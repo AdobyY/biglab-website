@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% load wagtailimages_tags wagtailcore_tags %}
+{% block content %}<article class="article-page"><header><a class="back-link" href="{{ page.get_parent.url }}">← {% if page.locale.language_code == 'cs' %}Novinky{% else %}News{% endif %}</a><time>{{ page.date|date:"j F Y" }}</time><h1>{{ page.title }}</h1>{% if page.intro %}<div class="intro">{{ page.intro|richtext }}</div>{% endif %}</header>{% if page.cover_image %}<div class="article-image">{% image page.cover_image width-1600 %}</div>{% endif %}<div class="article-body">{% include_block page.body %}</div></article>{% endblock %}

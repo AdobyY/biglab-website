@@ -1,0 +1,12 @@
+{% load wagtailcore_tags %}
+<ul class="{% if nested %}submenu{% else %}site-nav{% endif %}"{% if nested %} id="submenu-{{ parent_id }}"{% endif %}>
+  {% for item in menu_items %}
+    <li{% if item.children %} class="has-submenu{% if item.active %} active-branch{% endif %}"{% elif item.active %} class="active-branch"{% endif %}>
+      <div class="nav-entry">
+        <a href="{% pageurl item.page %}"{% if item.current %} aria-current="page"{% endif %}>{{ item.page.title }}</a>
+        {% if item.children %}<button class="submenu-toggle" type="button" aria-expanded="false" aria-controls="submenu-{{ item.page.id }}" aria-label="{% if language_code == 'cs' %}Otevřít podmenu {{ item.page.title }}{% else %}Open {{ item.page.title }} submenu{% endif %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"/></svg></button>{% endif %}
+      </div>
+      {% if item.children %}{% include "home/includes/navigation_menu.html" with menu_items=item.children nested=True parent_id=item.page.id language_code=language_code only %}{% endif %}
+    </li>
+  {% endfor %}
+</ul>

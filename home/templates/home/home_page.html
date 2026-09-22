@@ -1,21 +1,34 @@
-{% extends "base.html" %}
-{% load static %}
-
+{% extends "base.html" %}{% load wagtailcore_tags wagtailimages_tags %}
 {% block body_class %}template-homepage{% endblock %}
-
-{% block extra_css %}
-
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
-<link rel="stylesheet" href="{% static 'css/welcome_page.css' %}">
-{% endblock extra_css %}
-
 {% block content %}
-
-{% comment %}
-Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
-{% include 'home/welcome_page.html' %}
-
-{% endblock content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="kicker">{% if page.locale.language_code == 'cs' %}Chování · Vliv · Skupiny{% else %}Behavior · Influence · Groups{% endif %}</p>
+    <h1>{{ page.hero_title }}</h1>
+    {% if page.hero_summary %}<p class="summary">{{ page.hero_summary }}</p>{% endif %}
+    <div class="hero-actions">
+      {% if science_page %}<a class="button" href="{{ science_page.url }}">{% if page.locale.language_code == 'cs' %}Prozkoumat výzkum{% else %}Explore our science{% endif %}</a>{% endif %}
+      {% if people_index %}<a class="text-link" href="{{ people_index.url }}">{% if page.locale.language_code == 'cs' %}Poznat tým{% else %}Meet the team{% endif %} →</a>{% endif %}
+    </div>
+  </div>
+  <div class="network" data-network role="group" aria-label="{% if page.locale.language_code == 'cs' %}Interaktivní mapa výzkumných oblastí{% else %}Interactive map of research areas{% endif %}">
+    <svg viewBox="0 0 700 620" role="group" aria-label="{% if page.locale.language_code == 'cs' %}Výzkumné oblasti BIG Labu{% else %}BIG Lab research areas{% endif %}">
+      <g class="network-lines" aria-hidden="true"><path d="M110 140 L350 82 L582 180 L536 443 L292 530 L82 390 Z"/><path d="M110 140 L536 443 M350 82 L292 530 M582 180 L82 390"/></g>
+      <g class="network-nodes">
+        <a aria-label="{{ research_areas.0.title }}" href="{% if research_areas.0 %}{{ research_areas.0.url }}{% endif %}"><circle cx="110" cy="140" r="54"/><text x="110" y="137">{% if page.locale.language_code == 'cs' %}postoje{% else %}attitudes{% endif %}</text><text x="110" y="158">{% if page.locale.language_code == 'cs' %}a chování{% else %}&amp; behaviour{% endif %}</text></a>
+        <a aria-label="{{ research_areas.1.title }}" href="{% if research_areas.1 %}{{ research_areas.1.url }}{% endif %}"><circle cx="350" cy="82" r="44"/><text x="350" y="88">{% if page.locale.language_code == 'cs' %}vliv{% else %}influence{% endif %}</text></a>
+        <a aria-label="{{ research_areas.2.title }}" href="{% if research_areas.2 %}{{ research_areas.2.url }}{% endif %}"><circle cx="582" cy="180" r="58"/><text x="582" y="176">{% if page.locale.language_code == 'cs' %}skupinová{% else %}group{% endif %}</text><text x="582" y="197">{% if page.locale.language_code == 'cs' %}dynamika{% else %}dynamics{% endif %}</text></a>
+        <a aria-label="{{ research_areas.3.title }}" href="{% if research_areas.3 %}{{ research_areas.3.url }}{% endif %}"><circle cx="536" cy="443" r="66"/><text x="536" y="439">{% if page.locale.language_code == 'cs' %}segregace{% else %}segregation{% endif %}</text><text x="536" y="460">{% if page.locale.language_code == 'cs' %}a předsudky{% else %}&amp; prejudice{% endif %}</text></a>
+        <a aria-label="{{ research_areas.4.title }}" href="{% if research_areas.4 %}{{ research_areas.4.url }}{% endif %}"><circle cx="292" cy="530" r="58"/><text x="292" y="526">{% if page.locale.language_code == 'cs' %}sociální{% else %}social{% endif %}</text><text x="292" y="547">{% if page.locale.language_code == 'cs' %}sítě{% else %}networks{% endif %}</text></a>
+        <g class="node-person"><circle cx="82" cy="390" r="34"/><text x="82" y="395">{% if page.locale.language_code == 'cs' %}lidé{% else %}people{% endif %}</text></g>
+      </g>
+    </svg>
+    <p>{% if page.locale.language_code == 'cs' %}Prozkoumejte síť{% else %}Explore the network{% endif %}</p>
+  </div>
+</section>
+{% if page.sections %}
+  {% include_block page.sections %}
+{% else %}
+  {% include "home/includes/legacy_home_sections.html" %}
+{% endif %}
+{% endblock %}

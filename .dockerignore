@@ -1,7 +1,13 @@
 # Django project
 /media/
 /static/
+/backups/
 *.sqlite3
+.env
+.env.*
+!.env.example
+/.git/
+/.impeccable/
 
 # Python and others
 __pycache__

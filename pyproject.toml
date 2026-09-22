@@ -1,9 +1,10 @@
 [project]
 name = "biglab-website"
 version = "0.1.0"
-description = "Add your description here"
+description = "Multilingual Wagtail website for BIG Lab"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "wagtail>=8.0",
+    "wagtail>=8.0,<8.1",
+    "whitenoise>=6.9,<7",
 ]

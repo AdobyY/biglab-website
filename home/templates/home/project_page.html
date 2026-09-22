@@ -1,0 +1,24 @@
+{% extends "base.html" %}{% load wagtailcore_tags %}
+{% block content %}
+<article class="project-page">
+  <header>
+    <a class="back-link" href="{{ page.get_parent.url }}">← {% if page.locale.language_code == 'cs' %}Zpět{% else %}Back{% endif %}</a>
+    <p class="kicker">BIG LAB / {% if page.locale.language_code == 'cs' %}PROJEKT{% else %}PROJECT{% endif %}</p><h1>{{ page.title }}</h1>
+    {% if page.intro %}<div class="intro">{{ page.intro|richtext }}</div>{% endif %}
+  </header>
+  {% if project_sections %}<nav class="project-sections" aria-label="{% if page.locale.language_code == 'cs' %}Sekce projektu{% else %}Project sections{% endif %}">
+    {% for section in project_sections %}<a href="{{ section.url }}"><span>0{{ forloop.counter }}</span>{{ section.title }} <i>↗</i></a>{% endfor %}
+  </nav>{% endif %}
+  <div class="project-layout">
+    <aside>
+      {% if page.start_date or page.end_date or page.funder %}<dl class="metadata">
+        {% if page.start_date %}<dt>{% if page.locale.language_code == 'cs' %}Začátek{% else %}Start{% endif %}</dt><dd>{{ page.start_date|date:"F Y" }}</dd>{% endif %}
+        {% if page.end_date %}<dt>{% if page.locale.language_code == 'cs' %}Konec{% else %}End{% endif %}</dt><dd>{{ page.end_date|date:"F Y" }}</dd>{% endif %}
+        {% if page.funder %}<dt>{% if page.locale.language_code == 'cs' %}Podpora{% else %}Funder{% endif %}</dt><dd>{{ page.funder }}</dd>{% endif %}
+      </dl>{% endif %}
+      {% if page.external_url %}<a class="button" href="{{ page.external_url }}">{% if page.locale.language_code == 'cs' %}Web projektu{% else %}Project website{% endif %} ↗</a>{% endif %}
+    </aside>
+    <div class="article-body">{% include_block page.body %}</div>
+  </div>
+</article>
+{% endblock %}

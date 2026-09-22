@@ -1,0 +1,3 @@
+{% load wagtailcore_tags %}
+{% if page.intro %}<div class="intro">{{ page.intro|richtext }}</div>{% endif %}
+{% include_block page.body %}

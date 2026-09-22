@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from pathlib import Path
+
+from django.conf.global_settings import LANGUAGES as DJANGO_LANGUAGES
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = PROJECT_DIR.parent
@@ -25,9 +29,11 @@ BASE_DIR = PROJECT_DIR.parent
 
 INSTALLED_APPS = [
     "home",
-    "search",
+    "wagtail.contrib.settings",
+    "wagtail.contrib.simple_translation",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
+    "wagtail.locales",
     "wagtail.embeds",
     "wagtail.sites",
     "wagtail.users",
@@ -51,6 +57,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -88,7 +95,20 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": Path(os.environ.get("SQLITE_PATH", BASE_DIR / "db.sqlite3")),
+        "OPTIONS": {
+            # Wagtail's editor can save a revision, update its editing session,
+            # and render a live preview at nearly the same time. Wait for the
+            # current writer instead of failing immediately under that normal
+            # SQLite contention.
+            "timeout": 20,
+            "transaction_mode": "IMMEDIATE",
+            "init_command": (
+                "PRAGMA journal_mode=WAL; "
+                "PRAGMA synchronous=NORMAL; "
+                "PRAGMA busy_timeout=20000"
+            ),
+        },
     }
 }
 
@@ -115,7 +135,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "en"
+
+# Offer Wagtail's administrators every language supported by Django. Locales
+# are still only created when an administrator selects one in Settings → Locales.
+LANGUAGES = DJANGO_LANGUAGES
 
 TIME_ZONE = "UTC"
 
@@ -136,10 +160,10 @@ STATICFILES_DIRS = [
     PROJECT_DIR / "static",
 ]
 
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = Path(os.environ.get("STATIC_ROOT", BASE_DIR / "static"))
 STATIC_URL = "/static/"
 
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = Path(os.environ.get("MEDIA_ROOT", BASE_DIR / "media"))
 MEDIA_URL = "/media/"
 
 # Default storage settings
@@ -160,7 +184,10 @@ DATA_UPLOAD_MAX_NUMBER_FIELDS = 10_000
 
 # Wagtail settings
 
-WAGTAIL_SITE_NAME = "config"
+WAGTAIL_SITE_NAME = "BIG Lab"
+WAGTAIL_I18N_ENABLED = True
+WAGTAIL_CONTENT_LANGUAGES = LANGUAGES
+WAGTAILSIMPLETRANSLATION_SYNC_PAGE_TREE = True
 
 # Search
 # https://docs.wagtail.org/en/stable/topics/search/backends.html
@@ -172,7 +199,9 @@ WAGTAILSEARCH_BACKENDS = {
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = "http://example.com"
+WAGTAILADMIN_BASE_URL = os.environ.get(
+    "WAGTAILADMIN_BASE_URL", "http://localhost:8000"
+)
 
 # Allowed file extensions for documents in the document library.
 # This can be omitted to allow all files, but note that this may present a security risk

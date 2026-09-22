@@ -1,0 +1,17 @@
+{% load wagtailimages_tags navigation_tags %}
+{% section_background_url value as background_url %}
+{% curated_items value "selected_people" people "limit" as section_people %}
+{% should_carousel section_people value.enable_carousel value.carousel_after as carousel_active %}
+{% if value.is_visible and section_people %}
+  <section{% if value.anchor %} id="{{ value.anchor }}"{% endif %} class="builder-section people-preview section-theme-{{ value.theme }}{% if background_url %} has-section-background background-overlay-{{ value.background_overlay }}{% endif %}"{% if background_url %} style="--section-bg:url('{{ background_url }}');--section-bg-position:{{ value.background_position }}"{% endif %}>
+    <div class="section-shell">
+      <div class="section-heading"><h2>{{ value.title }}</h2>{% if people_index and value.link_label %}<a href="{{ people_index.url }}">{{ value.link_label }} →</a>{% endif %}</div>
+      <div class="people-carousel{% if carousel_active %} is-carousel{% endif %}" style="--people-visible:{{ value.carousel_after }}"{% if carousel_active %} data-card-carousel role="region" aria-label="{{ value.title }}"{% endif %}>
+        <div class="portrait-run"{% if carousel_active %} data-carousel-track tabindex="0"{% endif %}>
+          {% for person in section_people %}<a href="{{ person.url }}" class="portrait-size-{{ person.portrait_size }} portrait-format-{{ person.portrait_format }} portrait-fit-{{ person.portrait_fit }}">{% if person.portrait and person.show_portrait %}{% if person.portrait_format == 'square' %}{% image person.portrait fill-520x520 loading="lazy" %}{% elif person.portrait_format == 'original' %}{% image person.portrait width-640 loading="lazy" %}{% else %}{% image person.portrait fill-420x520 loading="lazy" %}{% endif %}{% endif %}<strong>{{ person.title }}</strong>{% if value.show_roles %}<span>{{ person.role }}</span>{% endif %}</a>{% endfor %}
+        </div>
+        {% if carousel_active %}<div class="people-carousel-controls"><span>{{ section_people|length }} {% if page.locale.language_code == 'cs' %}členů týmu{% else %}team members{% endif %}</span><button type="button" data-carousel-previous aria-label="{% if page.locale.language_code == 'cs' %}Předchozí lidé{% else %}Previous people{% endif %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7"/></svg></button><button type="button" data-carousel-next aria-label="{% if page.locale.language_code == 'cs' %}Další lidé{% else %}Next people{% endif %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button></div>{% endif %}
+      </div>
+    </div>
+  </section>
+{% endif %}

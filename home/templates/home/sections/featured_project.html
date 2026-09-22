@@ -1,0 +1,19 @@
+{% load wagtailcore_tags navigation_tags %}
+{% section_background_url value as background_url %}
+{% if value.is_visible %}
+  {% if value.project %}
+    {% with project=value.project.specific %}
+      <section{% if value.anchor %} id="{{ value.anchor }}"{% endif %} class="builder-section section-shell parta-band section-theme-{{ value.theme }}{% if background_url %} has-section-background background-overlay-{{ value.background_overlay }}{% endif %}"{% if background_url %} style="--section-bg:url('{{ background_url }}');--section-bg-position:{{ value.background_position }}"{% endif %}>
+        <div>{% if value.label %}<span>{{ value.label }}</span>{% endif %}<h2>{{ project.title }}</h2>{{ project.intro|richtext }}</div>
+        <a class="button button-light" href="{{ project.url }}">{{ value.button_label }} →</a>
+      </section>
+    {% endwith %}
+  {% else %}
+    {% for project in featured_projects|slice:":1" %}
+      <section{% if value.anchor %} id="{{ value.anchor }}"{% endif %} class="builder-section section-shell parta-band section-theme-{{ value.theme }}{% if background_url %} has-section-background background-overlay-{{ value.background_overlay }}{% endif %}"{% if background_url %} style="--section-bg:url('{{ background_url }}');--section-bg-position:{{ value.background_position }}"{% endif %}>
+        <div>{% if value.label %}<span>{{ value.label }}</span>{% endif %}<h2>{{ project.title }}</h2>{{ project.intro|richtext }}</div>
+        <a class="button button-light" href="{{ project.url }}">{{ value.button_label }} →</a>
+      </section>
+    {% endfor %}
+  {% endif %}
+{% endif %}

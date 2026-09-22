@@ -50,6 +50,7 @@ EXPOSE 8000
 # 3. Add the virtual environment to PATH.
 ENV PYTHONUNBUFFERED=1 \
     PORT=8000 \
+    DJANGO_SETTINGS_MODULE=config.settings.production \
     PATH="/opt/venv/bin:$PATH"
 
 
@@ -63,7 +64,7 @@ WORKDIR /app
 # Set this directory to be owned by the "wagtail" user. This Wagtail project
 # uses SQLite, the folder needs to be owned by the user that
 # will be writing to the database file.
-RUN chown wagtail:wagtail /app
+RUN mkdir -p /data && chown wagtail:wagtail /app /data
 
 # Copy the source code of the project into the container.
 COPY --chown=wagtail:wagtail . .
@@ -72,7 +73,7 @@ COPY --chown=wagtail:wagtail . .
 USER wagtail
 
 # Collect static files.
-RUN python manage.py collectstatic --noinput --clear
+RUN DJANGO_SETTINGS_MODULE=config.settings.dev python manage.py collectstatic --noinput --clear
 
 # Runtime command that executes when "docker run" is called, it does the
 # following:
@@ -83,4 +84,7 @@ RUN python manage.py collectstatic --noinput --clear
 #   PRACTICE. The database should be migrated manually or using the release
 #   phase facilities of your hosting platform. This is used only so the
 #   Wagtail instance can be started with a simple "docker run" command.
-CMD set -xe; python manage.py migrate --noinput; gunicorn config.wsgi:application
+CMD set -e; \
+    python manage.py migrate --noinput; \
+    if [ "${SEED_INITIAL_CONTENT:-0}" = "1" ]; then python manage.py seed_biglab; fi; \
+    exec gunicorn config.wsgi:application --bind "0.0.0.0:${PORT}"

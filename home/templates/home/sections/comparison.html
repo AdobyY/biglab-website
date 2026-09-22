@@ -1,0 +1,17 @@
+{% load wagtailcore_tags wagtailimages_tags navigation_tags %}
+{% section_background_url value as background_url %}
+{% if value.is_visible %}
+  <section{% if value.anchor %} id="{{ value.anchor }}"{% endif %} class="builder-section section-theme-{{ value.theme }}{% if background_url %} has-section-background background-overlay-{{ value.background_overlay }}{% endif %}"{% if background_url %} style="--section-bg:url('{{ background_url }}');--section-bg-position:{{ value.background_position }}"{% endif %}>
+    <div class="section-shell builder-embed">
+      <div class="builder-section-heading">{% if value.title %}<h2>{{ value.title }}</h2>{% endif %}{% if value.intro %}<div class="intro">{{ value.intro|richtext }}</div>{% endif %}</div>
+      <div class="image-comparison" data-image-comparison style="--comparison-position:{{ value.start_position }}%">
+        {% image value.after_image fill-1600x1000 class="comparison-image" loading="lazy" %}
+        <div class="comparison-before">{% image value.before_image fill-1600x1000 class="comparison-image" loading="lazy" %}</div>
+        <span class="comparison-label comparison-label-before">{{ value.before_label }}</span>
+        <span class="comparison-label comparison-label-after">{{ value.after_label }}</span>
+        <span class="comparison-divider" aria-hidden="true"></span>
+        <input type="range" min="0" max="100" value="{{ value.start_position }}" data-comparison-range aria-label="{% if page.locale.language_code == 'cs' %}Porovnat obrázky{% else %}Compare images{% endif %}">
+      </div>
+    </div>
+  </section>
+{% endif %}

@@ -1,11 +1,17 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load i18n %}
 
-{% block title %}Page not found{% endblock %}
+{% block title %}{% get_current_language as LANGUAGE_CODE %}{% if LANGUAGE_CODE == 'cs' %}Stránka nenalezena{% else %}Page not found{% endif %}{% endblock %}
 
 {% block body_class %}template-404{% endblock %}
 
 {% block content %}
-<h1>Page not found</h1>
-
-<h2>Sorry, this page could not be found.</h2>
+{% get_current_language as LANGUAGE_CODE %}
+<article class="content-page">
+    <header>
+        <p class="kicker">404 / BIG LAB</p>
+        <h1>{% if LANGUAGE_CODE == 'cs' %}Stránka nenalezena{% else %}Page not found{% endif %}</h1>
+        <div class="intro"><p>{% if LANGUAGE_CODE == 'cs' %}Stránka se mohla přesunout nebo odkaz vede jinam.{% else %}The page may have moved, or the connection led somewhere unexpected.{% endif %}</p></div>
+        <a class="button" href="{% if LANGUAGE_CODE == 'cs' %}/cs/{% else %}/{% endif %}">{% if LANGUAGE_CODE == 'cs' %}Zpět na úvod{% else %}Return home{% endif %}</a>
+    </header>
+</article>
 {% endblock %}

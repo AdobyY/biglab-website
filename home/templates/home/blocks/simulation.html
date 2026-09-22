@@ -1,0 +1,1 @@
+<section class="simulation">{% if value.title %}<h2>{{ value.title }}</h2>{% endif %}{% if value.description %}<p>{{ value.description }}</p>{% endif %}<iframe src="{{ value.embed_url }}" title="{{ value.title|default:'Interactive simulation' }}" loading="lazy"></iframe></section>
