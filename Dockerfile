@@ -73,7 +73,7 @@ COPY --chown=wagtail:wagtail . .
 USER wagtail
 
 # Collect static files.
-RUN DJANGO_SETTINGS_MODULE=config.settings.dev python manage.py collectstatic --noinput --clear
+RUN DJANGO_SETTINGS_MODULE=config.settings.production python manage.py collectstatic --noinput --clear
 
 # Runtime command that executes when "docker run" is called, it does the
 # following:
