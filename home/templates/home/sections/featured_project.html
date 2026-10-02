@@ -7,7 +7,7 @@
   <div class="section-shell">
     <div class="section-heading"><h2>{{ project.title }}</h2></div>
     {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
-    {% if value.label %}<p class="project-label">{{ value.label }}</p>{% endif %}
+    {% if value.label and not page.hero_layout %}<p class="project-label">{{ value.label }}</p>{% endif %}
     {% if project.intro %}<div class="collection-intro reading-content">{{ project.intro|richtext }}</div>{% endif %}
     <a class="button button-light" href="{{ project.url }}">{% if value.button_label %}{{ value.button_label }}{% else %}{% ui 'about_project' %}{% endif %}</a>
   </div>

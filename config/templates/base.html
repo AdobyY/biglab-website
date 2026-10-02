@@ -6,7 +6,7 @@
 {% contact_url site_home as homepage_contact_url %}
 <!DOCTYPE html>
 <html lang="{{ page.locale.language_code|default:active_language }}">
-<head></head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{{ page.seo_title|default:page.title|default:'BIG Lab' }} — {{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}{% endblock %}</title>
@@ -55,7 +55,7 @@
         {% if contact.email or contact.phone or contact.address %}<div class="footer-contact"><h2>{% ui 'contact' %}</h2>{% if contact.email %}<a href="mailto:{{ contact.email }}">{{ contact.email }}</a>{% endif %}{% if contact.phone %}<a href="tel:{{ contact.phone|cut:' ' }}">{{ contact.phone }}</a>{% endif %}{% if contact.address %}<address>{{ contact.address|linebreaksbr }}</address>{% endif %}</div>{% endif %}
         {% if contact.show_social_links %}{% if contact.linkedin_url or contact.instagram_url or contact.facebook_url %}<div class="footer-links"><h2>{% ui 'institute_social' %}</h2>{% if contact.linkedin_url %}<a href="{{ contact.linkedin_url }}">LinkedIn</a>{% endif %}{% if contact.instagram_url %}<a href="{{ contact.instagram_url }}">Instagram</a>{% endif %}{% if contact.facebook_url %}<a href="{{ contact.facebook_url }}">Facebook</a>{% endif %}</div>{% endif %}{% endif %}
       </div>
-      <div class="section-shell footer-bottom"><p></p>© {% now 'Y' %} {{ contact.copyright_text|default:contact.site_name|default:'BIG Lab' }}</p><a href="{% pageurl site_home %}">{% ui 'about' %}</a></div>
+      <div class="section-shell footer-bottom"><p>© {% now 'Y' %} {{ contact.copyright_text|default:contact.site_name|default:'BIG Lab' }}</p><a href="{% pageurl site_home %}">{% ui 'about' %}</a></div>
       {% endwith %}
     </footer>
     <script src="{% static 'js/config.js' %}" defer></script>{% block extra_js %}{% endblock %}

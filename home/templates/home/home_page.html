@@ -1,6 +1,8 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags wagtailsettings_tags navigation_tags ui_tags l10n %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailsettings_tags navigation_tags ui_tags l10n %}
 {% block body_class %}template-homepage{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/homepage.css' %}">{% endblock %}
+{% block extra_js %}<script src="{% static 'js/homepage.js' %}" defer></script>{% endblock %}
 {% block content %}
 <section class="hero hero-{{ page.hero_layout }}" data-hero-entrance>
   <div class="section-shell hero-inner">
@@ -18,6 +20,7 @@
       {% constellation_nodes research_areas as star_nodes %}
       <nav class="constellation{% if star_nodes|length > 7 %} constellation-dense{% endif %}" aria-label="{% ui 'research_areas' %}">
         <div class="constellation-field">
+          <canvas class="research-network" data-research-network aria-hidden="true"></canvas>
           <svg class="constellation-lines" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
             <g class="star-dust"><circle cx="52" cy="55" r="1.5"/><circle cx="146" cy="80" r="1"/><circle cx="228" cy="32" r="1"/><circle cx="450" cy="75" r="1.5"/><circle cx="543" cy="138" r="1"/><circle cx="575" cy="315" r="1"/><circle cx="530" cy="430" r="1.5"/><circle cx="456" cy="558" r="1"/><circle cx="311" cy="563" r="1.5"/><circle cx="140" cy="522" r="1"/><circle cx="36" cy="407" r="1.5"/><circle cx="38" cy="225" r="1"/><circle cx="201" cy="360" r="1.5"/><circle cx="399" cy="210" r="1"/></g>
             <g class="constellation-connections">{% for node in star_nodes %}<path data-constellation-connection="{{ forloop.counter0 }}" d="M300 276 Q{{ node.sx|unlocalize }} 276 {{ node.sx|unlocalize }} {{ node.sy|unlocalize }}"/>{% endfor %}</g>
@@ -28,11 +31,16 @@
             {% for node in star_nodes %}<li style="--star-x:{{ node.x|unlocalize }}%;--star-y:{{ node.y|unlocalize }}%"><a href="{{ node.url }}" data-constellation-topic="{{ forloop.counter0 }}"><span class="topic-star" aria-hidden="true"></span><span class="topic-label">{{ node.page.title }}</span></a></li>{% endfor %}
           </ul>
         </div>
-        <p class="constellation-caption">{% ui 'research_areas' %}</p>
+        <div class="constellation-caption"><span>{% ui 'research_areas' %}</span><button class="network-toggle" type="button" data-network-toggle aria-pressed="false" aria-label="{% ui 'pause_network' %}" data-pause-label="{% ui 'pause_network' %}" data-play-label="{% ui 'play_network' %}"><svg class="network-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14m6-14v14"/></svg><svg class="network-play" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z"/></svg></button></div>
       </nav>
     {% endif %}
   </div>
+  <div class="section-shell hero-footnote">
+    <p>{% ui 'research_disciplines' %}</p>
+    <a href="#home-sections">{% ui 'discover_lab' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16m-6-6 6 6 6-6"/></svg></a>
+  </div>
 </section>
+<div id="home-sections">
 {% if page.sections %}
   {% for section in page.sections %}
     {% include_block section %}
@@ -58,4 +66,5 @@
   </section>
   {% endwith %}
 {% endif %}
+</div>
 {% endblock %}
