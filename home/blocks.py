@@ -56,15 +56,21 @@ class SimulationBlock(blocks.StructBlock):
 
 
 SECTION_THEME_CHOICES = [
-    ("paper", "Paper"),
-    ("lilac", "Pale lilac"),
-    ("midnight", "Midnight blue"),
-    ("coral", "Coral"),
+    ("paper", "Cream"),
+    ("lilac", "Legacy cream"),
+    ("midnight", "Midnight"),
+    ("coral", "Brick red"),
 ]
 
 
 class HomeSectionBlock(blocks.StructBlock):
-    """Shared editorial controls for reorderable homepage sections."""
+    """Shared editorial controls for reorderable page sections."""
+
+    intro = blocks.RichTextBlock(
+        required=False, features=["bold", "italic", "link"],
+        label="Section introduction",
+        help_text="Optional introduction above this section's content.",
+    )
 
     is_visible = blocks.BooleanBlock(
         required=False,
@@ -154,8 +160,8 @@ class RichMediaHomeSectionBlock(HomeSectionBlock):
 
 
 class ResearchHomeSectionBlock(HomeSectionBlock):
-    title = blocks.CharBlock(max_length=120, default="Research areas")
-    link_label = blocks.CharBlock(required=False, max_length=80, default="All science")
+    title = blocks.CharBlock(required=False, max_length=120, default="", help_text="Leave blank for the translated research heading.")
+    link_label = blocks.CharBlock(required=False, max_length=80, default="", help_text="Leave blank for the translated science link label.")
     selected_areas = blocks.ListBlock(
         blocks.PageChooserBlock(page_type="home.ContentPage"),
         required=False,
@@ -180,8 +186,8 @@ class ResearchHomeSectionBlock(HomeSectionBlock):
 
 
 class PeopleHomeSectionBlock(HomeSectionBlock):
-    title = blocks.CharBlock(max_length=120, default="People behind the research")
-    link_label = blocks.CharBlock(required=False, max_length=80, default="Full team")
+    title = blocks.CharBlock(required=False, max_length=120, default="", help_text="Leave blank for the translated team heading.")
+    link_label = blocks.CharBlock(required=False, max_length=80, default="", help_text="Leave blank for the translated team link label.")
     selected_people = blocks.ListBlock(
         blocks.PageChooserBlock(page_type="home.PersonPage"),
         required=False,
@@ -208,7 +214,7 @@ class PeopleHomeSectionBlock(HomeSectionBlock):
         default=6,
         label="Start carousel after",
     )
-    theme = blocks.ChoiceBlock(choices=SECTION_THEME_CHOICES, default="lilac")
+    theme = blocks.ChoiceBlock(choices=SECTION_THEME_CHOICES, default="paper")
 
     class Meta:
         icon = "group"
@@ -218,8 +224,8 @@ class PeopleHomeSectionBlock(HomeSectionBlock):
 
 class FeaturedProjectHomeSectionBlock(HomeSectionBlock):
     project = blocks.PageChooserBlock(required=False, page_type="home.ProjectPage")
-    label = blocks.CharBlock(required=False, max_length=80, default="PARTA / BIG LAB")
-    button_label = blocks.CharBlock(required=False, max_length=80, default="About the project")
+    label = blocks.CharBlock(required=False, max_length=80, default="", help_text="Optional project label; leave blank for the translated default.")
+    button_label = blocks.CharBlock(required=False, max_length=80, default="", help_text="Leave blank for the translated project link label.")
     theme = blocks.ChoiceBlock(choices=SECTION_THEME_CHOICES, default="coral")
 
     class Meta:
@@ -229,7 +235,7 @@ class FeaturedProjectHomeSectionBlock(HomeSectionBlock):
 
 
 class UpdatesHomeSectionBlock(HomeSectionBlock):
-    title = blocks.CharBlock(max_length=120, default="In progress")
+    title = blocks.CharBlock(required=False, max_length=120, default="", help_text="Leave blank for the translated updates heading.")
     show_news = blocks.BooleanBlock(required=False, default=True)
     news_heading = blocks.CharBlock(required=False, max_length=80)
     selected_news = blocks.ListBlock(
@@ -399,6 +405,103 @@ class SimulationHomeSectionBlock(HomeSectionBlock):
         template = "home/sections/simulation.html"
 
 
+class AutomaticListSectionBlock(HomeSectionBlock):
+    title = blocks.CharBlock(
+        required=False, max_length=160, label="Section heading",
+        help_text="Leave blank to use the translated interface label.",
+    )
+    theme = blocks.ChoiceBlock(choices=SECTION_THEME_CHOICES, default="paper")
+
+    class Meta:
+        abstract = True
+
+
+class PublicationsSectionBlock(AutomaticListSectionBlock):
+    class Meta:
+        icon = "doc-full"
+        label = "Publications — full list"
+        help_text = "All publication snippets in this page's language, newest year first."
+        template = "home/sections/publications.html"
+
+
+class CollaborationsSectionBlock(AutomaticListSectionBlock):
+    class Meta:
+        icon = "group"
+        label = "Collaborations — full list"
+        help_text = "All collaboration snippets in this page's language, in editorial order."
+        template = "home/sections/collaborations.html"
+
+
+class ProjectListSectionBlock(AutomaticListSectionBlock):
+    status = blocks.ChoiceBlock(
+        choices=[("all", "All projects"), ("current", "Current projects"), ("finished", "Finished projects")],
+        default="all", label="Projects to display",
+        help_text="A project is finished when its end date is before today. No end date means current.",
+    )
+
+    class Meta:
+        icon = "folder-open-inverse"
+        label = "Projects — full list"
+        template = "home/sections/project_list.html"
+
+
+class ChildSectionsBlock(AutomaticListSectionBlock):
+    class Meta:
+        icon = "doc-full"
+        label = "Child pages — inline sections"
+        help_text = (
+            "Show published project child pages or science research areas in full on this page. "
+            "Each has the stable anchor section-<page ID>; edit its content on the child page."
+        )
+        template = "home/sections/child_sections.html"
+
+
+class NewsListSectionBlock(AutomaticListSectionBlock):
+    class Meta:
+        icon = "date"
+        label = "News — full list"
+        help_text = "All published news in this page's language, newest first."
+        template = "home/sections/news_list.html"
+
+
+class FinancingSectionBlock(AutomaticListSectionBlock):
+    text = blocks.RichTextBlock(
+        required=False, features=["h2", "h3", "bold", "italic", "link", "ol", "ul"],
+        label="Funding information",
+        help_text="Verified funding information only. Leave blank to use the homepage's About / financing information, if provided.",
+    )
+
+    class Meta:
+        icon = "doc-full"
+        label = "Financing / funding"
+        template = "home/sections/financing.html"
+
+
+class ContactSectionBlock(AutomaticListSectionBlock):
+    text = blocks.RichTextBlock(
+        required=False, features=["bold", "italic", "link", "ol", "ul"],
+        label="Contact introduction",
+        help_text="Optional text above the real contact details from site settings.",
+    )
+    show_email = blocks.BooleanBlock(required=False, default=True, label="Show email address")
+    show_phone = blocks.BooleanBlock(required=False, default=True, label="Show phone number")
+    show_address = blocks.BooleanBlock(required=False, default=True, label="Show postal address")
+    show_people_link = blocks.BooleanBlock(
+        required=False, default=True, label="Show link to the team",
+        help_text="Links to the published People page in this language, when available.",
+    )
+    show_social_links = blocks.BooleanBlock(
+        required=False, default=True, label="Show institute social links",
+        help_text="Uses verified INPSY links from site settings; the site's social-links visibility setting still applies.",
+    )
+
+    class Meta:
+        icon = "mail"
+        label = "Contact details"
+        help_text = "Only configured contact details are displayed. Manage actual addresses and accounts in site settings."
+        template = "home/sections/contact.html"
+
+
 HOME_SECTION_BLOCKS = [
     ("about", AboutHomeSectionBlock()),
     ("text_image", RichMediaHomeSectionBlock()),
@@ -413,6 +516,13 @@ HOME_SECTION_BLOCKS = [
     ("callout", CalloutHomeSectionBlock()),
     ("video", VideoHomeSectionBlock()),
     ("simulation", SimulationHomeSectionBlock()),
+    ("publications", PublicationsSectionBlock()),
+    ("collaborations", CollaborationsSectionBlock()),
+    ("project_list", ProjectListSectionBlock()),
+    ("child_sections", ChildSectionsBlock()),
+    ("news_list", NewsListSectionBlock()),
+    ("financing", FinancingSectionBlock()),
+    ("contact", ContactSectionBlock()),
 ]
 
 

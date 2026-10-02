@@ -1,41 +1,63 @@
-{% load static i18n wagtailcore_tags wagtailuserbar wagtailsettings_tags navigation_tags %}
+{% load static i18n wagtailcore_tags wagtailimages_tags wagtailuserbar wagtailsettings_tags navigation_tags ui_tags %}
 {% wagtail_site as current_site %}
 {% get_settings %}
 {% get_current_language as active_language %}
 {% localized_home as site_home %}
+{% contact_url site_home as homepage_contact_url %}
 <!DOCTYPE html>
 <html lang="{{ page.locale.language_code|default:active_language }}">
-<head>
+<head></head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{{ page.seo_title|default:page.title }} — BIG Lab{% endblock %}</title>
+    <title>{% block title %}{{ page.seo_title|default:page.title|default:'BIG Lab' }} — {{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}{% endblock %}</title>
     {% if page.search_description %}<meta name="description" content="{{ page.search_description }}">{% endif %}
-    <meta name="theme-color" content="#0d1934">
-    {% if request.in_preview_panel %}<base target="_blank">{% endif %}
+    <meta name="theme-color" content="#101e32">
+        <link rel="icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+    {% if page and not request.is_preview %}
+      {% absolute_page_url page as canonical_url %}<link rel="canonical" href="{{ canonical_url }}">
+      <link rel="alternate" hreflang="{{ page.locale.language_code }}" href="{{ canonical_url }}">
+      {% for translation in page.get_translations.live %}{% absolute_page_url translation as translation_url %}<link rel="alternate" hreflang="{{ translation.locale.language_code }}" href="{{ translation_url }}">{% endfor %}
+      <meta property="og:title" content="{{ page.seo_title|default:page.title }}">
+      <meta property="og:type" content="website">
+      <meta property="og:url" content="{{ canonical_url }}">
+      {% if page.search_description %}<meta property="og:description" content="{{ page.search_description }}">{% endif %}
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
     <link rel="stylesheet" href="{% static 'css/config.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
-<body class="{% block body_class %}{% endblock %}">
-    <a class="skip-link" href="#content">{% if active_language == 'cs' %}Přeskočit na obsah{% else %}Skip to content{% endif %}</a>
+<body class="{% block body_class %}{% endblock %}" data-image-preview="{% ui 'image_preview' %}" data-close="{% ui 'close' %}" data-previous-image="{% ui 'previous_image' %}" data-next-image="{% ui 'next_image' %}" data-pause="{% ui 'pause' %}" data-play="{% ui 'play' %}">
+    <a class="skip-link" href="#content">{% ui 'skip_content' %}</a>
     {% wagtailuserbar %}
     <header class="site-header">
-        <a class="site-name" href="{% pageurl site_home %}" aria-label="BIG Lab home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>BIG Lab</span></a>
-        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation"><span></span><span></span><span></span><b>{% if page.locale.language_code == 'cs' %}Menu{% else %}Menu{% endif %}</b></button>
-        <nav id="site-navigation" class="navigation" aria-label="{% if page.locale.language_code == 'cs' %}Hlavní navigace{% else %}Main navigation{% endif %}">{% primary_navigation site_home %}</nav>
-        {% if page %}<nav class="language-nav" aria-label="Language">
-            <span aria-current="page">{{ page.locale.language_code|upper }}</span>
-            {% for translation in page.get_translations.live %}<a href="{{ translation.url }}">{{ translation.locale.language_code|upper }}</a>{% endfor %}
+      <div class="header-inner section-shell">
+        <a class="site-name" href="{% pageurl site_home %}" aria-label="{{ settings.home.ContactSettings.site_name|default:'BIG Lab' }} — {% ui 'home' %}">
+          {% if settings.home.ContactSettings.logo %}{% image settings.home.ContactSettings.logo max-200x100 class="custom-logo" alt="" %}{% else %}{% include "home/includes/brand_mark.html" %}{% endif %}
+          <span>{{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}</span>
+        </a>
+        <button class="menu-toggle" type="button" aria-label="{% ui 'menu' %}" aria-expanded="false" aria-controls="site-navigation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>{% ui 'menu' %}</span></button>
+        <nav id="site-navigation" class="navigation" aria-label="{% ui 'main_navigation' %}">
+          <a class="home-nav-link{% if page.pk == site_home.pk %} is-current{% endif %}" href="{% pageurl site_home %}"{% if page.pk == site_home.pk %} aria-current="page"{% endif %}>{% ui 'about' %}</a>
+          {% primary_navigation site_home %}
+          {% if homepage_contact_url %}<a class="contact-nav-link" href="{{ homepage_contact_url }}">{% ui 'contact' %}</a>{% endif %}
+        </nav>
+        {% if page %}<nav class="language-nav" aria-label="{% ui 'language' %}">
+          <span aria-current="page">{{ page.locale.language_code|upper }}</span>
+          {% for translation in page.get_translations.live %}<a href="{{ translation.url }}" lang="{{ translation.locale.language_code }}" hreflang="{{ translation.locale.language_code }}">{{ translation.locale.language_code|upper }}</a>{% endfor %}
         </nav>{% endif %}
+      </div>
     </header>
-    <main id="content" class="site-main">{% block content %}{% endblock %}</main>
+    <main id="content" class="site-main" tabindex="-1">{% block content %}{% endblock %}</main>
     <footer class="site-footer">
-        <div class="footer-lead"><strong>BIG Lab</strong><p>{% if active_language == 'cs' %}Od individuální změny k sociálnímu šíření.{% else %}From individual change to social spread.{% endif %}</p></div>
-        {% with contact=settings.home.ContactSettings %}
-            <div class="footer-contact">{% if contact.email %}<a href="mailto:{{ contact.email }}">{{ contact.email }}</a>{% endif %}{% if contact.phone %}<span>{{ contact.phone }}</span>{% endif %}{% if contact.address %}<address>{{ contact.address|linebreaksbr }}</address>{% endif %}</div>
-            <div class="footer-links">{% if contact.linkedin_url %}<a href="{{ contact.linkedin_url }}">LinkedIn ↗</a>{% endif %}{% if contact.instagram_url %}<a href="{{ contact.instagram_url }}">Instagram ↗</a>{% endif %}{% if contact.facebook_url %}<a href="{{ contact.facebook_url }}">Facebook ↗</a>{% endif %}</div>
-        {% endwith %}
-        <p class="footer-note">© {% now "Y" %} Masaryk University</p>
+      {% with contact=settings.home.ContactSettings %}
+      <div class="section-shell footer-grid">
+        <div class="footer-lead"><a class="site-name" href="{% pageurl site_home %}">{% include "home/includes/brand_mark.html" %}<span>{{ contact.site_name|default:'BIG Lab' }}</span></a><p>{% if contact.tagline %}{{ contact.tagline }}{% else %}{% ui 'footer_tagline' %}{% endif %}</p></div>
+        {% if contact.email or contact.phone or contact.address %}<div class="footer-contact"><h2>{% ui 'contact' %}</h2>{% if contact.email %}<a href="mailto:{{ contact.email }}">{{ contact.email }}</a>{% endif %}{% if contact.phone %}<a href="tel:{{ contact.phone|cut:' ' }}">{{ contact.phone }}</a>{% endif %}{% if contact.address %}<address>{{ contact.address|linebreaksbr }}</address>{% endif %}</div>{% endif %}
+        {% if contact.show_social_links %}{% if contact.linkedin_url or contact.instagram_url or contact.facebook_url %}<div class="footer-links"><h2>{% ui 'institute_social' %}</h2>{% if contact.linkedin_url %}<a href="{{ contact.linkedin_url }}">LinkedIn</a>{% endif %}{% if contact.instagram_url %}<a href="{{ contact.instagram_url }}">Instagram</a>{% endif %}{% if contact.facebook_url %}<a href="{{ contact.facebook_url }}">Facebook</a>{% endif %}</div>{% endif %}{% endif %}
+      </div>
+      <div class="section-shell footer-bottom"><p></p>© {% now 'Y' %} {{ contact.copyright_text|default:contact.site_name|default:'BIG Lab' }}</p><a href="{% pageurl site_home %}">{% ui 'about' %}</a></div>
+      {% endwith %}
     </footer>
-    <script src="{% static 'js/config.js' %}"></script>{% block extra_js %}{% endblock %}
+    <script src="{% static 'js/config.js' %}" defer></script>{% block extra_js %}{% endblock %}
 </body>
 </html>

@@ -1,0 +1,12 @@
+{% load wagtailcore_tags wagtailsettings_tags ui_tags %}{% get_settings %}
+{% if value.is_visible %}{% with contact=settings.home.ContactSettings %}
+<section{% if not value.anchor %} id="contact"{% endif %}{% include "home/includes/section_attributes.html" with section_class="builder-contact" %}><div class="section-shell contact-inner">
+  <div><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'contact' %}{% endif %}</h2>{% if value.intro %}<div class="reading-content">{{ value.intro|richtext }}</div>{% endif %}{% if value.text %}<div class="reading-content">{{ value.text|richtext }}</div>{% endif %}</div>
+  <div class="contact-details">
+    {% if value.show_email and contact.email %}<a class="contact-email" href="mailto:{{ contact.email }}">{{ contact.email }}</a>{% endif %}
+    {% if value.show_phone and contact.phone %}<a href="tel:{{ contact.phone|cut:' ' }}">{{ contact.phone }}</a>{% endif %}
+    {% if value.show_address and contact.address %}<address>{{ contact.address|linebreaksbr }}</address>{% endif %}
+    {% if value.show_people_link and people_index %}<a class="button" href="{{ people_index.url }}">{% ui 'meet_team' %}</a>{% endif %}
+    {% if value.show_social_links and contact.show_social_links %}{% if contact.linkedin_url or contact.instagram_url or contact.facebook_url %}<div class="contact-social"><p>{% ui 'institute_social' %}</p>{% if contact.linkedin_url %}<a href="{{ contact.linkedin_url }}">LinkedIn</a>{% endif %}{% if contact.instagram_url %}<a href="{{ contact.instagram_url }}">Instagram</a>{% endif %}{% if contact.facebook_url %}<a href="{{ contact.facebook_url }}">Facebook</a>{% endif %}</div>{% endif %}{% endif %}
+  </div>
+</div></section>{% endwith %}{% endif %}

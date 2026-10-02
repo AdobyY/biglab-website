@@ -1,0 +1,21 @@
+{% load wagtailcore_tags wagtailimages_tags ui_tags %}
+<div class="people-grid{% if carousel_active %} portrait-run{% endif %}"{% if carousel_active %} data-carousel-track tabindex="0"{% endif %}>
+  {% for person in people_items %}
+    <article class="person-tile portrait-size-{{ person.portrait_size }} portrait-format-{{ person.portrait_format }} portrait-fit-{{ person.portrait_fit }}">
+      <a href="{{ person.url }}" class="person-link">
+        <div class="person-tile-image">
+          {% if person.portrait and person.show_portrait %}
+            {% if person.portrait_format == 'square' %}{% image person.portrait fill-760x760 loading="lazy" alt="" %}{% elif person.portrait_format == 'original' %}{% image person.portrait width-900 loading="lazy" alt="" %}{% else %}{% image person.portrait fill-640x760 loading="lazy" alt="" %}{% endif %}
+          {% else %}
+            <div class="person-placeholder" aria-hidden="true">{% for word in person.title.split %}{{ word|first|upper }}{% endfor %}</div>
+          {% endif %}
+        </div>
+        <h3>{{ person.title }}</h3>
+      </a>
+      {% if show_roles and person.role %}<p class="person-role">{{ person.role }}</p>{% endif %}
+      {% if person.card_summary %}<div class="person-summary reading-content">{{ person.card_summary|richtext }}</div>{% endif %}
+    </article>
+  {% empty %}
+    <p class="collection-empty">{% ui 'empty_people' %}</p>
+  {% endfor %}
+</div>

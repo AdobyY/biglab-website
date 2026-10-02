@@ -53,7 +53,7 @@ def default_home_sections(home):
                 "show_roles": True,
                 "enable_carousel": True,
                 "carousel_after": 6,
-                "theme": "lilac",
+                "theme": "paper",
             },
         ),
         (
@@ -93,7 +93,11 @@ def default_home_sections(home):
 
 def ensure_home_sections(home, *, force=False):
     """Populate the builder only when empty, unless an explicit refresh is requested."""
-    if home.sections and not force:
+    if not force and (
+        home.sections
+        or home.revisions.filter(content__sections__0__isnull=False).exists()
+        or home.revisions.filter(user__isnull=False).exists()
+    ):
         return False
     home.sections = default_home_sections(home)
     home.save_revision().publish()

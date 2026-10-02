@@ -1,0 +1,63 @@
+"""Built-in interface labels; editors can override each key per Wagtail locale."""
+
+UI_LABELS = {
+    "en": {
+        "about": "About", "science": "Science", "people": "People", "news": "News",
+        "projects": "Projects", "current_projects": "Current projects", "finished_projects": "Finished projects",
+        "publications": "Publications", "collaborations": "Collaborations", "contact": "Contact",
+        "menu": "Menu", "close": "Close", "skip_content": "Skip to content",
+        "main_navigation": "Main navigation", "language": "Language", "home": "Home",
+        "explore_science": "Explore our science", "meet_team": "Meet the team", "all_science": "All science",
+        "full_team": "Full team", "about_project": "About the project", "back": "Back",
+        "project": "Project", "project_website": "Project website", "start": "Start", "end": "End",
+        "funder": "Funder", "explore": "Explore", "read_more": "Read more",
+        "previous_people": "Previous people", "next_people": "Next people", "team_members": "Team members",
+        "previous_image": "Previous image", "next_image": "Next image", "image_preview": "Image preview",
+        "open_image": "Open image", "download": "Download", "simulation": "Simulation",
+        "results": "Results", "timeline": "Timeline", "for_parents": "For parents",
+        "for_schools": "For schools", "for_students": "For students", "contents": "Contents", "profile": "Profile",
+        "empty_news": "No news has been published yet.",
+        "empty_publications": "No publications have been added yet.",
+        "empty_projects": "No projects have been published yet.",
+        "empty_people": "No team profiles have been published yet.",
+        "contact_intro": "Get in touch with BIG Lab.",
+        "footer_tagline": "Behaviour, interactions and groups",
+        "institute_social": "INPSY institute social media",
+        "research_areas": "Research areas", "in_progress": "In progress",
+        "before": "Before", "after": "After", "email": "Email", "phone": "Phone", "address": "Address",
+        "financing": "Financing", "contact_us": "Contact us", "view_all": "View all",
+        "show_more": "Show more", "show_less": "Show less", "play": "Play", "pause": "Pause",
+    },
+    "cs": {
+        "about": "O nás", "science": "Výzkum", "people": "Lidé", "news": "Novinky",
+        "projects": "Projekty", "current_projects": "Probíhající projekty", "finished_projects": "Ukončené projekty",
+        "publications": "Publikace", "collaborations": "Spolupráce", "contact": "Kontakt",
+        "menu": "Menu", "close": "Zavřít", "skip_content": "Přejít na obsah",
+        "main_navigation": "Hlavní navigace", "language": "Jazyk", "home": "Úvod",
+        "explore_science": "Prozkoumejte náš výzkum", "meet_team": "Seznamte se s týmem", "all_science": "Veškerý výzkum",
+        "full_team": "Celý tým", "about_project": "O projektu", "back": "Zpět",
+        "project": "Projekt", "project_website": "Web projektu", "start": "Začátek", "end": "Konec",
+        "funder": "Poskytovatel financování", "explore": "Prozkoumat", "read_more": "Číst více",
+        "previous_people": "Předchozí lidé", "next_people": "Další lidé", "team_members": "Členové týmu",
+        "previous_image": "Předchozí obrázek", "next_image": "Další obrázek", "image_preview": "Náhled obrázku",
+        "open_image": "Otevřít obrázek", "download": "Stáhnout", "simulation": "Simulace",
+        "results": "Výsledky", "timeline": "Časová osa", "for_parents": "Pro rodiče",
+        "for_schools": "Pro školy", "for_students": "Pro studenty", "contents": "Obsah", "profile": "Profil",
+        "empty_news": "Zatím nebyly zveřejněny žádné novinky.",
+        "empty_publications": "Zatím nebyly přidány žádné publikace.",
+        "empty_projects": "Zatím nebyly zveřejněny žádné projekty.",
+        "empty_people": "Zatím nebyly zveřejněny žádné profily členů týmu.",
+        "contact_intro": "Kontaktujte BIG Lab.",
+        "footer_tagline": "Chování, interakce a skupiny",
+        "institute_social": "Sociální sítě institutu INPSY",
+        "research_areas": "Oblasti výzkumu", "in_progress": "Právě probíhá",
+        "before": "Před", "after": "Po", "email": "E-mail", "phone": "Telefon", "address": "Adresa",
+        "financing": "Financování", "contact_us": "Kontaktujte nás", "view_all": "Zobrazit vše",
+        "show_more": "Zobrazit více", "show_less": "Zobrazit méně", "play": "Přehrát", "pause": "Pozastavit",
+    },
+}
+
+
+def default_ui_text(key, language_code="en"):
+    language = (language_code or "en").lower().split("-")[0]
+    return UI_LABELS.get(language, {}).get(key, UI_LABELS["en"].get(key, key))

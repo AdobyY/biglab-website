@@ -2,6 +2,7 @@ import json
 import sqlite3
 import tarfile
 import tempfile
+from contextlib import closing
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -37,7 +38,7 @@ class Command(BaseCommand):
             manifest_path = temp_path / "manifest.json"
 
             connection.ensure_connection()
-            with sqlite3.connect(database_copy) as destination:
+            with closing(sqlite3.connect(database_copy)) as destination:
                 connection.connection.backup(destination)
 
             media_root = Path(settings.MEDIA_ROOT)

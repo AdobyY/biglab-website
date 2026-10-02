@@ -1,1 +1,7 @@
-<section class="simulation">{% if value.title %}<h2>{{ value.title }}</h2>{% endif %}{% if value.description %}<p>{{ value.description }}</p>{% endif %}<iframe src="{{ value.embed_url }}" title="{{ value.title|default:'Interactive simulation' }}" loading="lazy"></iframe></section>
+{% load ui_tags %}
+{% ui 'simulation' as default_title %}
+<section class="simulation builder-embed">
+  <h2>{{ value.title|default:default_title }}</h2>
+  {% if value.description %}<p>{{ value.description }}</p>{% endif %}
+  <iframe class="builder-simulation responsive-embed" src="{{ value.embed_url }}" title="{{ value.title|default:default_title }}" loading="lazy" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
+</section>

@@ -1,258 +1,234 @@
 ---
 name: BIG Lab
-description: A research observatory that makes invisible social influence legible.
+description: A navy and butter constellation identity with cream reading surfaces and brick accents.
 colors:
-  midnight-field: "#0d1934"
-  ink: "#12192c"
-  paper: "#f7f5ef"
-  signal-yellow: "#f6dc74"
-  pale-lilac: "#e8e5f3"
-  data-coral: "#b63d34"
-  network-mint: "#c7e8d0"
-  white: "#ffffff"
-  deep-blue-glow: "#213660"
-  muted-text: "#5a6375"
-  pale-blue-text: "#d9def0"
-  footer-muted: "#b9c1d2"
-  midnight-line: "rgba(13,25,52,.2)"
-  light-line: "rgba(255,255,255,.2)"
+  navy: "#101e32"
+  navy-light: "#1c3048"
+  ink: "#182b3e"
+  paper: "#f6f3e9"
+  paper-deep: "#ebe6d9"
+  yellow: "#f3dfa1"
+  coral: "#a94737"
+  muted: "#53616b"
+  line: "#d6d5cb"
+  dark-line: "#465467"
 typography:
   display:
-    fontFamily: "Anybody, Arial, sans-serif"
-    fontSize: "clamp(3.3rem, 8vw, 8rem)"
-    fontWeight: 700
-    lineHeight: 0.98
-    letterSpacing: "-.065em"
-    fontVariation: "\"wdth\" 108"
-  section-heading:
-    fontFamily: "Anybody, Arial, sans-serif"
-    fontSize: "clamp(2.3rem, 4.4vw, 4.7rem)"
-    fontWeight: 700
-    lineHeight: 0.98
-    letterSpacing: "-.045em"
-    fontVariation: "\"wdth\" 108"
+    fontFamily: "Alegreya, Georgia, serif"
+    fontSize: "clamp(2.5rem, 4vw, 3.6rem)"
+    fontWeight: 500
+    lineHeight: 1.1
+    letterSpacing: "-.02em"
+  headline:
+    fontFamily: "Alegreya, Georgia, serif"
+    fontSize: "clamp(1.8rem, 2.8vw, 2.4rem)"
+    fontWeight: 500
+    lineHeight: 1.12
+    letterSpacing: "-.02em"
+  title:
+    fontFamily: "Alegreya, Georgia, serif"
+    fontSize: "clamp(1.25rem, 1.8vw, 1.6rem)"
+    fontWeight: 500
+    lineHeight: 1.12
+    letterSpacing: "-.02em"
   body:
-    fontFamily: "Atkinson Hyperlegible Next, Arial, sans-serif"
+    fontFamily: "Source Sans 3, Segoe UI, sans-serif"
     fontSize: "17px"
     fontWeight: 400
-    lineHeight: 1.55
-  intro:
-    fontFamily: "Atkinson Hyperlegible Next, Arial, sans-serif"
-    fontSize: "1.25rem"
-    fontWeight: 400
-    lineHeight: 1.55
-  label:
-    fontFamily: "Atkinson Hyperlegible Next, Arial, sans-serif"
-    fontSize: ".8rem"
-    fontWeight: 700
-    lineHeight: 1.55
-    letterSpacing: ".13em"
+    lineHeight: 1.65
+  hero-summary:
+    fontFamily: "Source Sans 3, Segoe UI, sans-serif"
+    fontSize: "1.06rem"
+    lineHeight: 1.65
+  navigation:
+    fontFamily: "Source Sans 3, Segoe UI, sans-serif"
+    fontSize: ".88rem"
+    fontWeight: 500
 rounded:
-  square: "0px"
+  surface: "12px"
+  thumbnail: "8px"
+  control: "8px"
   circle: "50%"
 spacing:
-  compact: ".7rem"
-  control-x: "1.15rem"
   section-gap: "2rem"
-  module: "4rem"
-  section: "8rem"
-  shell-gutter-desktop: "32px"
-  shell-gutter-tablet: "20px"
-  shell-gutter-mobile: "16px"
+  module-gap: "4rem"
+  section-block: "clamp(2.75rem, 4.5vw, 4.25rem)"
+  section-block-mobile: "2.5rem"
+  shell-gutter-desktop: "48px"
+  shell-gutter-tablet: "32px"
+  shell-gutter-mobile: "20px"
+  shell-gutter-narrow: "16px"
 components:
   button-primary:
-    backgroundColor: "{colors.signal-yellow}"
-    textColor: "{colors.midnight-field}"
-    rounded: "{rounded.square}"
-    padding: ".72rem 1.15rem"
-    height: "50px"
-  button-light:
-    backgroundColor: "{colors.white}"
-    textColor: "{colors.midnight-field}"
-    rounded: "{rounded.square}"
-    padding: ".72rem 1.15rem"
-    height: "50px"
-  page-surface:
+    backgroundColor: "{colors.yellow}"
+    textColor: "{colors.navy}"
+    rounded: "{rounded.control}"
+    padding: ".6rem 1.15rem"
+  button-primary-hover:
+    backgroundColor: "{colors.navy}"
+    textColor: "{colors.yellow}"
+  button-primary-hover-dark-context:
     backgroundColor: "{colors.paper}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.square}"
-  dark-surface:
-    backgroundColor: "{colors.midnight-field}"
-    textColor: "{colors.white}"
-    rounded: "{rounded.square}"
+    textColor: "{colors.navy}"
+  button-secondary-hero:
+    backgroundColor: "transparent"
+    textColor: "{colors.paper}"
+    rounded: "{rounded.control}"
+    padding: ".6rem 1.15rem"
+  button-secondary-hero-hover:
+    backgroundColor: "{colors.navy-light}"
+  button-dark:
+    backgroundColor: "{colors.navy}"
+    textColor: "{colors.yellow}"
+    rounded: "{rounded.control}"
+    padding: ".6rem 1.15rem"
+  button-dark-hover:
+    backgroundColor: "{colors.navy-light}"
 ---
 
 # Design System: BIG Lab
 
 ## Overview
 
-**Creative North Star: “The Social-Network Atlas”**
+BIG Lab's shipped identity uses a constellation to express relationships among research topics. The navy header and homepage hero form one continuous opening, with butter-yellow headings, stars, and actions. Cream reading surfaces and occasional brick-colored sections carry the content below.
 
-BIG Lab’s visual system makes hidden interdependence visible. It behaves like a research observatory rather than a generic university site: large editorial statements establish the question, numbered rows catalogue the evidence, and connected nodes reveal the people, themes, and projects that form the lab’s work.
+Alegreya's serif headings pair with Source Sans 3 for prose and interface text. Compact typography and bounded photos accompany open editorial sections, thin dividers, rounded imagery, and softly rectangular controls. A finite animated opening introduces the research constellation without adding continuous ambient motion or turning every item into a boxed card.
 
-The interface combines scientific precision with human warmth. Midnight blue creates depth; pale paper and lilac keep long-form reading calm; butter yellow, coral, mint, and white act as scarce data signals. Hairline rules, square corners, terse labels, and oversized variable type give the system its exacting editorial character.
-
-**Key characteristics:**
-
-- A live sociogram—not a stock photograph—is the homepage’s primary artifact.
-- Evidence, people, and research outputs outrank promotional language.
-- Oversized type and asymmetrical grids create hierarchy; rules and numbering create order.
-- Most surfaces are flat and square. Circles belong to network nodes and the provisional constellation mark.
-- English and Czech content share the same layouts, with room for text expansion.
+This document records the current implementation, not a new design proposal. The source of truth is `config/static/css/config.css` and `config/static/js/config.js`, together with `config/templates/base.html`, the templates under `home/templates/home/`, and `config/static/fonts/fonts.css`. Frontmatter records the reused palette and representative desktop type roles; responsive and component-specific overrides are described below.
 
 ## Colors
 
-The palette is a midnight observatory punctuated by warm research signals and quiet paper-like reading surfaces.
-
 ### Primary
 
-- **Midnight Field** (`#0d1934`): hero, footer, brand linework, and the main dark ground. It is also the browser theme color.
-- **Signal Yellow** (`#f6dc74`): primary actions, the brand-mark node fill, and the lead sociogram node.
+- **Navy** (`navy`): header, hero, footer, constellation labels, dark buttons, and midnight section backgrounds. The base template also uses it for the browser theme color.
+- **Butter yellow** (`yellow`): hero headings, constellation stars and lines, brand mark, primary buttons, current language indicator, and the contact band. It is a substantial identity color, not merely a tiny signal accent.
 
 ### Secondary
 
-- **Data Coral** (`#b63d34`): the shipped coral token. Use for section indices, active language state, metadata, link underlines, and the featured-project band.
-- **Pale Lilac** (`#e8e5f3`): the people-section surface and one sociogram node; it softens the system without weakening contrast.
-- **Network Mint** (`#c7e8d0`): a supporting node color reserved for diagrams and related data accents.
+- **Brick** (`coral`): the CSS token retains its historical name, but its shipped appearance is brick red. It supplies the coral section background, default focus outline, and native control accent.
+- **Lighter navy** (`navy-light`): desktop submenu surfaces and dark-button hover states.
 
 ### Neutral
 
-- **Paper** (`#f7f5ef`): default page and tile background.
-- **Ink** (`#12192c`): default body and heading color on light surfaces.
-- **White** (`#ffffff`): text on dark fields, light button surface, and one network node.
-- **Muted Text** (`#5a6375`): dates, roles, publishers, and supporting metadata. Nearby legacy values `#566079` and `#5d6678` serve the same contextual role; prefer the canonical token in new work.
-- **Pale Blue Text** (`#d9def0`) and **Footer Muted** (`#b9c1d2`): secondary copy on midnight surfaces.
-- **Midnight Line** (`rgba(13,25,52,.2)`): dividers and grid seams on light surfaces. Use `rgba(255,255,255,.2)` or the subtler `.12` variant on dark surfaces.
-- **Deep Blue Glow** (`#213660`): the center of the network’s radial field; it is atmospheric, not a general-purpose surface.
+- **Cream paper** (`paper`): default page and section background, secondary hero copy, and text on brick sections.
+- **Deeper paper** (`paper-deep`): portrait placeholders and media backing surfaces.
+- **Ink** (`ink`): default text on light surfaces.
+- **Muted** (`muted`): supporting copy, dates, roles, captions, and metadata on light surfaces.
+- **Light line** (`line`) and **dark line** (`dark-line`): dividers and boundaries on their respective grounds.
 
-**The Signal Scarcity Rule.** Yellow, coral, lilac, and mint identify action, state, or a meaningful data category. Do not scatter them as decoration.
-
-**The Effective Coral Rule.** New components use `#b63d34`; do not introduce a brighter coral unless the palette and contrast checks are deliberately revised everywhere.
+Midnight sections use butter headings and cream supporting text; brick sections use cream for both. The legacy `lilac` section theme now resolves to cream paper: there is no separate lilac or mint palette token in the shipped stylesheet. Background-image sections use navy overlays, with none, light, default, and dark treatments defined in CSS.
 
 ## Typography
 
-**Display Font:** Anybody, with Arial and sans-serif fallbacks
-**Body Font:** Atkinson Hyperlegible Next, with Arial and sans-serif fallbacks
+**Display and heading font:** Alegreya, with Georgia and serif fallbacks.
 
-**Character:** Anybody supplies wide, compact, poster-like authority for the lab’s ideas. Atkinson Hyperlegible Next keeps dense scientific copy, metadata, navigation, and bilingual content highly readable. Both are loaded from Google Fonts in `config.css`; if external font loading fails, Arial preserves the sans-serif structure but not the brand character.
+**Body and interface font:** Source Sans 3, with Segoe UI and sans-serif fallbacks.
+
+The base template loads local font faces before the main stylesheet. `config/static/fonts/fonts.css` declares normal weights 400, 500, 600, and 700 for each family, with `font-display: swap`. `SOURCES.json` records the Google Fonts source URLs; the accompanying `Alegreya-OFL.txt` and `SourceSans3-OFL.txt` contain the SIL Open Font License 1.1. Page rendering uses local files rather than a Google Fonts stylesheet request.
 
 ### Hierarchy
 
-- **Display** (700 by inherited heading default, `clamp(3.3rem, 8vw, 8rem)`, `0.98`, `-.065em`): page titles. Homepage and profile variants use their own bounded clamps, but retain the same tight rhythm.
-- **Section Heading** (700 by inherited heading default, `clamp(2.3rem, 4.4vw, 4.7rem)`, `0.98`, `-.045em`): numbered section titles and major editorial transitions.
-- **Row Title** (600, usually `clamp(1.5rem, 3vw, 3.2rem)`, about `1`): research, project, publication, and card titles.
-- **Intro** (400, `1.25rem`–`1.35rem`, `1.55`): summaries and opening paragraphs, generally constrained to 670–750px.
-- **Body** (400, `17px` desktop / `16px` mobile, `1.55`): reading copy. Long-form article text is `1.15rem` and capped at 760px.
-- **Label** (600–700, `.8rem`–`.88rem`, up to `.13em`): kickers, navigation, dates, metadata, and indexes. Kicker and metadata labels are uppercase.
+- **Homepage display:** the frontmatter display role, constrained to 19ch on desktop. The text-only hero allows 24ch.
+- **Page title:** Alegreya (500), `clamp(2.15rem, 3.8vw, 3.5rem)`, with the shared heading line height (1.12) and tracking (`-.02em`). Page headings allow 22ch.
+- **Section heading and general title:** the frontmatter headline and title roles. Headings balance wrapping and allow long words to break.
+- **Reading headings:** h2 uses `clamp(1.65rem, 2.5vw, 2.15rem)`; h3 uses `1.5rem`.
+- **Body:** the root size is 17px on desktop and mobile. Reading content is capped at 72ch; paragraphs retain the body line height (1.65).
+- **Introductions:** hero summary uses the frontmatter role and a 45ch measure; page introductions use `1.15rem` and 64ch; the About introduction uses `1.08rem`.
+- **Interface and metadata:** Source Sans 3. Navigation uses the frontmatter navigation role; buttons use `.9rem` at weight 600; captions use `.85rem` with line height 1.5. Person names use Source Sans 3 at weight 600, rather than the heading serif.
 
-Set Anybody headings with `font-variation-settings: "wdth" 108`. Keep display tracking tight; do not apply the display face to paragraphs or long metadata. Use semantic heading levels independently of visual scale.
+Do not restore Anybody, Atkinson Hyperlegible Next, wide variable-font settings, or the former poster-sized heading scale: those describe the superseded design.
 
 ## Layout
 
-The global shell is `min(1440px, calc(100vw - 64px))`, centered. At 980px it becomes `calc(100vw - 40px)`; at 680px it becomes `calc(100vw - 32px)`. Full-bleed midnight, lilac, and coral bands may extend beyond the shell, but their content realigns to the same gutters.
+The centered desktop shell is `min(1120px, calc(100% - 96px))`. Full-width section backgrounds align their inner content to this shell; builder sections inside content pages extend to the viewport edges.
 
-Desktop layouts are deliberately asymmetric. The homepage hero uses roughly a 38/62 split between statement and sociogram. Editorial page heroes place a narrow index or kicker in the first column and content in the remaining three quarters. Profile and project detail pages pair a stable media/metadata rail with a flexible reading column. List views use rules, indices, and image columns instead of floating rounded cards.
+The desktop homepage hero uses a near-balanced `1.05fr 1fr` grid, a 3rem gap, and a 520px minimum height, with `3rem 3.5rem` block padding. The text-only variant uses one column and a 400px desktop minimum height. About and financing sections use `.85fr 1.15fr` columns; text/image sections use equal columns, usually separated by 4rem. Reading copy remains narrower than the shell.
 
-Vertical rhythm is generous: major sections typically use 5–10rem of block space, with 8–9rem common on desktop. Internal modules commonly use 1–4rem. Maintain the contrast between spacious page-level intervals and compact information rows.
+Builder sections use the frontmatter section-block spacing, with thin rules between adjacent sections. Research, project, collaboration, and publication lists are open rows with dividers, not numbered card grids. People indexes and previews within wide pages use four columns; the homepage preview retains six. Updates use three columns, with a slightly wider news column.
 
 ### Responsive behavior
 
-- **Above 980px:** preserve the asymmetric hero, six-person portrait run, three-column updates and people grids, and visible image columns in research/project rows.
-- **At 980px and below:** stack the hero, expose the 48px menu control and dark dropdown navigation, reduce portraits to three columns, updates and people to two columns, and simplify project rows.
-- **At 680px and below:** use 16px shell gutters and base type; reduce the header to 76px; stack content rails and all major grids; hide decorative list thumbnails; reduce portraits to two columns; convert row text such as “Explore” to the compact `↗`; and make the footer single-column.
-- **Short desktop viewports (981px+ and 800px high or less):** compress hero padding and display type so the question and actions remain visible while the network still fills the viewport below the 92px header.
+- **At 1100px and below:** shell gutters become 32px; the header exposes the menu control and navigation becomes a vertical panel. The hero retains two columns with a 470px minimum height and a `clamp(2.35rem, 4.3vw, 3.1rem)` title. People grids and previews become three-column; updates become two-column with news spanning both.
+- **At 760px and below:** shell gutters become 20px and root type remains 17px. The hero stacks, loses its minimum height, and uses `clamp(2.2rem, 7vw, 2.85rem)` for its title, with a 22ch measure and `2.5rem 2rem` block padding. Builder sections use 2.5rem block padding. About, media, profiles, and contact stack; people use two columns; updates, news, collaborations, and page-link grids use one. Research thumbnails remain visible in a smaller 110px column. The footer uses two columns with its lead spanning both.
+- **At 380px and below:** shell gutters become 16px, the constellation becomes a vertical topic list without the decorative SVG, and the footer becomes single-column.
 
-Do not force desktop column structures onto narrow screens. Reordering may simplify presentation, but document order and semantic relationships must remain intact.
+Inline subsections use a wrapping, outlined contents navigation with 8px corners and 44px minimum-height links, anchored section headings, and ruled boundaries. Their scroll margin is 2rem.
 
 ## Elevation & Depth
 
-The system is flat by default. Depth comes from tonal fields, borders, image crops, overlapping responsive movement, and the sociogram’s radial gradient—not from persistent card shadows. The one intentional shadow is the button hover response: `3px 3px 0 #b63d34`, paired with a `translate(-3px, -3px)` offset so the control feels like a lifted print block.
+Most content is flat, separated by tonal bands and 1px rules. There is no general card-shadow system or radial hero gradient.
 
-**The Flat-by-Default Rule.** Resting surfaces use color and `1px` rules. Do not add soft drop shadows, glass effects, or floating cards.
+Desktop submenus have a soft shadow (`0 12px 24px rgb(0 0 0 / .18)`), removed in the stacked navigation. Constellation topic stars have a fine offset butter outline, without the former glow. Faint circular and elliptical outlines add orbital structure behind the topics. The image lightbox uses a dark backdrop (`rgb(8 16 28 / .9)`). Buttons lift by 2px on hover without a hard offset shadow.
 
 ## Shapes
 
-Square corners are the dominant form language. Buttons, bands, cards, image frames, list rows, and reading surfaces have no radius. Structure comes from straight rules and rectangular crops: `3/4` or `4/5` for portraits, `16/9` for news, and shallow landscape crops for research.
+The reused surface radius is 12px, applied to portraits, hero/media images, galleries, sliders, simulations, submenus, and the lightbox. Research thumbnails use 8px corners. Buttons and contents links use the shared control radius (8px); carousel and lightbox controls are circular. The slider pause control retains its separate pill treatment (100px), not the general action shape. Editorial bands and ruled list structures remain open rather than rounded containers.
 
-Circles are semantic exceptions. They represent people or topics in the sociogram and form the endpoints of the provisional constellation brand mark. The large circular outline around the network is orbital context, not a reusable card shape.
-
-Use 1px borders for section boundaries, table-like grids, project navigation, and embeds. Avoid pill shapes and gratuitous rounding; they conflict with the research-atlas vocabulary.
+Hero images use 5:4 on desktop, capped at 380px high, and 4:3 on mobile. Gallery images use 4:3, sliders and comparisons use 16:9, and person tiles default to 4:4.3. Named portrait options also support square, portrait (3:4), original ratio, and contain fitting.
 
 ## Components
 
 ### Header and navigation
 
-The desktop header is a 92px-high shell with a bottom hairline. The provisional brand mark connects four yellow-filled nodes with crossed navy lines; pair it with the bold Anybody wordmark. Navigation is compact and text-led. Desktop hover/focus grows a 2px coral underline from left to right over 200ms.
+A navy header contains the constellation mark, Source Sans 3 site name, text navigation, and language links. The desktop inner header has an 82px minimum height and a dark bottom rule; this becomes 78px at the first breakpoint and 72px on mobile. The desktop mark is 36px square, reducing to 34px on mobile. The mark is butter yellow and can be replaced by an editor-supplied logo in the header.
 
-At 980px and below, replace the link row with the three-line 48px menu control. The menu opens as a full-width midnight panel below the header, uses a vertical link stack, reports state through `aria-expanded`, and closes on Escape while returning focus to the trigger. Keep language switching available beside the menu control.
+Hover and current navigation states use butter text and an underline. Desktop submenus use lighter navy, rounded corners, and separate disclosure buttons. At 1100px and below they become indented lists within the vertical navigation. The template provides `aria-expanded`, `aria-controls`, current-page indicators, and a labeled language navigation. CSS leaves navigation and submenus available when JavaScript is absent.
 
-Wagtail's `Show in menus` flag is the navigation source of truth at every supported tree level. Marked child pages appear in a square midnight submenu beneath their marked parent. Submenus have independent disclosure buttons, preserve parent-page links, expose the current page with `aria-current`, close on Escape, and become indented disclosure lists inside the mobile panel.
+### Buttons and links
 
-### Buttons and text links
+Primary buttons use a butter background with navy text; dark buttons reverse those roles. Both have 8px corners, `.6rem 1.15rem` padding, weight 600, line height 1.35, and a 46px minimum height. The outlined secondary hero action uses cream text, a transparent background, and a 1px dark-line border with the same geometry.
 
-- **Primary:** square, signal-yellow surface, midnight text, 1px yellow border, 50px minimum height, `.72rem 1.15rem` padding, and weight 700.
-- **Light:** the same geometry with a white surface and border; used against coral or other saturated fields.
-- **Hover:** shift 3px up and left and expose the hard coral shadow below and right.
-- **Text link:** underlined on dark surfaces with a 5px underline offset. Rich-text links use a 2px coral decoration and 4px offset.
+Hover depends on context: ordinary primary buttons become navy with butter text; primary buttons in the hero, midnight/brick sections, or image-background sections become cream with navy text. The dark variant uses lighter navy on hover. The secondary hero action gains a butter border and lighter-navy background. Primary/dark buttons lift 2px and their SVG arrows shift 3px right; color transitions take `.2s`, transforms `.3s` with `cubic-bezier(.16, 1, .3, 1)`. Active buttons move down 1px.
 
-Buttons communicate a bounded action; arrows (`→` or `↗`) communicate navigation or an external destination. Preserve minimum 44px interactive height in header links and 50–52px in primary/project controls.
+Ordinary links inherit their context color, with a thin underline offset by `.22em`; hover thickens the underline. List titles generally hide the underline until hover. The secondary hero action is styled as the outlined control above, not a plain underlined link.
 
-### Sociogram
+### Constellation
 
-The homepage network is the signature component. It occupies the hero’s visual majority, uses real research-area labels, and links its topic nodes to real pages. Dashed lilac lines describe relationships; differently colored circles distinguish nodes without implying a quantitative legend. Pointer movement shifts the SVG by at most 13px in either axis, and node hover/focus scales circles to `1.12` while turning them white. All motion is disabled when reduced motion is requested.
+The homepage constellation is a labeled navigation of actual research topics, not a force-directed or parallax sociogram. HTML links place topic labels and circular stars over a decorative SVG containing dust, curved connections, an orbit, and a central four-point star. Butter supplies the connections and stars; cream supplies the dust and caption.
 
-Keep the SVG’s accessible group labels and each linked node’s explicit accessible name. Never replace the network with a generic stock hero or animate it continuously.
+The template marks the hero with `data-hero-entrance` and pairs topic links with SVG paths using indexed data attributes. `config.js` choreographs a one-shot opening through the Web Animations API (WAAPI), using `cubic-bezier(.16, 1, .3, 1)`, one iteration, and backwards fill:
 
-### Numbered editorial rows
+- Heading, summary, and action links arrive from 10px below and opacity `.55`, over 700ms with short staggered delays.
+- Connection paths draw over 1000ms, beginning at 400ms plus a topic stagger spread across at most 1000ms. The final path finishes by 2.4s.
+- Topic links use the same 700ms arrival, beginning at 650ms plus that stagger; the positioned list items themselves are not transformed by the entrance.
+- Dust fades from 40% of its computed opacity to its resting opacity over 1800ms after a 200ms delay. The central star scales from `.82` to `1` and opacity `.6` to `1` over 1100ms after a 100ms delay.
 
-Research, project, publication, and section-navigation rows share a catalogue logic: small coral or numeric index, large Anybody title, supporting image or text, directional arrow, and a 1px rule. Hover may reveal color or slightly expand the image; it should not turn the row into a raised card. On mobile, remove optional imagery before compressing the title or tap target.
+All opening motion is finite and completes within 2.4s; there is no repeating star animation. Non-touch pointer entry and keyboard focus highlight the corresponding connection, raising its opacity from `.35` to `1` and stroke width from `.8` to `1.8`. Hover and focused topics are tracked independently, so both paths can remain highlighted. Pointer leave/cancel and blur clear their respective states. Labels become cream and underlined on hover or visible keyboard focus; pointer hover also expands the topic-star outline.
 
-### People and image tiles
+Entrance animations are skipped for reduced motion or unavailable WAAPI. Any focus entering the hero cancels outstanding entrance animations immediately, as does a change to the reduced-motion preference. Markup and CSS are visible at rest without JavaScript; animation is enhancement, not a visibility prerequisite. Reduced motion retains immediate pointer/keyboard highlighting without animated transitions.
 
-Portraits begin in grayscale and reveal color on hover; desktop preview portraits may alternate vertically to establish rhythm. Index tiles meet edge to edge with line-colored seams and a paper background. Names use Anybody, roles use muted body type, and portraits retain consistent crops within each context.
+More than seven topics use a two-column list over subdued SVG linework. At 380px and below, the SVG and decorative orbital outlines are hidden while the topic links remain a readable vertical list.
 
-### Reading pages and metadata
+### Editorial sections and lists
 
-Long-form bodies are centered or aligned to the main content rail, capped near 760px, and use `1.15rem` body text. Intro text is wider and larger but remains below display hierarchy. Project metadata uses uppercase small labels and plain definition lists. Project-section links form a square, bordered three-column index on desktop and a single column on mobile.
+Reorderable builder sections share the shell and paper, midnight, or brick themes. They cover reading text, media, research, people, projects, publications, collaborations, financing, page links, galleries, callouts, embeds, and contact. The homepage also supports image and text-only hero layouts, and retains a legacy section fallback when its section stream is empty.
 
-### Featured and update modules
+Research rows pair serif titles and summaries with rounded thumbnails. Publications pair a small year column with title and citation text. Projects use title, status, dates, funder, and introduction; collaborations use ruled entries with optional logos. Updates combine news, projects, and publications in responsive columns.
 
-The featured Parta band is a full-width coral interruption with white text and a light button. Treat it as a singular emphasis, not a reusable default card. Update columns separate latest news, active projects, and publications with small uppercase headings and ruled links; they collapse from three columns to two and then one.
+### People and media
 
-### Homepage section builder
+People tiles use rounded portraits, sans-serif names, muted roles, and optional summaries. Missing portraits have an initials-style placeholder surface. Portraits are not styled with the former grayscale hover treatment; pointer hover applies a small scale (`1.035`) over `.5s` inside the rounded crop. Desktop profiles use a 280px portrait rail with a 3rem gap, with 220px/340px small/large variants. Profile headings use `clamp(2rem, 3.5vw, 3.25rem)`. On mobile the layout stacks, the portrait is capped at 260px (230px for small), and the heading is 2.4rem. Carousel mode uses horizontal scroll snapping and circular previous/next controls.
 
-The branded hero and sociogram stay structurally fixed. Everything below them is assembled in Wagtail from reorderable, duplicable, removable, and individually hideable sections. Editors may use editorial text, text with image, research, people, featured project, updates, selected-page links, gallery, callout, video, or trusted simulation blocks. Every section follows the same shell, theme tokens, square geometry, and responsive rules described above; arbitrary HTML and pasted JavaScript are intentionally excluded.
+Media components include galleries, a dark image lightbox, before/after comparison, sliders with caption bands and circular controls, responsive video embeds, and bordered simulation frames. Media rounding follows the shared surface radius. Text/image block photos use contain fitting and a 370px height cap; full-image blocks are centered within 860px and capped at 460px high. Article/cover images use a 420px cap, while article-body figures use contain fitting and a 460px cap. Research thumbnails are 168×105px on desktop and 110×85px on mobile.
 
-Advanced media remains controlled: galleries may enable a full-screen lightbox, comparisons use a single horizontal reveal control, and sliders provide manual keyboard controls with optional motion-aware autoplay. Section backgrounds always use the image library, a fixed position choice, and a contrast overlay. Person portraits use named size, ratio, and fit options rather than arbitrary dimensions, so editorial flexibility cannot break the grid.
+### Reading pages and inline subsections
 
-Dynamic sections use the same curation rule: an explicit ordered selection overrides the automatic source, while an empty selection follows the current published content. People become a keyboard-operable, scroll-snap carousel only after the editor's threshold is exceeded; desktop shows the configured number of portraits and mobile shows two. Research retains its catalogue rows, and Updates lets news, projects, and publication snippets be curated independently without turning the section into a generic card carousel.
+Major pages reuse a spacious serif page heading, bounded introduction, body content, section stream, and optional after-body content. Science and project templates can render their child subsections inline, with an outlined, 8px-corner contents navigation and anchored headings; the child-sections builder block uses the same presentation. This is not a grid of links requiring a separate page visit for every subsection.
+
+### Contact and footer
+
+The contact band uses butter with navy text and a two-column introduction/details layout that stacks on mobile. The navy footer uses cream copy, butter headings and tagline, optional contact/social columns, and a ruled copyright row.
 
 ## Do's and Don'ts
 
-### Motion and accessibility
-
-- **Do** preserve the skip link, semantic landmarks and heading hierarchy, descriptive navigation labels, `aria-current`, and accessible names on diagram links.
-- **Do** retain visible keyboard focus. The shipped treatment is a 3px white outline with 3px offset and a contrasting midnight outer ring; verify it against both light and dark surfaces whenever colors change.
-- **Do** keep interaction motion brief (150–250ms), spatially small, and directly tied to hover, focus, or pointer movement.
-- **Do** honor `prefers-reduced-motion: reduce` by disabling smooth scrolling, transitions, animations, and sociogram parallax.
-- **Do** keep touch targets at least 44px high and test both English and Czech at every breakpoint.
-- **Don't** use color, hover, or motion as the only way to reveal meaning or access content.
-- **Don't** introduce autoplay, looping ambient motion, or dense animation into reading surfaces.
-
-### Imagery and provenance
-
-- **Do** use real BIG Lab people, meetings, and research imagery before decorative stock. Portraits and research images are editorial evidence.
-- **Do** preserve Wagtail’s responsive renditions and `loading="lazy"` on below-the-fold imagery. Maintain consistent `object-fit: cover` crops per component.
-- **Do** record every shipping raster’s source, license or permission basis, retrieval date, and intended use. Current seed-image provenance lives in `home/seed_assets/SOURCES.md`; all listed files came from the public BIG Lab/Masaryk University page supplied for the project on 2026-09-21.
-- **Don't** mistake Wagtail files in `media/images` and `media/original_images` for independent sources; they are derivatives and copies of the documented seed assets.
-- **Don't** add uncredited imagery, AI-generated scientific evidence, decorative portraits, or generic “research” stock to fill space.
-
-### Maintenance guidance
-
-- **Do** treat `config/static/css/config.css` as the implementation source of truth and this file as its design contract. When tokens or breakpoints change, update both in the same change.
-- **Do** reuse the existing CSS custom properties (`--navy`, `--ink`, `--paper`, `--yellow`, `--lilac`, `--coral`, `--mint`, `--line`, `--shell`) before adding one-off values. Consolidate legacy muted-text literals when touching those components.
-- **Do** preserve Wagtail template semantics and editor-managed content. New components must handle missing optional images, links, translations, dates, and summaries without leaving visual holes.
-- **Do** validate new work at desktop, 980px, and 680px boundaries, plus a short desktop viewport. Check keyboard operation, focus visibility, reduced motion, long Czech strings, and image-less content.
-- **Don't** turn the design into a conventional university hero plus rounded card grid. The sociogram, numbered evidence rows, asymmetric editorial layouts, and square modules are the identity.
-- **Don't** invent a final logo or imply that the Parta description is approved; both remain unresolved product inputs.
-- **Don't** duplicate overrides at the end of the stylesheet. If a token changes, edit its canonical `:root` value so computed behavior and documentation stay aligned.
+- **Do** reuse the shipped navy, butter, cream, and brick tokens, serif/sans pairing, compact typography, bounded photos, rounded media, and 8px-corner action controls.
+- **Do** retain open, ruled editorial lists and bounded reading measures instead of wrapping all content in cards.
+- **Do** preserve the skip link, semantic headings and landmarks, labeled topic links, language navigation, and visible focus. The shipped focus outline is 3px brick with a 5px offset, changing to butter in the header, hero, footer, midnight sections, and brick sections.
+- **Do** preserve reduced-motion handling in both CSS and JavaScript: CSS disables smooth scrolling and all CSS animations/transitions, and removes button/arrow/portrait hover transforms; JavaScript skips or cancels the finite hero entrance. Keep keyboard focus cancellation and the visible no-JavaScript resting state.
+- **Do** keep the opening finite (at most 2.4s) and connection highlighting available to both pointer and keyboard users; do not make users wait for choreography to access links.
+- **Do** keep optional images, summaries, contact fields, and translations optional in the existing templates.
+- **Do** keep this document aligned with the stylesheet and local font declarations when the implementation changes.
+- **Don't** restore obsolete lilac/mint accents, square buttons, numbered sociogram-era rows, grayscale portraits, parallax, or hard coral hover shadows as if they were current design rules.
+- **Don't** describe the constellation as measured network data or imply quantitative meaning for its decorative connections.
+- **Don't** mistake legacy theme names or retained subsection routes for a different visual system or a requirement to split the major reading pages.
+- **Don't** treat this implementation record as proof of a final approved logo, final Parta copy, or new accessibility/performance validation.

@@ -1,3 +1,14 @@
 {% extends "base.html" %}
-{% load wagtailimages_tags %}
-{% block content %}<article class="page-wide"><header class="page-hero"><p>BIG LAB / {% if page.locale.language_code == 'cs' %}TÝM{% else %}TEAM{% endif %}</p><h1>{{ page.title }}</h1>{% include "home/includes/page_content.html" with page=page %}</header><section class="people-grid" aria-label="{{ page.title }}">{% for person in people %}<a href="{{ person.url }}" class="person-tile portrait-size-{{ person.portrait_size }} portrait-format-{{ person.portrait_format }} portrait-fit-{{ person.portrait_fit }}">{% if person.portrait and person.show_portrait %}<div class="person-tile-image">{% if person.portrait_format == 'square' %}{% image person.portrait fill-760x760 loading="lazy" %}{% elif person.portrait_format == 'original' %}{% image person.portrait width-900 loading="lazy" %}{% else %}{% image person.portrait fill-640x760 loading="lazy" %}{% endif %}</div>{% endif %}<span>0{{ forloop.counter }}</span><h2>{{ person.title }}</h2><p>{{ person.role }}</p></a>{% endfor %}</section></article>{% endblock %}
+{% load wagtailcore_tags ui_tags %}
+{% block content %}
+<article class="page-wide">
+  <header class="page-hero page-heading"><h1>{{ page.title }}</h1>{% if page.intro %}<div class="intro collection-intro">{{ page.intro|richtext }}</div>{% endif %}</header>
+  <div class="article-body reading-content">{% include_block page.body %}</div>
+  {% if page.sections %}
+    {% include_block page.sections %}
+  {% else %}
+    <section class="builder-section people-section"><div class="section-shell"><div class="section-heading"><h2>{% ui 'people' %}</h2></div>{% include "home/includes/people_list.html" with people_items=people show_roles=True carousel_active=False %}</div></section>
+  {% endif %}
+  <div class="article-body reading-content after-body">{% include_block page.after_body %}</div>
+</article>
+{% endblock %}

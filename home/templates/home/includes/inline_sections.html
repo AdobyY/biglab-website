@@ -1,0 +1,18 @@
+{% load wagtailcore_tags wagtailimages_tags ui_tags %}
+{% if inline_children %}
+  <nav class="section-toc project-sections" aria-label="{% ui 'contents' %}">
+    {% for child in inline_children %}{% if child.live %}<a href="#section-{{ child.pk }}">{{ child.title }}</a>{% endif %}{% endfor %}
+  </nav>
+  {% for child in inline_children %}
+    {% if child.live %}
+      <section class="inline-section" id="section-{{ child.pk }}" aria-labelledby="section-title-{{ child.pk }}">
+        <header class="section-heading"><h2 id="section-title-{{ child.pk }}">{{ child.title }}</h2></header>
+        {% if child.intro %}<div class="collection-intro reading-content">{{ child.intro|richtext }}</div>{% endif %}
+        {% if child.cover_image %}<figure class="content-cover">{% image child.cover_image width-1600 loading="lazy" %}</figure>{% endif %}
+        <div class="article-body reading-content">{% include_block child.body %}</div>
+        {% if child.sections %}{% include_block child.sections with page=child %}{% endif %}
+        <div class="article-body reading-content after-body">{% include_block child.after_body %}</div>
+      </section>
+    {% endif %}
+  {% endfor %}
+{% endif %}

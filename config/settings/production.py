@@ -59,13 +59,9 @@ if os.environ.get("EMAIL_HOST"):
 else:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# Use WhiteNoise's standard storage instead of manifest-based storage
-# This avoids manifest.json creation issues during Docker builds
+# Must match build.py so collectstatic and runtime use the same storage.
 STORAGES["staticfiles"]["BACKEND"] = (
     "whitenoise.storage.CompressedStaticFilesStorage"
 )
 
-try:
-    from .local import *
-except ImportError:
-    pass
+# Runtime secrets and security settings come exclusively from the environment.

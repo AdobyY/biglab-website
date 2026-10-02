@@ -1,5 +1,14 @@
-{% extends "base.html" %}{% load wagtailimages_tags wagtailcore_tags %}
-{% block content %}<article class="page-wide">
-  <header class="page-hero"><p>BIG LAB / {% if page.locale.language_code == 'cs' %}NOVINKY{% else %}NEWS{% endif %}</p><h1>{{ page.title }}</h1>{% include "home/includes/page_content.html" with page=page %}</header>
-  <section class="news-list" aria-label="{{ page.title }}">{% for item in news_items %}<a href="{{ item.url }}">{% if item.cover_image %}{% image item.cover_image fill-760x440 loading="lazy" %}{% endif %}<time>{{ item.date|date:"j F Y" }}</time><h2>{{ item.title }}</h2>{% if item.intro %}<div>{{ item.intro|richtext }}</div>{% endif %}<span>{% if page.locale.language_code == 'cs' %}Číst článek{% else %}Read story{% endif %} →</span></a>{% endfor %}</section>
-</article>{% endblock %}
+{% extends "base.html" %}
+{% load wagtailcore_tags ui_tags %}
+{% block content %}
+<article class="page-wide">
+  <header class="page-hero page-heading"><h1>{{ page.title }}</h1>{% if page.intro %}<div class="intro collection-intro">{{ page.intro|richtext }}</div>{% endif %}</header>
+  <div class="article-body reading-content">{% include_block page.body %}</div>
+  {% if page.sections %}
+    {% include_block page.sections %}
+  {% else %}
+    <section class="builder-section news-section"><div class="section-shell"><div class="section-heading"><h2>{% ui 'news' %}</h2></div>{% include "home/includes/news_list.html" with news_list_items=news_items %}</div></section>
+  {% endif %}
+  <div class="article-body reading-content after-body">{% include_block page.after_body %}</div>
+</article>
+{% endblock %}

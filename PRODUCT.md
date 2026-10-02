@@ -26,14 +26,14 @@ One lab administrator updates the site roughly monthly through Wagtail. The publ
 
 - Django and Wagtail with SQLite.
 - English and Czech content; other locales may be added later and partial translation is acceptable.
-- Top-level sections are separate pages; each may begin as a single long page and later gain child pages.
+- Major sections remain separate top-level pages, with subsections rendered inline on their owning long page rather than requiring a separate visit for every child. Science research areas and project subsections use anchored headings and a contents navigation, through the default templates or a visible child-sections builder block. Child records and legacy standalone routes are retained; navigation to Science/Project children targets the parent-page anchor when inline rendering is enabled, otherwise it uses the child route.
 - Parta is treated as a featured project until the lab supplies its final description.
 - Prepared animations or simulations can be embedded; editors cannot author arbitrary JavaScript.
 - The lab edits content directly without an approval workflow.
 
 ## Brand Commitments
 
-The working name is BIG Lab / Behaviors of Individuals and Groups Lab. The visual brief proposes a constellation or mycelium as a metaphor for hidden interdependence, with a midnight blue and butter-yellow direction or an earthy green alternative. The new site is not required to follow the university visual identity.
+The working name is BIG Lab / Behaviors of Individuals and Groups Lab. The shipped design uses a constellation as a metaphor for hidden interdependence, with navy and butter yellow, cream reading surfaces, brick accents, and Alegreya paired with Source Sans 3. `DESIGN.md` records the implemented visual system; the earlier mycelium and earthy-green alternatives are not the current design. The site is not required to follow the university visual identity.
 
 ## Evidence on Hand
 

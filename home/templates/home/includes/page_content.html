@@ -1,3 +1,4 @@
 {% load wagtailcore_tags %}
-{% if page.intro %}<div class="intro">{{ page.intro|richtext }}</div>{% endif %}
-{% include_block page.body %}
+<div class="article-body reading-content">{% include_block page.body %}</div>
+{% if page.sections %}{% include_block page.sections %}{% endif %}
+<div class="article-body reading-content after-body">{% include_block page.after_body %}</div>

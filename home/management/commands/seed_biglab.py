@@ -1,11 +1,11 @@
 from datetime import date
 from pathlib import Path
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
 from django.core.management.base import BaseCommand
-from django.core.exceptions import ObjectDoesNotExist
 from wagtail.images import get_image_model
-from wagtail.models import Locale, Page, Site
+from wagtail.models import Locale, Site
 
 from home.home_sections import ensure_home_sections
 from home.models import (
@@ -160,6 +160,45 @@ PEOPLE = [
 ]
 
 
+# Funding is documented by the two university project records already imported below.
+FINANCING = {
+    "en": (
+        '<p>BIG Lab’s research is supported through two funded projects: '
+        '<a href="https://www.muni.cz/en/research/projects/75245">Rethinking Segregation within Schools</a> '
+        '(2026–2030), funded by the Czech Science Foundation’s JUNIOR STAR programme, and '
+        '<a href="https://www.muni.cz/en/research/projects/74806">Behavior Dynamics: From Individual Change to Social Spread</a> '
+        '(2025–2029), funded by the Grant Agency of Masaryk University.</p>'
+    ),
+    "cs": (
+        '<p>Výzkum BIG Labu podporují dva financované projekty: '
+        '<a href="https://www.muni.cz/en/research/projects/75245">Přehodnocení segregace ve školách</a> '
+        '(2026–2030), financovaný Grantovou agenturou České republiky v programu JUNIOR STAR, a '
+        '<a href="https://www.muni.cz/en/research/projects/74806">Dynamika chování: od individuální změny k sociálnímu šíření</a> '
+        '(2025–2029), financovaný Grantovou agenturou Masarykovy univerzity.</p>'
+    ),
+}
+
+PROJECT_BODIES_CS = {
+    "rethinking-segregation-within-schools": (
+        "<p>Segregace uvnitř škol může ovlivňovat šíření chování mezi žáky. Projekt propojuje síťovou vědu "
+        "s teoriemi zaměřenými na skupiny, aby vysvětlil, jak segregace ovlivňuje šíření chování, například "
+        "předsudků, a jak může porozumění těmto mechanismům zlepšit školní intervence.</p>"
+        "<p>Výzkum kombinuje longitudinální analýzu sociálních sítí, modelování založené na agentech, "
+        "sekundární i nově získaná data a intervenční studie.</p>"
+    ),
+    "behavior-dynamics": (
+        "<p>Projekt propojuje dvě dimenze: jak se postoje a chování mění prostřednictvím osobních zkušeností "
+        "a prostředí a jak se tyto změny šíří mezilidskými interakcemi a sociálními sítěmi. Kombinuje sociální "
+        "psychologii, sociologii a počítačové modelování se zvláštním důrazem na segregaci, předsudky a polarizaci.</p>"
+    ),
+    "selfharm-screening": (
+        "<p>Projekt zkoumal diagnostické dotazníkové nástroje pro zjišťování výskytu a forem sebepoškozování "
+        "u dětí staršího školního věku spolu se souvisejícími psychologickými a sociálními faktory. "
+        "Zjištění měla podpořit další výzkum a preventivní práci.</p>"
+    ),
+}
+
+
 RESEARCH_AREAS = [
     ("development-and-spread", "Development and spread of attitudes and behaviours", "Vývoj a šíření postojů a chování", "research-attitudes.jpg"),
     ("social-influence", "Social influence", "Sociální vliv", "research-social-influence.jpg"),
@@ -173,10 +212,11 @@ class Command(BaseCommand):
     help = "Populate the BIG Lab Wagtail site with public source content."
 
     def add_arguments(self, parser):
-        parser.add_argument("--force", action="store_true", help="Refresh existing seed-owned fields.")
+        parser.add_argument("--force", action="store_true", help="Deprecated; existing editor content is always preserved.")
 
     def handle(self, *args, **options):
-        self.force = options["force"]
+        if options["force"]:
+            self.stdout.write(self.style.WARNING("--force no longer replaces existing content."))
         images = self._load_images()
         home = HomePage.objects.get(depth=2, locale__language_code="en")
         self._seed_english(home, images)
@@ -198,33 +238,47 @@ class Command(BaseCommand):
             result[path.name] = image
         return result
 
-    def _publish(self, page):
-        page.save_revision().publish()
+    def _publish(self, page, *, publish=True):
+        revision = page.save_revision()
+        if publish:
+            revision.publish()
         return page
 
     def _seed_existing(self, page, *, marker="intro", **fields):
-        """Populate a prepared page once, preserving later editor changes."""
-        if self.force or not getattr(page, marker, None):
+        """Initialize only untouched migration placeholders, never editor revisions."""
+        if page is None:
+            return None
+        if not page.revisions.exists() and not any(
+            getattr(page, name, None) for name in ("intro", "body", "hero_summary")
+        ):
             for key, value in fields.items():
                 setattr(page, key, value)
             self._publish(page)
         return page
 
-    def _child(self, parent, model, slug, **fields):
-        page = parent.get_children().type(model).filter(slug=slug).specific().first()
-        created = page is None
-        if page is None:
-            page = model(slug=slug, **fields)
-            parent.add_child(instance=page)
-        needs_seed = created or self.force or not getattr(page, "intro", None)
-        if not created and needs_seed:
-            for key, value in fields.items():
-                setattr(page, key, value)
-        if needs_seed or not page.live:
-            self._publish(page)
-        return page
+    def _seed_financing(self, home):
+        # A revision containing the field is the marker, even if an editor cleared it.
+        if not hasattr(home, "about_financing") or home.about_financing or home.has_unpublished_changes:
+            return
+        if home.revisions.filter(content__has_key="about_financing").exists():
+            return
+        language = home.locale.language_code
+        home.about_financing = FINANCING["cs" if language == "cs" else "en"]
+        home.save(update_fields=["about_financing"])
+        if home.revisions.exists():
+            self._publish(home, publish=home.live)
+
+    def _child(self, parent, model, slug, *, publish=True, **fields):
+        page = parent.get_children().filter(slug=slug).specific().first()
+        if page is not None:
+            return page
+        page = model(slug=slug, live=False, **fields)
+        parent.add_child(instance=page)
+        return self._publish(page, publish=publish)
 
     def _seed_english(self, home, images):
+        initialize_sections = not home.revisions.exists()
+        self._seed_financing(home)
         self._seed_existing(
             home,
             marker="hero_title",
@@ -273,7 +327,7 @@ class Command(BaseCommand):
                 ContentPage,
                 slug,
                 title=title,
-                intro=f"<p>{title} is one of BIG Lab’s five connected research areas.</p>",
+                intro="",
                 cover_image=images[filename],
                 body=[],
                 show_in_menus=False,
@@ -353,14 +407,16 @@ class Command(BaseCommand):
             ("for-students", "For students"),
             ("timeline", "Timeline"),
             ("results", "Results"),
+            ("contact", "Contact"),
         ):
             self._child(
                 parta,
                 ContentPage,
                 slug,
                 title=title,
-                intro="<p>This section is ready for confirmed Parta materials from the BIG Lab team.</p>",
+                intro="",
                 body=[],
+                publish=False,
                 show_in_menus=True,
             )
 
@@ -443,14 +499,20 @@ class Command(BaseCommand):
         self._seed_publications(Locale.objects.get(language_code="en"))
         self._seed_collaborations(Locale.objects.get(language_code="en"))
         site = Site.objects.get(is_default_site=True)
-        settings, _ = ContactSettings.objects.get_or_create(site=site)
-        if self.force or not settings.address:
-            settings.address = "Faculty of Social Studies, Masaryk University\nJoštova 10, 602 00 Brno, Czech Republic"
-            settings.linkedin_url = "https://www.linkedin.com/company/inpsy-muni/"
-            settings.instagram_url = "https://www.instagram.com/inpsy_muni/"
-            settings.facebook_url = "https://www.facebook.com/inpsy.muni"
+        settings, created = ContactSettings.objects.get_or_create(site=site)
+        if created or initialize_sections:
+            defaults = {
+                "address": "Faculty of Social Studies, Masaryk University\nJoštova 10, 602 00 Brno, Czech Republic",
+                "linkedin_url": "https://www.linkedin.com/company/inpsy-muni/",
+                "instagram_url": "https://www.instagram.com/inpsy_muni/",
+                "facebook_url": "https://www.facebook.com/inpsy.muni",
+            }
+            for name, value in defaults.items():
+                if not getattr(settings, name):
+                    setattr(settings, name, value)
             settings.save()
-        ensure_home_sections(home, force=self.force)
+        if initialize_sections:
+            ensure_home_sections(home)
 
     def _seed_publications(self, locale):
         records = [
@@ -472,13 +534,10 @@ class Command(BaseCommand):
             },
         ]
         for record in records:
-            publication, created = Publication.objects.get_or_create(
+            Publication.objects.get_or_create(
                 locale=locale, title=record["title"], defaults=record
             )
-            if self.force and not created:
-                for key, value in record.items():
-                    setattr(publication, key, value)
-                publication.save()
+
 
     def _seed_collaborations(self, locale):
         records = [
@@ -492,42 +551,51 @@ class Command(BaseCommand):
                 40,
             ),
         ]
+        descriptions_cs = {
+            "International collaboration": "Mezinárodní spolupráce",
+            "Institute of Psychology, Czech Academy of Sciences": "Psychologický ústav Akademie věd České republiky",
+        }
         for name, description, website, order in records:
-            collaboration, created = Collaboration.objects.get_or_create(
+            if locale.language_code == "cs":
+                description = descriptions_cs[description]
+            Collaboration.objects.get_or_create(
                 locale=locale,
                 name=name,
                 defaults={"description": description, "website": website, "sort_order": order},
             )
-            if self.force and not created:
-                collaboration.description = description
-                collaboration.website = website
-                collaboration.sort_order = order
-                collaboration.save()
 
-    def _translation(self, source, locale, **fields):
+
+    def _translation(self, source, locale, *, publish=None, **fields):
         created = False
         try:
             translated = source.get_translation(locale).specific
         except ObjectDoesNotExist:
             translated = source.copy_for_translation(locale, copy_parents=True).specific
             created = True
-        if translated.alias_of_id:
+        if created and translated.alias_of_id:
             translated.alias_of = None
             translated.save(update_fields=["alias_of"])
-        if created or self.force or not getattr(translated, "intro", None):
+        if created:
             for key, value in fields.items():
                 setattr(translated, key, value)
-            return self._publish(translated)
+            return self._publish(translated, publish=source.live if publish is None else publish)
         return translated
 
     def _seed_czech(self, home):
         cs = Locale.objects.get(language_code="cs")
+        try:
+            existing_home_cs = home.get_translation(cs).specific
+            initialize_sections = not existing_home_cs.revisions.exists()
+            self._seed_financing(existing_home_cs)
+        except ObjectDoesNotExist:
+            initialize_sections = True
         home_cs = self._translation(
             home,
             cs,
             title="BIG Lab",
             draft_title="BIG Lab",
             hero_title="Jak se individuální volby mění v kolektivní změnu?",
+            sections=[],
             hero_summary="Zkoumáme, jak se postoje a chování utvářejí u jednotlivců a jak se šíří vztahy, skupinami a společností.",
             intro="<p>BIG Lab propojuje sociální psychologii, sociologii a síťovou vědu, aby porozuměl změně na dvou propojených úrovních: u člověka a ve skupině.</p>",
             body=[
@@ -540,9 +608,11 @@ class Command(BaseCommand):
                 ),
             ],
             search_description="BIG Lab zkoumá, jak se postoje a chování mění a šíří prostřednictvím sociálních sítí a skupin.",
+            **({"about_financing": FINANCING["cs"]} if hasattr(home, "about_financing") else {}),
         )
 
-        source_pages = {page.slug: page.specific for page in home.get_children().live()}
+        self._seed_financing(home_cs)
+        source_pages = {page.slug: page.specific for page in home.get_children()}
         science = source_pages["science"]
         science_cs = self._translation(
             science,
@@ -554,13 +624,18 @@ class Command(BaseCommand):
             intro="<p>Pět propojených oblastí rámuje náš výzkum individuální změny a sociálního šíření.</p>",
             body=[("text", "<p>Propojujeme individuální zkušenost, mezilidský vliv a skupinové vzorce prostřednictvím experimentů, longitudinálních síťových dat a počítačových modelů.</p>")],
         )
-        for source, (_, _, title_cs, _) in zip(science.get_children().live().specific(), RESEARCH_AREAS):
+        research_titles = {slug: title_cs for slug, _, title_cs, _ in RESEARCH_AREAS}
+        for source in science.get_children().specific():
+            if source.slug not in research_titles:
+                continue
+            title_cs = research_titles[source.slug]
             self._translation(
                 source,
                 cs,
                 title=title_cs,
                 draft_title=title_cs,
-                intro=f"<p>{title_cs} je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
+                intro="",
+                body=[],
             )
 
         team = source_pages["people"]
@@ -573,7 +648,7 @@ class Command(BaseCommand):
             show_in_menus=True,
             intro="<p>Jsme multidisciplinární tým zkoumající chování napříč lidmi, vztahy a skupinami.</p>",
         )
-        source_people = {page.slug: page.specific for page in team.get_children().live()}
+        source_people = {page.slug: page.specific for page in team.get_children()}
         for person in PEOPLE:
             self._translation(
                 source_people[person["slug"]],
@@ -594,7 +669,7 @@ class Command(BaseCommand):
             show_in_menus=True,
             intro="<p>Novinky z BIG Labu, našich projektů a výzkumné komunity.</p>",
         )
-        news_item = news.get_children().type(NewsPage).live().specific().first()
+        news_item = news.get_children().type(NewsPage).filter(slug="research-meeting-with-satis-lab").specific().first()
         self._translation(
             news_item,
             cs,
@@ -624,14 +699,19 @@ class Command(BaseCommand):
             "for-students": "Pro žáky",
             "timeline": "Časová osa",
             "results": "Výsledky",
+            "contact": "Kontakt",
         }
-        for source in parta.get_children().live().specific():
+        for source in parta.get_children().specific():
+            if source.slug not in parta_sections_cs:
+                continue
             self._translation(
                 source,
                 cs,
                 title=parta_sections_cs[source.slug],
                 draft_title=parta_sections_cs[source.slug],
-                intro="<p>Tato sekce je připravena pro potvrzené materiály projektu Parta od týmu BIG Labu.</p>",
+                publish=False,
+                intro="",
+                body=[],
                 show_in_menus=True,
             )
 
@@ -659,10 +739,16 @@ class Command(BaseCommand):
                 "<p>Dokončený projekt ověřující psychometrické nástroje pro screening sebepoškozování.</p>",
             ),
         }
-        for source in projects.get_children().live().specific():
+        for source in projects.get_children().specific():
+            if source.slug not in project_translations:
+                continue
             title, intro = project_translations[source.slug]
-            self._translation(source, cs, title=title, draft_title=title, intro=intro)
+            self._translation(
+                source, cs, title=title, draft_title=title, intro=intro,
+                body=[("text", PROJECT_BODIES_CS[source.slug])],
+            )
 
         self._seed_publications(cs)
         self._seed_collaborations(cs)
-        ensure_home_sections(home_cs, force=self.force)
+        if initialize_sections:
+            ensure_home_sections(home_cs)

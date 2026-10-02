@@ -33,18 +33,45 @@ against this file and avoid running migrations or the content seeder while an ed
 - The root page is **About BIG Lab**.
 - Add **Science**, **Team**, **News**, **Projects**, or a featured project such as **Parta** beneath it.
 - Add people beneath Team, news items beneath News, and projects beneath Projects.
-- A project may contain ordinary sub-pages, allowing Parta to begin as one page and grow later.
+- Science and project subsections appear inline on their owning major page, with anchor links.
+  Child records and standalone URLs remain available; hiding the inline collection makes links
+  fall back to those standalone pages.
 
-Every editable page has text, image, video, document, button, and prepared-simulation blocks. Publications, collaborations, and site contact details are edited from the Wagtail admin menus.
+Every editable page has text, image, video, document, button, and prepared-simulation blocks.
+Publications and collaborations are snippets; contact details are under **Settings → Contact settings**.
+The root’s **About / financing information** field describes the two funded projects documented by
+Masaryk University; keep claims source-backed and do not add unconfirmed grants or contact details.
 
-The homepage has a section builder under **Pages → BIG Lab → Edit → Sections**. Editors can add,
+The homepage and content pages have a **Page section builder** in the page editor.
+**A nonempty section builder replaces the default content layout and automatic lists; it does not
+append to them.** Header introductions remain visible, and existing main content stays stored.
+Clear the builder to return to the default layout. Hidden sections remain saved.
+The initial homepage is About-first, followed by research, people, Parta and updates, using the
+navy / butter-yellow / cream / brick palette. Financing is a separate root-page field and can also
+be placed through the financing section. Empty editors, including old revisions, open with visible
+editable default containers; deliberately clearing and saving the builder still restores the default layout.
+
+To put text **below the people list**, add blocks to
+**Content below the automatic list / sections**, or add a **People** section followed by
+**About / editorial text** in the builder.
+Do not put that text in the header introduction, which appears above the list.
+
+Editors can **Save draft**, **Preview**, then **Publish** directly; no approval workflow is required.
+Saving a draft alone does not change the public site. To remove content temporarily, unpublish it
+instead of deleting it. Keep originals and revisions until a backup has been verified.
+
+In the section builder, editors can add,
 duplicate, remove, hide, and drag sections into a new order. Available sections include editorial
 text, text with image, research areas, people, featured project, updates, selected pages, gallery,
-image comparison, slider, call to action, video, and a trusted animation/simulation embed. Galleries
+image comparison, slider, call to action, video, and a trusted animation/simulation embed.
+Full automatic collections are available for people, research, news, projects, publications,
+collaborations, and inline child sections, alongside financing and contact sections. Galleries
 may open images in a keyboard-accessible full-screen lightbox. Every section can use a reusable
 Wagtail image as its background with a controlled overlay and focal position. The hero remains a stable branded
-area and is edited through its two dedicated fields.
+area with dedicated title, summary, layout (constellation, image, or text-only), and image controls.
 
+For text beneath an individual team photo, open that person's page and edit **Team card caption**.
+Profiles remain visible even without a portrait.
 Each person page also provides controlled portrait display options: show/hide, small/standard/large,
 portrait/square/original ratio, and crop-to-fill/show-whole-image. Images are uploaded once; Wagtail
 generates the required renditions for every context.
@@ -61,22 +88,102 @@ Data-driven homepage sections support curation without losing automatic updates:
 Featured projects, selected-page links, galleries, sliders, and all image lists already use explicit
 chooser fields and drag ordering, so editors do not need template changes for those sections.
 
-The `seed_biglab` command uploads the source images and creates the initial English and Czech content
-from the previous site. It can be run again safely: missing prepared content is restored, while
-editor-written page content and additional pages are preserved. `seed_biglab --force` deliberately
-refreshes seed-owned fields and must not be used on a live site without a backup. Imported source
-files and their provenance are in `home/seed_assets/`; generated Wagtail renditions stay in `media/`.
+The `seed_biglab` command uploads source images and initializes English and Czech content from the
+previous site. Reruns create missing records but do not overwrite existing children, translations,
+snippets or edited page revisions, restore intentionally cleared text, or republish existing drafts.
+`--force` is deprecated and no longer replaces content. Corrected Czech project bodies and collaboration
+labels apply to newly created translations; existing editor translations must be reviewed in the CMS.
+Parta’s new audience, timeline, results and contact children start as editable **drafts**, with no
+invented results, dates or email. Add confirmed materials, preview and publish each child when ready;
+live child content is shown inline on Parta with anchors. Existing live children are not unpublished.
+Imported image provenance is in `home/seed_assets/`; generated renditions stay in `media/`.
+
+### Repairing an existing legacy installation
+
+The ordinary seeder intentionally does not repair already-published scaffolding. For installations
+created with the old defaults, first pause editorial work and create and verify a **database + media
+backup** using the procedure below. Then inspect the read-only repair report:
+
+```bash
+uv run python manage.py upgrade_biglab_content
+# Equivalent explicit report-only mode:
+uv run python manage.py upgrade_biglab_content --dry-run
+# Only after the backup has been verified and the report reviewed:
+uv run python manage.py upgrade_biglab_content --apply
+```
+
+For Docker, use `docker compose exec app python manage.py upgrade_biglab_content` and add `--apply`
+only after taking the maintenance-window backup. The report contains action counts, not personal
+information. Default and `--dry-run` modes write nothing. `--apply` publishes recognized repairs
+directly, without approval, and is idempotent.
+
+Repairs are deliberately narrow:
+
+- Fill the root mission and first About block only when its known default hero and section headings
+  match, its mission fields are blank, and revision history contains no earlier mission content.
+  Preserve the page title, section IDs, other sections and editor settings.
+- Add the verified funding explanation only on a recognized blank root or a recognized source-backed
+  Czech mission, with no existing funding content and no financing-field revision marker. A marker
+  is respected even when empty; previously populated or intentionally cleared funding is not restored.
+- Unpublish only the six recognized Parta child placeholders whose introductions exactly match the
+  old English/Czech holding text and whose body, sections and supporting content are empty. Keep
+  the pages, fields and revisions editable; do not delete them or invent contact details.
+- Translate Czech homepage section headings and buttons only when they exactly match the old English
+  defaults. Translate About paragraphs and root mission content only when they exactly match the
+  supplied English source; preserve custom headings, text, settings, order and block IDs. The
+  language-neutral `PARTA / BIG LAB` label stays unchanged.
+- Repair a recognized legacy Czech featured-Parta chooser pointing at the English holding page only
+  when its corresponding live Czech translation exists and has no draft. Do not replace custom
+  selections. This prevents an English project introduction from being displayed on the Czech home.
+- Translate the Czech Parta introduction only when it exactly matches the old English seed intro,
+  and its holding body only when the complete heading/text pair matches the historical seed.
+  These fields are checked independently; custom project copy is not replaced.
+- Replace another Czech project's body only if its single text block exactly equals the historical
+  English seed body. Translate only the known international collaboration snippets with the exact
+  old English description; preserve custom descriptions.
+
+Draft/unpublished pages, aliases and pages with unpublished changes are skipped. Custom text and
+custom blank sections are not filled. If the report skips something, review it in the CMS rather
+than relaxing these guards. Preview both languages after applying and retain the backup.
 
 ## Languages
 
 English and Czech locales are created initially. Administrators can add any Django-supported
 language under **Settings → Locales**, then use the page translation action and publish the result.
-The language switcher only lists published translations of the current page.
+The language switcher only lists published translations of the current page. Partial translation is
+supported: translate and publish only the pages you have ready; untranslated pages are not advertised
+as available in another language. Review copied content before publishing a new locale.
+
+Small interface labels are editable through the **Interface texts** snippet (`InterfaceText`): select
+the locale and use the same key in every language (for example `people` or `skip_content`). Missing
+overrides use built-in labels. Page titles, section headings and body text are edited on the page,
+not in the interface-text snippet.
+
+**Česky:** Obsah upravujte v **Stránky**. Neprázdný sestavovač sekcí nahrazuje výchozí rozložení,
+původní text nemaže. Text pod týmem vložte do **Content after the lists**, nebo za sekci **People**
+přidejte textovou sekci. **Save draft** změny pouze uloží; **Publish** je zveřejní bez schvalování.
+Překládat lze jen vybrané stránky. Popisky rozhraní upravujte ve snippetu **Interface texts**.
+Sekce Party zveřejněte až po doplnění potvrzených materiálů.
+
+### Moving Parta later without losing content
+
+Use Wagtail’s **Move** action on the existing Parta page to place it beneath Projects; do not delete
+and recreate it. Children and revisions move with it, and the homepage stays the site root. Review
+both locales and move the corresponding translated page as necessary. A move changes the URL from
+`/parta/` to `/projects/parta/`: verify Wagtail’s generated redirects in **Settings → Redirects**, add
+any missing old paths, test child URLs and update external links. Homepage page-chooser links use
+page IDs and continue to point at the moved page. Do not rerun the initial seeder after restructuring
+the page tree: it identifies prepared records by their original location and slug.
 
 ## Production
 
-Copy `.env.example` to a secure environment configuration and replace every placeholder. Django does
-not read this file itself; pass the variables through the hosting platform or Docker's `--env-file`.
+No production setup, domain registration or server provisioning has been performed by this change.
+The remaining external inputs are a real registered domain/DNS and hosting access credentials.
+Generate the runtime application secret locally; optional SMTP credentials are needed only for email.
+Django does not load environment files itself; pass variables through the hosting platform or Docker.
+Never commit runtime credentials or pass them to `docker build`. `config.settings.build` imports only
+base settings and uses a public build-only constant for `collectstatic`; runtime uses production
+settings and requires its own real secret. Both use compressed WhiteNoise static storage.
 The production settings require `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS`, and
 `WAGTAILADMIN_BASE_URL` and enable HTTPS redirects, secure cookies, HSTS, and compressed
 WhiteNoise delivery for versioned CSS/JavaScript.
@@ -91,20 +198,97 @@ MEDIA_ROOT=/data/media
 For a first container deployment, set `SEED_INITIAL_CONTENT=1`. Startup runs migrations and the
 repeatable seeder before Gunicorn. It can be changed to `0` after the first successful deployment.
 Only one application process should write to the SQLite database; scale vertically rather than by
-running multiple containers against the same file. The hosting proxy must expose `MEDIA_ROOT` at
-`/media/`; this is intentionally not handled by WhiteNoise because uploaded files are mutable.
+running multiple containers against the same file. The hosting proxy must serve public uploaded
+images at `/media/images/`; this is intentionally not handled by WhiteNoise because uploads are
+mutable. Keep documents behind Wagtail’s serving URLs and access checks.
+
+### Example: Docker Compose with Caddy HTTPS
+
+The repository’s `compose.yaml` runs one Gunicorn worker with two threads, persistent SQLite/media,
+and Caddy on ports 80/443. The application port is not published. Only Caddy may supply trusted
+forwarded HTTPS headers. Caddy automatically requests/renews certificates once DNS points to the
+server and ports 80/443 are reachable. Do not run multiple app replicas against SQLite.
+Caddy serves `/media/images/` from the read-only shared volume (originals and Wagtail renditions).
+Documents remain behind Wagtail’s document-serving URLs/access checks, not an unrestricted media
+file server; arbitrary uploaded files must not become executable public HTML.
+
+Example Linux host installation (paths below are examples, not commands already run):
+
+1. Place the checkout in `/srv/biglab`. Install Docker Engine and the Compose plugin.
+2. Point the domain’s A/AAAA records at the host; allow ports 80 and 443.
+3. Create a private `/etc/biglab-runtime.env` containing `DJANGO_SECRET_KEY=<locally generated random secret>`
+   and `SEED_INITIAL_CONTENT=0`. Set it to owner-only permissions. Generate a secret with
+   `python -c "import secrets; print(secrets.token_urlsafe(64))"` and store it securely.
+4. Create `/etc/biglab-deploy.env` with `DOMAIN=your-registered-hostname` (no scheme or path).
+   For an interactive shell set `export DOMAIN=your-registered-hostname` as well. Compose refuses
+   to start without it; no real hostname is hardcoded.
+5. Create `/srv/biglab/backups`, writable by the image’s `wagtail` user. Determine its numeric ID with
+   `docker compose run --rm --no-deps app id`, then set ownership accordingly; do not use mode 777.
+6. Run `docker compose build`, then `docker compose up -d`. Startup performs migrations. On an
+   existing installation, take a backup and stop editors before this step. For a genuinely new
+   installation only, run `docker compose exec app python manage.py seed_biglab` once.
+7. Run `docker compose exec app python manage.py createsuperuser`. In **Settings → Sites**, set
+   hostname to the real domain, port 443 and root to BIG Lab; do not create a replacement root page.
+8. Run `docker compose exec app python manage.py check --deploy`. Verify HTTPS, admin login,
+   CSRF-protected publishing, English/Czech URLs, uploaded images, document links and redirects.
+
+Keep `/etc/biglab-runtime.env` outside the checkout and Docker build context, with owner-only
+permissions. Never copy it into the repository or image. Keep backups outside the checkout as well.
 
 ## Backups
 
-Create a consistent archive of the live SQLite database and all uploaded media with:
+The command uses SQLite’s online backup API for a consistent database snapshot. Media is copied
+separately: for a consistent **database + media** archive, pause publishing/uploads and stop the app
+while running it in a one-off container. For local development with no active editors:
 
 ```bash
 uv run python manage.py backup_site --output-dir /path/to/backups
 ```
 
-Copy the resulting `biglab-backup-*.tar.gz` away from the application server. A usable backup must
-contain both `db.sqlite3` and `media/`; schedule this command with the hosting provider and test a
-restore before launch.
+For the Compose deployment:
+
+```bash
+docker compose stop app
+docker compose run --rm --no-deps app python manage.py backup_site --output-dir /backups
+docker compose start app
+```
+
+Always restart the app even if the backup fails. Archives contain `db.sqlite3`, `media/` (when media
+exists) and `manifest.json`. Treat the database archive as sensitive: it contains CMS account data.
+
+For Linux/systemd automation, copy `deploy/biglab-backup.service` and `deploy/biglab-backup.timer`
+to `/etc/systemd/system/`, run `systemctl daemon-reload`, then
+`systemctl enable --now biglab-backup.timer`. These examples assume `/srv/biglab`, Docker at
+`/usr/bin/docker`, and `DOMAIN` in `/etc/biglab-deploy.env`; adapt them to the host. The service pauses
+the app, writes to the host backup directory and restarts it even on failure. Monitor with
+`systemctl status biglab-backup.service` and `journalctl -u biglab-backup.service`. Backups introduce
+a short overnight maintenance window.
+
+**Offsite step (not automated):** copy each successful archive to independent storage, for example
+an encrypted backup bucket or another machine using `scp`. Keep multiple dated copies; verify their
+checksums after transfer. The same server, Docker volume or attached disk is not an offsite backup.
+Set a retention policy only after confirming a restore; keep an offsite copy before deleting old files.
+
+### Restore and verify
+
+1. Test in an isolated staging installation first, using the same application version as the archive.
+   Inspect `tar -tzf /path/to/biglab-backup-YYYYMMDDTHHMMSSZ.tar.gz` and `manifest.json`. Extract only
+   trusted archives into an empty directory, not over a running installation.
+2. Stop the app (`docker compose stop app`) and take a safety backup of the current installation.
+   Never use `docker compose down -v`, which destroys persistent volumes.
+3. Restore `db.sqlite3` and the entire `media/` directory into the mounted `/data` volume using an
+   administrator-controlled restore container or hosting storage tools. Replace the old media
+   directory rather than merging it. With all writers stopped, remove old `db.sqlite3-wal` and
+   `db.sqlite3-shm` sidecars before replacing the database; never delete sidecars on a live database.
+   Restore ownership/read-write access for the container’s `wagtail` user. Do not restore over Caddy’s
+   certificate data. Restored archives need no `seed_biglab` run.
+4. Before starting the app, use `sqlite3 /path/to/restored/db.sqlite3 'PRAGMA integrity_check;'` on the
+   restored file; require `ok`. Compare media file counts with the manifest and spot-check originals
+   and documents. Keep the untouched source archive until verification succeeds.
+5. Start the app (`docker compose start app`). Check login, page revisions, draft/live state, both
+   languages, image renditions, PDF downloads and Parta links. If deploying a newer code version,
+   run migrations only after the original-version restore is verified. Record the restore date and
+   result, and repeat this exercise periodically.
 
 ## Content still awaiting confirmation
 

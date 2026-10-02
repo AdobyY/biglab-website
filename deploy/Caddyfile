@@ -1,0 +1,12 @@
+{$DOMAIN} {
+    encode zstd gzip
+    # Only uploaded images are served directly; documents retain Wagtail access checks.
+    handle_path /media/images/* {
+        root * /data/site/media/images
+        header X-Content-Type-Options nosniff
+        file_server
+    }
+    handle {
+        reverse_proxy app:8000
+    }
+}

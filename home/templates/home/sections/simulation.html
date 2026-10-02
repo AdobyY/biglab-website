@@ -1,2 +1,12 @@
-{% load navigation_tags %}{% section_background_url value as background_url %}
-{% if value.is_visible %}<section{% if value.anchor %} id="{{ value.anchor }}"{% endif %} class="builder-section section-theme-{{ value.theme }}{% if background_url %} has-section-background background-overlay-{{ value.background_overlay }}{% endif %}"{% if background_url %} style="--section-bg:url('{{ background_url }}');--section-bg-position:{{ value.background_position }}"{% endif %}><div class="section-shell builder-embed">{% if value.title %}<h2>{{ value.title }}</h2>{% endif %}{% if value.description %}<p class="intro">{{ value.description }}</p>{% endif %}<iframe class="builder-simulation" src="{{ value.embed_url }}" title="{{ value.title|default:'Interactive simulation' }}" loading="lazy"></iframe></div></section>{% endif %}
+{% load wagtailcore_tags ui_tags %}
+{% ui 'simulation' as default_title %}
+{% if value.is_visible %}
+<section{% include "home/includes/section_attributes.html" %}>
+  <div class="section-shell builder-embed">
+    <div class="section-heading"><h2>{{ value.title|default:default_title }}</h2></div>
+    {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
+    {% if value.description %}<p class="intro">{{ value.description }}</p>{% endif %}
+    <iframe class="builder-simulation responsive-embed" src="{{ value.embed_url }}" title="{{ value.title|default:default_title }}" loading="lazy" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
+  </div>
+</section>
+{% endif %}

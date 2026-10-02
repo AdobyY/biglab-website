@@ -1,0 +1,8 @@
+{% load wagtailcore_tags ui_tags %}
+{% if value.is_visible %}{% if value.text or site_home.about_financing %}
+<section{% include "home/includes/section_attributes.html" %}><div class="section-shell">
+  <div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'financing' %}{% endif %}</h2></div>
+  {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
+  <div class="reading-content">{% if value.text %}{{ value.text|richtext }}{% else %}{{ site_home.about_financing|richtext }}{% endif %}</div>
+</div></section>
+{% endif %}{% endif %}

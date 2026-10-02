@@ -1,0 +1,43 @@
+# Supply DOMAIN in the host environment (no scheme); keep runtime secrets outside the checkout.
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    env_file: /etc/biglab-runtime.env
+    environment:
+      DJANGO_ALLOWED_HOSTS: "${DOMAIN:?Set DOMAIN to your registered hostname}"
+      DJANGO_CSRF_TRUSTED_ORIGINS: "https://${DOMAIN:?Set DOMAIN}"
+      WAGTAILADMIN_BASE_URL: "https://${DOMAIN:?Set DOMAIN}"
+      SQLITE_PATH: /data/db.sqlite3
+      MEDIA_ROOT: /data/media
+    volumes:
+      - site_data:/data
+      - /srv/biglab/backups:/backups
+    expose:
+      - "8000"
+    networks:
+      - backend
+  proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      DOMAIN: "${DOMAIN:?Set DOMAIN}"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - site_data:/data/site:ro
+      - caddy_data:/data/caddy
+      - caddy_config:/config
+    networks:
+      - backend
+    depends_on:
+      - app
+volumes:
+  site_data:
+  caddy_data:
+  caddy_config:
+networks:
+  backend:

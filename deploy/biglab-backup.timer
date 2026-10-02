@@ -1,0 +1,11 @@
+[Unit]
+Description=Nightly BIG Lab backup
+
+[Timer]
+OnCalendar=*-*-* 03:00:00
+RandomizedDelaySec=15min
+Persistent=true
+Unit=biglab-backup.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,12 @@
+{% load wagtailcore_tags ui_tags %}
+{% with inline_children=page.get_children.live.specific %}
+{% if value.is_visible and inline_children %}
+<section{% include "home/includes/section_attributes.html" with section_class="child-sections" %}>
+  <div class="section-shell">
+    <div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'contents' %}{% endif %}</h2></div>
+    {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
+    {% include "home/includes/inline_sections.html" %}
+  </div>
+</section>
+{% endif %}
+{% endwith %}

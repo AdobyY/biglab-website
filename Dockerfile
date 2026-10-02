@@ -51,6 +51,8 @@ EXPOSE 8000
 ENV PYTHONUNBUFFERED=1 \
     PORT=8000 \
     DJANGO_SETTINGS_MODULE=config.settings.production \
+    SQLITE_PATH=/data/db.sqlite3 \
+    MEDIA_ROOT=/data/media \
     PATH="/opt/venv/bin:$PATH"
 
 
@@ -64,7 +66,7 @@ WORKDIR /app
 # Set this directory to be owned by the "wagtail" user. This Wagtail project
 # uses SQLite, the folder needs to be owned by the user that
 # will be writing to the database file.
-RUN mkdir -p /data && chown wagtail:wagtail /app /data
+RUN mkdir -p /data/media && chown -R wagtail:wagtail /app /data
 
 # Copy the source code of the project into the container.
 COPY --chown=wagtail:wagtail . .
@@ -73,7 +75,7 @@ COPY --chown=wagtail:wagtail . .
 USER wagtail
 
 # Collect static files.
-RUN DJANGO_SETTINGS_MODULE=config.settings.production python manage.py collectstatic --noinput --clear
+RUN DJANGO_SETTINGS_MODULE=config.settings.build python manage.py collectstatic --noinput --clear
 
 # Runtime command that executes when "docker run" is called, it does the
 # following:
@@ -87,4 +89,4 @@ RUN DJANGO_SETTINGS_MODULE=config.settings.production python manage.py collectst
 CMD set -e; \
     python manage.py migrate --noinput; \
     if [ "${SEED_INITIAL_CONTENT:-0}" = "1" ]; then python manage.py seed_biglab; fi; \
-    exec gunicorn config.wsgi:application --bind "0.0.0.0:${PORT}"
+    exec gunicorn config.wsgi:application --bind "0.0.0.0:${PORT}" --workers 1 --threads 2 --timeout 60
