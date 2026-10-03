@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% load static wagtailcore_tags wagtailimages_tags wagtailsettings_tags navigation_tags ui_tags l10n %}
-{% block body_class %}template-homepage{% endblock %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'css/homepage.css' %}">{% endblock %}
-{% block extra_js %}<script src="{% static 'js/homepage.js' %}" defer></script>{% endblock %}
+{% block body_class %}template-homepage homepage-design-{{ design_version|default:'1' }}{% endblock %}
+{% block theme_color %}{% if design_version == '2' %}{{ settings.home.HomepageDesignSettings.background }}{% else %}#101e32{% endif %}{% endblock %}
+{% block body_attrs %}{% if design_version == '2' %}style="--design-background:{{ settings.home.HomepageDesignSettings.background }};--design-foreground:{{ settings.home.HomepageDesignSettings.foreground }};--design-accent:{{ settings.home.HomepageDesignSettings.accent }};--design-muted:{{ settings.home.HomepageDesignSettings.muted }};--design-network-secondary:{{ settings.home.HomepageDesignSettings.network_secondary }};" {% endif %}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/homepage.css' %}">{% if design_version == '2' %}<link rel="stylesheet" href="{% static 'css/hero-network.css' %}"><link rel="stylesheet" href="{% static 'css/homepage-v2.css' %}">{% else %}<link rel="stylesheet" href="{% static 'css/homepage-v1.css' %}">{% endif %}<link rel="stylesheet" href="{% static 'css/design-switch.css' %}">{% endblock %}
+{% block extra_js %}{% if design_version == '2' %}<script src="{% static 'js/homepage.js' %}" defer></script><script src="{% static 'js/hero-network.js' %}" defer></script>{% else %}<script src="{% static 'js/homepage-v1.js' %}" defer></script><script src="{% static 'js/hero-v1-entrance.js' %}" defer></script>{% endif %}{% endblock %}
 {% block content %}
+<a class="design-switch" data-design-switch data-current-design="{{ design_version|default:'1' }}" href="{{ design_switch_url }}" aria-label="{% ui 'switch_design' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM12 5v14"/></svg><span{% if design_version != '2' %} class="is-active"{% endif %}>V1</span><span class="design-switch-divider" aria-hidden="true"></span><span{% if design_version == '2' %} class="is-active"{% endif %}>V2</span></a>
+{% if design_version != '2' %}{% include 'home/includes/hero_v1.html' %}{% else %}
 <section class="hero hero-{{ page.hero_layout }}" data-hero-entrance>
+  {% if page.hero_layout == 'constellation' %}<canvas class="research-network" data-research-network aria-hidden="true"></canvas>{% endif %}
   <div class="section-shell hero-inner">
     <div class="hero-copy">
       <h1>{{ page.hero_title }}</h1>
@@ -16,23 +21,6 @@
     </div>
     {% if page.hero_layout == 'image' and page.hero_image %}
       <figure class="hero-image">{% image page.hero_image fill-1100x1100 %}</figure>
-    {% elif page.hero_layout == 'constellation' and research_areas %}
-      {% constellation_nodes research_areas as star_nodes %}
-      <nav class="constellation{% if star_nodes|length > 7 %} constellation-dense{% endif %}" aria-label="{% ui 'research_areas' %}">
-        <div class="constellation-field">
-          <canvas class="research-network" data-research-network aria-hidden="true"></canvas>
-          <svg class="constellation-lines" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
-            <g class="star-dust"><circle cx="52" cy="55" r="1.5"/><circle cx="146" cy="80" r="1"/><circle cx="228" cy="32" r="1"/><circle cx="450" cy="75" r="1.5"/><circle cx="543" cy="138" r="1"/><circle cx="575" cy="315" r="1"/><circle cx="530" cy="430" r="1.5"/><circle cx="456" cy="558" r="1"/><circle cx="311" cy="563" r="1.5"/><circle cx="140" cy="522" r="1"/><circle cx="36" cy="407" r="1.5"/><circle cx="38" cy="225" r="1"/><circle cx="201" cy="360" r="1.5"/><circle cx="399" cy="210" r="1"/></g>
-            <g class="constellation-connections">{% for node in star_nodes %}<path data-constellation-connection="{{ forloop.counter0 }}" d="M300 276 Q{{ node.sx|unlocalize }} 276 {{ node.sx|unlocalize }} {{ node.sy|unlocalize }}"/>{% endfor %}</g>
-            <circle class="star-orbit" cx="300" cy="276" r="87"/>
-            <path class="central-star" d="m300 251 5 19 20 6-20 5-5 20-6-20-19-5 19-6Z"/>
-          </svg>
-          <ul class="constellation-topics">
-            {% for node in star_nodes %}<li style="--star-x:{{ node.x|unlocalize }}%;--star-y:{{ node.y|unlocalize }}%"><a href="{{ node.url }}" data-constellation-topic="{{ forloop.counter0 }}"><span class="topic-star" aria-hidden="true"></span><span class="topic-label">{{ node.page.title }}</span></a></li>{% endfor %}
-          </ul>
-        </div>
-        <div class="constellation-caption"><span>{% ui 'research_areas' %}</span><span class="network-hint" data-network-hint>{% ui 'network_hint' %}</span></div>
-      </nav>
     {% endif %}
   </div>
   <div class="section-shell hero-footnote">
@@ -40,6 +28,7 @@
     <a href="#home-sections">{% ui 'discover_lab' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16m-6-6 6 6 6-6"/></svg></a>
   </div>
 </section>
+{% endif %}
 <div id="home-sections">
 {% if page.sections %}
   {% for section in page.sections %}

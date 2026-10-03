@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{{ page.seo_title|default:page.title|default:'BIG Lab' }} — {{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}{% endblock %}</title>
     {% if page.search_description %}<meta name="description" content="{{ page.search_description }}">{% endif %}
-    <meta name="theme-color" content="#101e32">
+    <meta name="theme-color" content="{% block theme_color %}#101e32{% endblock %}">
         <link rel="icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
     {% if page and not request.is_preview %}
       {% absolute_page_url page as canonical_url %}<link rel="canonical" href="{{ canonical_url }}">
@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="{% static 'css/config.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
-<body class="{% block body_class %}{% endblock %}" data-image-preview="{% ui 'image_preview' %}" data-close="{% ui 'close' %}" data-previous-image="{% ui 'previous_image' %}" data-next-image="{% ui 'next_image' %}" data-pause="{% ui 'pause' %}" data-play="{% ui 'play' %}">
+<body class="{% block body_class %}{% endblock %}" {% block body_attrs %}{% endblock %}data-image-preview="{% ui 'image_preview' %}" data-close="{% ui 'close' %}" data-previous-image="{% ui 'previous_image' %}" data-next-image="{% ui 'next_image' %}" data-pause="{% ui 'pause' %}" data-play="{% ui 'play' %}">
     <a class="skip-link" href="#content">{% ui 'skip_content' %}</a>
     {% wagtailuserbar %}
     <header class="site-header">
@@ -47,7 +47,7 @@
           <summary aria-label="{% ui 'language' %}: {{ current_language.name_local }}"><span>{% if page.locale.language_code == 'cs' %}CZ{% else %}{{ page.locale.language_code|upper }}{% endif %}</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary>
           <nav class="language-options" aria-label="{% ui 'language' %}">
             <span aria-current="page" lang="{{ page.locale.language_code }}">{{ current_language.name_local|capfirst }}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8 3 3 7-7"/></svg></span>
-            {% for translation in page.get_translations.live %}{% get_language_info for translation.locale.language_code as language %}<a href="{% pageurl translation %}" lang="{{ translation.locale.language_code }}" hreflang="{{ translation.locale.language_code }}">{{ language.name_local|capfirst }}</a>{% endfor %}
+            {% for translation in page.get_translations.live %}{% get_language_info for translation.locale.language_code as language %}<a href="{% pageurl translation %}{% if design_version == '2' %}?design=2{% endif %}" lang="{{ translation.locale.language_code }}" hreflang="{{ translation.locale.language_code }}">{{ language.name_local|capfirst }}</a>{% endfor %}
           </nav>
         </details>
         {% endif %}

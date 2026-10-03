@@ -1,3 +1,5 @@
+from django import forms
+from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
@@ -138,6 +140,19 @@ class HomePage(BaseContentPage):
         "home.ProjectsIndexPage",
         "home.ProjectPage",
     ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        version = "2" if request.GET.get("design") == "2" else "1"
+        switch_query = request.GET.copy()
+        if version == "2":
+            switch_query.pop("design", None)
+        else:
+            switch_query["design"] = "2"
+        query_string = switch_query.urlencode()
+        context["design_version"] = version
+        context["design_switch_url"] = request.path + (f"?{query_string}" if query_string else "")
+        return context
 
 
 class ContentPage(BaseContentPage):
@@ -409,3 +424,64 @@ class ContactSettings(BaseSiteSetting):
             heading="INPSY institute social media",
         ),
     ]
+
+
+HEX_COLOR_VALIDATOR = RegexValidator(
+    regex=r"\A#[0-9a-fA-F]{6}\Z",
+    message="Enter a six-digit hexadecimal color, for example #0b141e.",
+    code="invalid_hex_color",
+)
+
+
+@register_setting
+class HomepageDesignSettings(BaseSiteSetting):
+    """One homepage Version 2 palette shared by all languages of a site."""
+
+    background = models.CharField(
+        max_length=7, default="#0b141e", validators=[HEX_COLOR_VALIDATOR],
+        verbose_name="Version 2 background",
+        help_text="Background of the homepage in Version 2 only. Use #RRGGBB.",
+    )
+    foreground = models.CharField(
+        max_length=7, default="#eeeae0", validators=[HEX_COLOR_VALIDATOR],
+        verbose_name="Version 2 foreground",
+        help_text="Main text on the homepage in Version 2 only. Use #RRGGBB.",
+    )
+    accent = models.CharField(
+        max_length=7, default="#dac99c", validators=[HEX_COLOR_VALIDATOR],
+        verbose_name="Version 2 accent",
+        help_text="Actions and primary network connections on the homepage in Version 2 only. Use #RRGGBB.",
+    )
+    muted = models.CharField(
+        max_length=7, default="#a6b4bd", validators=[HEX_COLOR_VALIDATOR],
+        verbose_name="Version 2 muted text",
+        help_text="Supporting text on the homepage in Version 2 only. Use #RRGGBB.",
+    )
+    network_secondary = models.CharField(
+        max_length=7, default="#7f9d98", validators=[HEX_COLOR_VALIDATOR],
+        verbose_name="Version 2 secondary network color",
+        help_text="Secondary network strands on the homepage in Version 2 only. Use #RRGGBB.",
+    )
+
+    panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("background", widget=forms.ColorInput()),
+                FieldPanel("foreground", widget=forms.ColorInput()),
+                FieldPanel("muted", widget=forms.ColorInput()),
+            ],
+            heading="Version 2 homepage surfaces and text",
+            help_text="Shared across all languages. These colors affect only homepage Version 2 (?design=2); Version 1 remains the default.",
+        ),
+        MultiFieldPanel(
+            [
+                FieldPanel("accent", widget=forms.ColorInput()),
+                FieldPanel("network_secondary", widget=forms.ColorInput()),
+            ],
+            heading="Version 2 homepage connections and accents",
+            help_text="Choose colors with readable contrast against the Version 2 background.",
+        ),
+    ]
+
+    class Meta:
+        verbose_name = "homepage design (Version 2)"

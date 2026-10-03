@@ -1,0 +1,36 @@
+/* Version 2 changes the palette below the hero; layout comes from the shared homepage styles. */
+.homepage-design-2 {
+  --navy: var(--design-background); --navy-light: color-mix(in srgb, var(--design-background) 94%, var(--design-foreground));
+  --ink: var(--design-foreground); --paper: var(--design-foreground); --paper-deep: var(--design-background);
+  --yellow: var(--design-accent); --coral: var(--design-network-secondary); --muted: var(--design-muted);
+  --line: color-mix(in srgb, var(--design-muted) 25%, transparent); --dark-line: var(--line);
+  --section-ink: var(--design-foreground); --section-muted: var(--design-muted); --section-line: var(--line);
+  color: var(--design-foreground); background: var(--design-background); color-scheme: dark;
+}
+.template-homepage.homepage-design-2 .site-header, .template-homepage.homepage-design-2 .site-footer,
+.template-homepage.homepage-design-2 .hero, .template-homepage.homepage-design-2 .builder-section,
+.template-homepage.homepage-design-2 .contact-section, .template-homepage.homepage-design-2 .financing-section {
+  background: var(--design-background); color: var(--design-foreground);
+  --section-ink: var(--design-foreground); --section-muted: var(--design-muted); --section-line: var(--line);
+}
+.homepage-design-2 .site-header.is-scrolled { background: var(--design-background); }
+.homepage-design-2 .brand-affiliation, .homepage-design-2 .hero-footnote, .homepage-design-2 .person-role, .homepage-design-2 figcaption { color: var(--design-muted); }
+.homepage-design-2 :focus-visible { outline-color: var(--design-accent); }
+.homepage-design-2 ::selection { background: var(--design-accent); color: var(--design-background); }
+.homepage-design-2 .has-section-background::before, .homepage-design-2 .has-section-background::after { display: none; }
+.template-homepage.homepage-design-2 .hero h1 { color: var(--design-foreground); }
+.template-homepage.homepage-design-2 .hero .summary { color: var(--design-muted); }
+.homepage-design-2 .button, .homepage-design-2 .button-dark, .homepage-design-2 .button-light { background: var(--design-accent); color: var(--design-background); border-color: var(--design-accent); }
+.homepage-design-2 .button:hover, .homepage-design-2 .button-dark:hover, .homepage-design-2 .button-light:hover { background: var(--design-foreground); color: var(--design-background); border-color: var(--design-foreground); }
+.template-homepage.homepage-design-2 .hero-actions .text-link { color: var(--design-foreground); border-color: var(--line); }
+.template-homepage.homepage-design-2 .hero-actions .text-link:hover { color: var(--design-accent); border-color: var(--design-accent); }
+.homepage-design-2 .builder-section + .builder-section { border-top-color: var(--line); }
+.homepage-design-2 .section-heading h2 { color: var(--design-foreground); }
+.homepage-design-2 .section-heading > a, .homepage-design-2 .updates-grid > div > h3 { color: var(--design-accent); }
+.homepage-design-2 .builder-about .builder-copy, .homepage-design-2 .financing-section .reading-content,
+.homepage-design-2 .research-row .collection-intro, .homepage-design-2 .parta-band .collection-intro { color: var(--design-muted); }
+.homepage-design-2 .research-row::after { background: var(--design-network-secondary); }
+.homepage-design-2 .person-link:hover h3 { color: var(--design-accent); }
+.homepage-design-2 .updates-grid time, .homepage-design-2 .publication-year { color: var(--design-network-secondary); }
+.homepage-design-2 .footer-lead p, .homepage-design-2 .footer-contact h2, .homepage-design-2 .footer-links h2 { color: var(--design-accent); }
+.homepage-design-2 .site-footer { border-top-color: var(--line); }

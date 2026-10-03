@@ -1,0 +1,36 @@
+/* Version 1 hero only. Section dimensions come from the shared homepage stylesheet. */
+.homepage-design-1 .hero-constellation .hero-inner { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
+.homepage-design-1 .hero-copy, .homepage-design-1 .relationship-network { min-width: 0; }
+.homepage-design-1 .relationship-network { width: 100%; max-width: 100%; }
+.homepage-design-1 .constellation-field { max-width: 560px; width: 100%; }
+.homepage-design-1 .constellation-field::before, .homepage-design-1 .constellation-field::after { content: none; }
+.homepage-design-1 .constellation-field > .research-network, .homepage-design-1 .relationship-fallback { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.homepage-design-1 .relationship-fallback { opacity: .2; }
+.homepage-design-1 .network-ready .relationship-fallback { visibility: hidden; }
+.homepage-design-1 .constellation-topics li { width: 180px; }
+.homepage-design-1 .constellation-topics a { font-size: .78rem; line-height: 1.4; gap: .6rem; font-weight: 500; }
+.homepage-design-1 .topic-label { padding: .35rem .55rem; background: var(--navy); border-radius: 4px; }
+.homepage-design-1 .relationship-point { width: 10px; height: 10px; flex-shrink: 0; border-radius: 50%; background: var(--yellow); outline: 1px solid rgb(243 223 161 / .4); outline-offset: 4px; opacity: .8; transition: opacity .2s ease, background-color .2s ease; }
+.homepage-design-1 .constellation-topics a:is(:hover, :focus-visible, .is-active) .relationship-point { opacity: 1; background: var(--paper); }
+.homepage-design-1 .constellation-topics a:focus-visible { outline-offset: 3px; }
+@media (max-width: 1100px) {
+  .homepage-design-1 .constellation-topics li { width: 145px; }
+  .homepage-design-1 .constellation-topics a { font-size: .74rem; }
+}
+@media (max-width: 760px) {
+  .homepage-design-1 .hero-constellation .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .homepage-design-1 .hero-footnote { padding-right: 7.5rem; }
+  .homepage-design-1 .relationship-network { max-width: 470px; }
+  .homepage-design-1 .constellation-topics li { width: 140px; }
+  .homepage-design-1 .constellation-topics a { font-size: .76rem; }
+}
+@media (max-width: 380px) {
+  .homepage-design-1 .constellation-field { aspect-ratio: 1; }
+  .homepage-design-1 .constellation-topics { display: block; padding: 0; }
+  .homepage-design-1 .constellation-topics li { position: absolute; left: var(--star-x); top: var(--star-y); width: 108px; transform: translate(-50%, -50%); }
+  .homepage-design-1 .constellation-topics a { flex-direction: column; text-align: center; font-size: .7rem; }
+  .homepage-design-1 .constellation-dense .constellation-topics { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1rem 0; }
+  .homepage-design-1 .constellation-dense .constellation-topics li { position: static; width: auto; transform: none; }
+  .homepage-design-1 .constellation-dense .constellation-topics a { flex-direction: row; text-align: left; font-size: .85rem; }
+  .homepage-design-1 .constellation-dense .constellation-field { aspect-ratio: auto; }
+}

@@ -1,0 +1,35 @@
+{% load wagtailcore_tags wagtailimages_tags navigation_tags ui_tags l10n %}
+<section class="hero hero-{{ page.hero_layout }}" data-hero-entrance>
+  <div class="section-shell hero-inner">
+    <div class="hero-copy">
+      <h1>{{ page.hero_title }}</h1>
+      {% if page.hero_summary %}<p class="summary">{{ page.hero_summary }}</p>{% endif %}
+      <div class="hero-actions">
+        {% if science_page %}<a class="button" href="{{ science_page.url }}">{% ui 'explore_science' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></a>{% endif %}
+        {% if people_index %}<a class="text-link" href="{{ people_index.url }}">{% ui 'meet_team' %}</a>{% endif %}
+      </div>
+    </div>
+    {% if page.hero_layout == 'image' and page.hero_image %}
+      <figure class="hero-image">{% image page.hero_image fill-1100x1100 %}</figure>
+    {% elif page.hero_layout == 'constellation' and research_areas %}
+      {% constellation_nodes research_areas as star_nodes %}
+      <nav class="constellation relationship-network{% if star_nodes|length > 7 %} constellation-dense{% endif %}" aria-label="{% ui 'research_areas' %}">
+        <div class="constellation-field">
+          <canvas class="research-network" data-research-network aria-hidden="true"></canvas>
+          <svg class="relationship-fallback" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
+            <g fill="none" stroke="currentColor" stroke-width="1">
+              <path d="M174 205 218 163 272 147 326 169 376 158 426 218 444 273 409 327 416 360 357 408 296 417 240 391 193 363 158 311 164 252Z M174 205 248 213 218 163M248 213 272 147 312 242 326 169M312 242 376 158 361 268 426 218M361 268 444 273 341 332 409 327M341 332 416 360 302 363 357 408M302 363 296 417 259 302 240 391M259 302 193 363 214 274 158 311M214 274 164 252 248 213 259 302 312 242 361 268 341 332 302 363 259 302"/>
+            </g>
+          </svg>
+          <ul class="constellation-topics">
+            {% for node in star_nodes %}<li style="--star-x:{{ node.x|unlocalize }}%;--star-y:{{ node.y|unlocalize }}%"><a href="{{ node.url }}" data-constellation-topic="{{ forloop.counter0 }}"><span class="relationship-point" aria-hidden="true"></span><span class="topic-label">{{ node.page.title }}</span></a></li>{% endfor %}
+          </ul>
+        </div>
+      </nav>
+    {% endif %}
+  </div>
+  <div class="section-shell hero-footnote">
+    <p>{% ui 'research_disciplines' %}</p>
+    <a href="#home-sections">{% ui 'discover_lab' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16m-6-6 6 6 6-6"/></svg></a>
+  </div>
+</section>

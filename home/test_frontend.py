@@ -1,3 +1,5 @@
+from urllib.parse import parse_qs, urlsplit
+
 from bs4 import BeautifulSoup
 from django.template.loader import render_to_string
 from django.test import RequestFactory
@@ -39,39 +41,80 @@ class FrontendContractTests(WagtailPageTestCase):
         self.assertEqual(reordered[0]["page"], areas[-1])
         self.assertTrue(reordered[0]["url"].endswith(f"#section-{areas[-1].pk}"))
 
-    def test_hero_entrance_preserves_visible_copy_and_topic_destinations(self):
+    def test_v2_hero_preserves_copy_and_keeps_research_links_in_the_collection(self):
         Site.objects.update_or_create(hostname="localhost", defaults={"root_page": self.home, "is_default_site": True})
         areas = [self.science.add_child(instance=ContentPage(title=f"Topic {i}")) for i in range(9)]
+        people = self.home.add_child(instance=PeopleIndexPage(title="Team"))
         self.home.hero_layout = "constellation"
         self.home.hero_title = "Research together"
         self.home.hero_summary = "Our research summary"
-        request = RequestFactory().get("/")
+        request = RequestFactory().get("/?design=2")
         context = self.home.get_context(request)
-        context.update(research_areas=areas, science_page=self.science)
+        context.update(research_areas=areas, science_page=self.science, people_index=people)
         soup = BeautifulSoup(render_to_string("home/home_page.html", context, request=request), "html.parser")
+        self.assertIn("homepage-design-2", soup.body.get("class", []))
+        switch = soup.select_one("a[data-design-switch]")
+        self.assertIsNotNone(switch)
+        self.assertNotIn("design", parse_qs(urlsplit(switch["href"]).query))
         hero = soup.select_one(".hero[data-hero-entrance]")
         self.assertEqual(hero.select_one("h1").get_text(), self.home.hero_title)
         self.assertFalse(hero.select("[data-network-toggle]"))
         self.assertEqual(hero.select_one(".summary").get_text(), self.home.hero_summary)
         self.assertEqual(hero.select_one(".hero-actions a")["href"], self.science.url)
-        self.assertFalse(hero.select("[hidden], .hero-copy[aria-hidden='true'], .constellation-topics [aria-hidden='true']:not(.topic-star)"))
-        self.assertFalse(hero.select(".hero-copy [style], .constellation-topics a[style]"))
-        self.assertEqual(hero.select_one(".constellation-lines")["aria-hidden"], "true")
-        self.assertEqual(hero.select_one(".constellation-lines")["focusable"], "false")
-        paths = hero.select(".constellation-connections path[data-constellation-connection]")
-        links = hero.select(".constellation-topics a[data-constellation-topic]")
-        self.assertEqual(len(paths), len(areas))
+        self.assertEqual(hero.select_one(".hero-actions a.text-link")["href"], people.url)
+        self.assertFalse(hero.select(".hero-copy[hidden], .hero-copy[aria-hidden='true']"))
+        self.assertFalse(hero.select(".hero-copy [style]"))
+        canvas = hero.select_one("canvas[data-research-network]")
+        self.assertIsNotNone(canvas)
+        self.assertIs(canvas.parent, hero)
+        self.assertEqual(canvas["aria-hidden"], "true")
+        self.assertFalse(canvas.has_attr("tabindex"))
+        self.assertFalse(hero.select(".constellation, .constellation-topics, [data-constellation-topic]"))
+        self.assertFalse(hero.select(".central-star, .star-orbit, .constellation-connections, .constellation-caption, [data-network-hint]"))
+        self.assertNotIn("Research areas", hero.get_text(" ", strip=True))
+        self.assertEqual(soup.select_one(".research-section h2").get_text(), "Research areas")
+        links = soup.select("#home-sections .research-row h3 a")
         self.assertEqual(len(links), len(areas))
-        for index, (path, link, node) in enumerate(zip(paths, links, constellation_nodes(areas))):
-            self.assertEqual(path["data-constellation-connection"], str(index))
-            self.assertEqual(link["data-constellation-topic"], str(index))
+        for link, node in zip(links, constellation_nodes(areas)):
             self.assertEqual(link["href"], node["url"])
-            self.assertEqual(link.select_one(".topic-label").get_text(), node["page"].title)
+            self.assertEqual(link.get_text(), node["page"].title)
+            self.assertNotIn(node["page"].title, hero.get_text(" ", strip=True))
+
+    def test_design_one_is_default_without_central_star_or_network_caption(self):
+        Site.objects.update_or_create(hostname="localhost", defaults={"root_page": self.home, "is_default_site": True})
+        area = self.science.add_child(instance=ContentPage(title="Research topic"))
+        self.home.hero_layout = "constellation"
+        for query in ["", "?design=1", "?design=unknown", "?design=02"]:
+            with self.subTest(query=query):
+                request = RequestFactory().get(f"/{query}")
+                context = self.home.get_context(request)
+                context.update(research_areas=[area])
+                soup = BeautifulSoup(render_to_string("home/home_page.html", context, request=request), "html.parser")
+                self.assertIn("homepage-design-1", soup.body.get("class", []))
+                self.assertNotIn("homepage-design-2", soup.body.get("class", []))
+                hero = soup.select_one(".hero[data-hero-entrance]")
+                self.assertFalse(hero.select(".central-star, .star-orbit, .star-dust, .constellation-connections, [data-constellation-connection]"))
+                self.assertFalse(hero.select(".constellation-caption, .network-hint, [data-network-hint]"))
+                self.assertNotIn("Research areas", hero.get_text(" ", strip=True))
+                field = hero.select_one(".constellation-field")
+                canvas = field.select_one("canvas[data-research-network]")
+                self.assertIsNotNone(canvas)
+                self.assertIs(canvas.parent, field)
+                self.assertEqual(canvas["aria-hidden"], "true")
+                self.assertFalse(canvas.has_attr("tabindex"))
+                self.assertFalse(hero.select(":scope > canvas[data-research-network]"))
+                self.assertFalse(hero.select("[data-network-toggle]"))
+                topic = hero.select_one(".constellation-topics a[data-constellation-topic]")
+                self.assertEqual(topic.get_text(strip=True), area.title)
+                self.assertEqual(topic["href"], constellation_nodes([area])[0]["url"])
+                switch = soup.select_one("a[data-design-switch]")
+                self.assertIsNotNone(switch)
+                self.assertEqual(parse_qs(urlsplit(switch["href"]).query).get("design"), ["2"])
 
     def test_text_hero_entrance_keeps_optional_content_optional(self):
         self.home.hero_layout = "text"
         self.home.hero_summary = ""
-        request = RequestFactory().get("/")
+        request = RequestFactory().get("/?design=2")
         soup = BeautifulSoup(render_to_string(
             "home/home_page.html", self.home.get_context(request), request=request,
         ), "html.parser")
@@ -79,6 +122,32 @@ class FrontendContractTests(WagtailPageTestCase):
         self.assertIsNotNone(hero.select_one("h1"))
         self.assertIsNone(hero.select_one(".summary"))
         self.assertIsNone(hero.select_one(".constellation"))
+        self.assertIsNone(hero.select_one("[data-research-network]"))
+
+    def test_v2_network_appears_only_for_constellation_regardless_of_research_topics(self):
+        area = self.science.add_child(instance=ContentPage(title="Research topic"))
+        request = RequestFactory().get("/?design=2")
+        for layout, areas in [
+            ("constellation", []), ("constellation", [area]),
+            ("image", []), ("image", [area]), ("text", []), ("text", [area]),
+        ]:
+            with self.subTest(layout=layout, has_topics=bool(areas)):
+                self.home.hero_layout = layout
+                self.home.hero_image = None
+                context = self.home.get_context(request)
+                context.update(research_areas=areas)
+                soup = BeautifulSoup(render_to_string("home/home_page.html", context, request=request), "html.parser")
+                hero = soup.select_one(".hero[data-hero-entrance]")
+                self.assertIsNotNone(hero.select_one("h1"))
+                canvas = hero.select_one("canvas[data-research-network]")
+                if layout == "constellation":
+                    self.assertIsNotNone(canvas)
+                    self.assertIs(canvas.parent, hero)
+                    self.assertEqual(canvas["aria-hidden"], "true")
+                    self.assertFalse(canvas.has_attr("tabindex"))
+                else:
+                    self.assertIsNone(canvas)
+                self.assertIsNone(hero.select_one(".constellation"))
 
     def test_child_menu_uses_direct_route_when_inline_collection_removed(self):
         child = self.project.add_child(instance=ContentPage(title="Parents", show_in_menus=True))

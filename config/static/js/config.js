@@ -45,59 +45,6 @@ document.querySelectorAll('[data-hero-entrance]').forEach((hero) => {
   arrive(hero.querySelector('.hero-copy .summary'), 110);
   hero.querySelectorAll('.hero-actions > a').forEach((link, index) => arrive(link, 220 + index * 90));
 
-  const constellation = hero.querySelector('.constellation');
-  if (!constellation) return;
-  const connections = new Map([...constellation.querySelectorAll('[data-constellation-connection]')]
-    .map((path) => [path.dataset.constellationConnection, path]));
-  const topics = [...constellation.querySelectorAll('[data-constellation-topic]')];
-  let hoveredTopic = null;
-  let focusedTopic = null;
-  const highlight = () => {
-    connections.forEach((path, key) => {
-      path.classList.toggle('is-active', key === hoveredTopic || key === focusedTopic);
-    });
-  };
-  topics.forEach((link, index) => {
-    const key = link.dataset.constellationTopic;
-    link.addEventListener('pointerenter', (event) => {
-      if (event.pointerType === 'touch') return;
-      hoveredTopic = key;
-      highlight();
-    });
-    const clearHover = () => {
-      if (hoveredTopic === key) hoveredTopic = null;
-      highlight();
-    };
-    link.addEventListener('pointerleave', clearHover);
-    link.addEventListener('pointercancel', clearHover);
-    link.addEventListener('focus', () => { focusedTopic = key; highlight(); });
-    link.addEventListener('blur', () => {
-      if (focusedTopic === key) focusedTopic = null;
-      highlight();
-    });
-    // Animate the link, never the li whose transform positions the topic.
-    const stagger = index * (1000 / Math.max(1, topics.length - 1));
-    const path = connections.get(key);
-    if (path && !reducedMotion.matches && typeof path.getTotalLength === 'function') {
-      const length = path.getTotalLength();
-      if (Number.isFinite(length) && length > 0) {
-        animate(path, [
-          { strokeDasharray: `${length} ${length}`, strokeDashoffset: length },
-          { strokeDasharray: `${length} ${length}`, strokeDashoffset: 0 },
-        ], 400 + stagger, 1000);
-      }
-    }
-    arrive(link, 650 + stagger);
-  });
-  const dust = constellation.querySelector('.star-dust');
-  if (dust) {
-    const opacity = Number.parseFloat(window.getComputedStyle(dust).opacity);
-    animate(dust, [{ opacity: opacity * 0.4 }, { opacity }], 200, 1800);
-  }
-  animate(constellation.querySelector('.central-star'), [
-    { opacity: 0.6, transform: 'scale(0.82)', transformOrigin: '300px 276px' },
-    { opacity: 1, transform: 'scale(1)', transformOrigin: '300px 276px' },
-  ], 100, 1100);
 });
 
 const closeSubmenus = (except = null) => {

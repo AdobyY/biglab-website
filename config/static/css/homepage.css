@@ -8,36 +8,6 @@
 .template-homepage .button { min-height: 48px; padding: .7rem 1.15rem; border-radius: 6px; font-size: .85rem; }
 .template-homepage .hero-actions .text-link { padding: .7rem .15rem; border: 0; border-bottom: 1px solid #75808c; border-radius: 0; min-height: 44px; }
 .template-homepage .hero-actions .text-link:hover { background: transparent; border-color: var(--yellow); color: var(--yellow); }
-.template-homepage .constellation { width: 100%; }
-.template-homepage .constellation-field { max-width: 560px; }
-.template-homepage .constellation-field::before { width: 65%; height: 65%; border-color: rgb(243 223 161 / .13); }
-.template-homepage .constellation-field::after { width: 78%; height: 42%; border-color: rgb(243 223 161 / .09); transform: translate(-50%, -50%) rotate(-32deg); }
-.research-network { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-.network-ready .constellation-field::before, .network-ready .constellation-field::after, .network-ready .star-orbit { opacity: 0; }
-.template-homepage .star-dust { opacity: .5; }
-.template-homepage .star-orbit { stroke-dasharray: 2 7; opacity: .45; }
-.template-homepage .central-star { fill: var(--yellow); }
-.template-homepage .constellation-connections { stroke-width: 1; opacity: .65; }
-.template-homepage .constellation-connections path.is-active { stroke-width: 2; }
-.network-ready .constellation-connections path.is-active { stroke-dasharray: 5 9; animation: influence-route 1.4s linear infinite; }
-@keyframes influence-route { to { stroke-dashoffset: -28; } }
-.template-homepage .constellation-topics li { width: 180px; }
-.template-homepage .constellation-topics a { font-size: .78rem; line-height: 1.4; gap: .6rem; font-weight: 500; }
-.template-homepage .topic-label { padding: .35rem .55rem; background: var(--navy); border-radius: 4px; }
-.template-homepage .topic-star { width: 12px; height: 12px; outline: 1px solid rgb(243 223 161 / .5); outline-offset: 5px; box-shadow: none; }
-.template-homepage .constellation-topics a:hover .topic-star { outline-offset: 8px; }
-.template-homepage .constellation-topics a:focus-visible .topic-star { outline-offset: 8px; }
-.topic-star { position: relative; }
-.network-ready .topic-star::after { content: ""; position: absolute; inset: -10px; border: 1px solid var(--yellow); border-radius: 50%; opacity: 0; transform: scale(.7); pointer-events: none; }
-.network-ready .constellation-topics a:is(:hover, :focus-visible) .topic-star::after { animation: topic-signal 1.8s ease-out infinite; }
-@keyframes topic-signal { from { opacity: .55; transform: scale(.7); } to { opacity: 0; transform: scale(1.7); } }
-.network-hint { display: none; max-width: 27ch; text-align: right; color: #bdc5cd; line-height: 1.45; }
-.network-ready .network-hint { display: inline; }
-.network-exploring .network-hint { color: var(--yellow); }
-.template-homepage .constellation-caption { display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-align: left; font-size: .72rem; color: #bdc5cd; margin: .25rem 1rem 0; }
-.network-paused .central-star { animation-play-state: paused; }
-.network-ready:not(.network-paused) .central-star { animation: network-heartbeat 4s ease-in-out infinite; transform-origin: 300px 276px; }
-@keyframes network-heartbeat { 0%, 100% { transform: scale(.9) rotate(-8deg); opacity: .85; } 50% { transform: scale(1.12) rotate(8deg); opacity: 1; } }
 .template-homepage .hero-actions .button { position: relative; overflow: hidden; }
 .template-homepage .hero-actions .button::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 20%, rgb(246 243 233 / .32) 50%, transparent 80%); transform: translateX(-125%); transition: transform .65s var(--ease-out); pointer-events: none; }
 .template-homepage .hero-actions .button:is(:hover, :focus-visible)::after { transform: translateX(125%); }
@@ -106,9 +76,6 @@
   .template-homepage { --shell: calc(100% - 64px); }
   .template-homepage .hero-inner { min-height: 510px; gap: 2rem; padding-block: 2.5rem; }
   .template-homepage .hero h1 { font-size: clamp(2.4rem, 4.2vw, 3.1rem); }
-  .template-homepage .constellation-topics li { width: 145px; }
-  .template-homepage .constellation-topics a { font-size: .74rem; }
-  .template-homepage .constellation-caption { margin-top: .5rem; }
   .template-homepage .research-list { gap: 0 2rem; }
   .template-homepage .research-row { grid-template-columns: minmax(0, 1fr) 110px; }
   .template-homepage .research-row img { width: 110px; height: 120px; }
@@ -126,10 +93,6 @@
   .template-homepage .hero h1 { font-size: clamp(2rem, 5.7vw, 2.65rem); max-width: 23ch; margin-bottom: 1.2rem; }
   .template-homepage .hero .summary { max-width: 42ch; font-size: 1rem; }
   .template-homepage .hero-actions { gap: 1rem; margin-top: 1.5rem; }
-  .template-homepage .constellation { max-width: 470px; }
-  .template-homepage .constellation-topics li { width: 140px; }
-  .template-homepage .constellation-topics a { font-size: .76rem; }
-  .template-homepage .constellation-caption { flex-direction: row; margin-inline: 0; }
   .hero-footnote { align-items: flex-start; flex-direction: column; gap: .4rem; padding-block: 1rem; font-size: .75rem; }
   .hero-footnote a { min-height: 40px; }
   .template-homepage .builder-section { padding-block: 3.5rem; }
@@ -161,16 +124,6 @@
 @media (max-width: 380px) {
   .template-homepage { --shell: calc(100% - 32px); }
   .template-homepage .hero h1 { font-size: 2rem; }
-  .template-homepage .constellation-field { aspect-ratio: 1; }
-  .template-homepage .constellation-lines, .template-homepage .constellation-field::before, .template-homepage .constellation-field::after { display: block; }
-  .template-homepage .constellation-topics { display: block; padding: 0; }
-  .template-homepage .constellation-topics li { position: absolute; left: var(--star-x); top: var(--star-y); width: 108px; transform: translate(-50%, -50%); }
-  .template-homepage .constellation-topics a { flex-direction: column; text-align: center; font-size: .66rem; }
-  .template-homepage .constellation-dense .constellation-topics { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1rem 0; }
-  .template-homepage .constellation-dense .constellation-topics li { position: static; width: auto; transform: none; }
-  .template-homepage .constellation-dense .constellation-topics a { flex-direction: row; text-align: left; font-size: .85rem; }
-  .template-homepage .constellation-dense .constellation-field { aspect-ratio: auto; }
-  .template-homepage .constellation-caption { flex-wrap: wrap; }
 }
 @media (prefers-reduced-motion: reduce) {
   .template-homepage *, .template-homepage *::before, .template-homepage *::after { scroll-behavior: auto; transition: none; animation: none; }
