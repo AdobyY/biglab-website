@@ -31,7 +31,7 @@
             {% for node in star_nodes %}<li style="--star-x:{{ node.x|unlocalize }}%;--star-y:{{ node.y|unlocalize }}%"><a href="{{ node.url }}" data-constellation-topic="{{ forloop.counter0 }}"><span class="topic-star" aria-hidden="true"></span><span class="topic-label">{{ node.page.title }}</span></a></li>{% endfor %}
           </ul>
         </div>
-        <div class="constellation-caption"><span>{% ui 'research_areas' %}</span></div>
+        <div class="constellation-caption"><span>{% ui 'research_areas' %}</span><span class="network-hint" data-network-hint>{% ui 'network_hint' %}</span></div>
       </nav>
     {% endif %}
   </div>

@@ -34,61 +34,102 @@
           if (Math.hypot(node.x - other.x, node.y - other.y, node.z - other.z) < 66) edges.push([i, j]);
         }
       });
-      let hovered = -1;
-      let focused = -1;
-      let frame = 0;
-      let angle = 0;
-      let phase = 0;
-      let lastTime = 0;
-      let visible = true;
-      let pointer = 0;
-      let pointerTarget = 0;
+      let hovered = -1, focused = -1, frame = 0, angle = 0, phase = 0, lastTime = 0;
+      let visible = true, yaw = 0, pitch = 0, targetYaw = 0, targetPitch = 0;
+      let spread = 0, targetSpread = 0, pointerInside = false;
+      let pointerX = 300, pointerY = 276, box, heroBox, size = 0;
+      const hero = field.closest('.hero');
       const constellation = field.closest('.constellation');
-      constellation.classList.add('network-ready');
-      const draw = (rotation = 0) => {
-        const box = field.getBoundingClientRect();
-        if (!box.width) return;
-        const ratio = Math.min(window.devicePixelRatio || 1, 2);
-        const size = Math.round(box.width * ratio);
-        if (canvas.width !== size || canvas.height !== size) {
-          canvas.width = size;
-          canvas.height = size;
-        }
+      const hint = constellation.querySelector('[data-network-hint]');
+      const defaultHint = hint?.textContent;
+      const weights = nodes.map(() => 0);
+      const waves = [];
+      const dust = Array.from({ length: 48 }, () => ({
+        x: random() * 600, y: random() * 600, phase: random() * 6.28, size: .5 + random() * .8,
+      }));
+      const measure = () => {
+        box = field.getBoundingClientRect();
+        heroBox = hero.getBoundingClientRect();
+        size = Math.round(box.width * Math.min(window.devicePixelRatio || 1, 2));
+        if (canvas.width !== size || canvas.height !== size) canvas.width = canvas.height = size;
+        targetSpread = Math.max(0, Math.min(1, -heroBox.top / heroBox.height));
+      };
+      const sendWave = (x = 300, y = 276) => {
+        if (motion.matches) return;
+        if (waves.length >= 3) waves.shift();
+        waves.push({ x, y, birth: phase });
+      };
+      const draw = () => {
+        if (!size) return;
         ctx.setTransform(size / 600, 0, 0, size / 600, 0, 0);
         ctx.clearRect(0, 0, 600, 600);
         const active = focused >= 0 ? focused : hovered;
-        const positions = nodes.map((node) => {
-          const x = node.x * Math.cos(rotation) + node.z * Math.sin(rotation);
-          const z = node.z * Math.cos(rotation) - node.x * Math.sin(rotation);
-          const perspective = 1 + z / 900;
-          return { x: 300 + x * perspective, y: 276 + node.y * perspective, depth: (z + 180) / 360 };
-        });
-        edges.forEach(([i, j], edgeIndex) => {
-          const lit = active >= 0 && (nodes[i].group === active || nodes[j].group === active);
-          ctx.strokeStyle = lit ? 'rgba(243,223,161,.52)' : `rgba(243,223,161,${.055 + positions[i].depth * .13})`;
-          ctx.lineWidth = lit ? 1 : .65;
+        const rotation = angle + yaw + spread * .4;
+        const tilt = pitch + Math.sin(phase * .18) * .12;
+        const formation = motion.matches ? 1 : 1 - Math.pow(1 - Math.min(1, phase / 1.8), 3);
+        const expansion = (.72 + formation * .28) * (1 + spread * .15 + Math.sin(phase * .65) * .025);
+        dust.forEach(star => {
+          ctx.fillStyle = `rgba(246,243,233,${.12 + (Math.sin(phase * .65 + star.phase) + 1) * .1})`;
           ctx.beginPath();
-          ctx.moveTo(positions[i].x, positions[i].y);
-          ctx.lineTo(positions[j].x, positions[j].y);
-          ctx.stroke();
-          // Moving signals make the relationships visible, especially on hover.
-          if (edgeIndex % (lit ? 3 : 17) === 0) {
-            const progress = (phase * .16 + edgeIndex * .137) % 1;
-            ctx.fillStyle = lit ? 'rgba(243,223,161,.9)' : 'rgba(243,223,161,.45)';
-            ctx.beginPath();
-            ctx.arc(positions[i].x + (positions[j].x - positions[i].x) * progress,
-              positions[i].y + (positions[j].y - positions[i].y) * progress, lit ? 1.7 : 1.1, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        });
-        positions.forEach((position, i) => {
-          const lit = nodes[i].group === active;
-          ctx.fillStyle = `rgba(243,223,161,${lit ? 1 : .25 + position.depth * .65})`;
-          ctx.beginPath();
-          ctx.arc(position.x, position.y, nodes[i].size * (lit ? 1.45 : 1), 0, Math.PI * 2);
+          ctx.arc(star.x + yaw * 10, star.y + pitch * 10, star.size, 0, Math.PI * 2);
           ctx.fill();
         });
+        // Quiet orbital traces frame the connections, rather than a UI progress ring.
+        for (let i = 0; i < 2; i += 1) {
+          ctx.strokeStyle = 'rgba(243,223,161,.12)';
+          ctx.lineWidth = .7;
+          ctx.beginPath();
+          ctx.ellipse(300, 276, 220 + spread * 12, 100 + i * 65, -.5 + i * 1.3 + yaw * .2, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        const positions = nodes.map((node, i) => {
+          weights[i] += ((active >= 0 && node.group === active ? 1 : 0) - weights[i]) * .12;
+          const x = node.x * Math.cos(rotation) + node.z * Math.sin(rotation);
+          const z = node.z * Math.cos(rotation) - node.x * Math.sin(rotation);
+          const y = node.y * Math.cos(tilt) - z * Math.sin(tilt);
+          const depthZ = node.y * Math.sin(tilt) + z * Math.cos(tilt);
+          const perspective = (1 + depthZ / 900) * expansion;
+          let px = 300 + x * perspective + Math.sin(phase * .6 + i) * 2;
+          let py = 276 + y * perspective + Math.cos(phase * .5 + i) * 2;
+          const distance = Math.hypot(pointerX - px, pointerY - py);
+          const proximity = pointerInside ? Math.max(0, 1 - distance / 110) : 0;
+          px += (pointerX - px) * proximity * .09;
+          py += (pointerY - py) * proximity * .09;
+          let energy = 0;
+          waves.forEach(wave => {
+            const age = phase - wave.birth;
+            const d = Math.hypot(px - wave.x, py - wave.y) - age * 115;
+            energy = Math.max(energy, Math.exp(-d * d / 650) * Math.max(0, 1 - age / 3.8));
+          });
+          return { x: px, y: py, depth: (depthZ + 180) / 360, energy: Math.max(weights[i], proximity * .8, energy) };
+        });
+        edges.forEach(([i, j], edgeIndex) => {
+          const a = positions[i], b = positions[j], energy = Math.max(a.energy, b.energy);
+          ctx.strokeStyle = `rgba(243,223,161,${.055 + a.depth * .15 + energy * .45})`;
+          ctx.lineWidth = .6 + energy * .7;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          if (edgeIndex % 11 === 0 || (energy > .35 && edgeIndex % 3 === 0)) {
+            const progress = (phase * (.2 + energy * .18) + edgeIndex * .137) % 1;
+            // A short trailing segment makes the direction of influence legible.
+            const tail = Math.max(0, progress - .1);
+            ctx.strokeStyle = `rgba(246,243,233,${.3 + energy * .55})`;
+            ctx.lineWidth = 1 + energy;
+            ctx.beginPath(); ctx.moveTo(a.x + (b.x - a.x) * tail, a.y + (b.y - a.y) * tail);
+            ctx.lineTo(a.x + (b.x - a.x) * progress, a.y + (b.y - a.y) * progress); ctx.stroke();
+          }
+        });
+        positions.forEach((p, i) => {
+          ctx.fillStyle = `rgba(243,223,161,${Math.min(1, .25 + p.depth * .6 + p.energy * .5)})`;
+          ctx.beginPath(); ctx.arc(p.x, p.y, nodes[i].size * (1 + p.energy * .65), 0, Math.PI * 2); ctx.fill();
+          if (p.energy > .45 && i % 3 === 0) {
+            ctx.strokeStyle = `rgba(243,223,161,${p.energy * .3})`;
+            ctx.lineWidth = .7;
+            ctx.beginPath(); ctx.arc(p.x, p.y, nodes[i].size * 2.8, 0, Math.PI * 2); ctx.stroke();
+          }
+        });
+        while (waves.length && phase - waves[0].birth > 3.8) waves.shift();
       };
+      constellation.classList.add('network-ready');
       const stop = () => {
         cancelAnimationFrame(frame); frame = 0; lastTime = 0;
         constellation.classList.add('network-paused');
@@ -100,9 +141,12 @@
           lastTime = time;
           const seconds = Math.min(elapsed, 80) / 1000;
           phase += seconds;
-          angle += seconds * .035;
-          pointer += (pointerTarget - pointer) * .08;
-          draw(angle + pointer);
+          angle += seconds * .075;
+          yaw += (targetYaw - yaw) * .075;
+          pitch += (targetPitch - pitch) * .075;
+          spread += (targetSpread - spread) * .06;
+          if (Math.floor((phase - seconds) / 7) !== Math.floor(phase / 7)) sendWave();
+          draw();
         }
         frame = requestAnimationFrame(tick);
       };
@@ -111,32 +155,56 @@
         constellation.classList.remove('network-paused');
         frame = requestAnimationFrame(tick);
       };
-      field.addEventListener('pointermove', (event) => {
+      hero.addEventListener('pointermove', (event) => {
         if (event.pointerType === 'touch' || motion.matches) return;
-        const box = field.getBoundingClientRect();
-        pointerTarget = ((event.clientX - box.left) / box.width - .5) * .3;
+        targetYaw = ((event.clientX - heroBox.left) / heroBox.width - .5) * .85;
+        targetPitch = ((event.clientY - heroBox.top) / heroBox.height - .5) * .5;
+        pointerX = (event.clientX - box.left) / box.width * 600;
+        pointerY = (event.clientY - box.top) / box.height * 600;
+        pointerInside = pointerX >= 0 && pointerX <= 600 && pointerY >= 0 && pointerY <= 600;
       });
-      field.addEventListener('pointerleave', () => { pointerTarget = 0; });
+      const resetPointer = () => { targetYaw = targetPitch = 0; pointerInside = false; };
+      hero.addEventListener('pointerleave', resetPointer);
+      hero.addEventListener('pointercancel', resetPointer);
+      field.addEventListener('pointerdown', (event) => {
+        if (event.target.closest('a') || motion.matches) return;
+        sendWave((event.clientX - box.left) / box.width * 600, (event.clientY - box.top) / box.height * 600);
+      });
+      const highlight = () => {
+        const active = focused >= 0 ? focused : hovered;
+        constellation.classList.toggle('network-exploring', active >= 0);
+        if (hint) hint.textContent = active >= 0 ? topics[active].querySelector('.topic-label').textContent : defaultHint;
+        if (motion.matches) {
+          nodes.forEach((node, i) => { weights[i] = node.group === active ? 1 : 0; });
+          draw();
+        }
+      };
       topics.forEach((topic, i) => {
         topic.addEventListener('pointerenter', (event) => {
           if (event.pointerType === 'touch') return;
-          hovered = i; draw(angle);
+          hovered = i; highlight(); sendWave();
         });
-        const clear = () => { hovered = -1; draw(angle); };
+        const clear = () => { hovered = -1; highlight(); };
         topic.addEventListener('pointerleave', clear);
         topic.addEventListener('pointercancel', clear);
-        topic.addEventListener('focus', () => { focused = i; draw(angle); });
-        topic.addEventListener('blur', () => { focused = -1; draw(angle); });
+        topic.addEventListener('focus', () => { focused = i; highlight(); sendWave(); });
+        topic.addEventListener('blur', () => { focused = -1; highlight(); });
       });
-      if ('ResizeObserver' in window) new ResizeObserver(() => draw(angle)).observe(field);
+      if ('ResizeObserver' in window) new ResizeObserver(() => { measure(); draw(); }).observe(field);
+      window.addEventListener('scroll', measure, { passive: true });
+      window.addEventListener('resize', measure, { passive: true });
       if ('IntersectionObserver' in window) new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting;
         if (!visible) stop(); else start();
       }).observe(field);
       document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
       motion.addEventListener('change', () => {
-        if (motion.matches) { stop(); angle = 0; draw(); } else start();
+        if (motion.matches) {
+          stop(); resetPointer(); angle = yaw = pitch = spread = phase = 0; waves.length = 0; draw();
+        } else start();
       });
+      measure();
+      sendWave();
       draw();
       start();
     }

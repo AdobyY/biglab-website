@@ -184,7 +184,7 @@ Ordinary links inherit their context color, with a thin underline offset by `.22
 
 ### Constellation
 
-The homepage constellation is a labeled navigation of actual research topics, not a force-directed or parallax sociogram. HTML links place topic labels and circular stars over a decorative SVG containing dust, curved connections, an orbit, and a central four-point star. Butter supplies the connections and stars; cream supplies the dust and caption.
+The homepage constellation is a labeled navigation of actual research topics with an illustrative, interactive network behind it. HTML links place topic labels and circular stars over decorative canvas and SVG linework, with a central four-point star. Butter supplies the connections and stars; cream supplies signal trails and dust. The homepage uses a 620px minimum desktop hero, a heading up to 3.7rem, and a diagram up to 560px wide, keeping stable topic labels separate from the moving network.
 
 The template marks the hero with `data-hero-entrance` and pairs topic links with SVG paths using indexed data attributes. `config.js` choreographs a one-shot opening through the Web Animations API (WAAPI), using `cubic-bezier(.16, 1, .3, 1)`, one iteration, and backwards fill:
 
@@ -193,11 +193,11 @@ The template marks the hero with `data-hero-entrance` and pairs topic links with
 - Topic links use the same 700ms arrival, beginning at 650ms plus that stagger; the positioned list items themselves are not transformed by the entrance.
 - Dust fades from 40% of its computed opacity to its resting opacity over 1800ms after a 200ms delay. The central star scales from `.82` to `1` and opacity `.6` to `1` over 1100ms after a 100ms delay.
 
-The entrance completes within 2.4s. The homepage canvas constellation then rotates continuously with traveling connection signals and a subtle central-star pulse; there is no manual pause control. Its rendering suspends outside the viewport or in a hidden tab and resumes automatically, while reduced motion keeps a static network. Non-touch pointer entry and keyboard focus highlight the corresponding connection. Hover and focused topics are tracked independently, so both paths can remain highlighted. Pointer leave/cancel and blur clear their respective states. Labels become cream and underlined on hover or visible keyboard focus; pointer hover also expands the topic-star outline.
+The entrance completes within 2.4s, with the network unfolding from a compact cluster over 1.8s. The homepage canvas constellation rotates in depth, with traveling signals and a subtle central-star pulse. Pointer movement across the hero tilts the network on two axes; nearby nodes gently gather and their connections brighten. Tapping or clicking the diagram sends a wave through the nodes without intercepting topic links. Scrolling slightly expands and turns the network. Hover and keyboard focus highlight a research group, animate its SVG connection and topic ring, and show its actual name in the caption. Motion uses one capped, 30fps canvas loop with cached bounds and at most three concurrent waves; text and link hit targets stay fixed. There is no manual pause control. Rendering suspends outside the viewport or in a hidden tab and resumes automatically, while reduced motion keeps a static network with immediate topic highlighting. Hover and focused topics are tracked independently; pointer leave/cancel and blur clear their respective states. Markup remains readable and navigable without JavaScript.
 
 Entrance animations are skipped for reduced motion or unavailable WAAPI. Any focus entering the hero cancels outstanding entrance animations immediately, as does a change to the reduced-motion preference. Markup and CSS are visible at rest without JavaScript; animation is enhancement, not a visibility prerequisite. Reduced motion retains immediate pointer/keyboard highlighting without animated transitions.
 
-More than seven topics use a two-column list over subdued SVG linework. At 380px and below, the SVG and decorative orbital outlines are hidden while the topic links remain a readable vertical list.
+More than seven topics use a two-column list over subdued SVG linework, with the interactive canvas and hint disabled. On mobile the normal constellation retains its diagram and fixed labels; dense collections become a single-column list at 380px and below.
 
 ### Editorial sections and lists
 
