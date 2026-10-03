@@ -177,8 +177,8 @@ the page tree: it identifies prepared records by their original location and slu
 
 ## Production
 
-No production setup, domain registration or server provisioning has been performed by this change.
-The remaining external inputs are a real registered domain/DNS and hosting access credentials.
+The test deployment runs on Railway using its generated HTTPS domain. A custom domain can be
+connected later through the hosting platform.
 Generate the runtime application secret locally; optional SMTP credentials are needed only for email.
 Django does not load environment files itself; pass variables through the hosting platform or Docker.
 Never commit runtime credentials or pass them to `docker build`. `config.settings.build` imports only
@@ -198,9 +198,18 @@ MEDIA_ROOT=/data/media
 For a first container deployment, set `SEED_INITIAL_CONTENT=1`. Startup runs migrations and the
 repeatable seeder before Gunicorn. It can be changed to `0` after the first successful deployment.
 Only one application process should write to the SQLite database; scale vertically rather than by
-running multiple containers against the same file. The hosting proxy must serve public uploaded
-images at `/media/images/`; this is intentionally not handled by WhiteNoise because uploads are
-mutable. Keep documents behind Wagtail’s serving URLs and access checks.
+running multiple containers against the same file. On Railway, the application serves registered
+raster Wagtail renditions at `/media/images/`; documents, originals and arbitrary uploads are not
+exposed by this endpoint. This is separate from WhiteNoise static-file delivery. Set
+`SERVE_PUBLIC_IMAGE_RENDITIONS=0` when a dedicated proxy serves these images instead.
+
+### Railway
+
+Deploy the repository's `main` branch with the Dockerfile and attach a volume at `/data`.
+Set the required production variables above to the generated Railway hostname and HTTPS URL.
+Railway supplies `PORT`; the entrypoint binds Gunicorn to it. At startup the entrypoint makes the
+mounted directory writable, then switches to the `wagtail` user before migrations, optional
+seeding and serving requests. Image builds use the isolated build settings and need no runtime secret.
 
 ### Example: Docker Compose with Caddy HTTPS
 

@@ -13,6 +13,11 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
 ]
 
+if getattr(settings, "SERVE_PUBLIC_IMAGE_RENDITIONS", False):
+    from .public_images import public_image
+
+    urlpatterns.append(path("media/images/<path:filename>", public_image))
+
 
 if settings.DEBUG:
     from django.conf.urls.static import static

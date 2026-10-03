@@ -24,6 +24,7 @@ def env_list(name, *, required=False):
     return [item.strip() for item in raw.split(",") if item.strip()]
 
 DEBUG = False
+SERVE_PUBLIC_IMAGE_RENDITIONS = env_bool("SERVE_PUBLIC_IMAGE_RENDITIONS", True)
 
 MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 
