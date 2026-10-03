@@ -3,7 +3,7 @@
 UI_LABELS = {
     "en": {
         "research_disciplines": "Psychology · Sociology · Network science",
-        "discover_lab": "Discover BIG Lab", "pause_network": "Pause network animation", "play_network": "Play network animation",
+        "discover_lab": "Discover BIG Lab",
         "about": "About", "science": "Science", "people": "People", "news": "News",
         "projects": "Projects", "current_projects": "Current projects", "finished_projects": "Finished projects",
         "publications": "Publications", "collaborations": "Collaborations", "contact": "Contact",
@@ -32,7 +32,7 @@ UI_LABELS = {
     },
     "cs": {
         "research_disciplines": "Psychologie · Sociologie · Síťová věda",
-        "discover_lab": "Objevte BIG Lab", "pause_network": "Pozastavit animaci sítě", "play_network": "Spustit animaci sítě",
+        "discover_lab": "Objevte BIG Lab",
         "about": "O nás", "science": "Výzkum", "people": "Lidé", "news": "Novinky",
         "projects": "Projekty", "current_projects": "Probíhající projekty", "finished_projects": "Ukončené projekty",
         "publications": "Publikace", "collaborations": "Spolupráce", "contact": "Kontakt",

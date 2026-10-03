@@ -33,7 +33,7 @@
       <div class="header-inner section-shell">
         <a class="site-name" href="{% pageurl site_home %}" aria-label="{{ settings.home.ContactSettings.site_name|default:'BIG Lab' }} — {% ui 'home' %}">
           {% if settings.home.ContactSettings.logo %}{% image settings.home.ContactSettings.logo max-200x100 class="custom-logo" alt="" %}{% else %}{% include "home/includes/brand_mark.html" %}{% endif %}
-          <span>{{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}</span>
+          <span class="brand-wordmark"><span>{{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}</span><span class="brand-affiliation">Masaryk University<span class="brand-location">Czechia</span></span></span>
         </a>
         <button class="menu-toggle" type="button" aria-label="{% ui 'menu' %}" aria-expanded="false" aria-controls="site-navigation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>{% ui 'menu' %}</span></button>
         <nav id="site-navigation" class="navigation" aria-label="{% ui 'main_navigation' %}">
@@ -41,10 +41,16 @@
           {% primary_navigation site_home %}
           {% if homepage_contact_url %}<a class="contact-nav-link" href="{{ homepage_contact_url }}">{% ui 'contact' %}</a>{% endif %}
         </nav>
-        {% if page %}<nav class="language-nav" aria-label="{% ui 'language' %}">
-          <span aria-current="page">{{ page.locale.language_code|upper }}</span>
-          {% for translation in page.get_translations.live %}<a href="{{ translation.url }}" lang="{{ translation.locale.language_code }}" hreflang="{{ translation.locale.language_code }}">{{ translation.locale.language_code|upper }}</a>{% endfor %}
-        </nav>{% endif %}
+        {% if page %}
+        {% get_language_info for page.locale.language_code as current_language %}
+        <details class="language-nav">
+          <summary aria-label="{% ui 'language' %}: {{ current_language.name_local }}"><span>{% if page.locale.language_code == 'cs' %}CZ{% else %}{{ page.locale.language_code|upper }}{% endif %}</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary>
+          <nav class="language-options" aria-label="{% ui 'language' %}">
+            <span aria-current="page" lang="{{ page.locale.language_code }}">{{ current_language.name_local|capfirst }}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8 3 3 7-7"/></svg></span>
+            {% for translation in page.get_translations.live %}{% get_language_info for translation.locale.language_code as language %}<a href="{% pageurl translation %}" lang="{{ translation.locale.language_code }}" hreflang="{{ translation.locale.language_code }}">{{ language.name_local|capfirst }}</a>{% endfor %}
+          </nav>
+        </details>
+        {% endif %}
       </div>
     </header>
     <main id="content" class="site-main" tabindex="-1">{% block content %}{% endblock %}</main>

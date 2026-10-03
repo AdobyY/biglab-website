@@ -41,11 +41,9 @@
       let phase = 0;
       let lastTime = 0;
       let visible = true;
-      let paused = false;
       let pointer = 0;
       let pointerTarget = 0;
       const constellation = field.closest('.constellation');
-      const toggle = constellation.querySelector('[data-network-toggle]');
       constellation.classList.add('network-ready');
       const draw = (rotation = 0) => {
         const box = field.getBoundingClientRect();
@@ -96,7 +94,7 @@
         constellation.classList.add('network-paused');
       };
       const tick = (time) => {
-        if (motion.matches || paused || !visible || document.hidden) { stop(); return; }
+        if (motion.matches || !visible || document.hidden) { stop(); return; }
         const elapsed = lastTime ? time - lastTime : 34;
         if (elapsed >= 32) {
           lastTime = time;
@@ -109,16 +107,10 @@
         frame = requestAnimationFrame(tick);
       };
       const start = () => {
-        if (motion.matches || paused || !visible || document.hidden || frame) return;
+        if (motion.matches || !visible || document.hidden || frame) return;
         constellation.classList.remove('network-paused');
         frame = requestAnimationFrame(tick);
       };
-      toggle?.addEventListener('click', () => {
-        paused = !paused;
-        toggle.setAttribute('aria-pressed', String(paused));
-        toggle.setAttribute('aria-label', paused ? toggle.dataset.playLabel : toggle.dataset.pauseLabel);
-        if (paused) stop(); else start();
-      });
       field.addEventListener('pointermove', (event) => {
         if (event.pointerType === 'touch' || motion.matches) return;
         const box = field.getBoundingClientRect();
@@ -143,10 +135,8 @@
       }).observe(field);
       document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });
       motion.addEventListener('change', () => {
-        toggle.hidden = motion.matches;
         if (motion.matches) { stop(); angle = 0; draw(); } else start();
       });
-      toggle.hidden = motion.matches;
       draw();
       start();
     }

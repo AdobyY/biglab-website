@@ -2,6 +2,22 @@ document.documentElement.classList.add('has-js');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const menuButton = document.querySelector('.menu-toggle');
 const navigation = document.querySelector('.navigation');
+const languageSwitcher = document.querySelector('details.language-nav');
+const closeLanguage = (restoreFocus = false) => {
+  if (!languageSwitcher?.open) return;
+  languageSwitcher.open = false;
+  if (restoreFocus) languageSwitcher.querySelector('summary').focus();
+};
+const siteHeader = document.querySelector('.site-header');
+let headerFrame = 0;
+const updateHeader = () => {
+  siteHeader?.classList.toggle('is-scrolled', window.scrollY > 24);
+  headerFrame = 0;
+};
+window.addEventListener('scroll', () => {
+  if (!headerFrame) headerFrame = requestAnimationFrame(updateHeader);
+}, { passive: true });
+updateHeader();
 
 // Only the homepage opening is choreographed; markup remains visible without JS.
 document.querySelectorAll('[data-hero-entrance]').forEach((hero) => {
@@ -99,6 +115,7 @@ const closeNavigation = (restoreFocus = false) => {
   if (restoreFocus) menuButton.focus();
 };
 menuButton?.addEventListener('click', () => {
+  closeLanguage();
   const open = menuButton.getAttribute('aria-expanded') === 'true';
   menuButton.setAttribute('aria-expanded', String(!open));
   navigation?.classList.toggle('is-open', !open);
@@ -118,9 +135,24 @@ document.querySelectorAll('.submenu-toggle').forEach((button) => {
 });
 document.addEventListener('click', (event) => {
   if (!event.target.closest('.site-header')) closeNavigation();
+  if (!event.target.closest('.language-nav')) closeLanguage();
+});
+languageSwitcher?.addEventListener('toggle', () => {
+  if (languageSwitcher.open) closeNavigation();
+});
+languageSwitcher?.addEventListener('focusout', (event) => {
+  if (!languageSwitcher.contains(event.relatedTarget)) closeLanguage();
+});
+window.matchMedia('(max-width: 1100px)').addEventListener('change', () => {
+  closeNavigation();
+  closeLanguage();
 });
 document.addEventListener('keydown', (event) => {
   if (event.key !== 'Escape') return;
+  if (languageSwitcher?.open) {
+    closeLanguage(true);
+    return;
+  }
   const openItem = document.querySelector('.has-submenu.is-open');
   if (openItem) {
     const button = openItem.querySelector(':scope > .nav-entry .submenu-toggle');

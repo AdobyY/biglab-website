@@ -31,7 +31,7 @@
             {% for node in star_nodes %}<li style="--star-x:{{ node.x|unlocalize }}%;--star-y:{{ node.y|unlocalize }}%"><a href="{{ node.url }}" data-constellation-topic="{{ forloop.counter0 }}"><span class="topic-star" aria-hidden="true"></span><span class="topic-label">{{ node.page.title }}</span></a></li>{% endfor %}
           </ul>
         </div>
-        <div class="constellation-caption"><span>{% ui 'research_areas' %}</span><button class="network-toggle" type="button" data-network-toggle aria-pressed="false" aria-label="{% ui 'pause_network' %}" data-pause-label="{% ui 'pause_network' %}" data-play-label="{% ui 'play_network' %}"><svg class="network-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14m6-14v14"/></svg><svg class="network-play" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7Z"/></svg></button></div>
+        <div class="constellation-caption"><span>{% ui 'research_areas' %}</span></div>
       </nav>
     {% endif %}
   </div>

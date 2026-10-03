@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from django.template.loader import render_to_string
 from django.test import RequestFactory
-from wagtail.models import Page, Site
+from wagtail.models import Locale, Page, Site
 from wagtail.test.utils import WagtailPageTestCase
 
 from home.models import ContentPage, HomePage, PeopleIndexPage, ProjectPage, SciencePage
@@ -51,6 +51,7 @@ class FrontendContractTests(WagtailPageTestCase):
         soup = BeautifulSoup(render_to_string("home/home_page.html", context, request=request), "html.parser")
         hero = soup.select_one(".hero[data-hero-entrance]")
         self.assertEqual(hero.select_one("h1").get_text(), self.home.hero_title)
+        self.assertFalse(hero.select("[data-network-toggle]"))
         self.assertEqual(hero.select_one(".summary").get_text(), self.home.hero_summary)
         self.assertEqual(hero.select_one(".hero-actions a")["href"], self.science.url)
         self.assertFalse(hero.select("[hidden], .hero-copy[aria-hidden='true'], .constellation-topics [aria-hidden='true']:not(.topic-star)"))
@@ -118,6 +119,29 @@ class FrontendContractTests(WagtailPageTestCase):
         html = render_to_string("home/home_page.html", self.home.get_context(request), request=request)
         menu = BeautifulSoup(html, "html.parser").select_one("button.menu-toggle")
         self.assertEqual(menu.get("aria-label"), "Menu")
+
+    def test_language_dropdown_links_to_published_translation_of_current_page(self):
+        Site.objects.update_or_create(hostname="localhost", defaults={"root_page": self.home, "is_default_site": True})
+        locale, _ = Locale.objects.get_or_create(language_code="cs")
+        translated_home = self.home.copy_for_translation(locale)
+        translated_science = self.science.copy_for_translation(locale)
+        translated_home.save_revision().publish()
+        translated_science.save_revision().publish()
+        request = RequestFactory().get(self.science.url)
+        soup = BeautifulSoup(render_to_string(
+            self.science.get_template(request), self.science.get_context(request), request=request,
+        ), "html.parser")
+        languages = soup.select_one("details.language-nav")
+        self.assertEqual(languages.select_one("[aria-current='page']").get_text(strip=True), "English")
+        link = languages.select_one("a[hreflang='cs']")
+        self.assertEqual(link["href"], translated_science.url)
+        self.assertEqual(link.get_text(strip=True), "Česky")
+        translated_science.refresh_from_db()
+        translated_science.unpublish()
+        soup = BeautifulSoup(render_to_string(
+            self.science.get_template(request), self.science.get_context(request), request=request,
+        ), "html.parser")
+        self.assertFalse(soup.select(".language-options a"))
 
     def test_hidden_custom_contact_does_not_create_a_dead_header_link(self):
         self.home.sections = [("contact", {"title": "", "theme": "paper", "is_visible": False})]

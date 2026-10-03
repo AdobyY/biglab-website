@@ -92,7 +92,7 @@ components:
 
 BIG Lab's shipped identity uses a constellation to express relationships among research topics. The navy header and homepage hero form one continuous opening, with butter-yellow headings, stars, and actions. Cream reading surfaces and occasional brick-colored sections carry the content below.
 
-Alegreya's serif headings pair with Source Sans 3 for prose and interface text. Compact typography and bounded photos accompany open editorial sections, thin dividers, rounded imagery, and softly rectangular controls. A finite animated opening introduces the research constellation without adding continuous ambient motion or turning every item into a boxed card.
+Alegreya's serif headings pair with Source Sans 3 for prose and interface text. Compact typography and bounded photos accompany open editorial sections, thin dividers, rounded imagery, and softly rectangular controls. A finite entrance introduces the research constellation, whose moving connections continue while visible.
 
 This document records the current implementation, not a new design proposal. The source of truth is `config/static/css/config.css` and `config/static/js/config.js`, together with `config/templates/base.html`, the templates under `home/templates/home/`, and `config/static/fonts/fonts.css`. Frontmatter records the reused palette and representative desktop type roles; responsive and component-specific overrides are described below.
 
@@ -170,7 +170,7 @@ Hero images use 5:4 on desktop, capped at 380px high, and 4:3 on mobile. Gallery
 
 ### Header and navigation
 
-A navy header contains the constellation mark, Source Sans 3 site name, text navigation, and language links. The desktop inner header has an 82px minimum height and a dark bottom rule; this becomes 78px at the first breakpoint and 72px on mobile. The desktop mark is 36px square, reducing to 34px on mobile. The mark is butter yellow and can be replaced by an editor-supplied logo in the header.
+A shared navy header contains the constellation mark, Source Sans 3 site name, the affiliation “Masaryk University · Czechia”, text navigation, and a native language disclosure linking to published translations of the current page. Header and footer use the same 1200px shell and 16px inherited interface type on every page; homepage CSS never overrides them. The header sticks at the top, gains a subtle shadow and translucent navy background after scrolling, and preserves its height to avoid layout shifts. The inner header has an 82px minimum height, becoming 84px at 1100px and 76px on mobile. The butter mark is 36px square, reducing to 35px on mobile, and can be replaced by an editor-supplied logo. Escape and outside clicks close language/navigation panels; the mobile menu scrolls within the viewport.
 
 Hover and current navigation states use butter text and an underline. Desktop submenus use lighter navy, rounded corners, and separate disclosure buttons. At 1100px and below they become indented lists within the vertical navigation. The template provides `aria-expanded`, `aria-controls`, current-page indicators, and a labeled language navigation. CSS leaves navigation and submenus available when JavaScript is absent.
 
@@ -193,7 +193,7 @@ The template marks the hero with `data-hero-entrance` and pairs topic links with
 - Topic links use the same 700ms arrival, beginning at 650ms plus that stagger; the positioned list items themselves are not transformed by the entrance.
 - Dust fades from 40% of its computed opacity to its resting opacity over 1800ms after a 200ms delay. The central star scales from `.82` to `1` and opacity `.6` to `1` over 1100ms after a 100ms delay.
 
-All opening motion is finite and completes within 2.4s; there is no repeating star animation. Non-touch pointer entry and keyboard focus highlight the corresponding connection, raising its opacity from `.35` to `1` and stroke width from `.8` to `1.8`. Hover and focused topics are tracked independently, so both paths can remain highlighted. Pointer leave/cancel and blur clear their respective states. Labels become cream and underlined on hover or visible keyboard focus; pointer hover also expands the topic-star outline.
+The entrance completes within 2.4s. The homepage canvas constellation then rotates continuously with traveling connection signals and a subtle central-star pulse; there is no manual pause control. Its rendering suspends outside the viewport or in a hidden tab and resumes automatically, while reduced motion keeps a static network. Non-touch pointer entry and keyboard focus highlight the corresponding connection. Hover and focused topics are tracked independently, so both paths can remain highlighted. Pointer leave/cancel and blur clear their respective states. Labels become cream and underlined on hover or visible keyboard focus; pointer hover also expands the topic-star outline.
 
 Entrance animations are skipped for reduced motion or unavailable WAAPI. Any focus entering the hero cancels outstanding entrance animations immediately, as does a change to the reduced-motion preference. Markup and CSS are visible at rest without JavaScript; animation is enhancement, not a visibility prerequisite. Reduced motion retains immediate pointer/keyboard highlighting without animated transitions.
 
@@ -217,7 +217,7 @@ Major pages reuse a spacious serif page heading, bounded introduction, body cont
 
 ### Contact and footer
 
-The contact band uses butter with navy text and a two-column introduction/details layout that stacks on mobile. The navy footer uses cream copy, butter headings and tagline, optional contact/social columns, and a ruled copyright row.
+The contact band uses butter with navy text and a two-column introduction/details layout that stacks on mobile. The shared navy footer uses cream copy, butter headings and tagline, optional contact/social columns, and a ruled copyright row, with 4rem top padding and a 1.4rem site name on every page.
 
 ## Do's and Don'ts
 

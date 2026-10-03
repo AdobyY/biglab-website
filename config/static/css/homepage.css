@@ -1,9 +1,5 @@
 /* The homepage is a spacious editorial expression of the shared lab identity. */
 .template-homepage { --shell: min(1200px, calc(100% - 96px)); font-size: 16px; }
-.template-homepage .header-inner { min-height: 82px; }
-.template-homepage .site-name { font-size: 1.3rem; gap: .7rem; }
-.template-homepage .brand-mark { width: 36px; height: 36px; }
-.template-homepage .navigation, .template-homepage .site-nav { gap: 1.65rem; }
 .template-homepage .hero-inner { grid-template-columns: .95fr 1.05fr; min-height: 580px; gap: 3.5rem; padding-block: 2.5rem 2rem; }
 .template-homepage .hero-copy { padding-right: 0; }
 .template-homepage .hero h1 { font-size: clamp(2.65rem, 4.1vw, 3.5rem); line-height: 1.12; letter-spacing: -.025em; max-width: 19ch; margin-bottom: 1.4rem; text-wrap: balance; }
@@ -28,13 +24,6 @@
 .template-homepage .topic-star { width: 12px; height: 12px; outline: 1px solid rgb(243 223 161 / .5); outline-offset: 5px; box-shadow: none; }
 .template-homepage .constellation-topics a:hover .topic-star { outline-offset: 8px; }
 .template-homepage .constellation-caption { display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-align: left; font-size: .72rem; color: #bdc5cd; margin: .25rem 1rem 0; }
-.network-toggle { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; color: var(--yellow); border: 1px solid var(--dark-line); border-radius: 50%; background: transparent; }
-.network-ready .network-toggle { display: inline-flex; }
-.network-toggle[hidden] { display: none; }
-.network-toggle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; }
-.network-toggle:hover { background: var(--navy-light); border-color: var(--yellow); }
-.network-toggle .network-play, .network-toggle[aria-pressed="true"] .network-pause { display: none; }
-.network-toggle[aria-pressed="true"] .network-play { display: block; }
 .network-paused .central-star { animation-play-state: paused; }
 .network-ready:not(.network-paused) .central-star { animation: network-heartbeat 5s ease-in-out infinite; transform-origin: 300px 276px; }
 @keyframes network-heartbeat { 0%, 100% { transform: scale(.85); opacity: .8; } 50% { transform: scale(1.05); opacity: 1; } }
@@ -44,7 +33,7 @@
 .hero-footnote a { display: inline-flex; align-items: center; gap: .7rem; text-decoration: none; min-height: 44px; color: var(--paper); }
 .hero-footnote svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.5; transition: transform .3s var(--ease-out); }
 .hero-footnote a:hover svg { transform: translateY(4px); }
-#home-sections { scroll-margin-top: 2rem; }
+#home-sections { scroll-margin-top: 0; }
 .template-homepage .hero-text .hero-inner { grid-template-columns: 1fr; min-height: 440px; }
 .template-homepage .hero-text h1 { max-width: 22ch; }
 .template-homepage .hero-image img { max-height: 560px; aspect-ratio: 1; border-radius: 12px; }
@@ -99,12 +88,9 @@
 .template-homepage .contact-inner { gap: 5rem; align-items: center; }
 .template-homepage .contact-inner h2 { font-size: clamp(1.8rem, 2.5vw, 2.15rem); margin-bottom: 1rem; }
 .template-homepage .contact-details { gap: 1rem; }
-.template-homepage .site-footer { padding-top: 4rem; }
-.template-homepage .footer-lead .site-name { font-size: 1.4rem; }
 
 @media (max-width: 1100px) {
   .template-homepage { --shell: calc(100% - 64px); }
-  .template-homepage .header-inner { min-height: 84px; }
   .template-homepage .hero-inner { min-height: 510px; gap: 2rem; padding-block: 2.5rem; }
   .template-homepage .hero h1 { font-size: clamp(2.4rem, 4.2vw, 3.1rem); }
   .template-homepage .constellation-topics li { width: 145px; }
@@ -123,9 +109,6 @@
 }
 @media (max-width: 760px) {
   .template-homepage { --shell: calc(100% - 40px); }
-  .template-homepage .header-inner { min-height: 76px; }
-  .template-homepage .site-name { font-size: 1.25rem; }
-  .template-homepage .brand-mark { width: 35px; height: 35px; }
   .template-homepage .hero-inner { grid-template-columns: 1fr; min-height: 0; gap: 1rem; padding-block: 2rem 1.25rem; }
   .template-homepage .hero h1 { font-size: clamp(2rem, 5.7vw, 2.65rem); max-width: 23ch; margin-bottom: 1.2rem; }
   .template-homepage .hero .summary { max-width: 42ch; font-size: 1rem; }
