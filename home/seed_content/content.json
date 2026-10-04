@@ -1455,7 +1455,7 @@
         "show_in_menus": true,
         "seo_title": "",
         "search_description": "",
-        "intro": "<p>Tato sekce je připravena pro potvrzené materiály projektu Parta od týmu BIG Labu.</p>",
+        "intro": "<p data-block-key=\"56fcd\">Tato sekce je připravena pro potvrzené materiály projektu Parta od týmu BIG Labu.</p>",
         "body": [],
         "after_body": [],
         "sections": [],
@@ -1464,7 +1464,7 @@
       "parent": 46,
       "locale": "cs",
       "translation_key": "e2db2fbc-7bea-4d26-9d33-96fca6ac8697",
-      "live": false
+      "live": true
     },
     {
       "model": "home.contentpage",

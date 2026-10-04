@@ -163,7 +163,8 @@ def import_bundle(directory=DEFAULT_BUNDLE, *, if_changed=False):
     if not manifest.exists():
         raise CommandError("Export development content with export_biglab_content first.")
     payload = manifest.read_bytes()
-    digest = hashlib.sha256(payload).hexdigest()
+    # Reapply when the importer gains a repair, even for the same content.
+    digest = hashlib.sha256(b"biglab-content-sync-v2\n" + payload).hexdigest()
     data = json.loads(payload)
     if data.get("version") != 1:
         raise CommandError("Unsupported content snapshot version.")
@@ -178,7 +179,7 @@ def import_bundle(directory=DEFAULT_BUNDLE, *, if_changed=False):
         if hashlib.sha256(source.read_bytes()).hexdigest() != item["sha256"]:
             raise CommandError("Snapshot asset checksum mismatch.")
     mappings = {(label(Page), data["tree_root"]): Page.get_first_root_node()}
-    counts = {"pages": 0, "assets": 0, "snippets": 0, "settings": 0}
+    counts = {"pages": 0, "assets": 0, "snippets": 0, "settings": 0, "urls": 0}
     with transaction.atomic():
         site = Site.objects.get(is_default_site=True)
         for code in data["locales"]:
@@ -257,6 +258,16 @@ def import_bundle(directory=DEFAULT_BUNDLE, *, if_changed=False):
                     revision.publish()
                 counts["pages"] += 1
             mappings[(label(Page), item["id"])] = page
+        # Older installations can have stale descendant URLs even when the
+        # parent's slug is already correct. Repair derived paths without
+        # creating editorial revisions or changing publication states.
+        for item in data["pages"]:
+            page = Page.objects.get(pk=mappings[(label(Page), item["id"])].pk)
+            old_path = page.url_path
+            page.set_url_path(page.get_parent())
+            if page.url_path != old_path:
+                Page.objects.filter(pk=page.pk).update(url_path=page.url_path)
+                counts["urls"] += 1
         site.root_page = mappings[(label(Page), data["default_root"])]
         site.save(update_fields=["root_page"])
         for item in data["settings"]:

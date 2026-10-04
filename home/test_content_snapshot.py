@@ -14,7 +14,7 @@ from wagtail.images import get_image_model
 from wagtail.models import PageViewRestriction, Site
 
 from home.content_snapshot import export_bundle, import_bundle
-from home.models import ContentPage, HomePage, HomepageDesignSettings, NewsIndexPage, NewsPage, ProjectPage
+from home.models import ContentPage, HomePage, HomepageDesignSettings, NewsIndexPage, NewsPage, PeopleIndexPage, PersonPage, ProjectPage
 from home.templatetags.navigation_tags import _build_menu
 
 
@@ -31,6 +31,9 @@ class DevelopmentSnapshotTests(TestCase):
         self.site.port = 443
         self.site.save()
         self.home = self.site.root_page.specific
+        people = PeopleIndexPage.objects.child_of(self.home).first()
+        self.profile = people.add_child(instance=PersonPage(title="Snapshot researcher", slug="snapshot-researcher", role="Researcher"))
+        self.profile.save_revision().publish()
         self.parta = ProjectPage.objects.child_of(self.home).get(slug="parta")
         self.child = self.parta.add_child(instance=ContentPage(title="Parents", slug="for-parents", live=False, show_in_menus=True))
         image_bytes = BytesIO()
@@ -154,3 +157,29 @@ class DevelopmentSnapshotTests(TestCase):
         PageViewRestriction.objects.create(page=self.home, restriction_type="login")
         with self.assertRaises(CommandError):
             export_bundle(self.directory / "private")
+
+    def test_index_slug_change_updates_all_profile_links(self):
+        index = PeopleIndexPage.objects.child_of(self.home).first()
+        profiles = list(PersonPage.objects.child_of(index))
+        old_slug = index.slug
+        index.slug = "old-team"
+        index.save_revision().publish()
+        import_bundle(self.bundle)
+        index.refresh_from_db()
+        self.assertEqual(index.slug, old_slug)
+        for profile in profiles:
+            profile.refresh_from_db()
+            self.assertEqual(profile.url_path, index.url_path + profile.slug + "/")
+            self.assertEqual(self.client.get(profile.url).status_code, 200)
+
+    def test_stale_profile_urls_are_repaired_when_content_is_unchanged(self):
+        index = PeopleIndexPage.objects.child_of(self.home).first()
+        profile = PersonPage.objects.child_of(index).first()
+        PersonPage.objects.filter(pk=profile.pk).update(url_path="/home/old-team/" + profile.slug + "/")
+        revisions = profile.revisions.count()
+        result = import_bundle(self.bundle)
+        profile.refresh_from_db()
+        self.assertEqual(result["urls"], 1)
+        self.assertEqual(profile.url_path, index.url_path + profile.slug + "/")
+        self.assertEqual(profile.revisions.count(), revisions)
+        self.assertEqual(self.client.get(profile.url).status_code, 200)
