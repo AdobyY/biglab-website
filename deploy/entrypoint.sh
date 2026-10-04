@@ -20,6 +20,6 @@ fi
 
 python manage.py migrate --noinput
 if [ "${SEED_INITIAL_CONTENT:-0}" = "1" ]; then
-    python manage.py seed_biglab
+    python manage.py seed_biglab --if-changed
 fi
 exec gunicorn config.wsgi:application --bind "0.0.0.0:${PORT:-8000}" --workers 1 --threads 2 --timeout 60

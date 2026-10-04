@@ -269,7 +269,7 @@ class LocaleAdminTests(WagtailPageTestCase):
 class InitialContentTests(WagtailPageTestCase):
     def test_seed_is_repeatable_without_replacing_editor_content(self):
         with TemporaryDirectory() as media_root, self.settings(MEDIA_ROOT=media_root):
-            call_command("seed_biglab", verbosity=0)
+            call_command("seed_biglab", bootstrap=True, verbosity=0)
             home = HomePage.objects.get(depth=2, locale__language_code="en")
             self.assertTrue(home.sections)
             self.assertTrue(PersonPage.objects.filter(locale__language_code="en").exists())
@@ -278,7 +278,7 @@ class InitialContentTests(WagtailPageTestCase):
             home.hero_title = "Editor-owned headline"
             home.save_revision().publish()
 
-            call_command("seed_biglab", verbosity=0)
+            call_command("seed_biglab", bootstrap=True, verbosity=0)
             home.refresh_from_db()
 
             self.assertEqual(home.hero_title, "Editor-owned headline")

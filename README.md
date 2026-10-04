@@ -88,19 +88,40 @@ Data-driven homepage sections support curation without losing automatic updates:
 Featured projects, selected-page links, galleries, sliders, and all image lists already use explicit
 chooser fields and drag ordering, so editors do not need template changes for those sections.
 
-The `seed_biglab` command uploads source images and initializes English and Czech content from the
-previous site. Reruns create missing records but do not overwrite existing children, translations,
-snippets or edited page revisions, restore intentionally cleared text, or republish existing drafts.
-`--force` is deprecated and no longer replaces content. Corrected Czech project bodies and collaboration
-labels apply to newly created translations; existing editor translations must be reviewed in the CMS.
-Parta’s new audience, timeline, results and contact children start as editable **drafts**, with no
-invented results, dates or email. Add confirmed materials, preview and publish each child when ready;
-live child content is shown inline on Parta with anchors. Existing live children are not unpublished.
-Imported image provenance is in `home/seed_assets/`; generated renditions stay in `media/`.
+The `seed_biglab` command synchronizes the committed development snapshot in `home/seed_content/`.
+It copies page text (including the hero), sections and their order, both languages, original images,
+documents, publications, collaborations, interface labels, contacts and homepage colors. Page/image
+IDs are remapped for the destination database. Menu visibility and published/draft states match
+development, so a draft Parta child does not appear in production navigation. Unrelated destination
+records are retained. Accounts, passwords, permissions, revision history and runtime credentials are
+not exported; the destination hostname/port are preserved.
+
+After changing development content, refresh the snapshot, commit it and push:
+
+The snapshot files become public when committed to this public repository, including draft content;
+include only material intended for that distribution.
+
+```bash
+uv run python manage.py export_biglab_content
+# Commit home/seed_content/ together with the relevant source changes, then push.
+```
+
+An explicit `python manage.py seed_biglab` replaces the snapshot-managed content with the exported
+development version, including restoring blank fields and matching publication states. Container
+startup uses `seed_biglab --if-changed`: it applies each new snapshot once, storing its checksum on the
+persistent media volume, and preserves later CMS edits across restarts of the same snapshot. To
+deliberately reapply it, run the command without `--if-changed`. `--bundle-dir` can select an exported
+snapshot; `export_biglab_content --output-dir` can create one outside the default directory.
+
+The legacy source initializer remains available as `seed_biglab --bootstrap`; it preserves existing
+editor records and is intended only for initial source scaffolding, not development synchronization.
+Parta's unfilled audience, timeline, results and contact pages remain editable drafts until real
+materials are available. Source image provenance is in `home/seed_assets/`; renditions are generated
+on the destination and remain in `media/`.
 
 ### Repairing an existing legacy installation
 
-The ordinary seeder intentionally does not repair already-published scaffolding. For installations
+The legacy `--bootstrap` initializer intentionally does not repair already-published scaffolding. For installations
 created with the old defaults, first pause editorial work and create and verify a **database + media
 backup** using the procedure below. Then inspect the read-only repair report:
 
@@ -195,8 +216,9 @@ SQLITE_PATH=/data/db.sqlite3
 MEDIA_ROOT=/data/media
 ```
 
-For a first container deployment, set `SEED_INITIAL_CONTENT=1`. Startup runs migrations and the
-repeatable seeder before Gunicorn. It can be changed to `0` after the first successful deployment.
+Set `SEED_INITIAL_CONTENT=1` to synchronize each new development snapshot during container startup.
+Startup runs migrations and `seed_biglab --if-changed` before Gunicorn. Set it to `0` to disable
+automatic snapshot updates while retaining the command for explicit runs.
 Only one application process should write to the SQLite database; scale vertically rather than by
 running multiple containers against the same file. On Railway, the application serves registered
 raster Wagtail renditions at `/media/images/`; documents, originals and arbitrary uploads are not

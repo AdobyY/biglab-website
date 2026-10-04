@@ -209,12 +209,20 @@ RESEARCH_AREAS = [
 
 
 class Command(BaseCommand):
-    help = "Populate the BIG Lab Wagtail site with public source content."
+    help = "Synchronize all content from the committed development snapshot."
 
     def add_arguments(self, parser):
-        parser.add_argument("--force", action="store_true", help="Deprecated; existing editor content is always preserved.")
+        parser.add_argument("--force", action="store_true", help="Deprecated; explicit seed_biglab runs already synchronize the snapshot.")
+        parser.add_argument("--bootstrap", action="store_true", help="Use the legacy initial source-content importer instead of the development snapshot.")
+        parser.add_argument("--bundle-dir", help="Directory containing an exported development content snapshot.")
+        parser.add_argument("--if-changed", action="store_true", help="Skip an already applied snapshot; used at container startup to preserve later CMS edits.")
 
     def handle(self, *args, **options):
+        if not options["bootstrap"]:
+            from home.content_snapshot import DEFAULT_BUNDLE, import_bundle
+            result = import_bundle(options["bundle_dir"] or DEFAULT_BUNDLE, if_changed=options["if_changed"])
+            self.stdout.write(f"Development content synchronized: {result}")
+            return
         if options["force"]:
             self.stdout.write(self.style.WARNING("--force no longer replaces existing content."))
         images = self._load_images()

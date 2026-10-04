@@ -439,7 +439,7 @@ from django.core.management import call_command
 
 django.setup()
 call_command("migrate", verbosity=0)
-call_command("seed_biglab", verbosity=0)
+call_command("seed_biglab", bootstrap=True, verbosity=0)
 from home.models import HomePage, ProjectPage, Collaboration
 from wagtail.models import Locale
 
@@ -471,7 +471,7 @@ home.save_revision().publish()
 child = parta.get_children().specific().get(slug="results")
 child.intro = "<p>Editor draft only</p>"
 child.save_revision()
-call_command("seed_biglab", force=True, verbosity=0)
+call_command("seed_biglab", bootstrap=True, force=True, verbosity=0)
 home.refresh_from_db()
 assert not home.intro and not home.body and not home.sections and not home.about_financing
 child.refresh_from_db()
@@ -480,6 +480,47 @@ published_child.refresh_from_db()
 assert published_child.live
 assert "Confirmed editor materials" in str(published_child.body)
 assert "Editor draft only" in str(child.get_latest_revision_as_object().intro)
+'''
+        env = self.environment("config.settings.dev")
+        with tempfile.TemporaryDirectory() as directory:
+            env["SQLITE_PATH"] = str(Path(directory) / "db.sqlite3")
+            env["MEDIA_ROOT"] = str(Path(directory) / "media")
+            result = self.run_python("-c", script, env=env)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_development_snapshot_seeds_fresh_database_with_different_ids(self):
+        script = '''
+import django
+import json
+from io import BytesIO
+from PIL import Image
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.management import call_command
+from django.db import connections
+django.setup()
+from wagtail.models import Site
+from wagtail.images import get_image_model
+from home.models import ContentPage, HomePage, ProjectPage
+from home.content_snapshot import DEFAULT_BUNDLE, import_bundle
+try:
+    call_command("migrate", verbosity=0)
+    home = Site.objects.get(is_default_site=True).root_page.specific
+    home.add_child(instance=ContentPage(title="Unrelated target page", slug="unrelated", live=False))
+    payload = BytesIO()
+    Image.new("RGB", (10,10), "red").save(payload, format="JPEG")
+    get_image_model().objects.create(title="Unrelated photo", file=SimpleUploadedFile("other.jpg", payload.getvalue(), "image/jpeg"))
+    result = import_bundle()
+    snapshot = json.loads((DEFAULT_BUNDLE / "content.json").read_text(encoding="utf-8"))
+    expected_home = next(p for p in snapshot["pages"] if p["id"] == snapshot["default_root"])
+    home.refresh_from_db()
+    assert home.hero_summary == expected_home["fields"]["hero_summary"]
+    assert home.hero_title == expected_home["fields"]["hero_title"]
+    assert HomePage.objects.get(locale__language_code="cs").hero_summary
+    assert not ProjectPage.objects.get(slug="parta", locale__language_code="en").get_children().live().exists()
+    assert get_image_model().objects.count() == len(snapshot["assets"]) + 1
+    assert import_bundle()["pages"] == 0
+finally:
+    connections.close_all()
 '''
         env = self.environment("config.settings.dev")
         with tempfile.TemporaryDirectory() as directory:

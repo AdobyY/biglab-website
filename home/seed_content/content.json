@@ -1,0 +1,2128 @@
+{
+  "version": 1,
+  "locales": [
+    "en",
+    "cs"
+  ],
+  "tree_root": 1,
+  "default_root": 3,
+  "pages": [
+    {
+      "model": "home.homepage",
+      "id": 3,
+      "fields": {
+        "title": "About BIG Lab",
+        "draft_title": "About BIG Lab",
+        "slug": "home",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>BIG Lab brings together social psychology, sociology and network science to understand change at two connected levels: the person and the group.</p>",
+        "body": [
+          {
+            "type": "heading",
+            "value": "From individual change to social spread",
+            "id": "95c3328b-ca12-417d-9274-3809fabb75bb"
+          },
+          {
+            "type": "text",
+            "value": "<p>Our work examines outcomes including prejudice, substance use, pro-environmental behaviour, polarization and conflict. We combine longitudinal social network analysis, computational modelling, experiments and real-world interventions.</p>",
+            "id": "77307069-a1e3-40ba-9fce-a5d3aacb8d4e"
+          }
+        ],
+        "after_body": [],
+        "hero_title": "How do individual choices become collective change?",
+        "hero_summary": "We study how attitudes and behaviours form in individuals—and how they spread through relationships, groups and society.",
+        "hero_image": null,
+        "hero_layout": "constellation",
+        "show_contact_section": true,
+        "about_financing": "<p>BIG Lab’s research is supported through two funded projects: <a href=\"https://www.muni.cz/en/research/projects/75245\">Rethinking Segregation within Schools</a> (2026–2030), funded by the Czech Science Foundation’s JUNIOR STAR programme, and <a href=\"https://www.muni.cz/en/research/projects/74806\">Behavior Dynamics: From Individual Change to Social Spread</a> (2025–2029), funded by the Grant Agency of Masaryk University.</p>",
+        "sections": [
+          {
+            "type": "about",
+            "value": {
+              "intro": "<p>BIG Lab brings together social psychology, sociology and network science to understand change at two connected levels: the person and the group.</p>",
+              "is_visible": true,
+              "anchor": "about",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium",
+              "title": "From individual change to social spread",
+              "text": "<p>Our work examines outcomes including prejudice, substance use, pro-environmental behaviour, polarization and conflict. We combine longitudinal social network analysis, computational modelling, experiments and real-world interventions.</p>",
+              "theme": "paper"
+            },
+            "id": "9bbdae6e-2cbf-4ae8-8c0c-63ad4e29fb73"
+          },
+          {
+            "type": "research",
+            "value": {
+              "is_visible": true,
+              "anchor": "research",
+              "title": "Research areas",
+              "link_label": "All science",
+              "selected_areas": [],
+              "limit": 5,
+              "show_images": true,
+              "theme": "paper"
+            },
+            "id": "83b56f48-7962-4ca4-a360-499665204a31"
+          },
+          {
+            "type": "people",
+            "value": {
+              "is_visible": true,
+              "anchor": "people",
+              "title": "People behind the research",
+              "link_label": "Full team",
+              "selected_people": [],
+              "limit": 12,
+              "show_roles": true,
+              "enable_carousel": true,
+              "carousel_after": 6,
+              "theme": "lilac"
+            },
+            "id": "48186d2c-c0e0-43aa-ad01-ddf0f8e45c8c"
+          },
+          {
+            "type": "featured_project",
+            "value": {
+              "is_visible": true,
+              "anchor": "featured-project",
+              "project": 5,
+              "label": "PARTA / BIG LAB",
+              "button_label": "About the project",
+              "theme": "coral"
+            },
+            "id": "6b8c3732-39bf-49a1-97a5-a21202d94f47"
+          },
+          {
+            "type": "updates",
+            "value": {
+              "is_visible": true,
+              "anchor": "updates",
+              "title": "In progress",
+              "show_news": true,
+              "news_heading": "",
+              "selected_news": [],
+              "news_limit": 1,
+              "show_projects": true,
+              "projects_heading": "",
+              "selected_projects": [],
+              "projects_limit": 2,
+              "show_publications": true,
+              "publications_heading": "",
+              "selected_publications": [],
+              "publications_limit": 2,
+              "theme": "paper"
+            },
+            "id": "5a801cca-4059-42f2-ac3d-d72d40163695"
+          }
+        ]
+      },
+      "parent": null,
+      "locale": "en",
+      "translation_key": "495d67c7-ea1a-40d2-b7d8-cc40ede31a36",
+      "live": true
+    },
+    {
+      "model": "home.sciencepage",
+      "id": 4,
+      "fields": {
+        "title": "Science",
+        "draft_title": "Science",
+        "slug": "science",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Five connected areas frame our research into individual change and social spread.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>We move between individual experience, interpersonal influence and group-level patterns. The same question is viewed through experiments, longitudinal network data and computational models.</p>",
+            "id": "8080c30f-33e7-4e43-8ad5-fe1fe43113ff"
+          }
+        ],
+        "after_body": [],
+        "sections": []
+      },
+      "parent": 3,
+      "locale": "en",
+      "translation_key": "b51d3d27-b531-4644-bd91-b981f9b15b72",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 9,
+      "fields": {
+        "title": "Development and spread of attitudes and behaviours",
+        "draft_title": "Development and spread of attitudes and behaviours",
+        "slug": "development-and-spread",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Development and spread of attitudes and behaviours is one of BIG Lab’s five connected research areas.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 4
+        }
+      },
+      "parent": 4,
+      "locale": "en",
+      "translation_key": "7d3e8727-ea73-4cea-864f-84006cb9da4a",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 10,
+      "fields": {
+        "title": "Social influence",
+        "draft_title": "Social influence",
+        "slug": "social-influence",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Social influence is one of BIG Lab’s five connected research areas.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 8
+        }
+      },
+      "parent": 4,
+      "locale": "en",
+      "translation_key": "d5f864a4-1024-4bc6-af90-052e69d11a43",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 11,
+      "fields": {
+        "title": "Intra- and intergroup dynamics",
+        "draft_title": "Intra- and intergroup dynamics",
+        "slug": "group-dynamics",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Intra- and intergroup dynamics is one of BIG Lab’s five connected research areas.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 5
+        }
+      },
+      "parent": 4,
+      "locale": "en",
+      "translation_key": "3c97cf79-d458-4421-b3f3-04cee6743e18",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 12,
+      "fields": {
+        "title": "Segregation, prejudice and intergroup relations",
+        "draft_title": "Segregation, prejudice and intergroup relations",
+        "slug": "segregation-and-prejudice",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Segregation, prejudice and intergroup relations is one of BIG Lab’s five connected research areas.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 7
+        }
+      },
+      "parent": 4,
+      "locale": "en",
+      "translation_key": "58ad160a-7aad-4d8c-b038-616fd68a8610",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 13,
+      "fields": {
+        "title": "Social networks",
+        "draft_title": "Social networks",
+        "slug": "social-networks",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Social networks is one of BIG Lab’s five connected research areas.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 6
+        }
+      },
+      "parent": 4,
+      "locale": "en",
+      "translation_key": "cf277618-b7ee-4c46-b3d3-621111e5067b",
+      "live": true
+    },
+    {
+      "model": "home.projectpage",
+      "id": 5,
+      "fields": {
+        "title": "Parta",
+        "draft_title": "Parta",
+        "slug": "parta",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p data-block-key=\"78o0u\">A dedicated BIG Lab project for students, parents and schools.</p>",
+        "body": [
+          {
+            "type": "heading",
+            "value": "Project information is being prepared",
+            "id": "34ae8c97-6d63-4bc4-bc35-ffcc8f4b3764"
+          },
+          {
+            "type": "text",
+            "value": "<p data-block-key=\"up69e\">This page is ready for the confirmed project overview, audience information, timeline and results. BIG Lab will publish those materials here as they become available.</p>",
+            "id": "5a52d297-5845-40ae-9c0d-0aa6b3efe0e0"
+          }
+        ],
+        "after_body": [],
+        "sections": [
+          {
+            "type": "child_sections",
+            "value": {
+              "intro": "<p data-block-key=\"4x2l2\"><a linktype=\"page\" id=\"50\">Pro žáky</a></p>",
+              "is_visible": true,
+              "anchor": "sdfsdfsdf",
+              "background_image": 6,
+              "background_position": "center",
+              "background_overlay": "medium",
+              "title": "dsfsdfsdfsd",
+              "theme": "paper"
+            },
+            "id": "f7b59c04-5d25-4ce9-8afd-644eb9bf43fd"
+          }
+        ],
+        "start_date": null,
+        "end_date": null,
+        "funder": "",
+        "external_url": "",
+        "is_featured": true
+      },
+      "parent": 3,
+      "locale": "en",
+      "translation_key": "671c7a85-3b76-406f-b9c3-b1e21a459f27",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 21,
+      "fields": {
+        "title": "About the project",
+        "draft_title": "About the project",
+        "slug": "about-the-project",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>This section is ready for confirmed Parta materials from the BIG Lab team.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 5,
+      "locale": "en",
+      "translation_key": "3b31b14b-12e9-4d49-880d-033e0498c14f",
+      "live": false
+    },
+    {
+      "model": "home.contentpage",
+      "id": 22,
+      "fields": {
+        "title": "For parents",
+        "draft_title": "For parents",
+        "slug": "for-parents",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>This section is ready for confirmed Parta materials from the BIG Lab team.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 5,
+      "locale": "en",
+      "translation_key": "56264938-27e5-48ee-98b4-e925394b5c2a",
+      "live": false
+    },
+    {
+      "model": "home.contentpage",
+      "id": 23,
+      "fields": {
+        "title": "For schools",
+        "draft_title": "For schools",
+        "slug": "for-schools",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>This section is ready for confirmed Parta materials from the BIG Lab team.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 5,
+      "locale": "en",
+      "translation_key": "d78c35b5-0d21-4652-bc98-2690396f7f90",
+      "live": false
+    },
+    {
+      "model": "home.contentpage",
+      "id": 24,
+      "fields": {
+        "title": "For students",
+        "draft_title": "For students",
+        "slug": "for-students",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>This section is ready for confirmed Parta materials from the BIG Lab team.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 5,
+      "locale": "en",
+      "translation_key": "e2db2fbc-7bea-4d26-9d33-96fca6ac8697",
+      "live": false
+    },
+    {
+      "model": "home.contentpage",
+      "id": 25,
+      "fields": {
+        "title": "Timeline",
+        "draft_title": "Timeline",
+        "slug": "timeline",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>This section is ready for confirmed Parta materials from the BIG Lab team.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 5,
+      "locale": "en",
+      "translation_key": "33656786-1fed-45c1-84d5-0608e27743e2",
+      "live": false
+    },
+    {
+      "model": "home.contentpage",
+      "id": 26,
+      "fields": {
+        "title": "Results",
+        "draft_title": "Results",
+        "slug": "results",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>This section is ready for confirmed Parta materials from the BIG Lab team.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 5,
+      "locale": "en",
+      "translation_key": "eb53a0f0-cb05-4533-bf5b-4a3d43666124",
+      "live": false
+    },
+    {
+      "model": "home.projectsindexpage",
+      "id": 6,
+      "fields": {
+        "title": "Projects",
+        "draft_title": "Projects",
+        "slug": "projects",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Current and completed research projects connected to the lab’s work.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": []
+      },
+      "parent": 3,
+      "locale": "en",
+      "translation_key": "8505d66c-0d93-4cec-951b-f6b222764c02",
+      "live": true
+    },
+    {
+      "model": "home.projectpage",
+      "id": 27,
+      "fields": {
+        "title": "Rethinking Segregation within Schools",
+        "draft_title": "Rethinking Segregation within Schools",
+        "slug": "rethinking-segregation-within-schools",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Ways of spreading positive attitudes and behaviours among youth.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Within-school segregation may shape how behaviours diffuse among students. This project integrates network science with group-based theories to explain how segregation affects the spread of behaviours such as prejudice, and how understanding these mechanisms can improve school interventions.</p><p>The research combines longitudinal social network analysis, agent-based modelling, secondary and newly collected data, and intervention studies.</p>",
+            "id": "c3474703-c33f-4dea-9592-06346966372b"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "start_date": "2026-01-01",
+        "end_date": "2030-12-31",
+        "funder": "Czech Science Foundation · JUNIOR STAR",
+        "external_url": "https://www.muni.cz/en/research/projects/75245",
+        "is_featured": false
+      },
+      "parent": 6,
+      "locale": "en",
+      "translation_key": "e03e0d37-18aa-4b0b-a186-74fc2f7701ff",
+      "live": true
+    },
+    {
+      "model": "home.projectpage",
+      "id": 28,
+      "fields": {
+        "title": "Behavior Dynamics: From Individual Change to Social Spread",
+        "draft_title": "Behavior Dynamics: From Individual Change to Social Spread",
+        "slug": "behavior-dynamics",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Building an interdisciplinary research programme around individual change and social diffusion.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>The project connects two dimensions: how attitudes and behaviours change through personal experience and environment, and how those changes propagate through interpersonal interaction and social networks. It combines social psychology, sociology and computational modelling, with a particular focus on segregation, prejudice and polarization.</p>",
+            "id": "15007eb3-2dc5-455e-babf-38cf0ac42109"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "start_date": "2025-09-01",
+        "end_date": "2029-08-31",
+        "funder": "Masaryk University · Grant Agency of Masaryk University",
+        "external_url": "https://www.muni.cz/en/research/projects/74806",
+        "is_featured": false
+      },
+      "parent": 6,
+      "locale": "en",
+      "translation_key": "7d02993d-d3b3-4f72-a561-ef3627b22deb",
+      "live": true
+    },
+    {
+      "model": "home.projectpage",
+      "id": 29,
+      "fields": {
+        "title": "Screening self-harm among older school-age children",
+        "draft_title": "Screening self-harm among older school-age children",
+        "slug": "selfharm-screening",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>A completed project evaluating psychometric tools for screening self-harm.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>The project examined diagnostic questionnaire tools for identifying the occurrence and forms of self-harm among older school-age children, together with related psychological and social factors. Its findings were intended to support further research and preventive work.</p>",
+            "id": "c7bb4280-ead1-4dbe-a307-d72d800670c7"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "start_date": "2013-01-01",
+        "end_date": "2013-12-31",
+        "funder": "Masaryk University · Grant Agency of Masaryk University",
+        "external_url": "https://www.muni.cz/en/research/projects/22035",
+        "is_featured": false
+      },
+      "parent": 6,
+      "locale": "en",
+      "translation_key": "250c7623-7fd9-41ca-ba3a-42ddd2a6dcc8",
+      "live": true
+    },
+    {
+      "model": "home.newsindexpage",
+      "id": 7,
+      "fields": {
+        "title": "News",
+        "draft_title": "News",
+        "slug": "news",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Updates from BIG Lab, our projects and research community.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": []
+      },
+      "parent": 3,
+      "locale": "en",
+      "translation_key": "3e2f898a-1c3c-440d-9436-0b1263df44c0",
+      "live": true
+    },
+    {
+      "model": "home.newspage",
+      "id": 20,
+      "fields": {
+        "title": "Research meeting with the SATIS lab",
+        "draft_title": "Research meeting with the SATIS lab",
+        "slug": "research-meeting-with-satis-lab",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Researchers from the SATIS lab joined us to present current work and exchange plans.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Like BIG Lab, SATIS Lab conducts social network analyses within schools. This shared focus gave us an opportunity to exchange feedback, compare approaches and brainstorm together.</p>",
+            "id": "82beef39-4863-4cda-a90d-f74231562093"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "date": "2026-05-19",
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 9
+        }
+      },
+      "parent": 7,
+      "locale": "en",
+      "translation_key": "94aa6bd7-7ce8-421f-b61e-6ca358b99e5c",
+      "live": true
+    },
+    {
+      "model": "home.peopleindexpage",
+      "id": 8,
+      "fields": {
+        "title": "People",
+        "draft_title": "People",
+        "slug": "people",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>We are a multidisciplinary team studying behaviour across people, relationships and groups.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": []
+      },
+      "parent": 3,
+      "locale": "en",
+      "translation_key": "ffdfa8ee-c40e-4113-a5dd-5f5918253c4a",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 14,
+      "fields": {
+        "title": "Tibor Žingora",
+        "draft_title": "Tibor Žingora",
+        "slug": "tibor-zingora",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Tibor Žingora, Ph.D. is a social psychologist studying how attitudes and behaviours emerge, evolve and spread among people. He examines how changes shaped by environments, relationships and experience translate into broader outcomes such as polarization, the diffusion of prejudice, or the adoption of health-protective and pro-environmental behaviours. His work combines psychology, sociology and network science using structural equation modelling, longitudinal social network analysis and agent-based modelling. Before founding BIG Lab, he worked at the University of Oxford, the University of Groningen and the Czech Academy of Sciences.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Head of BIG Lab · Social psychologist",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 10
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": "https://www.muni.cz/en/people/362589-tibor-zingora"
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "6e6d0468-df41-461b-9347-9d0d1f041644",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 15,
+      "fields": {
+        "title": "Utku Caybas",
+        "draft_title": "Utku Caybas",
+        "slug": "utku-caybas",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Utku Caybas, Ph.D. is a postdoctoral researcher at BIG Lab. His research focuses on peer relations at school—including interactions, relationships and group processes—and their role in shaping students’ motivational beliefs in STEM. He uses longitudinal social network analysis and mixed-method designs. Utku completed his Ph.D. in Educational Psychology and Educational Technology at Michigan State University.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Postdoctoral researcher",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 11
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": ""
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "582dfeec-d5ed-44a5-a207-8f6fa8b89ce9",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 16,
+      "fields": {
+        "title": "Zhe Dong",
+        "draft_title": "Zhe Dong",
+        "slug": "zhe-dong",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Zhe Dong, Ph.D. is a postdoctoral researcher working on friendship segregation, youth leadership and social networks. Using social network analysis and structural equation modelling, she investigates the antecedents and consequences of friendship segregation among adolescents. In 2026, she received her Ph.D. from the University of Groningen for research on positive and negative leadership in childhood.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Postdoctoral researcher",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 12
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": "https://www.muni.cz/en/people/529373-zhe-dong"
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "8c85321b-f7de-4cd1-a275-b4bbb3bb8b77",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 17,
+      "fields": {
+        "title": "Michaela Kryštofová",
+        "draft_title": "Michaela Kryštofová",
+        "slug": "michaela-krystofova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Bc. Michaela Kryštofová is a research assistant at BIG Lab and a final-year Master’s student in Psychology preparing for doctoral study in the lab. Her work moves from individual differences toward questions about how attitudes and behaviours form, change and spread through social networks. She is particularly interested in bridging quantitative and qualitative methodologies.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Research assistant",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 2
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": ""
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "2d21c2dd-fc98-42bd-b1bf-711ed7e4ed3a",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 18,
+      "fields": {
+        "title": "Olesja Nyjherová",
+        "draft_title": "Olesja Nyjherová",
+        "slug": "olesja-nyjherova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Olesja Nyjherová is an undergraduate psychology student at Masaryk University. Her interests include psychometrics, research methodology and statistics, as well as developmental psychology. At BIG Lab, she manages data collection, bringing organization, precision and careful planning to the team’s fieldwork.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Data collection manager",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 3
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": "https://www.muni.cz/en/people/581225-olesja-nyjherova"
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "857b0187-fe32-427f-af5a-f8e5226a2823",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 19,
+      "fields": {
+        "title": "Ching Ting Ang",
+        "draft_title": "Ching Ting Ang",
+        "slug": "ching-ting-ang",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Ching-Ting Ang, MSc, is a doctoral student whose research focuses on adolescent peer cliques, including their structural characteristics, developmental consequences and underlying social processes. She graduated in 2025 from the Erasmus Mundus Joint Master’s Degree in Global MINDs (Social and Cultural Psychology), delivered by SWPS University, the University of Oslo and the University of Limerick.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Doctoral researcher",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 1
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": ""
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "8b60d391-9047-4d34-8d1a-3982a213f283",
+      "live": true
+    },
+    {
+      "model": "home.homepage",
+      "id": 30,
+      "fields": {
+        "title": "BIG Lab",
+        "draft_title": "BIG Lab",
+        "slug": "home-cs",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "BIG Lab zkoumá, jak se postoje a chování mění a šíří prostřednictvím sociálních sítí a skupin.",
+        "intro": "<p>BIG Lab propojuje sociální psychologii, sociologii a síťovou vědu, aby porozuměl změně na dvou propojených úrovních: u člověka a ve skupině.</p>",
+        "body": [
+          {
+            "type": "heading",
+            "value": "Od individuální změny k sociálnímu šíření",
+            "id": "de20a368-66d2-4e2a-a99e-5c6c2326c98a"
+          },
+          {
+            "type": "text",
+            "value": "<p>Zkoumáme jevy včetně předsudků, užívání návykových látek, proenvironmentálního chování, polarizace a konfliktu. Kombinujeme longitudinální analýzu sociálních sítí, počítačové modelování, experimenty a intervence v reálném prostředí.</p>",
+            "id": "bea85bb6-c1ba-4833-b06a-5e6e4e5bb274"
+          }
+        ],
+        "after_body": [],
+        "hero_title": "Jak se individuální volby mění v kolektivní změnu?",
+        "hero_summary": "Zkoumáme, jak se postoje a chování utvářejí u jednotlivců a jak se šíří vztahy, skupinami a společností.",
+        "hero_image": null,
+        "hero_layout": "constellation",
+        "show_contact_section": true,
+        "about_financing": "<p>Výzkum BIG Labu podporují dva financované projekty: <a href=\"https://www.muni.cz/en/research/projects/75245\">Přehodnocení segregace ve školách</a> (2026–2030), financovaný Grantovou agenturou České republiky v programu JUNIOR STAR, a <a href=\"https://www.muni.cz/en/research/projects/74806\">Dynamika chování: od individuální změny k sociálnímu šíření</a> (2025–2029), financovaný Grantovou agenturou Masarykovy univerzity.</p>",
+        "sections": [
+          {
+            "type": "about",
+            "value": {
+              "is_visible": true,
+              "anchor": "about",
+              "title": "Od individuální změny k sociálnímu šíření",
+              "intro": "",
+              "text": "",
+              "theme": "paper"
+            },
+            "id": "9bbdae6e-2cbf-4ae8-8c0c-63ad4e29fb73"
+          },
+          {
+            "type": "research",
+            "value": {
+              "is_visible": true,
+              "anchor": "research",
+              "title": "Oblasti výzkumu",
+              "link_label": "Veškerý výzkum",
+              "selected_areas": [],
+              "limit": 5,
+              "show_images": true,
+              "theme": "paper"
+            },
+            "id": "83b56f48-7962-4ca4-a360-499665204a31"
+          },
+          {
+            "type": "people",
+            "value": {
+              "is_visible": true,
+              "anchor": "people",
+              "title": "Lidé za výzkumem",
+              "link_label": "Celý tým",
+              "selected_people": [],
+              "limit": 12,
+              "show_roles": true,
+              "enable_carousel": true,
+              "carousel_after": 6,
+              "theme": "lilac"
+            },
+            "id": "48186d2c-c0e0-43aa-ad01-ddf0f8e45c8c"
+          },
+          {
+            "type": "featured_project",
+            "value": {
+              "is_visible": true,
+              "anchor": "featured-project",
+              "project": 46,
+              "label": "PARTA / BIG LAB",
+              "button_label": "O projektu",
+              "theme": "coral"
+            },
+            "id": "6b8c3732-39bf-49a1-97a5-a21202d94f47"
+          },
+          {
+            "type": "updates",
+            "value": {
+              "is_visible": true,
+              "anchor": "updates",
+              "title": "Právě probíhá",
+              "show_news": true,
+              "news_heading": "",
+              "selected_news": [],
+              "news_limit": 1,
+              "show_projects": true,
+              "projects_heading": "",
+              "selected_projects": [],
+              "projects_limit": 2,
+              "show_publications": true,
+              "publications_heading": "",
+              "selected_publications": [],
+              "publications_limit": 2,
+              "theme": "paper"
+            },
+            "id": "5a801cca-4059-42f2-ac3d-d72d40163695"
+          }
+        ]
+      },
+      "parent": null,
+      "locale": "cs",
+      "translation_key": "495d67c7-ea1a-40d2-b7d8-cc40ede31a36",
+      "live": true
+    },
+    {
+      "model": "home.sciencepage",
+      "id": 31,
+      "fields": {
+        "title": "Výzkum",
+        "draft_title": "Výzkum",
+        "slug": "vyzkum",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Pět propojených oblastí rámuje náš výzkum individuální změny a sociálního šíření.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Propojujeme individuální zkušenost, mezilidský vliv a skupinové vzorce prostřednictvím experimentů, longitudinálních síťových dat a počítačových modelů.</p>",
+            "id": "f2696502-6a06-45de-b8d9-6c80653776a1"
+          }
+        ],
+        "after_body": [],
+        "sections": []
+      },
+      "parent": 30,
+      "locale": "cs",
+      "translation_key": "b51d3d27-b531-4644-bd91-b981f9b15b72",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 32,
+      "fields": {
+        "title": "Vývoj a šíření postojů a chování",
+        "draft_title": "Vývoj a šíření postojů a chování",
+        "slug": "development-and-spread",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Vývoj a šíření postojů a chování je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 4
+        }
+      },
+      "parent": 31,
+      "locale": "cs",
+      "translation_key": "7d3e8727-ea73-4cea-864f-84006cb9da4a",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 33,
+      "fields": {
+        "title": "Sociální vliv",
+        "draft_title": "Sociální vliv",
+        "slug": "social-influence",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Sociální vliv je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 8
+        }
+      },
+      "parent": 31,
+      "locale": "cs",
+      "translation_key": "d5f864a4-1024-4bc6-af90-052e69d11a43",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 34,
+      "fields": {
+        "title": "Vnitroskupinová a meziskupinová dynamika",
+        "draft_title": "Vnitroskupinová a meziskupinová dynamika",
+        "slug": "group-dynamics",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Vnitroskupinová a meziskupinová dynamika je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 5
+        }
+      },
+      "parent": 31,
+      "locale": "cs",
+      "translation_key": "3c97cf79-d458-4421-b3f3-04cee6743e18",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 35,
+      "fields": {
+        "title": "Segregace, předsudky a meziskupinové vztahy",
+        "draft_title": "Segregace, předsudky a meziskupinové vztahy",
+        "slug": "segregation-and-prejudice",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Segregace, předsudky a meziskupinové vztahy je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 7
+        }
+      },
+      "parent": 31,
+      "locale": "cs",
+      "translation_key": "58ad160a-7aad-4d8c-b038-616fd68a8610",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 36,
+      "fields": {
+        "title": "Sociální sítě",
+        "draft_title": "Sociální sítě",
+        "slug": "social-networks",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Sociální sítě je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 6
+        }
+      },
+      "parent": 31,
+      "locale": "cs",
+      "translation_key": "cf277618-b7ee-4c46-b3d3-621111e5067b",
+      "live": true
+    },
+    {
+      "model": "home.peopleindexpage",
+      "id": 37,
+      "fields": {
+        "title": "Lidé",
+        "draft_title": "Lidé",
+        "slug": "lide",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Jsme multidisciplinární tým zkoumající chování napříč lidmi, vztahy a skupinami.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": []
+      },
+      "parent": 30,
+      "locale": "cs",
+      "translation_key": "ffdfa8ee-c40e-4113-a5dd-5f5918253c4a",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 38,
+      "fields": {
+        "title": "Tibor Žingora",
+        "draft_title": "Tibor Žingora",
+        "slug": "tibor-zingora",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Tibor Žingora, Ph.D. je sociální psycholog, který se zabývá tím, jak postoje a chování vznikají, vyvíjejí a šíří mezi lidmi. Zkoumá, jak se změny utvářené prostředím, vztahy a zkušenostmi promítají do širších jevů, jako je polarizace společnosti, šíření předsudků nebo přijímání chování podporujícího zdraví a ochranu životního prostředí. Ve své práci propojuje psychologii, sociologii a síťovou vědu a využívá strukturní modelování, longitudinální analýzu sociálních sítí a modelování založené na agentech. Před založením BIG Labu působil na Oxfordské univerzitě, Univerzitě v Groningenu a v Akademii věd ČR.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Vedoucí BIG Labu · sociální psycholog",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 10
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": "https://www.muni.cz/en/people/362589-tibor-zingora"
+      },
+      "parent": 37,
+      "locale": "cs",
+      "translation_key": "6e6d0468-df41-461b-9347-9d0d1f041644",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 39,
+      "fields": {
+        "title": "Utku Caybas",
+        "draft_title": "Utku Caybas",
+        "slug": "utku-caybas",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Utku Caybas, Ph.D. je postdoktorandským výzkumníkem v BIG Labu. Jeho výzkum se zaměřuje na vrstevnické vztahy ve škole—interakce, vztahy a skupinové procesy—a jejich roli při utváření motivačních přesvědčení žáků v oblastech STEM. Využívá longitudinální analýzu sociálních sítí a smíšené metody. Doktorát z pedagogické psychologie a vzdělávacích technologií získal na Michiganské státní univerzitě.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Postdoktorandský výzkumník",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 11
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": ""
+      },
+      "parent": 37,
+      "locale": "cs",
+      "translation_key": "582dfeec-d5ed-44a5-a207-8f6fa8b89ce9",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 40,
+      "fields": {
+        "title": "Zhe Dong",
+        "draft_title": "Zhe Dong",
+        "slug": "zhe-dong",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Zhe Dong, Ph.D. je postdoktorandskou výzkumnicí zabývající se segregací v přátelských vztazích, vedením mladých lidí a sociálními sítěmi. Pomocí analýzy sociálních sítí a strukturního modelování zkoumá příčiny a důsledky segregace v přátelských vztazích u dospívajících. V roce 2026 získala na Univerzitě v Groningenu doktorát zaměřený na pozitivní a negativní vedení v dětství.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Postdoktorandská výzkumnice",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 12
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": "https://www.muni.cz/en/people/529373-zhe-dong"
+      },
+      "parent": 37,
+      "locale": "cs",
+      "translation_key": "8c85321b-f7de-4cd1-a275-b4bbb3bb8b77",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 41,
+      "fields": {
+        "title": "Michaela Kryštofová",
+        "draft_title": "Michaela Kryštofová",
+        "slug": "michaela-krystofova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Bc. Michaela Kryštofová je výzkumnou asistentkou v BIG Labu a studentkou posledního ročníku magisterského studia psychologie, která se připravuje na doktorské studium v laboratoři. Její práce směřuje od individuálních rozdílů k otázkám, jak se postoje a chování utvářejí, mění a šíří prostřednictvím sociálních sítí. Zajímá se o propojování kvantitativních a kvalitativních metod.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Výzkumná asistentka",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 2
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": ""
+      },
+      "parent": 37,
+      "locale": "cs",
+      "translation_key": "2d21c2dd-fc98-42bd-b1bf-711ed7e4ed3a",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 42,
+      "fields": {
+        "title": "Olesja Nyjherová",
+        "draft_title": "Olesja Nyjherová",
+        "slug": "olesja-nyjherova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Olesja Nyjherová je studentkou bakalářského studia psychologie na Masarykově univerzitě. Její odborné zájmy zahrnují psychometriku, statistiku, metodologii výzkumu a vývojovou psychologii. V BIG Labu zastává roli manažerky sběru dat, kde uplatňuje svůj smysl pro organizaci, preciznost a plánování.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Manažerka sběru dat",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 3
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": "https://www.muni.cz/en/people/581225-olesja-nyjherova"
+      },
+      "parent": 37,
+      "locale": "cs",
+      "translation_key": "857b0187-fe32-427f-af5a-f8e5226a2823",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 43,
+      "fields": {
+        "title": "Ching Ting Ang",
+        "draft_title": "Ching Ting Ang",
+        "slug": "ching-ting-ang",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Ching-Ting Ang, MSc, je doktorskou studentkou, jejíž výzkum se zaměřuje na vrstevnické skupiny v dospívání, včetně jejich strukturálních charakteristik, dopadů na vývoj a souvisejících sociálních procesů. V roce 2025 absolvovala společný magisterský program Erasmus Mundus Global MINDs v sociální a kulturní psychologii.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Doktorská výzkumnice",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 1
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": ""
+      },
+      "parent": 37,
+      "locale": "cs",
+      "translation_key": "8b60d391-9047-4d34-8d1a-3982a213f283",
+      "live": true
+    },
+    {
+      "model": "home.newsindexpage",
+      "id": 44,
+      "fields": {
+        "title": "Novinky",
+        "draft_title": "Novinky",
+        "slug": "novinky",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Novinky z BIG Labu, našich projektů a výzkumné komunity.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": []
+      },
+      "parent": 30,
+      "locale": "cs",
+      "translation_key": "3e2f898a-1c3c-440d-9436-0b1263df44c0",
+      "live": true
+    },
+    {
+      "model": "home.newspage",
+      "id": 45,
+      "fields": {
+        "title": "Výzkumné setkání s laboratoří SATIS",
+        "draft_title": "Výzkumné setkání s laboratoří SATIS",
+        "slug": "research-meeting-with-satis-lab",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Výzkumníci z laboratoře SATIS nám představili svou současnou práci a společně jsme sdíleli další plány.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Stejně jako BIG Lab provádí SATIS Lab analýzy sociálních sítí ve školách. Společné zaměření nám umožnilo vyměnit si zpětnou vazbu, porovnat přístupy a společně hledat nové otázky.</p>",
+            "id": "69f8608a-6b0c-4855-8a44-ddffe93157e1"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "date": "2026-05-19",
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 9
+        }
+      },
+      "parent": 44,
+      "locale": "cs",
+      "translation_key": "94aa6bd7-7ce8-421f-b61e-6ca358b99e5c",
+      "live": true
+    },
+    {
+      "model": "home.projectpage",
+      "id": 46,
+      "fields": {
+        "title": "Parta",
+        "draft_title": "Parta",
+        "slug": "parta",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Samostatný projekt BIG Labu pro žáky, rodiče a školy.</p>",
+        "body": [
+          {
+            "type": "heading",
+            "value": "Informace o projektu připravujeme",
+            "id": "1ecec525-1b68-4263-b0cb-4700f303e29d"
+          },
+          {
+            "type": "text",
+            "value": "<p>Na této stránce zveřejníme potvrzený popis projektu, informace pro jednotlivé skupiny, časovou osu a výsledky, jakmile budou k dispozici.</p>",
+            "id": "6a559faf-6b87-4039-8172-602d708d7abb"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "start_date": null,
+        "end_date": null,
+        "funder": "",
+        "external_url": "",
+        "is_featured": true
+      },
+      "parent": 30,
+      "locale": "cs",
+      "translation_key": "671c7a85-3b76-406f-b9c3-b1e21a459f27",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 47,
+      "fields": {
+        "title": "O projektu",
+        "draft_title": "O projektu",
+        "slug": "about-the-project",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Tato sekce je připravena pro potvrzené materiály projektu Parta od týmu BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 46,
+      "locale": "cs",
+      "translation_key": "3b31b14b-12e9-4d49-880d-033e0498c14f",
+      "live": false
+    },
+    {
+      "model": "home.contentpage",
+      "id": 48,
+      "fields": {
+        "title": "Pro rodiče",
+        "draft_title": "Pro rodiče",
+        "slug": "for-parents",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Tato sekce je připravena pro potvrzené materiály projektu Parta od týmu BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 46,
+      "locale": "cs",
+      "translation_key": "56264938-27e5-48ee-98b4-e925394b5c2a",
+      "live": false
+    },
+    {
+      "model": "home.contentpage",
+      "id": 49,
+      "fields": {
+        "title": "Pro školy",
+        "draft_title": "Pro školy",
+        "slug": "for-schools",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Tato sekce je připravena pro potvrzené materiály projektu Parta od týmu BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 46,
+      "locale": "cs",
+      "translation_key": "d78c35b5-0d21-4652-bc98-2690396f7f90",
+      "live": false
+    },
+    {
+      "model": "home.contentpage",
+      "id": 50,
+      "fields": {
+        "title": "Pro žáky",
+        "draft_title": "Pro žáky",
+        "slug": "for-students",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Tato sekce je připravena pro potvrzené materiály projektu Parta od týmu BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 46,
+      "locale": "cs",
+      "translation_key": "e2db2fbc-7bea-4d26-9d33-96fca6ac8697",
+      "live": false
+    },
+    {
+      "model": "home.contentpage",
+      "id": 51,
+      "fields": {
+        "title": "Časová osa",
+        "draft_title": "Časová osa",
+        "slug": "timeline",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Tato sekce je připravena pro potvrzené materiály projektu Parta od týmu BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 46,
+      "locale": "cs",
+      "translation_key": "33656786-1fed-45c1-84d5-0608e27743e2",
+      "live": false
+    },
+    {
+      "model": "home.contentpage",
+      "id": 52,
+      "fields": {
+        "title": "Výsledky",
+        "draft_title": "Výsledky",
+        "slug": "results",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Tato sekce je připravena pro potvrzené materiály projektu Parta od týmu BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 46,
+      "locale": "cs",
+      "translation_key": "eb53a0f0-cb05-4533-bf5b-4a3d43666124",
+      "live": false
+    },
+    {
+      "model": "home.projectsindexpage",
+      "id": 53,
+      "fields": {
+        "title": "Projekty",
+        "draft_title": "Projekty",
+        "slug": "projekty",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Probíhající a dokončené projekty spojené s výzkumem laboratoře.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": []
+      },
+      "parent": 30,
+      "locale": "cs",
+      "translation_key": "8505d66c-0d93-4cec-951b-f6b222764c02",
+      "live": true
+    },
+    {
+      "model": "home.projectpage",
+      "id": 54,
+      "fields": {
+        "title": "Přehodnocení segregace ve školách",
+        "draft_title": "Přehodnocení segregace ve školách",
+        "slug": "rethinking-segregation-within-schools",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Způsoby šíření pozitivních postojů a chování mezi mladými lidmi.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Segregace uvnitř škol může ovlivňovat šíření chování mezi žáky. Projekt propojuje síťovou vědu s teoriemi zaměřenými na skupiny, aby vysvětlil, jak segregace ovlivňuje šíření chování, například předsudků, a jak může porozumění těmto mechanismům zlepšit školní intervence.</p><p>Výzkum kombinuje longitudinální analýzu sociálních sítí, modelování založené na agentech, sekundární i nově získaná data a intervenční studie.</p>",
+            "id": "c3474703-c33f-4dea-9592-06346966372b"
+          }
+        ],
+        "after_body": [],
+        "sections": [
+          {
+            "type": "child_sections",
+            "id": "49d9d0f5-74d2-444c-bdc8-d4f848881c49",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            }
+          }
+        ],
+        "start_date": "2026-01-01",
+        "end_date": "2030-12-31",
+        "funder": "Czech Science Foundation · JUNIOR STAR",
+        "external_url": "https://www.muni.cz/en/research/projects/75245",
+        "is_featured": false
+      },
+      "parent": 53,
+      "locale": "cs",
+      "translation_key": "e03e0d37-18aa-4b0b-a186-74fc2f7701ff",
+      "live": true
+    },
+    {
+      "model": "home.projectpage",
+      "id": 55,
+      "fields": {
+        "title": "Dynamika chování: od individuální změny k sociálnímu šíření",
+        "draft_title": "Dynamika chování: od individuální změny k sociálnímu šíření",
+        "slug": "behavior-dynamics",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Budování interdisciplinárního výzkumného programu zaměřeného na individuální změnu a sociální šíření.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Projekt propojuje dvě dimenze: jak se postoje a chování mění prostřednictvím osobních zkušeností a prostředí a jak se tyto změny šíří mezilidskými interakcemi a sociálními sítěmi. Kombinuje sociální psychologii, sociologii a počítačové modelování se zvláštním důrazem na segregaci, předsudky a polarizaci.</p>",
+            "id": "15007eb3-2dc5-455e-babf-38cf0ac42109"
+          }
+        ],
+        "after_body": [],
+        "sections": [
+          {
+            "type": "child_sections",
+            "id": "8bc80810-0fe7-40e7-b1f0-ebea7ed617ec",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            }
+          }
+        ],
+        "start_date": "2025-09-01",
+        "end_date": "2029-08-31",
+        "funder": "Masaryk University · Grant Agency of Masaryk University",
+        "external_url": "https://www.muni.cz/en/research/projects/74806",
+        "is_featured": false
+      },
+      "parent": 53,
+      "locale": "cs",
+      "translation_key": "7d02993d-d3b3-4f72-a561-ef3627b22deb",
+      "live": true
+    },
+    {
+      "model": "home.projectpage",
+      "id": 56,
+      "fields": {
+        "title": "Screening sebepoškozování u dětí staršího školního věku",
+        "draft_title": "Screening sebepoškozování u dětí staršího školního věku",
+        "slug": "selfharm-screening",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Dokončený projekt ověřující psychometrické nástroje pro screening sebepoškozování.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Projekt zkoumal diagnostické dotazníkové nástroje pro zjišťování výskytu a forem sebepoškozování u dětí staršího školního věku spolu se souvisejícími psychologickými a sociálními faktory. Zjištění měla podpořit další výzkum a preventivní práci.</p>",
+            "id": "c7bb4280-ead1-4dbe-a307-d72d800670c7"
+          }
+        ],
+        "after_body": [],
+        "sections": [
+          {
+            "type": "child_sections",
+            "id": "6fa43664-27dc-4d80-919d-743a2297c1b4",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            }
+          }
+        ],
+        "start_date": "2013-01-01",
+        "end_date": "2013-12-31",
+        "funder": "Masaryk University · Grant Agency of Masaryk University",
+        "external_url": "https://www.muni.cz/en/research/projects/22035",
+        "is_featured": false
+      },
+      "parent": 53,
+      "locale": "cs",
+      "translation_key": "250c7623-7fd9-41ca-ba3a-42ddd2a6dcc8",
+      "live": true
+    }
+  ],
+  "assets": [
+    {
+      "model": "wagtailimages.image",
+      "id": 1,
+      "fields": {
+        "title": "Ching Ting Ang",
+        "description": "",
+        "width": 477,
+        "height": 477,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/c338aa72687e8d87a749fc4dab9aa89481591b68eadf60780198b5c031d83470.jpg",
+      "sha256": "c338aa72687e8d87a749fc4dab9aa89481591b68eadf60780198b5c031d83470",
+      "filename": "ching-ting-ang.jpg",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 2,
+      "fields": {
+        "title": "Michaela Krystofova",
+        "description": "",
+        "width": 477,
+        "height": 477,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/ceeef4e6031b422d4258a8a49a873247091889b4117b2a5c6d7bda798dd9b161.jpg",
+      "sha256": "ceeef4e6031b422d4258a8a49a873247091889b4117b2a5c6d7bda798dd9b161",
+      "filename": "michaela-krystofova.jpg",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 3,
+      "fields": {
+        "title": "Olesja Nyjherova",
+        "description": "",
+        "width": 477,
+        "height": 477,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/197ab9076b5ae7802267c4e9a718756ff1bc3617dd89e9e2956dc2644fc5c14f.jpeg",
+      "sha256": "197ab9076b5ae7802267c4e9a718756ff1bc3617dd89e9e2956dc2644fc5c14f",
+      "filename": "olesja-nyjherova.jpeg",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 4,
+      "fields": {
+        "title": "Research Attitudes",
+        "description": "",
+        "width": 477,
+        "height": 503,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/32d3ef39103cc846bba074dd56c45bf5b5b843e1954f2e2b1e6670506b56a58b.jpg",
+      "sha256": "32d3ef39103cc846bba074dd56c45bf5b5b843e1954f2e2b1e6670506b56a58b",
+      "filename": "research-attitudes.jpg",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 5,
+      "fields": {
+        "title": "Research Group Dynamics",
+        "description": "",
+        "width": 477,
+        "height": 503,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/2c3026a9faf1a773a0a9d571012f565a2a6c13278fa677358812e725795f4ee4.jpg",
+      "sha256": "2c3026a9faf1a773a0a9d571012f565a2a6c13278fa677358812e725795f4ee4",
+      "filename": "research-group-dynamics.jpg",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 6,
+      "fields": {
+        "title": "Research Networks",
+        "description": "",
+        "width": 477,
+        "height": 503,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/a3f9c17c9d697dcc84e7a87d75aff842ed9466d3f2c8463ba4415b9764b6a86c.jpg",
+      "sha256": "a3f9c17c9d697dcc84e7a87d75aff842ed9466d3f2c8463ba4415b9764b6a86c",
+      "filename": "research-networks.jpg",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 7,
+      "fields": {
+        "title": "Research Segregation",
+        "description": "",
+        "width": 477,
+        "height": 503,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/43b5c0b060b434022695bc0b1aa0bf6aab4ce9b27f2dd9bcbf5f4382be3b8453.jpg",
+      "sha256": "43b5c0b060b434022695bc0b1aa0bf6aab4ce9b27f2dd9bcbf5f4382be3b8453",
+      "filename": "research-segregation.jpg",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 8,
+      "fields": {
+        "title": "Research Social Influence",
+        "description": "",
+        "width": 477,
+        "height": 503,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/08443da051b2b6826561a3c3b254d95d1c7210cb29764f8f51ef1f19996f4868.jpg",
+      "sha256": "08443da051b2b6826561a3c3b254d95d1c7210cb29764f8f51ef1f19996f4868",
+      "filename": "research-social-influence.jpg",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 9,
+      "fields": {
+        "title": "Satis Meeting",
+        "description": "",
+        "width": 1170,
+        "height": 889,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/68f3cfcc0df487faf643f2ba95beb2915a210ec81121e97050b614f13f65d94c.png",
+      "sha256": "68f3cfcc0df487faf643f2ba95beb2915a210ec81121e97050b614f13f65d94c",
+      "filename": "satis-meeting.png",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 10,
+      "fields": {
+        "title": "Tibor Zingora",
+        "description": "",
+        "width": 477,
+        "height": 477,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/4e6f209bd08daa464bacb19dc5e666335928a1829655b5cd350a52a8c206d428.jpg",
+      "sha256": "4e6f209bd08daa464bacb19dc5e666335928a1829655b5cd350a52a8c206d428",
+      "filename": "tibor-zingora.jpg",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 11,
+      "fields": {
+        "title": "Utku Caybas",
+        "description": "",
+        "width": 477,
+        "height": 477,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/0b51ecc575df20b3de295a9863386cf507eae6231b08094bfb8124f6e778da85.jpeg",
+      "sha256": "0b51ecc575df20b3de295a9863386cf507eae6231b08094bfb8124f6e778da85",
+      "filename": "utku-caybas.jpeg",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 12,
+      "fields": {
+        "title": "Zhe Dong",
+        "description": "",
+        "width": 477,
+        "height": 477,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/af0f93b82738cf900a8b5ff87c6f2daa448d03c6fde20cc48c1cfbbefa7afbe8.jpeg",
+      "sha256": "af0f93b82738cf900a8b5ff87c6f2daa448d03c6fde20cc48c1cfbbefa7afbe8",
+      "filename": "zhe-dong.jpeg",
+      "tags": []
+    }
+  ],
+  "snippets": [
+    {
+      "model": "home.publication",
+      "id": 1,
+      "fields": {
+        "translation_key": "06d20042-ba9a-4655-a255-68f9fc8c365d",
+        "locale": {
+          "locale": "en"
+        },
+        "title": "From Mate to Hate? Prejudice Socialization in Friendship Networks",
+        "authors": "Chloe Bracegirdle, Tibor Žingora, Olivia Spiegler",
+        "year": 2026,
+        "publication_type": "Peer-reviewed scientific article",
+        "journal_or_publisher": "American Psychologist",
+        "doi_or_url": "https://doi.org/10.1037/amp0001662"
+      }
+    },
+    {
+      "model": "home.publication",
+      "id": 2,
+      "fields": {
+        "translation_key": "473d6a66-447a-4042-b090-45ea0c036b60",
+        "locale": {
+          "locale": "en"
+        },
+        "title": "Outgroup Friendships and Social Influence in the Development of Adolescent Attitudes Toward Secondary Outgroups",
+        "authors": "Tibor Žingora, Chloe Bracegirdle, Tobias H. Stark, Olivia Spiegler",
+        "year": 2026,
+        "publication_type": "Peer-reviewed scientific article",
+        "journal_or_publisher": "Journal of Personality and Social Psychology",
+        "doi_or_url": "https://doi.org/10.1037/pspi0000530"
+      }
+    },
+    {
+      "model": "home.publication",
+      "id": 3,
+      "fields": {
+        "translation_key": "6596050e-f512-4e61-ad75-38b5fd08c3f2",
+        "locale": {
+          "locale": "cs"
+        },
+        "title": "From Mate to Hate? Prejudice Socialization in Friendship Networks",
+        "authors": "Chloe Bracegirdle, Tibor Žingora, Olivia Spiegler",
+        "year": 2026,
+        "publication_type": "Peer-reviewed scientific article",
+        "journal_or_publisher": "American Psychologist",
+        "doi_or_url": "https://doi.org/10.1037/amp0001662"
+      }
+    },
+    {
+      "model": "home.publication",
+      "id": 4,
+      "fields": {
+        "translation_key": "d3cbc463-b8fe-4a93-ac73-0bde9af6adb3",
+        "locale": {
+          "locale": "cs"
+        },
+        "title": "Outgroup Friendships and Social Influence in the Development of Adolescent Attitudes Toward Secondary Outgroups",
+        "authors": "Tibor Žingora, Chloe Bracegirdle, Tobias H. Stark, Olivia Spiegler",
+        "year": 2026,
+        "publication_type": "Peer-reviewed scientific article",
+        "journal_or_publisher": "Journal of Personality and Social Psychology",
+        "doi_or_url": "https://doi.org/10.1037/pspi0000530"
+      }
+    },
+    {
+      "model": "home.collaboration",
+      "id": 1,
+      "fields": {
+        "translation_key": "4966cb2d-27d1-46bf-a2dd-22978e750a3b",
+        "locale": {
+          "locale": "en"
+        },
+        "name": "University of Groningen",
+        "description": "International collaboration",
+        "website": "https://www.rug.nl/",
+        "logo": null,
+        "sort_order": 10
+      }
+    },
+    {
+      "model": "home.collaboration",
+      "id": 2,
+      "fields": {
+        "translation_key": "136fc4ef-513d-4c5b-a2b4-acf7ef8ccef4",
+        "locale": {
+          "locale": "en"
+        },
+        "name": "University of Oxford",
+        "description": "International collaboration",
+        "website": "https://www.ox.ac.uk/",
+        "logo": null,
+        "sort_order": 20
+      }
+    },
+    {
+      "model": "home.collaboration",
+      "id": 3,
+      "fields": {
+        "translation_key": "53429c3e-469d-4a92-a1a0-83a88619b199",
+        "locale": {
+          "locale": "en"
+        },
+        "name": "Utrecht University",
+        "description": "International collaboration",
+        "website": "https://www.uu.nl/en",
+        "logo": null,
+        "sort_order": 30
+      }
+    },
+    {
+      "model": "home.collaboration",
+      "id": 4,
+      "fields": {
+        "translation_key": "1dda79c8-7ccb-4744-b0bf-1e5c15e15b18",
+        "locale": {
+          "locale": "en"
+        },
+        "name": "Brno Lab of Intergroup Processes",
+        "description": "Institute of Psychology, Czech Academy of Sciences",
+        "website": "https://psu.cas.cz/en/institute/about-the-institute/",
+        "logo": null,
+        "sort_order": 40
+      }
+    },
+    {
+      "model": "home.collaboration",
+      "id": 5,
+      "fields": {
+        "translation_key": "12342719-5e96-43a6-9a45-f622acebc641",
+        "locale": {
+          "locale": "cs"
+        },
+        "name": "University of Groningen",
+        "description": "Mezinárodní spolupráce",
+        "website": "https://www.rug.nl/",
+        "logo": null,
+        "sort_order": 10
+      }
+    },
+    {
+      "model": "home.collaboration",
+      "id": 6,
+      "fields": {
+        "translation_key": "2845ea41-3405-4f80-9376-cbdf86b12d39",
+        "locale": {
+          "locale": "cs"
+        },
+        "name": "University of Oxford",
+        "description": "Mezinárodní spolupráce",
+        "website": "https://www.ox.ac.uk/",
+        "logo": null,
+        "sort_order": 20
+      }
+    },
+    {
+      "model": "home.collaboration",
+      "id": 7,
+      "fields": {
+        "translation_key": "19e44c06-8059-44df-bb0f-d446f922db0b",
+        "locale": {
+          "locale": "cs"
+        },
+        "name": "Utrecht University",
+        "description": "Mezinárodní spolupráce",
+        "website": "https://www.uu.nl/en",
+        "logo": null,
+        "sort_order": 30
+      }
+    },
+    {
+      "model": "home.collaboration",
+      "id": 8,
+      "fields": {
+        "translation_key": "dcc1cf8c-289e-4d33-bb50-2d809ebed488",
+        "locale": {
+          "locale": "cs"
+        },
+        "name": "Brno Lab of Intergroup Processes",
+        "description": "Institute of Psychology, Czech Academy of Sciences",
+        "website": "https://psu.cas.cz/en/institute/about-the-institute/",
+        "logo": null,
+        "sort_order": 40
+      }
+    }
+  ],
+  "settings": [
+    {
+      "model": "home.contactsettings",
+      "id": 1,
+      "fields": {
+        "site_name": "BIG Lab",
+        "tagline": "",
+        "copyright_text": "",
+        "logo": null,
+        "show_social_links": true,
+        "email": "",
+        "phone": "",
+        "address": "Faculty of Social Studies, Masaryk University\nJoštova 10, 602 00 Brno, Czech Republic",
+        "linkedin_url": "https://www.linkedin.com/company/inpsy-muni/",
+        "instagram_url": "https://www.instagram.com/inpsy_muni/",
+        "facebook_url": "https://www.facebook.com/inpsy.muni"
+      }
+    },
+    {
+      "model": "home.homepagedesignsettings",
+      "id": 1,
+      "fields": {
+        "background": "#0b141e",
+        "foreground": "#eeeae0",
+        "accent": "#dac99c",
+        "muted": "#a6b4bd",
+        "network_secondary": "#7f9d98"
+      }
+    }
+  ]
+}
