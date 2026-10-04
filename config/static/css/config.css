@@ -62,7 +62,7 @@ address { font-style: normal; }
 .brand-wordmark { display: flex; flex-direction: column; gap: .45rem; }
 .brand-affiliation { font-size: .7rem; font-weight: 400; letter-spacing: .015em; line-height: 1.25; color: #bdc5cd; white-space: nowrap; }
 .brand-location::before { content: " · "; color: var(--yellow); }
-.brand-mark { width: 36px; height: 36px; color: var(--yellow); }
+.brand-mark { width: 36px; height: 36px; object-fit: contain; border-radius: 5px; flex-shrink: 0; }
 .custom-logo { max-width: 110px; max-height: 50px; object-fit: contain; }
 .navigation { display: flex; align-items: center; gap: 1.65rem; margin-left: auto; }
 .site-nav, .submenu { list-style: none; padding: 0; margin: 0; }

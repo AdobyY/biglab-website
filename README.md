@@ -321,6 +321,13 @@ Set a retention policy only after confirming a restore; keep an offsite copy bef
    run migrations only after the original-version restore is verified. Record the restore date and
    result, and repeat this exercise periodically.
 
+## Shared logo
+
+Change **Settings → Contact settings → Brand → Logo** once to update the website
+header, footer, browser icon, admin sidebar, login screens and editor userbar in
+both languages. The supplied BIG Lab image is also the default when this field
+is empty. Upload replacements through the existing Wagtail image chooser.
+
 ## Content still awaiting confirmation
 
 The Parta page is implemented and editable, but intentionally contains a short holding text rather

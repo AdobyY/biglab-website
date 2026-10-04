@@ -400,7 +400,7 @@ class ContactSettings(BaseSiteSetting):
     copyright_text = models.CharField(max_length=255, blank=True, help_text="Optional custom copyright line.")
     logo = models.ForeignKey(
         "wagtailimages.Image", null=True, blank=True, on_delete=models.SET_NULL, related_name="+",
-        help_text="Optional site / footer brand logo.",
+        help_text="Shared logo for the website header, footer, browser icon and CMS. Change it here once to update every location. Leave blank to use the default BIG Lab logo.",
     )
     show_social_links = models.BooleanField(
         default=True, verbose_name="Show institute social links",

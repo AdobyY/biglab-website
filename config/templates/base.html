@@ -1,4 +1,5 @@
-{% load static i18n wagtailcore_tags wagtailimages_tags wagtailuserbar wagtailsettings_tags navigation_tags ui_tags %}
+{% load static i18n wagtailcore_tags wagtailimages_tags wagtailuserbar wagtailsettings_tags navigation_tags ui_tags branding_tags %}
+{% brand as identity %}
 {% wagtail_site as current_site %}
 {% get_settings %}
 {% get_current_language as active_language %}
@@ -12,7 +13,7 @@
     <title>{% block title %}{{ page.seo_title|default:page.title|default:'BIG Lab' }} — {{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}{% endblock %}</title>
     {% if page.search_description %}<meta name="description" content="{{ page.search_description }}">{% endif %}
     <meta name="theme-color" content="{% block theme_color %}#101e32{% endblock %}">
-        <link rel="icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+    <link rel="icon" href="{{ identity.icon_url }}">
     {% if page and not request.is_preview %}
       {% absolute_page_url page as canonical_url %}<link rel="canonical" href="{{ canonical_url }}">
       <link rel="alternate" hreflang="{{ page.locale.language_code }}" href="{{ canonical_url }}">
@@ -28,11 +29,11 @@
 </head>
 <body class="{% block body_class %}{% endblock %}" {% block body_attrs %}{% endblock %}data-image-preview="{% ui 'image_preview' %}" data-close="{% ui 'close' %}" data-previous-image="{% ui 'previous_image' %}" data-next-image="{% ui 'next_image' %}" data-pause="{% ui 'pause' %}" data-play="{% ui 'play' %}">
     <a class="skip-link" href="#content">{% ui 'skip_content' %}</a>
-    {% wagtailuserbar %}
+    {% wagtailuserbar 'bottom-left' %}
     <header class="site-header">
       <div class="header-inner section-shell">
         <a class="site-name" href="{% pageurl site_home %}" aria-label="{{ settings.home.ContactSettings.site_name|default:'BIG Lab' }} — {% ui 'home' %}">
-          {% if settings.home.ContactSettings.logo %}{% image settings.home.ContactSettings.logo max-200x100 class="custom-logo" alt="" %}{% else %}{% include "home/includes/brand_mark.html" %}{% endif %}
+          {% include "home/includes/brand_mark.html" %}
           <span class="brand-wordmark"><span>{{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}</span><span class="brand-affiliation">Masaryk University<span class="brand-location">Czechia</span></span></span>
         </a>
         <button class="menu-toggle" type="button" aria-label="{% ui 'menu' %}" aria-expanded="false" aria-controls="site-navigation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>{% ui 'menu' %}</span></button>

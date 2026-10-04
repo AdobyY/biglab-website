@@ -1,0 +1,4 @@
+{% extends "wagtailadmin/admin_base.html" %}
+{% load branding_tags %}
+{% block branding_favicon %}{% brand as identity %}<link rel="icon" href="{{ identity.icon_url }}">{% endblock %}
+{% block branding_title %}{% brand as identity %}{{ identity.name }}{% endblock %}

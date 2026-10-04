@@ -1907,6 +1907,26 @@
       "sha256": "af0f93b82738cf900a8b5ff87c6f2daa448d03c6fde20cc48c1cfbbefa7afbe8",
       "filename": "zhe-dong.jpeg",
       "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 13,
+      "fields": {
+        "title": "BIG Lab logo",
+        "description": "",
+        "width": 346,
+        "height": 346,
+        "focal_point_x": null,
+        "focal_point_y": null,
+        "focal_point_width": null,
+        "focal_point_height": null,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/2b2ca2332809e1b5b559853b1246bd3557d9630062a3b357e6b1bf2e4096164e.png",
+      "sha256": "2b2ca2332809e1b5b559853b1246bd3557d9630062a3b357e6b1bf2e4096164e",
+      "filename": "biglab-logo.png",
+      "tags": []
     }
   ],
   "snippets": [
@@ -2103,7 +2123,10 @@
         "site_name": "BIG Lab",
         "tagline": "",
         "copyright_text": "",
-        "logo": null,
+        "logo": {
+          "ref": "wagtailimages.image",
+          "id": 13
+        },
         "show_social_links": true,
         "email": "",
         "phone": "",
