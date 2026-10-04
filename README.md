@@ -323,7 +323,7 @@ Set a retention policy only after confirming a restore; keep an offsite copy bef
 
 ## Shared logo
 
-Change **Settings → Contact settings → Brand → Logo** once to update the website
+Change **Settings → Contact settings → Logo** once to update the website
 header, footer, browser icon, admin sidebar, login screens and editor userbar in
 both languages. The supplied BIG Lab image is also the default when this field
 is empty. Upload replacements through the existing Wagtail image chooser.

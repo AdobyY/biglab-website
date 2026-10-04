@@ -34,6 +34,7 @@ class SharedBrandTests(TestCase):
         self.assertTrue(all(image["src"].endswith("images/biglab-logo.png") for image in public.select(".brand-mark")))
         login = self.soup("/admin/login/")
         self.assertIn("BIG Lab", login.title.text)
+        self.assertEqual(login.h1.get_text(strip=True), "Sign in — BIG Lab")
         self.assertIsNone(login.select_one("svg.icon-wagtail"))
         self.assertTrue(login.select_one(".biglab-admin-logo")["src"].endswith("images/biglab-logo.png"))
         self.client.force_login(self.editor)

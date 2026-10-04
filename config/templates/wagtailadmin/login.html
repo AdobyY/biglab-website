@@ -1,0 +1,3 @@
+{% extends "wagtailadmin/login.html" %}
+{% load branding_tags i18n %}
+{% block branding_login %}{% brand as identity %}{% trans "Sign in" %} — {{ identity.name }}{% endblock %}
