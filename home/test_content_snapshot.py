@@ -132,6 +132,49 @@ class DevelopmentSnapshotTests(TestCase):
         self.assertEqual(get_image_model().objects.count(), assets)
         self.assertEqual((self.home.revisions.count(), self.child.revisions.count()), revisions)
 
+    def test_existing_translation_is_reused_after_its_parent_and_slug_changed(self):
+        people = self.profile.get_parent().specific
+        archive = self.home.add_child(instance=PeopleIndexPage(title="Archived people", slug="archived-people"))
+        self.profile.move(archive, pos="last-child")
+        self.profile.refresh_from_db()
+        self.profile.slug = "renamed-researcher"
+        self.profile.save_revision().publish()
+        original_id = self.profile.pk
+        total_pages = self.home.get_descendants().count()
+
+        import_bundle(self.bundle)
+
+        self.profile.refresh_from_db()
+        self.assertEqual(self.profile.pk, original_id)
+        self.assertEqual(self.profile.get_parent().pk, people.pk)
+        self.assertEqual(self.profile.slug, "snapshot-researcher")
+        self.assertEqual(self.home.get_descendants().count(), total_pages)
+        self.assertTrue(PeopleIndexPage.objects.filter(pk=archive.pk).exists())
+        self.assertEqual(self.client.get(self.profile.url).status_code, 200)
+        self.assertEqual(import_bundle(self.bundle)["pages"], 0)
+
+    def test_unrelated_slug_collision_is_rejected_without_overwriting_content(self):
+        people = self.profile.get_parent().specific
+        archive = self.home.add_child(instance=PeopleIndexPage(title="Archived people", slug="archived-people"))
+        self.profile.move(archive, pos="last-child")
+        self.profile.refresh_from_db()
+        replacement = people.add_child(instance=PersonPage(
+            title="Keep this editor profile", slug=self.profile.slug, role="Editor profile",
+        ))
+        replacement.save_revision().publish()
+        original_key = replacement.translation_key
+        revisions = replacement.revisions.count()
+
+        with self.assertRaisesMessage(CommandError, "is already in use"):
+            import_bundle(self.bundle)
+
+        self.profile.refresh_from_db()
+        replacement.refresh_from_db()
+        self.assertEqual(self.profile.get_parent().pk, archive.pk)
+        self.assertEqual(replacement.title, "Keep this editor profile")
+        self.assertEqual(replacement.translation_key, original_key)
+        self.assertEqual(replacement.revisions.count(), revisions)
+
     def test_corrupted_asset_is_rejected_before_content_changes(self):
         self.home.hero_summary = "Keep until valid import"
         self.home.save_revision().publish()

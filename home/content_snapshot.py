@@ -215,9 +215,22 @@ def import_bundle(directory=DEFAULT_BUNDLE, *, if_changed=False):
             if model._meta.app_label != "home" or not issubclass(model, Page):
                 raise CommandError("Unsupported snapshot page model.")
             locale = Locale.objects.get(language_code=item["locale"])
-            parent = mappings[(label(Page), item["parent"])] if item["parent"] else Page.get_first_root_node()
+            parent = (Page.objects.get(pk=mappings[(label(Page), item["parent"])].pk)
+                      if item["parent"] else Page.get_first_root_node())
             candidates = model.objects.child_of(parent).filter(locale=locale)
-            page = candidates.filter(translation_key=item["translation_key"]).first()
+            # Translation identity is unique across the entire tree. Older
+            # installations may place the same page under a different parent;
+            # limiting this lookup to siblings attempts to insert a duplicate.
+            page = Page.objects.filter(locale=locale, translation_key=item["translation_key"]).first()
+            if page is not None:
+                page = page.specific
+                if not isinstance(page, model):
+                    raise CommandError(f"Snapshot page {item['id']} conflicts with existing page {page.pk}: different page types.")
+                if page.get_parent().pk != parent.pk:
+                    if parent.get_children().exclude(pk=page.pk).filter(slug=item["fields"]["slug"]).exists():
+                        raise CommandError(f"Cannot move snapshot page {item['id']}: slug {item['fields']['slug']!r} is already in use under page {parent.pk}.")
+                    page.move(parent, pos="last-child")
+                    page.refresh_from_db()
             page = page or candidates.filter(slug=item["fields"]["slug"]).first()
             # Structural indexes are unique even when an older installation used
             # a different slug (for example "team" instead of "people").
