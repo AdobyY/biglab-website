@@ -1,9 +1,9 @@
-{% load wagtailcore_tags ui_tags %}
+{% load wagtailcore_tags wagtailembeds_tags ui_tags %}
 {% if value.is_visible %}
 <section{% include "home/includes/section_attributes.html" %}>
   <div class="section-shell builder-embed">
     <div class="builder-section-heading section-heading">{% if value.title %}<h2>{{ value.title }}</h2>{% endif %}{% if value.intro %}<div class="intro collection-intro">{{ value.intro|richtext }}</div>{% endif %}</div>
-    <div class="responsive-embed">{% include_block value.video %}</div>
+    <div class="responsive-embed">{% embed value.video.url %}</div>
   </div>
 </section>
 {% endif %}

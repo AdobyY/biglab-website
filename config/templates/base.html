@@ -24,10 +24,10 @@
       {% if page.search_description %}<meta property="og:description" content="{{ page.search_description }}">{% endif %}
     {% endif %}
     <link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
-    <link rel="stylesheet" href="{% static 'css/config.css' %}">
-    {% if page and page.pk != site_home.pk %}<link rel="stylesheet" href="{% static 'css/internal-pages.css' %}?v=20261007-subpages">{% endif %}
+    <link rel="stylesheet" href="{% static 'css/config.css' %}?v=20261007-media-autoplay">
+    {% if page and page.pk != site_home.pk %}<link rel="stylesheet" href="{% static 'css/internal-pages.css' %}?v=20261007-section-layout">{% endif %}
     {% block extra_css %}{% endblock %}
-    <link rel="stylesheet" href="{% static 'css/editorial-enhancements.css' %}?v=20261007-visual-2">
+    <link rel="stylesheet" href="{% static 'css/editorial-enhancements.css' %}?v=20261007-media-autoplay">
     {% block final_css %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}" {% block body_attrs %}{% endblock %}data-image-preview="{% ui 'image_preview' %}" data-close="{% ui 'close' %}" data-previous-image="{% ui 'previous_image' %}" data-next-image="{% ui 'next_image' %}" data-pause="{% ui 'pause' %}" data-play="{% ui 'play' %}">
@@ -73,7 +73,6 @@
       {% endwith %}
     </footer>
     <script src="{% static 'js/config.js' %}" defer></script>
-    <script src="{% static 'js/animated-media.js' %}" defer></script>
     {% if page and page.pk != site_home.pk %}<script src="{% static 'js/internal-pages.js' %}" defer></script>{% endif %}
     {% block extra_js %}{% endblock %}
 </body>

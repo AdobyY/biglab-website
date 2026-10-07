@@ -1,8 +1,8 @@
 {% load wagtailcore_tags ui_tags %}
 {% if value.is_visible %}
-<section{% include "home/includes/section_attributes.html" %}>
+<section{% include "home/includes/section_attributes.html" with section_class="builder-callout-section" %}>
   <div class="section-shell builder-callout">
-    <div>
+    <div class="builder-callout-copy">
       <div class="section-heading"><h2>{{ value.title }}</h2></div>
       {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
       {% if value.text %}<div class="reading-content">{{ value.text|richtext }}</div>{% endif %}

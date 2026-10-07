@@ -20,19 +20,9 @@
       if (selected === entry) return;
       const image = entry.image.cloneNode(false);
       image.removeAttribute('id');
-      image.removeAttribute('data-animation-src');
-      image.removeAttribute('data-poster-src');
       image.alt = '';
       image.loading = 'eager';
       image.decoding = 'async';
-
-      // A supplied poster always wins over a potentially animated source set.
-      const poster = entry.image.dataset.posterSrc;
-      if (poster) {
-        image.src = poster;
-        image.removeAttribute('srcset');
-        image.removeAttribute('sizes');
-      }
 
       frame.replaceChildren(image);
       caption.textContent = entry.title.textContent.trim();

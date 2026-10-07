@@ -121,9 +121,6 @@
 .template-homepage .collaboration-item h3 a { text-decoration: none; }
 .template-homepage .collaboration-item h3 a:hover { text-decoration: underline; }
 .template-homepage .collaboration-item .collaboration-description { margin: 0; font-size: .95rem; }
-.template-homepage .page-link-symbol { width: 28px; height: 28px; margin: 0 0 1.5rem; }
-.template-homepage .page-link-grid > a h3 { font-family: var(--body); font-size: 1.7rem; font-weight: 500; line-height: 1.1; }
-.template-homepage .page-link-grid > a p { font-size: 1rem; }
 .template-homepage .contact-section, .template-homepage .builder-contact { padding-block: 4rem; }
 .template-homepage .contact-inner h2 { font-size: 4rem; font-weight: 400; }
 
@@ -181,11 +178,6 @@
   .template-homepage .collaboration-list { grid-template-columns: 1fr; gap: 0; }
   .template-homepage .collaboration-item { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: .5rem 1rem; padding-block: 1.25rem; }
   .template-homepage .collaboration-symbol { margin: 0; }
-  .template-homepage .page-link-grid > a { display: grid; grid-template-columns: 28px minmax(0, 1fr) 18px; gap: .5rem 1rem; align-items: start; }
-  .template-homepage .page-link-symbol { margin: 0; }
-  .template-homepage .page-link-grid > a h3 { font-size: 1.5rem; margin: 0; }
-  .template-homepage .page-link-grid > a p { grid-column: 2; margin: 0; }
-  .template-homepage .page-link-arrow { grid-column: 3; grid-row: 1; }
   .template-homepage .contact-inner h2 { font-size: 2.5rem; }
   .template-homepage .contact-section, .template-homepage .builder-contact { padding-block: 2.75rem; }
 }

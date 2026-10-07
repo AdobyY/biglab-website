@@ -18,15 +18,15 @@
 .page-wide > .article-body, .content-page > .article-body, .article-page > .article-body, .project-page > .article-body { margin-bottom: 2rem; }
 .page-wide .builder-section, .content-page .builder-section, .article-page .builder-section, .project-page .builder-section { margin-inline: 0; }
 .page-wide .builder-section > .section-shell, .content-page .builder-section > .section-shell, .article-page .builder-section > .section-shell, .project-page .builder-section > .section-shell { width: 100%; }
-/* Neutral sections follow the reading grid; colored editorial sections retain full bleed. */
-:is(.page-wide, .content-page, .article-page, .project-page) > .builder-section:is(.section-theme-midnight, .section-theme-coral, .section-theme-butter, .has-section-background),
-:is(.page-wide, .content-page, .article-page, .project-page) > [class^="block-"] > .builder-section:is(.section-theme-midnight, .section-theme-coral, .section-theme-butter, .has-section-background) { margin-inline: calc((100% - 100vw) / 2); }
-:is(.page-wide, .content-page, .article-page, .project-page) > .builder-section:is(.section-theme-midnight, .section-theme-coral, .section-theme-butter, .has-section-background) > .section-shell,
-:is(.page-wide, .content-page, .article-page, .project-page) > [class^="block-"] > .builder-section:is(.section-theme-midnight, .section-theme-coral, .section-theme-butter, .has-section-background) > .section-shell { width: var(--shell); }
+/* Inset colored panels work at any StreamField depth, including Wagtail 8 wrappers. */
+:is(.page-wide, .content-page, .article-page, .project-page, .profile-page) .builder-section:is(.section-theme-midnight, .section-theme-coral, .section-theme-butter, .has-section-background) {
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+  border-radius: var(--radius);
+}
 .builder-section { padding-block: 2.5rem; }
-.page-wide > .page-heading + .builder-section, .page-wide > .page-heading + [class^="block-"] > .builder-section { padding-top: .5rem; }
-.page-wide > .article-body + .builder-section, .page-wide > .article-body + [class^="block-"] > .builder-section { padding-top: 1rem; }
-.page-wide > [class^="block-"] + [class^="block-"] > .builder-section { border-top: 1px solid var(--section-line, var(--line)); }
+.page-wide > .page-heading + .builder-section.section-theme-paper, .page-wide > .page-heading + :is([class^="block-"], [class^="w-block-"]) > .builder-section.section-theme-paper { padding-top: .5rem; }
+.page-wide > .article-body + .builder-section.section-theme-paper, .page-wide > .article-body + :is([class^="block-"], [class^="w-block-"]) > .builder-section.section-theme-paper { padding-top: 1rem; }
+.page-wide > :is([class^="block-"], [class^="w-block-"]) + :is([class^="block-"], [class^="w-block-"]) > .builder-section.section-theme-paper { border-top: 1px solid var(--section-line, var(--line)); }
 .section-heading { margin-bottom: 1.5rem; }
 .after-body { margin-block: 2.5rem 0; }
 .reading-content .block-text + .block-heading { margin-top: 2rem; }

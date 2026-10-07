@@ -240,7 +240,9 @@ Media components include galleries, a dark image lightbox, before/after comparis
 
 ### Reading pages and inline subsections
 
-All internal pages load `internal-pages.css`, with a shared page-heading include and localized breadcrumbs generated from the actual Wagtail tree. Collection headings pair the title with a bounded introduction on desktop and stack on mobile. Neutral sections align to the same reading grid, including Wagtail's StreamField wrappers; colored and background-image sections retain full-width surfaces. Empty body fields create no layout containers. Team and News suppress repeated default section titles and links to themselves while preserving custom editor headings.
+All internal pages load `internal-pages.css`, with a shared page-heading include and localized breadcrumbs generated from the actual Wagtail tree. Collection headings pair the title with a bounded introduction on desktop and stack on mobile. Neutral sections align to the reading grid. Colored and background-image sections on internal pages use contained panels with a 12px radius and responsive side insets of 20–51px, including sections inside profiles and inline child pages. This avoids dependence on the order of Wagtail's generated wrapper classes. Homepage colored sections retain their full-width surfaces. Empty body fields create no layout containers. Team and News suppress repeated default section titles and links to themselves while preserving custom editor headings.
+
+Selected-page links share compact ruled rows across homepages and internal pages: a quiet icon, a Source Sans 3 title and optional description, then an arrow aligned at the right. Two- and three-column groups collapse to a single column on mobile; rows grow with their actual content. Callouts align the text and action in two columns, stacking on mobile. Featured projects without an illustration pair the title and label with the description and action in a second column; projects with an existing illustration keep their visual layout.
 
 Science and project subsections share an inline collection: a 230px sticky contents rail and anchored editorial rows on desktop, becoming an ordinary contents list on mobile. Topic images sit beside their summaries at 220px wide (160px on intermediate screens), then become bounded illustrations below the text on narrow phones. Each subsection links back to contents. `internal-pages.js` progressively marks the current section while reading; native anchor navigation remains usable without JavaScript. Publications and collaborations follow as separate sections.
 
@@ -287,8 +289,8 @@ desktop / 2.5rem mobile padding. Homepage collection titles use 1.2–1.8rem ser
 supporting copy uses .85–1rem sans-serif type. The People index
 shows all eight members in a regular three/two-column grid; optional carousel tracks
 explicitly reset inherited fixed columns so every portrait retains its width.
-Missing portraits use a neutral grey silhouette. GIF detail images start on a still
-poster, with explicit localized Play/Pause controls; linked thumbnails use the poster.
+Missing portraits use a neutral grey silhouette. GIF images animate automatically
+in both detail views and linked thumbnails, without a start button or JavaScript.
 
 Editorial references: Kinfolk Stories (https://www.kinfolk.com/stories/) for ruled
 photographic columns and confident serif hierarchy; Pentagram's Isomorphic Labs
@@ -311,7 +313,7 @@ open list beside a single bounded photograph (320px high, 280px at intermediate
 widths). Hover or keyboard focus updates the still photograph and its actual
 topic caption without blocking the link. Without JavaScript, the section remains
 a photographic collection. Mobile shows a two-column photo index with 110–135px
-images and no duplicate preview. Thumbnail GIFs remain still posters.
+images and no duplicate preview. Thumbnail GIFs animate automatically.
 
 The team uses the full shell in four columns with portraits bounded at 210 × 240px,
 220px high on intermediate screens, and two columns with 140–165px portraits on

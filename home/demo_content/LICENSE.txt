@@ -1,0 +1,11 @@
+Bubble-sort-example-300px.gif
+Source: https://commons.wikimedia.org/wiki/File:Bubble-sort-example-300px.gif
+Author: Swfung8 (2011); updated by Joshua Issac (2013).
+License: Creative Commons Attribution-ShareAlike 3.0 Unported
+https://creativecommons.org/licenses/by-sa/3.0/
+Bundled original unchanged (154867 bytes).
+Attribution and license links are also included on the GIF demonstration page.
+
+The Wagtail tutorial video and Nicky Case simulation are external embeds, not bundled copies.
+Video source: https://wagtail.org/blog/how-to-use-wagtail-live-preview/
+Simulation creator and original: Nicky Case, https://ncase.me/crowds/

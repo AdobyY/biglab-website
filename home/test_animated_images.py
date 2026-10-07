@@ -31,7 +31,7 @@ class AnimatedImageTests(TestCase):
             with poster.file.open('rb') as file:
                 self.assertEqual(PILImage.open(file).format, 'PNG')
 
-    def test_transparent_animation_and_accessible_poster_controls(self):
+    def test_transparent_animation_starts_directly_in_details_and_thumbnails(self):
         with tempfile.TemporaryDirectory() as directory, override_settings(MEDIA_ROOT=directory):
             frames = []
             for position in (15, 50):
@@ -50,9 +50,9 @@ class AnimatedImageTests(TestCase):
                     result.seek(index)
                     self.assertEqual(result.convert('RGBA').getpixel((0, 0))[3], 0)
             rendered = Template("{% load media_tags %}{% media_image image 'width-50' %}").render(Context({'image': image}))
-            self.assertIn('data-animation-src=', rendered)
-            self.assertIn('aria-pressed="false"', rendered)
-            self.assertIn('Play', rendered)
+            self.assertIn(rendition.url, rendered)
+            self.assertNotIn('<button', rendered)
+            self.assertNotIn('data-poster-src', rendered)
             thumbnail = Template("{% load media_tags %}{% media_image image 'width-50' controls=False %}").render(Context({'image': image}))
             self.assertNotIn('<button', thumbnail)
-            self.assertIn('.png', thumbnail)
+            self.assertIn(rendition.url, thumbnail)
