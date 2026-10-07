@@ -263,3 +263,17 @@ The baseline contact band uses butter with navy text and a two-column introducti
 - **Don't** describe either decorative network as measured data or imply quantitative meaning for its node prominence or connections.
 - **Don't** mistake legacy theme names or retained subsection routes for a different visual system or a requirement to split the major reading pages.
 - **Don't** treat this implementation record as proof of a final approved logo, final Parta copy, or new accessibility/performance validation.
+
+The October content update adds editable methods, publications, completed projects,
+collaborations and discovery links to both homepages. About groups Lab, People and News;
+Science exposes its published research sections and publication/collaboration/project
+anchors. Homepage and Science omit the redundant Contents strips and sidebar. Science
+uses a continuous full-width reading column with bounded research images. The homepage
+mission pairs its existing copy with the real SATIS meeting photo. Larger research
+images, three illustrated method columns, a symbolic PARTA audience diagram and
+consistent line icons enrich the open editorial sections. The homepage team uses four
+columns on desktop, three at intermediate widths and two on mobile. The People index
+shows all eight members in a regular three/two-column grid; optional carousel tracks
+explicitly reset inherited fixed columns so every portrait retains its width.
+Missing portraits use a neutral grey silhouette. GIF detail images start on a still
+poster, with explicit localized Play/Pause controls; linked thumbnails use the poster.

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% load wagtailimages_tags wagtailcore_tags ui_tags %}
+{% load wagtailimages_tags wagtailcore_tags ui_tags media_tags %}
 {% block content %}
-<article class="profile-page{% if not page.portrait or not page.show_portrait %} profile-page-no-image{% endif %} portrait-size-{{ page.portrait_size }} portrait-format-{{ page.portrait_format }} portrait-fit-{{ page.portrait_fit }}">
-  {% if page.portrait and page.show_portrait %}<div class="profile-image">{% if page.portrait_format == 'square' %}{% image page.portrait fill-960x960 alt="" %}{% elif page.portrait_format == 'original' %}{% image page.portrait width-1100 alt="" %}{% else %}{% image page.portrait fill-800x960 alt="" %}{% endif %}</div>{% endif %}
+<article class="profile-page{% if not page.show_portrait %} profile-page-no-image{% endif %} portrait-size-{{ page.portrait_size }} portrait-format-{{ page.portrait_format }} portrait-fit-{{ page.portrait_fit }}">
+  {% if page.portrait and page.show_portrait %}<div class="profile-image">{% if page.portrait_fit == 'contain' or page.portrait_format == 'original' %}{% media_image page.portrait 'width-1100' alt="" %}{% elif page.portrait_format == 'square' %}{% media_image page.portrait 'fill-960x960' alt="" %}{% else %}{% media_image page.portrait 'fill-800x960' alt="" %}{% endif %}</div>{% elif page.show_portrait %}<div class="profile-image">{% include "home/includes/person_placeholder.html" %}</div>{% endif %}
   <div class="profile-copy">
     <header class="page-heading">
       <h1>{{ page.title }}</h1>

@@ -1,0 +1,119 @@
+/* Shared editorial details: real content, open rows and deliberate breathing room. */
+.builder-section[id] { scroll-margin-top: 1.5rem; }
+.line-icon { display: block; width: 32px; height: 32px; flex: 0 0 auto; }
+.section-symbol { width: 70px; height: 70px; margin-bottom: 1.5rem; color: var(--section-muted, var(--muted)); }
+.inline-collection--continuous { display: block; }
+.science-page .inline-section-lead.has-image { grid-template-columns: minmax(0, 1fr) 280px; gap: 3rem; }
+.science-page .inline-section-image img { width: 280px; }
+.animated-media { display: block; position: relative; min-width: 0; }
+.animated-media > img { display: block; }
+.animation-toggle { position: absolute; inset: auto .75rem .75rem auto; min-height: 44px; padding: .5rem 1rem; border: 1px solid #f6f3e9; border-radius: 4px; background: #101e32; color: #f6f3e9; cursor: pointer; font: inherit; font-size: .9rem; }
+.animation-toggle:hover { background: #273d55; }
+.animation-toggle[hidden] { display: none; }
+.person-placeholder { background: #dededb; color: #939793; }
+.person-placeholder svg { display: block; width: 74%; max-height: 100%; fill: currentColor; }
+.profile-image .person-placeholder { aspect-ratio: 5 / 6; border-radius: 8px; }
+/* Carousel tracks must never inherit a page's fixed grid columns. */
+.people-carousel.is-carousel .people-grid.portrait-run { grid-template-columns: none; }
+.template-homepage .people-preview .people-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.5rem 1.75rem; }
+.template-homepage .people-preview .person-tile-image { max-width: 100%; border-radius: 4px; }
+.template-homepage .people-preview .person-link h3 { font-size: clamp(1.25rem, 1.5vw, 1.5rem); }
+.template-homepage .people-preview .person-role { font-size: .92rem; }
+.template-homepage .builder-media { display: grid; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+.template-homepage .builder-media-image-left { grid-template-columns: 1.08fr .92fr; }
+.template-homepage .builder-media figure { margin: 0; }
+.template-homepage .builder-media figure img { width: 100%; max-height: none; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 70%; border-radius: 12px; }
+.template-homepage .builder-media .collection-intro { font-size: 1.12rem; line-height: 1.6; margin-bottom: 1.5rem; }
+.template-homepage .builder-media .reading-content { max-width: 52ch; }
+.template-homepage .builder-media .button { margin-top: 1rem; }
+.template-homepage .research-list { gap: 0 2.5rem; }
+.template-homepage .research-row:not(:first-child) { display: flex; flex-direction: column; align-items: stretch; gap: .85rem; padding-block: 2rem; }
+.template-homepage .research-row:not(:first-child) > img, .template-homepage .research-row:not(:first-child) > .animated-media { order: -1; width: 100%; height: auto; margin-bottom: .5rem; }
+.template-homepage .research-row:not(:first-child) img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 8px; }
+.template-homepage .research-row:not(:first-child) h3 { font-size: clamp(1.55rem, 2.2vw, 1.8rem); max-width: 30ch; }
+.method-lead { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 3rem; }
+.method-lead h2 { font-size: clamp(2rem, 3.3vw, 3rem); line-height: 1.1; text-wrap: balance; max-width: 22ch; margin-bottom: 1.25rem; }
+.method-lead .collection-intro { max-width: 44ch; margin: 0; }
+.method-diagram { display: block; width: 100%; max-height: 250px; color: var(--yellow); }
+.method-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem; }
+.method-item { border-top: 1px solid var(--section-line, var(--line)); padding-top: 1.5rem; min-width: 0; }
+.method-item > .line-icon { width: 44px; height: 44px; margin-bottom: 1.25rem; color: var(--yellow); }
+.method-item h3 { font-size: 1.6rem; line-height: 1.2; margin-bottom: .85rem; max-width: 22ch; }
+.method-item p { margin-bottom: 0; color: var(--section-muted, var(--muted)); font-size: 1rem; }
+.template-homepage .parta-band .section-shell { grid-template-columns: .95fr 1.05fr; gap: 4rem; }
+.template-homepage .parta-band .section-heading { margin-bottom: 1.25rem; }
+.template-homepage .parta-band h2 { font-size: clamp(3rem, 6vw, 4.5rem); }
+.template-homepage .parta-band .button { margin-top: 1.5rem; }
+.parta-band .section-shell:not(:has(.parta-visual)) { display: block; }
+.parta-band .featured-project-copy { min-width: 0; }
+.parta-visual { position: relative; aspect-ratio: 14 / 9; color: var(--yellow); }
+.parta-connections { width: 100%; height: 100%; opacity: .6; }
+.parta-audience { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; width: 27%; aspect-ratio: 1; background: var(--section-ink, var(--paper)); color: var(--coral); border-radius: 50%; transform: translate(-50%, -50%); font-size: .88rem; }
+.parta-audience > .line-icon { width: 40px; height: 40px; }
+.parta-audience-school { left: 21.4%; top: 25%; }
+.parta-audience-parent { left: 78.6%; top: 25%; }
+.parta-audience-student { left: 50%; top: 80.6%; }
+.parta-center { position: absolute; left: 50%; top: 47.2%; transform: translate(-50%, -50%); font-family: var(--display); font-size: 1.5rem; color: var(--section-ink, var(--paper)); }
+.homepage-design-2 .parta-audience { background: var(--design-accent); color: var(--design-background); }
+.homepage-design-2 .method-diagram, .homepage-design-2 .method-item > .line-icon, .homepage-design-2 .parta-visual { color: var(--design-accent); }
+.template-homepage .publication-section .section-shell { display: grid; grid-template-columns: .7fr 1.3fr; gap: 0 4rem; }
+.template-homepage .publication-section .section-heading { grid-column: 1; grid-row: 1 / span 3; }
+.template-homepage .publication-section .publication-list { grid-column: 2; }
+.template-homepage .publication-section .collection-intro { grid-column: 2; margin-bottom: 1.5rem; }
+.template-homepage .publication-list > li { grid-template-columns: 4rem minmax(0, 1fr); gap: 1.5rem; padding-block: 1.75rem; }
+.template-homepage .publication-copy h3 { font-family: var(--display); font-size: 1.65rem; line-height: 1.2; text-wrap: balance; }
+.template-homepage .publication-year { color: var(--section-muted); font-size: 1rem; }
+.template-homepage .collaboration-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 4rem; }
+.template-homepage .collaboration-item { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: .4rem 1.5rem; padding-block: 2rem; border-top: 1px solid var(--section-line, var(--line)); }
+.template-homepage .collaboration-item:not(:has(.collaboration-logo, .collaboration-symbol)) { display: block; }
+.template-homepage .collaboration-symbol { grid-row: 1 / span 2; align-self: start; color: var(--section-muted, var(--muted)); }
+.template-homepage .collaboration-symbol .line-icon { width: 48px; height: 48px; }
+.research-row > .animated-media { grid-column: 2; grid-row: 1 / span 2; }
+.research-row > .animated-media img { width: 100%; }
+.template-homepage .collaboration-logo { grid-row: 1 / span 2; align-self: center; }
+.template-homepage .collaboration-logo img { width: 100%; height: 70px; object-fit: contain; }
+.template-homepage .collaboration-item h3 { font-size: 1.4rem; line-height: 1.25; margin-bottom: .25rem; }
+.template-homepage .collaboration-description { grid-column: 2; font-size: .95rem; }
+.template-homepage .page-link-grid > a { position: relative; padding-right: 2.5rem; }
+.template-homepage .page-link-symbol { width: 48px; height: 48px; color: var(--section-muted, var(--muted)); margin-block: .5rem 1.5rem; }
+.template-homepage .page-link-arrow { position: absolute; right: .2rem; top: 1.5rem; width: 24px; height: 24px; }
+.template-homepage .page-link-grid > a h3 { font-size: 1.75rem; text-wrap: balance; }
+.template-homepage .page-link-grid > a p { color: var(--section-muted); max-width: 48ch; }
+@media (max-width: 1000px) {
+  .template-homepage .people-preview .people-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .template-homepage .publication-section .section-shell { grid-template-columns: 1fr; }
+  .template-homepage .publication-section .section-heading, .template-homepage .publication-section .collection-intro, .template-homepage .publication-section .publication-list { grid-column: 1; grid-row: auto; }
+  .method-grid { gap: 1.75rem; }
+  .method-lead { gap: 2rem; }
+  .template-homepage .parta-band .section-shell { gap: 2rem; }
+}
+@media (max-width: 760px) {
+  .template-homepage .builder-media-image-left { grid-template-columns: 1fr; }
+  .template-homepage .builder-media-image-left .builder-media-copy, .template-homepage .builder-media-image-left figure { grid-column: 1; grid-row: auto; }
+  .template-homepage .builder-media figure { order: -1; margin: 0; }
+  .template-homepage .research-row:not(:first-child) img { aspect-ratio: 16 / 10; }
+  .method-lead { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+  .method-diagram { max-height: 170px; }
+  .method-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+  .method-item { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 1rem; }
+  .method-item > .line-icon { width: 36px; height: 36px; }
+  .method-item h3 { font-size: 1.4rem; }
+  .template-homepage .parta-band .section-shell { grid-template-columns: 1fr; gap: 2.5rem; }
+  .parta-visual { width: 100%; max-width: 480px; justify-self: center; }
+  .parta-audience { font-size: .75rem; }
+  .parta-audience > .line-icon { width: 32px; height: 32px; }
+  .science-page .inline-section-lead.has-image { grid-template-columns: minmax(0, 1fr) 160px; gap: 1.5rem; }
+  .science-page .inline-section-image img { width: 160px; }
+  .template-homepage .people-preview .people-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1rem; }
+  .template-homepage .people-preview .person-link h3 { font-size: 1.25rem; }
+  .template-homepage .publication-list > li { grid-template-columns: 3rem minmax(0, 1fr); gap: .75rem; }
+  .template-homepage .publication-copy h3 { font-size: 1.4rem; }
+  .template-homepage .collaboration-list { grid-template-columns: 1fr; }
+  .template-homepage .collaboration-item { grid-template-columns: 72px minmax(0, 1fr); gap: .5rem 1rem; }
+  .template-homepage .page-link-grid > a h3 { font-size: 1.5rem; }
+}
+@media (max-width: 480px) {
+  .science-page .inline-section-lead.has-image { display: block; }
+  .science-page .inline-section-image { max-width: none; }
+  .science-page .inline-section-image img { width: 100%; }
+}

@@ -39,7 +39,7 @@
         "about_financing": "<p>BIG Lab’s research is supported through two funded projects: <a href=\"https://www.muni.cz/en/research/projects/75245\">Rethinking Segregation within Schools</a> (2026–2030), funded by the Czech Science Foundation’s JUNIOR STAR programme, and <a href=\"https://www.muni.cz/en/research/projects/74806\">Behavior Dynamics: From Individual Change to Social Spread</a> (2025–2029), funded by the Grant Agency of Masaryk University.</p>",
         "sections": [
           {
-            "type": "about",
+            "type": "text_image",
             "value": {
               "intro": "<p>BIG Lab brings together social psychology, sociology and network science to understand change at two connected levels: the person and the group.</p>",
               "is_visible": true,
@@ -49,7 +49,13 @@
               "background_overlay": "medium",
               "title": "From individual change to social spread",
               "text": "<p>Our work examines outcomes including prejudice, substance use, pro-environmental behaviour, polarization and conflict. We combine longitudinal social network analysis, computational modelling, experiments and real-world interventions.</p>",
-              "theme": "paper"
+              "theme": "paper",
+              "image": 9,
+              "layout": "image-left",
+              "image_caption": "Research meeting with the SATIS lab · May 2026",
+              "button_page": 8,
+              "button_label": "Meet the team",
+              "button_url": ""
             },
             "id": "9bbdae6e-2cbf-4ae8-8c0c-63ad4e29fb73"
           },
@@ -68,6 +74,18 @@
             "id": "83b56f48-7962-4ca4-a360-499665204a31"
           },
           {
+            "type": "about",
+            "id": "32148ed8-d6ef-43ee-9881-fbd428b9cc26",
+            "value": {
+              "is_visible": true,
+              "anchor": "methods",
+              "title": "How we study a connected world",
+              "theme": "midnight",
+              "intro": "<p>From relationships between people to the dynamics of whole groups.</p>",
+              "text": "<h3>Social networks over time</h3><p>Longitudinal social network analysis lets us study relationships and how they change.</p><h3>Models of group processes</h3><p>Computational and agent-based models connect individual behaviour with group dynamics.</p><h3>Research in real settings</h3><p>Experiments and real-world interventions complement our study of individual and group change.</p>"
+            }
+          },
+          {
             "type": "people",
             "value": {
               "is_visible": true,
@@ -77,9 +95,9 @@
               "selected_people": [],
               "limit": 12,
               "show_roles": true,
-              "enable_carousel": true,
+              "enable_carousel": false,
               "carousel_after": 6,
-              "theme": "lilac"
+              "theme": "paper"
             },
             "id": "48186d2c-c0e0-43aa-ad01-ddf0f8e45c8c"
           },
@@ -89,7 +107,7 @@
               "is_visible": true,
               "anchor": "featured-project",
               "project": 5,
-              "label": "PARTA / BIG LAB",
+              "label": "",
               "button_label": "About the project",
               "theme": "coral"
             },
@@ -109,13 +127,72 @@
               "projects_heading": "",
               "selected_projects": [],
               "projects_limit": 2,
-              "show_publications": true,
+              "show_publications": false,
               "publications_heading": "",
               "selected_publications": [],
               "publications_limit": 2,
               "theme": "paper"
             },
             "id": "5a801cca-4059-42f2-ac3d-d72d40163695"
+          },
+          {
+            "type": "publications",
+            "id": "fe517da2-a1bc-4adb-bd5d-9aa189b0ee1f",
+            "value": {
+              "is_visible": true,
+              "anchor": "publications",
+              "title": "",
+              "theme": "paper"
+            }
+          },
+          {
+            "type": "project_list",
+            "id": "338cb98a-97ce-404d-9a20-fdef6dbc67cb",
+            "value": {
+              "is_visible": true,
+              "anchor": "finished-projects",
+              "title": "",
+              "theme": "paper",
+              "status": "finished"
+            }
+          },
+          {
+            "type": "collaborations",
+            "id": "aec807e9-9901-4863-a480-ac0437ae9cf6",
+            "value": {
+              "is_visible": true,
+              "anchor": "collaborations",
+              "title": "",
+              "theme": "paper"
+            }
+          },
+          {
+            "type": "page_links",
+            "id": "b21d22a6-1f51-40a3-82c7-b5336d1fa403",
+            "value": {
+              "is_visible": true,
+              "anchor": "explore",
+              "title": "Explore BIG Lab",
+              "theme": "paper",
+              "columns": "three",
+              "pages": [
+                {
+                  "page": 4,
+                  "label": "Science",
+                  "description": "Our research areas, publications and collaborations."
+                },
+                {
+                  "page": 8,
+                  "label": "People",
+                  "description": "Meet the team and discover their research interests."
+                },
+                {
+                  "page": 7,
+                  "label": "News",
+                  "description": "Updates and news from the lab."
+                }
+              ]
+            }
           }
         ]
       },
@@ -143,7 +220,61 @@
           }
         ],
         "after_body": [],
-        "sections": []
+        "sections": [
+          {
+            "type": "child_sections",
+            "id": "ed4d93e7-4203-4edb-9069-5b47f9112396",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "research-areas",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            }
+          },
+          {
+            "type": "project_list",
+            "id": "e8504ede-5ab8-4df1-8247-f8143378cb7c",
+            "value": {
+              "is_visible": true,
+              "anchor": "finished-projects",
+              "title": "",
+              "theme": "paper",
+              "status": "finished"
+            }
+          },
+          {
+            "type": "publications",
+            "id": "07a77766-f852-46b5-993e-701302268770",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "publications",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            }
+          },
+          {
+            "type": "collaborations",
+            "id": "ff472b46-7e83-4a1d-b9a3-ddf478a31404",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "collaborations",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            }
+          }
+        ]
       },
       "parent": 3,
       "locale": "en",
@@ -334,7 +465,18 @@
         "intro": "<p>This section is ready for confirmed Parta materials from the BIG Lab team.</p>",
         "body": [],
         "after_body": [],
-        "sections": [],
+        "sections": [
+          {
+            "type": "child_sections",
+            "id": "7dd4fe30-ca25-490c-8642-eb499703570a",
+            "value": {
+              "is_visible": true,
+              "anchor": "audiences",
+              "title": "",
+              "theme": "paper"
+            }
+          }
+        ],
         "cover_image": null
       },
       "parent": 5,
@@ -358,7 +500,7 @@
         "sections": [],
         "cover_image": null
       },
-      "parent": 5,
+      "parent": 21,
       "locale": "en",
       "translation_key": "56264938-27e5-48ee-98b4-e925394b5c2a",
       "live": false
@@ -379,7 +521,7 @@
         "sections": [],
         "cover_image": null
       },
-      "parent": 5,
+      "parent": 21,
       "locale": "en",
       "translation_key": "d78c35b5-0d21-4652-bc98-2690396f7f90",
       "live": false
@@ -400,7 +542,7 @@
         "sections": [],
         "cover_image": null
       },
-      "parent": 5,
+      "parent": 21,
       "locale": "en",
       "translation_key": "e2db2fbc-7bea-4d26-9d33-96fca6ac8697",
       "live": false
@@ -624,7 +766,28 @@
         "intro": "<p>We are a multidisciplinary team studying behaviour across people, relationships and groups.</p>",
         "body": [],
         "after_body": [],
-        "sections": []
+        "sections": [
+          {
+            "type": "people",
+            "id": "8930e100-2886-4bc0-bf3c-6e56e30d4d13",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium",
+              "selected_people": [],
+              "limit": 24,
+              "link_label": "",
+              "show_roles": true,
+              "enable_carousel": false,
+              "carousel_after": 6
+            }
+          }
+        ]
       },
       "parent": 3,
       "locale": "en",
@@ -731,20 +894,26 @@
       "model": "home.personpage",
       "id": 17,
       "fields": {
-        "title": "Michaela Kryštofová",
-        "draft_title": "Michaela Kryštofová",
+        "title": "Mgr. Michaela Kryštofová",
+        "draft_title": "Mgr. Michaela Kryštofová",
         "slug": "michaela-krystofova",
         "show_in_menus": false,
         "seo_title": "",
         "search_description": "",
-        "intro": "<p>Bc. Michaela Kryštofová is a research assistant at BIG Lab and a final-year Master’s student in Psychology preparing for doctoral study in the lab. Her work moves from individual differences toward questions about how attitudes and behaviours form, change and spread through social networks. She is particularly interested in bridging quantitative and qualitative methodologies.</p>",
-        "body": [],
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p><a href=\"https://www.muni.cz/lide/520266-michaela-krystofova\">Mgr. Michaela Kryštofová</a> is a PhD student whose research focuses on group processes in adolescence and on how peer relationships shape young people&#x27;s identity, attitudes and behaviour, particularly within the school class. In her work, she seeks to bridge qualitative and quantitative methodologies and to apply modern methods such as longitudinal social network analysis and agent-based modelling. Outside academia, she is an avid reader, an enthusiastic home baker, and a devoted dog owner.</p>",
+            "id": "528a8420-35b4-4499-afb4-39b650f5cd94"
+          }
+        ],
         "after_body": [],
         "sections": [],
-        "role": "Research assistant",
+        "role": "PhD candidate",
         "portrait": {
           "ref": "wagtailimages.image",
-          "id": 2
+          "id": 15
         },
         "card_summary": "",
         "show_portrait": true,
@@ -752,7 +921,7 @@
         "portrait_format": "portrait",
         "portrait_fit": "cover",
         "email": "",
-        "profile_url": ""
+        "profile_url": "https://www.muni.cz/lide/520266-michaela-krystofova"
       },
       "parent": 8,
       "locale": "en",
@@ -763,17 +932,23 @@
       "model": "home.personpage",
       "id": 18,
       "fields": {
-        "title": "Olesja Nyjherová",
-        "draft_title": "Olesja Nyjherová",
+        "title": "Bc. Olesja Nyjherová",
+        "draft_title": "Bc. Olesja Nyjherová",
         "slug": "olesja-nyjherova",
         "show_in_menus": false,
         "seo_title": "",
         "search_description": "",
-        "intro": "<p>Olesja Nyjherová is an undergraduate psychology student at Masaryk University. Her interests include psychometrics, research methodology and statistics, as well as developmental psychology. At BIG Lab, she manages data collection, bringing organization, precision and careful planning to the team’s fieldwork.</p>",
-        "body": [],
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p><a href=\"https://www.muni.cz/lide/548707-olesja-nyjherova\">Bc. Olesja Nyjherová</a> is a graduate student of psychology at Masaryk University. Her academic interests include psychometrics, research methodology and statistics, as well as developmental psychology. At the BIG lab, she fulfills the role of data collection manager, bringing her love of organization, precision, and careful planning to everything she does. Outside of the lab, she enjoys baking, knitting, and exploring nature.</p>",
+            "id": "9dc0e34f-ea9a-443d-873f-9a3ef9f5863a"
+          }
+        ],
         "after_body": [],
         "sections": [],
-        "role": "Data collection manager",
+        "role": "Fieldwork",
         "portrait": {
           "ref": "wagtailimages.image",
           "id": 3
@@ -784,7 +959,7 @@
         "portrait_format": "portrait",
         "portrait_fit": "cover",
         "email": "",
-        "profile_url": "https://www.muni.cz/en/people/581225-olesja-nyjherova"
+        "profile_url": "https://www.muni.cz/lide/548707-olesja-nyjherova"
       },
       "parent": 8,
       "locale": "en",
@@ -805,7 +980,7 @@
         "body": [],
         "after_body": [],
         "sections": [],
-        "role": "Doctoral researcher",
+        "role": "PhD candidate",
         "portrait": {
           "ref": "wagtailimages.image",
           "id": 1
@@ -821,6 +996,79 @@
       "parent": 8,
       "locale": "en",
       "translation_key": "8b60d391-9047-4d34-8d1a-3982a213f283",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 57,
+      "fields": {
+        "title": "Petra Paličková",
+        "draft_title": "Petra Paličková",
+        "slug": "petra-palickova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p><a href=\"https://www.muni.cz/lide/561542-petra-palickova\">Petra Paličková</a> is a bachelor’s degree student in Psychology at the Faculty of Social Studies and a research assistant at BIG Lab. In her professional development, she hopes to bridge psychological research and practice. Alongside her work at BIG Lab, she also engages in volunteering, including at Černovice Mental Hospital, where she works with people with mental health difficulties.</p>",
+            "id": "b1157e55-13f7-47eb-9235-836ae5b0784a"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "role": "Research assistant",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 14
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": "https://www.muni.cz/lide/561542-petra-palickova"
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "c8b166a9-73fe-40c0-8d12-9a75e7e3dcb3",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 58,
+      "fields": {
+        "title": "Adéla Franková",
+        "draft_title": "Adéla Franková",
+        "slug": "adela-frankova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Adéla Franková is a Bachelor’s student of Psychology at the Faculty of Social Studies, Masaryk University, and a Research Assistant at the BIG Lab. Through her work, she is gaining experience in psychological research and academic work.</p>",
+            "id": "8c8d3211-cca1-4a43-80d1-7876601478cb"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "role": "Research assistant",
+        "portrait": null,
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": ""
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "c919b962-694c-4489-94be-121e4e18ab40",
       "live": true
     },
     {
@@ -855,14 +1103,20 @@
         "about_financing": "<p>Výzkum BIG Labu podporují dva financované projekty: <a href=\"https://www.muni.cz/en/research/projects/75245\">Přehodnocení segregace ve školách</a> (2026–2030), financovaný Grantovou agenturou České republiky v programu JUNIOR STAR, a <a href=\"https://www.muni.cz/en/research/projects/74806\">Dynamika chování: od individuální změny k sociálnímu šíření</a> (2025–2029), financovaný Grantovou agenturou Masarykovy univerzity.</p>",
         "sections": [
           {
-            "type": "about",
+            "type": "text_image",
             "value": {
               "is_visible": true,
               "anchor": "about",
               "title": "Od individuální změny k sociálnímu šíření",
-              "intro": "",
-              "text": "",
-              "theme": "paper"
+              "intro": "<p>BIG Lab propojuje sociální psychologii, sociologii a síťovou vědu, aby porozuměl změnám na dvou propojených úrovních: jednotlivce a skupiny.</p>",
+              "text": "<p>Zkoumáme předsudky, užívání návykových látek, proenvironmentální chování, polarizaci a konflikty. Kombinujeme longitudinální analýzu sociálních sítí, výpočetní modelování, experimenty a intervence v reálném prostředí.</p>",
+              "theme": "paper",
+              "image": 9,
+              "layout": "image-left",
+              "image_caption": "Výzkumné setkání s laboratoří SATIS · květen 2026",
+              "button_page": 37,
+              "button_label": "Seznamte se s týmem",
+              "button_url": ""
             },
             "id": "9bbdae6e-2cbf-4ae8-8c0c-63ad4e29fb73"
           },
@@ -881,6 +1135,18 @@
             "id": "83b56f48-7962-4ca4-a360-499665204a31"
           },
           {
+            "type": "about",
+            "id": "69228c25-9bdc-4cd1-ba2d-e8e5c233cf26",
+            "value": {
+              "is_visible": true,
+              "anchor": "methods",
+              "title": "Jak zkoumáme propojený svět",
+              "theme": "midnight",
+              "intro": "<p>Od vztahů mezi lidmi k dynamice celých skupin.</p>",
+              "text": "<h3>Sociální sítě v čase</h3><p>Longitudinální analýza sociálních sítí nám umožňuje zkoumat vztahy a jejich proměny.</p><h3>Modely skupinových procesů</h3><p>Výpočetní modelování a modely založené na agentech propojují individuální chování a skupinovou dynamiku.</p><h3>Výzkum v reálném prostředí</h3><p>Experimenty a intervence doplňují studium změn jednotlivců i skupin.</p>"
+            }
+          },
+          {
             "type": "people",
             "value": {
               "is_visible": true,
@@ -890,9 +1156,9 @@
               "selected_people": [],
               "limit": 12,
               "show_roles": true,
-              "enable_carousel": true,
+              "enable_carousel": false,
               "carousel_after": 6,
-              "theme": "lilac"
+              "theme": "paper"
             },
             "id": "48186d2c-c0e0-43aa-ad01-ddf0f8e45c8c"
           },
@@ -902,7 +1168,7 @@
               "is_visible": true,
               "anchor": "featured-project",
               "project": 46,
-              "label": "PARTA / BIG LAB",
+              "label": "",
               "button_label": "O projektu",
               "theme": "coral"
             },
@@ -922,13 +1188,72 @@
               "projects_heading": "",
               "selected_projects": [],
               "projects_limit": 2,
-              "show_publications": true,
+              "show_publications": false,
               "publications_heading": "",
               "selected_publications": [],
               "publications_limit": 2,
               "theme": "paper"
             },
             "id": "5a801cca-4059-42f2-ac3d-d72d40163695"
+          },
+          {
+            "type": "publications",
+            "id": "7d6b76e9-c960-4d9b-a961-113c19f588b2",
+            "value": {
+              "is_visible": true,
+              "anchor": "publications",
+              "title": "",
+              "theme": "paper"
+            }
+          },
+          {
+            "type": "project_list",
+            "id": "57f09ea9-2ee0-4867-8082-7cd62c49beef",
+            "value": {
+              "is_visible": true,
+              "anchor": "finished-projects",
+              "title": "",
+              "theme": "paper",
+              "status": "finished"
+            }
+          },
+          {
+            "type": "collaborations",
+            "id": "f78d13ce-476e-4d8e-9aa5-2987d17e7719",
+            "value": {
+              "is_visible": true,
+              "anchor": "collaborations",
+              "title": "",
+              "theme": "paper"
+            }
+          },
+          {
+            "type": "page_links",
+            "id": "e0b358cb-7228-40ea-8637-0f53da7c6163",
+            "value": {
+              "is_visible": true,
+              "anchor": "explore",
+              "title": "Objevte BIG Lab",
+              "theme": "paper",
+              "columns": "three",
+              "pages": [
+                {
+                  "page": 31,
+                  "label": "Výzkum",
+                  "description": "Oblasti výzkumu, publikace a spolupráce."
+                },
+                {
+                  "page": 37,
+                  "label": "Lidé",
+                  "description": "Seznamte se s týmem a jeho odbornými zájmy."
+                },
+                {
+                  "page": 44,
+                  "label": "Novinky",
+                  "description": "Zprávy a aktuality z laboratoře."
+                }
+              ]
+            }
           }
         ]
       },
@@ -956,7 +1281,61 @@
           }
         ],
         "after_body": [],
-        "sections": []
+        "sections": [
+          {
+            "type": "child_sections",
+            "id": "65c5fabf-0c46-469a-bbb0-2d083956ff5a",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "research-areas",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            }
+          },
+          {
+            "type": "project_list",
+            "id": "d6c0b7ce-f438-42e3-b16b-44178f4461f3",
+            "value": {
+              "is_visible": true,
+              "anchor": "finished-projects",
+              "title": "",
+              "theme": "paper",
+              "status": "finished"
+            }
+          },
+          {
+            "type": "publications",
+            "id": "213542db-0735-4d11-b397-faf4040cf555",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "publications",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            }
+          },
+          {
+            "type": "collaborations",
+            "id": "fa8db640-0255-4781-b9f4-8655043ce49d",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "collaborations",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            }
+          }
+        ]
       },
       "parent": 30,
       "locale": "cs",
@@ -1096,7 +1475,28 @@
         "intro": "<p>Jsme multidisciplinární tým zkoumající chování napříč lidmi, vztahy a skupinami.</p>",
         "body": [],
         "after_body": [],
-        "sections": []
+        "sections": [
+          {
+            "type": "people",
+            "id": "8947fd11-d272-4052-8d95-907413fa39ef",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium",
+              "selected_people": [],
+              "limit": 24,
+              "link_label": "",
+              "show_roles": true,
+              "enable_carousel": false,
+              "carousel_after": 6
+            }
+          }
+        ]
       },
       "parent": 30,
       "locale": "cs",
@@ -1203,20 +1603,26 @@
       "model": "home.personpage",
       "id": 41,
       "fields": {
-        "title": "Michaela Kryštofová",
-        "draft_title": "Michaela Kryštofová",
+        "title": "Mgr. Michaela Kryštofová",
+        "draft_title": "Mgr. Michaela Kryštofová",
         "slug": "michaela-krystofova",
         "show_in_menus": false,
         "seo_title": "",
         "search_description": "",
-        "intro": "<p>Bc. Michaela Kryštofová je výzkumnou asistentkou v BIG Labu a studentkou posledního ročníku magisterského studia psychologie, která se připravuje na doktorské studium v laboratoři. Její práce směřuje od individuálních rozdílů k otázkám, jak se postoje a chování utvářejí, mění a šíří prostřednictvím sociálních sítí. Zajímá se o propojování kvantitativních a kvalitativních metod.</p>",
-        "body": [],
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p><a href=\"https://www.muni.cz/lide/520266-michaela-krystofova\">Mgr. Michaela Kryštofová</a> je doktorskou studentkou, jejíž výzkum se zaměřuje na skupinové procesy v dospívání a na to, jak vrstevnické vztahy utvářejí identitu, postoje a chování mladých lidí, zejména v kontextu školní třídy. Ve své práci se snaží o propojování kvalitativní a kvantitativní metodologie a uplatňování moderních metod, jako je longitudinální analýza sociálních sítí a modelování založené na agentech. Mimo akademické prostředí je vášnivou čtenářkou, nadšenou domácí pekařkou a oddanou majitelkou psa.</p>",
+            "id": "d08fee31-22f5-4464-ac18-2aa566c4ddfc"
+          }
+        ],
         "after_body": [],
         "sections": [],
-        "role": "Výzkumná asistentka",
+        "role": "doktorandka",
         "portrait": {
           "ref": "wagtailimages.image",
-          "id": 2
+          "id": 15
         },
         "card_summary": "",
         "show_portrait": true,
@@ -1224,7 +1630,7 @@
         "portrait_format": "portrait",
         "portrait_fit": "cover",
         "email": "",
-        "profile_url": ""
+        "profile_url": "https://www.muni.cz/lide/520266-michaela-krystofova"
       },
       "parent": 37,
       "locale": "cs",
@@ -1235,17 +1641,23 @@
       "model": "home.personpage",
       "id": 42,
       "fields": {
-        "title": "Olesja Nyjherová",
-        "draft_title": "Olesja Nyjherová",
+        "title": "Bc. Olesja Nyjherová",
+        "draft_title": "Bc. Olesja Nyjherová",
         "slug": "olesja-nyjherova",
         "show_in_menus": false,
         "seo_title": "",
         "search_description": "",
-        "intro": "<p>Olesja Nyjherová je studentkou bakalářského studia psychologie na Masarykově univerzitě. Její odborné zájmy zahrnují psychometriku, statistiku, metodologii výzkumu a vývojovou psychologii. V BIG Labu zastává roli manažerky sběru dat, kde uplatňuje svůj smysl pro organizaci, preciznost a plánování.</p>",
-        "body": [],
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p><a href=\"https://www.muni.cz/lide/548707-olesja-nyjherova\">Bc. Olesja Nyjherová</a> je magisterskou studentkou psychologie na Masarykově univerzitě. Její odborné zájmy zahrnují především psychometriku, statistiku a metodologii výzkumu, ale také vývojovou psychologii. V BIG labu zastává roli manažerky sběru dat, kde uplatňuje svůj smysl pro organizaci, preciznost a plánování. Mimo akademické prostředí se věnuje pečení, pletení a výletům do přírody.</p>",
+            "id": "be483264-9ae0-431f-9f6d-357c0e69c763"
+          }
+        ],
         "after_body": [],
         "sections": [],
-        "role": "Manažerka sběru dat",
+        "role": "sběr dat",
         "portrait": {
           "ref": "wagtailimages.image",
           "id": 3
@@ -1256,7 +1668,7 @@
         "portrait_format": "portrait",
         "portrait_fit": "cover",
         "email": "",
-        "profile_url": "https://www.muni.cz/en/people/581225-olesja-nyjherova"
+        "profile_url": "https://www.muni.cz/lide/548707-olesja-nyjherova"
       },
       "parent": 37,
       "locale": "cs",
@@ -1277,7 +1689,7 @@
         "body": [],
         "after_body": [],
         "sections": [],
-        "role": "Doktorská výzkumnice",
+        "role": "doktorandka",
         "portrait": {
           "ref": "wagtailimages.image",
           "id": 1
@@ -1293,6 +1705,79 @@
       "parent": 37,
       "locale": "cs",
       "translation_key": "8b60d391-9047-4d34-8d1a-3982a213f283",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 59,
+      "fields": {
+        "title": "Petra Paličková",
+        "draft_title": "Petra Paličková",
+        "slug": "petra-palickova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p><a href=\"https://www.muni.cz/lide/561542-petra-palickova\">Petra Paličková</a> je studentkou bakalářského programu Psychologie na Fakultě sociálních studií a v BIG Labu je výzkumnou asistentkou. V rámci profesního směřování by ráda propojovala psychologický výzkum s praxí. Kromě působení v BIG Labu se ve volném čase věnuje dobrovolnické činnosti s lidmi se zkušeností s duševními obtížemi, a to např. v psychiatrické nemocnici Černovice.</p>",
+            "id": "10ee1998-dc0c-466e-b0f1-479d6be007b0"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "role": "výzkumná asistentka",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 14
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": "https://www.muni.cz/lide/561542-petra-palickova"
+      },
+      "parent": 37,
+      "locale": "cs",
+      "translation_key": "c8b166a9-73fe-40c0-8d12-9a75e7e3dcb3",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 60,
+      "fields": {
+        "title": "Adéla Franková",
+        "draft_title": "Adéla Franková",
+        "slug": "adela-frankova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Adéla Franková je studentkou bakalářského programu psychologie na Fakultě sociálních studií Masarykovy univerzity a výzkumnou asistentkou v BIG Labu. V rámci své práce se seznamuje s psychologickým výzkumem a získává zkušenosti v oblasti akademické a výzkumné práce.</p>",
+            "id": "4cf215df-b445-4e47-a038-db285f31f26e"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "role": "výzkumná asistentka",
+        "portrait": null,
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "",
+        "profile_url": ""
+      },
+      "parent": 37,
+      "locale": "cs",
+      "translation_key": "c919b962-694c-4489-94be-121e4e18ab40",
       "live": true
     },
     {
@@ -1395,7 +1880,18 @@
         "intro": "<p>Tato sekce je připravena pro potvrzené materiály projektu Parta od týmu BIG Labu.</p>",
         "body": [],
         "after_body": [],
-        "sections": [],
+        "sections": [
+          {
+            "type": "child_sections",
+            "id": "87ee8d6e-41f2-4e98-9b04-1afd9f4474a6",
+            "value": {
+              "is_visible": true,
+              "anchor": "audiences",
+              "title": "",
+              "theme": "paper"
+            }
+          }
+        ],
         "cover_image": null
       },
       "parent": 46,
@@ -1419,7 +1915,7 @@
         "sections": [],
         "cover_image": null
       },
-      "parent": 46,
+      "parent": 47,
       "locale": "cs",
       "translation_key": "56264938-27e5-48ee-98b4-e925394b5c2a",
       "live": false
@@ -1440,7 +1936,7 @@
         "sections": [],
         "cover_image": null
       },
-      "parent": 46,
+      "parent": 47,
       "locale": "cs",
       "translation_key": "d78c35b5-0d21-4652-bc98-2690396f7f90",
       "live": false
@@ -1461,10 +1957,10 @@
         "sections": [],
         "cover_image": null
       },
-      "parent": 46,
+      "parent": 47,
       "locale": "cs",
       "translation_key": "e2db2fbc-7bea-4d26-9d33-96fca6ac8697",
-      "live": true
+      "live": false
     },
     {
       "model": "home.contentpage",
@@ -1927,6 +2423,46 @@
       "sha256": "2b2ca2332809e1b5b559853b1246bd3557d9630062a3b357e6b1bf2e4096164e",
       "filename": "biglab-logo.png",
       "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 14,
+      "fields": {
+        "title": "Petra Paličková — 2026",
+        "description": "",
+        "width": 931,
+        "height": 889,
+        "focal_point_x": 450,
+        "focal_point_y": 405,
+        "focal_point_width": 260,
+        "focal_point_height": 300,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/c294b5d52259de561546df943139e54df504bffca8c7771bcfe031846a3866eb.jpg",
+      "sha256": "c294b5d52259de561546df943139e54df504bffca8c7771bcfe031846a3866eb",
+      "filename": "petra-palickova.jpg",
+      "tags": []
+    },
+    {
+      "model": "wagtailimages.image",
+      "id": 15,
+      "fields": {
+        "title": "Michaela Kryštofová — 2026",
+        "description": "",
+        "width": 500,
+        "height": 889,
+        "focal_point_x": 215,
+        "focal_point_y": 345,
+        "focal_point_width": 180,
+        "focal_point_height": 210,
+        "file_size": null,
+        "file_hash": ""
+      },
+      "asset": "assets/157100af8ba76dc7ddd5966bc9da190480b158134df49e0d5ea873afc4f9dac4.jpg",
+      "sha256": "157100af8ba76dc7ddd5966bc9da190480b158134df49e0d5ea873afc4f9dac4",
+      "filename": "michaela-krystofova_8ftGTlW.jpg",
+      "tags": []
     }
   ],
   "snippets": [
@@ -2130,7 +2666,7 @@
         "show_social_links": true,
         "email": "",
         "phone": "",
-        "address": "Faculty of Social Studies, Masaryk University\nJoštova 10, 602 00 Brno, Czech Republic",
+        "address": "Faculty of Social Studies, Masaryk University\r\nJoštova 10, 602 00 Brno, Czech Republic",
         "linkedin_url": "https://www.linkedin.com/company/inpsy-muni/",
         "instagram_url": "https://www.instagram.com/inpsy_muni/",
         "facebook_url": "https://www.facebook.com/inpsy.muni"

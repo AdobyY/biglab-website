@@ -1,10 +1,10 @@
-{% load wagtailcore_tags ui_tags %}
+{% load wagtailcore_tags ui_tags visual_tags %}
 {% if value.is_visible %}
 <section{% include "home/includes/section_attributes.html" %}>
   <div class="section-shell">
     <div class="builder-section-heading section-heading"><h2>{{ value.title }}</h2>{% if value.intro %}<div class="intro collection-intro">{{ value.intro|richtext }}</div>{% endif %}</div>
     <div class="page-link-grid page-link-grid-{{ value.columns }}">
-      {% for item in value.pages %}{% if item.page.live %}<a href="{{ item.page.url }}"><h3>{{ item.label|default:item.page.title }}</h3>{% if item.description %}<p>{{ item.description }}</p>{% elif item.page.search_description %}<p>{{ item.page.search_description }}</p>{% endif %}</a>{% endif %}{% endfor %}
+      {% for item in value.pages %}{% if item.page.live %}<a href="{{ item.page.url }}">{% include 'home/includes/icon.html' with name=item.page|page_icon icon_class='page-link-symbol' %}<h3>{{ item.label|default:item.page.title }}</h3>{% if item.description %}<p>{{ item.description }}</p>{% elif item.page.search_description %}<p>{{ item.page.search_description }}</p>{% endif %}{% include 'home/includes/icon.html' with name='arrow' icon_class='page-link-arrow' %}</a>{% endif %}{% endfor %}
     </div>
   </div>
 </section>

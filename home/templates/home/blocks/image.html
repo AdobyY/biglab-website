@@ -1,1 +1,1 @@
-{% load wagtailimages_tags %}<figure>{% image value.image width-1200 %}{% if value.caption %}<figcaption>{{ value.caption }}</figcaption>{% endif %}</figure>
+{% load wagtailimages_tags media_tags %}<figure>{% media_image value.image 'width-1200' %}{% if value.caption %}<figcaption>{{ value.caption }}</figcaption>{% endif %}</figure>

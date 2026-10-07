@@ -5,11 +5,20 @@
 {% if project and project.live %}
 <section{% include "home/includes/section_attributes.html" with section_class="parta-band" %}>
   <div class="section-shell">
+    <div class="featured-project-copy">
     <div class="section-heading"><h2>{{ project.title }}</h2></div>
     {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
-    {% if value.label and not page.hero_layout %}<p class="project-label">{{ value.label }}</p>{% endif %}
+    {% if value.label %}<p class="project-label">{{ value.label }}</p>{% endif %}
     {% if project.intro %}<div class="collection-intro reading-content">{{ project.intro|richtext }}</div>{% endif %}
     <a class="button button-light" href="{{ project.url }}">{% if value.button_label %}{{ value.button_label }}{% else %}{% ui 'about_project' %}{% endif %}</a>
+    </div>
+    {% if page.hero_layout and project.slug == 'parta' %}<div class="parta-visual" aria-hidden="true">
+      <svg class="parta-connections" viewBox="0 0 560 360" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M120 90 440 90 280 290 120 90M120 90l160 80 160-80M280 170v120"/><circle cx="280" cy="170" r="53" opacity=".3"/></g></svg>
+      <div class="parta-audience parta-audience-school">{% include 'home/includes/icon.html' with name='school' %}<span>{% ui 'for_schools' %}</span></div>
+      <div class="parta-audience parta-audience-parent">{% include 'home/includes/icon.html' with name='team' %}<span>{% ui 'for_parents' %}</span></div>
+      <div class="parta-audience parta-audience-student">{% include 'home/includes/icon.html' with name='student' %}<span>{% ui 'for_students' %}</span></div>
+      <span class="parta-center">PARTA</span>
+    </div>{% endif %}
   </div>
 </section>
 {% endif %}

@@ -84,12 +84,21 @@ class HomepagePaletteAdminTests(TestCase):
             self.assertIsNotNone(control)
             self.assertEqual(control["type"], "color")
         self.assertContains(response, "Version 1 remains the default")
-        values = {name: "#123456" for name in PALETTE_FIELDS}
+        values = {"background": "#123456", "foreground": "#ffffff", "muted": "#eeeeee", "accent": "#dddddd", "network_secondary": "#abcdef"}
         response = self.client.post(self.edit_url, values)
         self.assertEqual(response.status_code, 302)
         saved = HomepageDesignSettings.for_site(self.site)
         for name in PALETTE_FIELDS:
-            self.assertEqual(getattr(saved, name), "#123456")
+            self.assertEqual(getattr(saved, name), values[name])
+
+    def test_unreadable_palette_is_rejected_without_changing_saved_colors(self):
+        palette = HomepageDesignSettings.for_site(self.site)
+        values = {name: "#ffffff" for name in PALETTE_FIELDS}
+        response = self.client.post(self.edit_url, values)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Contrast against the background is 1.0:1")
+        palette.refresh_from_db()
+        self.assertEqual(palette.background, "#0b141e")
 
     def test_invalid_admin_color_does_not_replace_saved_palette(self):
         palette = HomepageDesignSettings.for_site(self.site)

@@ -1,0 +1,13 @@
+<svg class="line-icon {{ icon_class }}" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+{% if name == 'network' %}<path d="m9 9 14 3M9 9l3 14m11-11-11 11"/><circle cx="8" cy="8" r="4"/><circle cx="25" cy="12" r="3"/><circle cx="12" cy="25" r="4"/>
+{% elif name == 'models' %}<path d="m16 3 12 7-12 7L4 10zm-12 7v12l12 7 12-7V10M16 17v12M10 6l12 7"/>
+{% elif name == 'science' or name == 'experiment' %}<path d="M12 3h8m-6 0v10L6 25a3 3 0 0 0 2.5 4h15a3 3 0 0 0 2.5-4l-8-12V3M10 20h12"/><circle cx="14" cy="24" r="1"/><path d="m21 6 3-3m0 8h4"/>
+{% elif name == 'team' %}<circle cx="16" cy="10" r="4"/><path d="M8 27v-3a8 8 0 0 1 16 0v3M6 6a4 4 0 0 0 0 8M3 24v-3a6 6 0 0 1 4-5M26 6a4 4 0 0 1 0 8m3 10v-3a6 6 0 0 0-4-5"/>
+{% elif name == 'school' or name == 'campus' %}<path d="m3 11 13-8 13 8H3zm3 3v11m7-11v11m6-11v11m7-11v11M3 29h26M5 25h22"/>
+{% elif name == 'student' %}<path d="m2 11 14-7 14 7-14 7L2 11zm6 4v7c5 4 11 4 16 0v-7m6-4v11"/>
+{% elif name == 'book' %}<path d="M16 8C12 5 6 4 3 6v21c4-2 9-1 13 2 4-3 9-4 13-2V6c-3-2-9-1-13 2zm0 0v21M7 11l5 1m-5 5 5 1m8-6 5-1m-5 7 5-1"/>
+{% elif name == 'news' %}<path d="M5 4h22v24H5zM9 8h14M9 13h6v6H9zm10 0h4m-4 5h4M9 23h14"/>
+{% elif name == 'pin' %}<path d="M25 13c0 8-9 16-9 16S7 21 7 13a9 9 0 0 1 18 0z"/><circle cx="16" cy="13" r="3"/>
+{% elif name == 'arrow' %}<path d="M5 16h22m-9-9 9 9-9 9"/>
+{% else %}<circle cx="16" cy="16" r="12"/><path d="M4 16h24M16 4c-7 8-7 16 0 24m0-24c7 8 7 16 0 24"/>{% endif %}
+</svg>

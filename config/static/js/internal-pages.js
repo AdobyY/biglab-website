@@ -1,6 +1,7 @@
 // A reading aid only: anchors and contents remain usable without JavaScript.
 document.querySelectorAll('[data-inline-collection]').forEach((collection) => {
   const links = [...collection.querySelectorAll(':scope > .section-toc a[href^="#"]')];
+  if (!links.length) return;
   const sections = links.map((link) => collection.querySelector(link.getAttribute('href')));
   let frame = 0;
   const update = () => {

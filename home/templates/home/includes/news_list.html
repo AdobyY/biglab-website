@@ -1,8 +1,8 @@
-{% load wagtailcore_tags wagtailimages_tags ui_tags %}
+{% load wagtailcore_tags wagtailimages_tags ui_tags media_tags %}
 <div class="news-list">
   {% for item in news_list_items %}
     <article class="news-list-item">
-      {% if item.cover_image %}<a class="news-thumbnail" href="{{ item.url }}" tabindex="-1" aria-hidden="true">{% image item.cover_image fill-760x440 loading="lazy" alt="" %}</a>{% endif %}
+      {% if item.cover_image %}<a class="news-thumbnail" href="{{ item.url }}" tabindex="-1" aria-hidden="true">{% media_image item.cover_image 'fill-760x440' loading="lazy" alt="" controls=False %}</a>{% endif %}
       <div class="news-list-copy">
         <time datetime="{{ item.date|date:'Y-m-d' }}">{{ item.date|date:"j F Y" }}</time>
         {% if page.pk == news_index.pk %}<h2 class="news-title"><a href="{{ item.url }}">{{ item.title }}</a></h2>{% else %}<h3 class="news-title"><a href="{{ item.url }}">{{ item.title }}</a></h3>{% endif %}

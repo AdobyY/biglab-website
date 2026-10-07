@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% load wagtailimages_tags wagtailcore_tags ui_tags %}
+{% load wagtailimages_tags wagtailcore_tags ui_tags media_tags %}
 {% block content %}
 <article class="content-page">
   {% include "home/includes/page_heading.html" %}
-  {% if page.cover_image %}<figure class="content-cover">{% image page.cover_image width-1000 %}</figure>{% endif %}
+  {% if page.cover_image %}<figure class="content-cover">{% media_image page.cover_image 'width-1000' %}</figure>{% endif %}
   {% include "home/includes/page_content.html" %}
 </article>
 {% endblock %}

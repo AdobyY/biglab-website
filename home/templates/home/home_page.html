@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags wagtailimages_tags wagtailsettings_tags navigation_tags ui_tags l10n %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailsettings_tags navigation_tags ui_tags l10n media_tags %}
 {% block body_class %}template-homepage homepage-design-{{ design_version|default:'1' }}{% endblock %}
 {% block theme_color %}{% if design_version == '2' %}{{ settings.home.HomepageDesignSettings.background }}{% else %}#101e32{% endif %}{% endblock %}
 {% block body_attrs %}{% if design_version == '2' %}style="--design-background:{{ settings.home.HomepageDesignSettings.background }};--design-foreground:{{ settings.home.HomepageDesignSettings.foreground }};--design-accent:{{ settings.home.HomepageDesignSettings.accent }};--design-muted:{{ settings.home.HomepageDesignSettings.muted }};--design-network-secondary:{{ settings.home.HomepageDesignSettings.network_secondary }};" {% endif %}{% endblock %}
@@ -20,7 +20,7 @@
       </div>
     </div>
     {% if page.hero_layout == 'image' and page.hero_image %}
-      <figure class="hero-image">{% image page.hero_image fill-1100x1100 %}</figure>
+      <figure class="hero-image">{% media_image page.hero_image 'fill-1100x1100' %}</figure>
     {% endif %}
   </div>
   <div class="section-shell hero-footnote">

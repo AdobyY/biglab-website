@@ -1,4 +1,4 @@
-{% load wagtailcore_tags wagtailimages_tags navigation_tags ui_tags l10n %}
+{% load wagtailcore_tags wagtailimages_tags navigation_tags ui_tags l10n media_tags %}
 <section class="hero hero-{{ page.hero_layout }}" data-hero-entrance>
   <div class="section-shell hero-inner">
     <div class="hero-copy">
@@ -10,7 +10,7 @@
       </div>
     </div>
     {% if page.hero_layout == 'image' and page.hero_image %}
-      <figure class="hero-image">{% image page.hero_image fill-1100x1100 %}</figure>
+      <figure class="hero-image">{% media_image page.hero_image 'fill-1100x1100' %}</figure>
     {% elif page.hero_layout == 'constellation' and research_areas %}
       {% constellation_nodes research_areas as star_nodes %}
       <nav class="constellation relationship-network{% if star_nodes|length > 7 %} constellation-dense{% endif %}" aria-label="{% ui 'research_areas' %}">

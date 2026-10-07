@@ -266,7 +266,7 @@ class FrontendContractTests(WagtailPageTestCase):
         draft.unpublish()
         last = people.add_child(instance=PersonPage(title="Last", role="Researcher"))
         soup = self.render_page(first)
-        self.assertIsNotNone(soup.select_one(".profile-page-no-image"))
+        self.assertIsNotNone(soup.select_one(".profile-image .person-placeholder svg"))
         nav = soup.select_one(".page-navigation")
         self.assertEqual(nav.select_one(".page-navigation-parent")["href"], people.url)
         self.assertEqual(nav.select_one(".page-navigation-next")["href"], last.url)
@@ -277,10 +277,16 @@ class FrontendContractTests(WagtailPageTestCase):
         first = self.science.add_child(instance=ContentPage(title="First topic", intro="<p>Topic summary</p>"))
         last = self.science.add_child(instance=ContentPage(title="Last topic"))
         soup = self.render_page(self.science)
-        for link in soup.select(".section-toc a, .contents-return"):
-            self.assertIsNotNone(soup.select_one(link["href"]))
+        self.assertFalse(soup.select('.section-contents, .section-toc, .contents-return'))
+        self.assertIn('inline-collection--continuous', soup.select_one('.inline-collection')['class'])
         self.assertIn("Topic summary", soup.select_one(f"#section-{first.pk}").get_text())
         self.assertEqual(self.render_page(first).select_one(".page-navigation-next")["href"], section_url(last))
+        # Project contents remain useful and retain working anchor destinations.
+        self.project.add_child(instance=ContentPage(title='Project details'))
+        soup = self.render_page(self.project)
+        self.assertIsNotNone(soup.select_one('.section-toc a'))
+        for link in soup.select(".section-toc a, .contents-return"):
+            self.assertIsNotNone(soup.select_one(link["href"]))
 
     def test_team_index_avoids_redundant_self_links_but_keeps_custom_headings(self):
         people = self.home.add_child(instance=PeopleIndexPage(title="People"))

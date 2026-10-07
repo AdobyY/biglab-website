@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="{% static 'css/config.css' %}">
     {% if page and page.pk != site_home.pk %}<link rel="stylesheet" href="{% static 'css/internal-pages.css' %}">{% endif %}
     {% block extra_css %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'css/editorial-enhancements.css' %}">
 </head>
 <body class="{% block body_class %}{% endblock %}" {% block body_attrs %}{% endblock %}data-image-preview="{% ui 'image_preview' %}" data-close="{% ui 'close' %}" data-previous-image="{% ui 'previous_image' %}" data-next-image="{% ui 'next_image' %}" data-pause="{% ui 'pause' %}" data-play="{% ui 'play' %}">
     <a class="skip-link" href="#content">{% ui 'skip_content' %}</a>
@@ -39,7 +40,6 @@
         </a>
         <button class="menu-toggle" type="button" aria-label="{% ui 'menu' %}" aria-expanded="false" aria-controls="site-navigation"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>{% ui 'menu' %}</span></button>
         <nav id="site-navigation" class="navigation" aria-label="{% ui 'main_navigation' %}">
-          <a class="home-nav-link{% if page.pk == site_home.pk %} is-current{% endif %}" href="{% pageurl site_home %}"{% if page.pk == site_home.pk %} aria-current="page"{% endif %}>{% ui 'about' %}</a>
           {% primary_navigation site_home %}
           {% if homepage_contact_url %}<a class="contact-nav-link" href="{{ homepage_contact_url }}">{% ui 'contact' %}</a>{% endif %}
         </nav>
@@ -71,6 +71,7 @@
       {% endwith %}
     </footer>
     <script src="{% static 'js/config.js' %}" defer></script>
+    <script src="{% static 'js/animated-media.js' %}" defer></script>
     {% if page and page.pk != site_home.pk %}<script src="{% static 'js/internal-pages.js' %}" defer></script>{% endif %}
     {% block extra_js %}{% endblock %}
 </body>

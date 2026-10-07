@@ -1,4 +1,4 @@
-{% load wagtailcore_tags wagtailimages_tags ui_tags %}
+{% load wagtailcore_tags wagtailimages_tags ui_tags media_tags %}
 {% if value.is_visible %}
 <section{% include "home/includes/section_attributes.html" %}>
   <div class="section-shell builder-media builder-media-{{ value.layout }}">
@@ -8,7 +8,7 @@
       {% if value.text %}<div class="reading-content">{{ value.text|richtext }}</div>{% endif %}
       {% if value.button_label %}{% if value.button_page %}<a class="button" href="{{ value.button_page.url }}">{{ value.button_label }}</a>{% elif value.button_url %}<a class="button" href="{{ value.button_url }}">{{ value.button_label }}</a>{% endif %}{% endif %}
     </div>
-    {% if value.image and value.layout != 'text-only' %}<figure>{% image value.image width-1200 loading="lazy" %}{% if value.image_caption %}<figcaption>{{ value.image_caption }}</figcaption>{% endif %}</figure>{% endif %}
+    {% if value.image and value.layout != 'text-only' %}<figure>{% media_image value.image 'width-1200' loading="lazy" %}{% if value.image_caption %}<figcaption>{{ value.image_caption }}</figcaption>{% endif %}</figure>{% endif %}
   </div>
 </section>
 {% endif %}

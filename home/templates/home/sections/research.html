@@ -1,4 +1,4 @@
-{% load wagtailcore_tags wagtailimages_tags navigation_tags ui_tags %}
+{% load wagtailcore_tags wagtailimages_tags navigation_tags ui_tags media_tags %}
 {% if not legacy %}{% curated_items value "selected_areas" research_areas "limit" as section_areas %}{% endif %}
 {% if value.is_visible or legacy %}{% if section_areas %}
 <section{% include "home/includes/section_attributes.html" with section_class="research-section" %}>
@@ -6,7 +6,7 @@
     <div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'research_areas' %}{% endif %}</h2>{% if science_page %}<a href="{{ science_page.url }}">{% if value.link_label %}{{ value.link_label }}{% else %}{% ui 'all_science' %}{% endif %}</a>{% endif %}</div>
     {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
     <div class="research-list">
-      {% for area in section_areas %}<article class="research-row"><h3><a href="{{ area|section_destination }}">{{ area.title }}</a></h3>{% if area.cover_image %}{% if value.show_images or legacy %}{% image area.cover_image fill-420x240 loading="lazy" %}{% endif %}{% endif %}{% if area.intro %}<div class="collection-intro">{{ area.intro|richtext }}</div>{% endif %}</article>{% endfor %}
+      {% for area in section_areas %}<article class="research-row"><h3><a href="{{ area|section_destination }}">{{ area.title }}</a></h3>{% if area.cover_image %}{% if value.show_images or legacy %}{% media_image area.cover_image 'fill-420x240' loading="lazy" %}{% endif %}{% endif %}{% if area.intro %}<div class="collection-intro">{{ area.intro|richtext }}</div>{% endif %}</article>{% endfor %}
     </div>
   </div>
 </section>

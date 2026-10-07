@@ -2,8 +2,9 @@
 
 from copy import deepcopy
 
+from django.core.exceptions import ValidationError
 from wagtail.admin.forms import WagtailAdminPageForm
-from wagtail.blocks import StreamValue
+from wagtail.blocks import ListBlockValidationError, StreamBlockValidationError, StreamValue, StructBlockValidationError
 
 
 _DEFAULT_SECTIONS = {
@@ -60,3 +61,45 @@ class EditorialPageForm(WagtailAdminPageForm):
             defaults = defaults_for_page(self.instance)
             if defaults:
                 self.initial["sections"] = defaults
+
+    def clean(self):
+        cleaned = super().clean()
+        sections = cleaned.get("sections")
+        if not sections:
+            return cleaned
+        anchors = {"content", "home-sections"}
+        if self.instance.pk:
+            anchors.update(f"section-{pk}" for pk in self.instance.get_children().values_list("pk", flat=True))
+            anchors.update(f"section-title-{pk}" for pk in self.instance.get_children().values_list("pk", flat=True))
+            anchors.add(f"contents-{self.instance.pk}")
+        section_errors = {}
+        inline_seen = False
+        for index, section in enumerate(sections):
+            value, errors = section.value, {}
+            anchor = value.get("anchor")
+            if anchor:
+                if anchor in anchors:
+                    errors["anchor"] = ValidationError("This anchor is already used on this page. Enter a different anchor or leave it blank.")
+                anchors.add(anchor)
+            if section.block_type == "child_sections" and value.get("is_visible"):
+                if inline_seen:
+                    section_errors[index] = StructBlockValidationError(non_block_errors=["Use Child pages — inline sections only once, so each child has one anchor."])
+                inline_seen = True
+            for field, items in value.items():
+                if not field.startswith("selected_"):
+                    continue
+                item_errors = {}
+                for item_index, item in enumerate(items or []):
+                    if not item:
+                        continue
+                    if item.locale_id != self.instance.locale_id:
+                        item_errors[item_index] = ValidationError("Choose the version in this page's language. Other-language copies are managed separately.")
+                    elif field == "selected_areas" and item.get_parent().specific._meta.model_name != "sciencepage":
+                        item_errors[item_index] = ValidationError("Choose a research area directly under Science, not a project or other information page.")
+                if item_errors:
+                    errors[field] = ListBlockValidationError(block_errors=item_errors)
+            if errors:
+                section_errors[index] = StructBlockValidationError(block_errors=errors)
+        if section_errors:
+            self.add_error("sections", StreamBlockValidationError(block_errors=section_errors))
+        return cleaned

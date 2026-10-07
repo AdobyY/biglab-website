@@ -1,8 +1,8 @@
-{% load wagtailimages_tags %}
+{% load wagtailimages_tags media_tags %}
 <div class="collaboration-list">
   {% for collaboration in collaboration_items %}
     <article class="collaboration-item">
-      {% if collaboration.logo %}<div class="collaboration-logo">{% image collaboration.logo max-360x180 loading="lazy" alt="" %}</div>{% endif %}
+      {% if collaboration.logo %}<div class="collaboration-logo">{% media_image collaboration.logo 'max-360x180' loading="lazy" alt="" %}</div>{% elif page.hero_layout %}<div class="collaboration-symbol">{% include 'home/includes/icon.html' with name='campus' %}</div>{% endif %}
       <h3>{% if collaboration.website %}<a href="{{ collaboration.website }}">{{ collaboration.name }}</a>{% else %}{{ collaboration.name }}{% endif %}</h3>
       {% if collaboration.description %}<div class="collaboration-description">{{ collaboration.description|linebreaks }}</div>{% endif %}
     </article>

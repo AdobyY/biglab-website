@@ -44,7 +44,7 @@
 .team-page .person-link:hover .person-name { text-decoration: underline; }
 .team-page .person-role { max-width: 28ch; }
 .team-page .person-summary { max-width: 36ch; }
-.team-page .people-carousel.is-carousel .people-grid { grid-auto-columns: calc((100% - 4rem) / 3); }
+.team-page .people-carousel.is-carousel .people-grid { grid-template-columns: none; grid-auto-columns: calc((100% - 4rem) / 3); }
 .profile-page { padding-top: 2rem; gap: 3rem; align-items: start; }
 .profile-copy { min-width: 0; }
 .profile-copy .page-heading { padding: 0 0 1.5rem; }

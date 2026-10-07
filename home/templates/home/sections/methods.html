@@ -1,0 +1,13 @@
+{% load wagtailcore_tags visual_tags %}
+<section{% include "home/includes/section_attributes.html" with section_class="method-section" %}>
+  <div class="section-shell">
+    <div class="method-lead">
+      <div><h2>{{ value.title }}</h2>{% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}</div>
+      <svg class="method-diagram" viewBox="0 0 440 220" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="220" cy="110" r="87" opacity=".25"/><ellipse cx="220" cy="110" rx="185" ry="62" opacity=".35"/><path d="M43 103 142 59 220 110 305 168 399 103M142 59l163 109M220 110l83-54M220 110l-84 54M43 103l93 61M303 56l96 47" opacity=".65"/></g>
+        <g fill="currentColor"><circle cx="43" cy="103" r="7"/><circle cx="142" cy="59" r="5"/><circle cx="303" cy="56" r="5"/><circle cx="305" cy="168" r="6"/><circle cx="136" cy="164" r="5"/><circle cx="399" cy="103" r="7"/></g><circle cx="220" cy="110" r="23" fill="currentColor"/><circle cx="220" cy="110" r="34" fill="none" stroke="currentColor" opacity=".45"/>
+      </svg>
+    </div>
+    <div class="method-grid">{% for item in value.text|method_parts %}<article class="method-item">{% include 'home/includes/icon.html' with name=item.icon %}<div class="reading-content">{{ item.html|richtext }}</div></article>{% endfor %}</div>
+  </div>
+</section>

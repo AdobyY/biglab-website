@@ -170,10 +170,22 @@ than relaxing these guards. Preview both languages after applying and retain the
 ## Languages
 
 English and Czech locales are created initially. Administrators can add any Django-supported
-language under **Settings → Locales**, then use the page translation action and publish the result.
-The language switcher only lists published translations of the current page. Partial translation is
-supported: translate and publish only the pages you have ready; untranslated pages are not advertised
-as available in another language. Review copied content before publishing a new locale.
+language under **Settings → Locales**. Page-tree synchronization creates linked language copies
+(aliases). Publishing the original also updates and publishes these copies with the original text;
+this behaviour is intentional. The editor displays a notice about this before publishing.
+For an independent translation, open **Status → Switch locales**, select the language and choose
+**Convert this alias into an ordinary page**, then edit and publish it. Existing independent
+translations are edited separately. The language switcher lists published language versions,
+including aliases; a published alias is not proof that its content has been translated.
+
+The **Editors** group can create, edit and publish pages, manage images/documents, publications,
+collaborations, interface texts, translations, contacts and the Version 2 palette. It cannot manage
+users or groups. Migration `0018_editor_content_permissions` adds these content permissions to
+the existing group without changing membership or removing other permissions.
+
+**Save** on publications, collaborations and interface texts still applies immediately to every
+page that displays that record in its language. These shared records have no draft workflow;
+their editor displays this explicitly.
 
 Small interface labels are editable through the **Interface texts** snippet (`InterfaceText`): select
 the locale and use the same key in every language (for example `people` or `skip_content`). Missing

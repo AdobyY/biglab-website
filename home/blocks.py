@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
@@ -32,10 +33,28 @@ class DocumentBlock(blocks.StructBlock):
         template = "home/blocks/document.html"
 
 
+def validate_link(value, label_field, page_field, url_field, required=False):
+    """Keep an optional link empty, or require a complete, unambiguous link."""
+    errors = {}
+    page, url, label = value.get(page_field), value.get(url_field), value.get(label_field)
+    if page and url:
+        errors[url_field] = ValidationError("Choose an internal page OR enter an external URL, not both.")
+    if (required or label) and not (page or url):
+        errors[page_field] = ValidationError("Choose a page or enter a URL for this button.")
+    if (page or url) and not label:
+        errors[label_field] = ValidationError("Enter the text visitors will see on this button.")
+    if errors:
+        raise blocks.StructBlockValidationError(block_errors=errors)
+    return value
+
+
 class CallToActionBlock(blocks.StructBlock):
     label = blocks.CharBlock(max_length=80)
     page = blocks.PageChooserBlock(required=False)
     url = blocks.URLBlock(required=False, help_text="Use this for an external link.")
+
+    def clean(self, value):
+        return validate_link(super().clean(value), "label", "page", "url", required=True)
 
     class Meta:
         icon = "link"
@@ -112,6 +131,24 @@ class HomeSectionBlock(blocks.StructBlock):
         help_text="Adds contrast between the background image and text.",
     )
 
+    def get_form_layout(self):
+        appearance = [name for name in (
+            "theme", "anchor", "background_image", "background_position", "background_overlay"
+        ) if name in self.child_blocks]
+        content = [name for name in self.child_blocks if name not in appearance]
+        if "title" in content:
+            content.remove("title")
+            content.insert(0, "title")
+        # Native Wagtail settings expand automatically when a field has an error.
+        self.meta.label_format = "{title}" if "title" in content else "{label}" if "label" in content else ""
+        return blocks.BlockGroup(content, settings=appearance)
+
+    def clean(self, value):
+        value = super().clean(value)
+        if "button_label" in self.child_blocks and "button_page" in self.child_blocks:
+            validate_link(value, "button_label", "button_page", "button_url")
+        return value
+
     class Meta:
         abstract = True
 
@@ -168,7 +205,7 @@ class ResearchHomeSectionBlock(HomeSectionBlock):
         default=[],
         max_num=12,
         label="Selected research areas",
-        help_text="Optional. Choose and drag pages into order; leave empty to show research pages automatically.",
+        help_text="Choose research pages under Science in this page's language, then drag into order. Leave empty for the automatic list. Draft pages appear only after publication.",
     )
     limit = blocks.IntegerBlock(
         min_value=1,
@@ -194,7 +231,7 @@ class PeopleHomeSectionBlock(HomeSectionBlock):
         default=[],
         max_num=24,
         label="Selected people",
-        help_text="Optional. Choose and drag people into order; leave empty to use the published team automatically.",
+        help_text="Choose people in this page's language, then drag into order. Leave empty for the automatic team. Draft profiles appear only after publication.",
     )
     limit = blocks.IntegerBlock(
         min_value=1,
@@ -224,7 +261,7 @@ class PeopleHomeSectionBlock(HomeSectionBlock):
 
 class FeaturedProjectHomeSectionBlock(HomeSectionBlock):
     project = blocks.PageChooserBlock(required=False, page_type="home.ProjectPage")
-    label = blocks.CharBlock(required=False, max_length=80, default="", help_text="Optional project label; leave blank for the translated default.")
+    label = blocks.CharBlock(required=False, max_length=80, default="", label="Project subtitle", help_text="Optional subtitle beneath the project title. Leave blank to omit it.")
     button_label = blocks.CharBlock(required=False, max_length=80, default="", help_text="Leave blank for the translated project link label.")
     theme = blocks.ChoiceBlock(choices=SECTION_THEME_CHOICES, default="coral")
 
@@ -244,7 +281,7 @@ class UpdatesHomeSectionBlock(HomeSectionBlock):
         default=[],
         max_num=6,
         label="Selected news",
-        help_text="Optional. Leave empty to show the newest published news automatically.",
+        help_text="Choose news in this page's language. Leave empty for the newest published news. Draft items appear only after publication.",
     )
     news_limit = blocks.IntegerBlock(min_value=1, max_value=6, default=1)
     show_projects = blocks.BooleanBlock(required=False, default=True)
@@ -255,7 +292,7 @@ class UpdatesHomeSectionBlock(HomeSectionBlock):
         default=[],
         max_num=6,
         label="Selected projects",
-        help_text="Optional. Leave empty to show the latest projects automatically.",
+        help_text="Choose projects in this page's language. Leave empty for the latest current projects. Draft items appear only after publication.",
     )
     projects_limit = blocks.IntegerBlock(min_value=1, max_value=6, default=2)
     show_publications = blocks.BooleanBlock(required=False, default=True)
@@ -266,7 +303,7 @@ class UpdatesHomeSectionBlock(HomeSectionBlock):
         default=[],
         max_num=6,
         label="Selected publications",
-        help_text="Optional. Leave empty to show the newest publications automatically.",
+        help_text="Choose publications in this page's language. Leave empty for the newest publications automatically.",
     )
     publications_limit = blocks.IntegerBlock(min_value=1, max_value=6, default=2)
     theme = blocks.ChoiceBlock(choices=SECTION_THEME_CHOICES, default="paper")
@@ -451,7 +488,7 @@ class ChildSectionsBlock(AutomaticListSectionBlock):
         label = "Child pages — inline sections"
         help_text = (
             "Show published project child pages or science research areas in full on this page. "
-            "Each has the stable anchor section-<page ID>; edit its content on the child page."
+            "Each has a stable anchor such as section-123. Edit the content on the child page."
         )
         template = "home/sections/child_sections.html"
 
@@ -524,6 +561,17 @@ HOME_SECTION_BLOCKS = [
     ("financing", FinancingSectionBlock()),
     ("contact", ContactSectionBlock()),
 ]
+
+# Keep every existing block available while making the insertion menu scannable.
+for _name, _block in HOME_SECTION_BLOCKS:
+    if _name in {"about", "text_image", "page_links", "callout"}:
+        _block.meta.group = "Text and links"
+    elif _name in {"gallery", "comparison", "slider", "video", "simulation"}:
+        _block.meta.group = "Images and media"
+    elif _name in {"financing", "contact"}:
+        _block.meta.group = "Contact and funding"
+    else:
+        _block.meta.group = "People and content lists"
 
 
 CONTENT_BLOCKS = [

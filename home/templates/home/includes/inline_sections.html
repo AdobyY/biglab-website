@@ -1,10 +1,12 @@
-{% load wagtailcore_tags wagtailimages_tags ui_tags %}
+{% load wagtailcore_tags wagtailimages_tags ui_tags media_tags %}
 {% if inline_children %}
-  <div class="inline-collection" data-inline-collection>
+  <div class="inline-collection{% if page.content_type.model == 'sciencepage' %} inline-collection--continuous{% endif %}" data-inline-collection>
+    {% if page.content_type.model != 'sciencepage' %}
     <nav class="section-toc project-sections" id="contents-{{ page.pk }}" aria-label="{% ui 'contents' %}">
       <p class="section-toc-title">{% ui 'contents' %}</p>
       <ol>{% for child in inline_children %}{% if child.live %}<li><a href="#section-{{ child.pk }}">{{ child.title }}</a></li>{% endif %}{% endfor %}</ol>
     </nav>
+    {% endif %}
     <div class="inline-sections">
     {% for child in inline_children %}
     {% if child.live %}
@@ -14,12 +16,12 @@
             <h2 id="section-title-{{ child.pk }}">{{ child.title }}</h2>
             {% if child.intro %}<div class="collection-intro reading-content">{{ child.intro|richtext }}</div>{% endif %}
           </div>
-          {% if child.cover_image %}<figure class="inline-section-image">{% image child.cover_image fill-640x440 loading="lazy" %}</figure>{% endif %}
+          {% if child.cover_image %}<figure class="inline-section-image">{% media_image child.cover_image 'fill-640x440' loading="lazy" %}</figure>{% endif %}
         </div>
         {% if child.body %}<div class="article-body reading-content">{% include_block child.body %}</div>{% endif %}
         {% if child.sections %}{% include_block child.sections with page=child %}{% endif %}
         {% if child.after_body %}<div class="article-body reading-content after-body">{% include_block child.after_body %}</div>{% endif %}
-        <a class="contents-return" href="#contents-{{ page.pk }}">{% ui 'back_to_contents' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6M12 8v12"/></svg></a>
+        {% if page.content_type.model != 'sciencepage' %}<a class="contents-return" href="#contents-{{ page.pk }}">{% ui 'back_to_contents' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6M12 8v12"/></svg></a>{% endif %}
       </section>
     {% endif %}
     {% endfor %}

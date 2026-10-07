@@ -1,5 +1,6 @@
 {% load wagtailcore_tags ui_tags %}
 {% if value.is_visible or legacy %}
+{% if page.hero_layout and value.anchor == 'methods' %}{% include 'home/sections/methods.html' %}{% else %}
 <section{% include "home/includes/section_attributes.html" with section_class="builder-about home-about" %}>
   <div class="section-shell builder-section-inner">
     <div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'about' %}{% endif %}</h2></div>
@@ -12,4 +13,5 @@
     {% endif %}
   </div>
 </section>
+{% endif %}
 {% endif %}

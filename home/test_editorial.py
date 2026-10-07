@@ -123,7 +123,7 @@ class EditorialTests(TestCase):
 
     def test_editor_groups_are_clear_and_home_legacy_data_is_retained(self):
         headings = [panel.heading for panel in HomePage.content_panels if isinstance(panel, MultiFieldPanel)]
-        self.assertEqual(headings, ["Hero", "Page sections", "Supporting content"])
+        self.assertEqual(headings, ["Hero", "Page sections", "Content at the bottom"])
         self.home.intro = "<p>Legacy intro</p>"
         self.home.body = [("text", "<p>Legacy body</p>")]
         self.home.save()
@@ -132,7 +132,7 @@ class EditorialTests(TestCase):
         self.assertIn("Legacy body", str(self.home.body[0].value))
         for model in (PeopleIndexPage, NewsIndexPage, ProjectsIndexPage, SciencePage, ProjectPage):
             headings = [panel.heading for panel in model.content_panels if isinstance(panel, MultiFieldPanel)]
-            self.assertTrue({"Page header", "Page sections", "Supporting content"}.issubset(headings))
+            self.assertTrue({"Page header", "Page sections", "Content at the bottom"}.issubset(headings))
         self.assertEqual(self.people.get_context(self.request)["site_home"], self.home)
 
     def test_new_labels_are_blank_but_existing_editor_labels_are_preserved(self):

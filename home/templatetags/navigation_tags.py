@@ -1,8 +1,10 @@
 import math
+from types import SimpleNamespace
 
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
 from wagtail.models import Locale, Site
+from home.ui import default_ui_text
 
 
 register = template.Library()
@@ -78,11 +80,41 @@ def _build_menu(parent, current_page=None, levels=3):
 
 @register.inclusion_tag("home/includes/navigation_menu.html", takes_context=True)
 def primary_navigation(context, root):
-    """Render every published page marked for menus, including nested pages."""
+    """Group the lab, people and news; expose real science section anchors."""
     page = context.get("page")
+    language = getattr(getattr(page, "locale", None), "language_code", "en")
+    items = _build_menu(root, page)
+    about_children = [{"page": SimpleNamespace(id=f'lab-{root.pk}', title='Lab'),
+                       "url": f'{root.url}#about', "active": page and page.pk == root.pk,
+                       "current": page and page.pk == root.pk, "children": []}]
+    remaining = []
+    project_items = []
+    for item in items:
+        model = item['page'].__class__.__name__
+        if model in {'PeopleIndexPage', 'NewsIndexPage'}:
+            about_children.append(item)
+        elif model == 'ProjectsIndexPage':
+            project_items.append(item)
+        else:
+            remaining.append(item)
+    for item in remaining:
+        if item['page'].__class__.__name__ == 'SciencePage':
+            item['children'].extend(project_items)
+            item['active'] = item['active'] or any(child['active'] for child in project_items)
+            for block in item['page'].sections:
+                if block.block_type in {'publications', 'collaborations', 'project_list'} and block.value.get('is_visible') and block.value.get('anchor'):
+                    key = block.block_type if block.block_type != 'project_list' else ('finished_projects' if block.value.get('status') == 'finished' else 'projects')
+                    item['children'].append({'page': SimpleNamespace(id=f"{item['page'].pk}-{block.value['anchor']}", title=block.value.get('title') or default_ui_text(key, language)),
+                        'url': f"{item['page'].url}#{block.value['anchor']}", 'active': False, 'current': False, 'children': []})
+            break
+    else:
+        remaining.extend(project_items)
+    about = {'page': SimpleNamespace(id=root.pk, title=default_ui_text('about', language)),
+             'url': f'{root.url}#about', 'active': any(child['active'] for child in about_children),
+             'current': page and page.pk == root.pk, 'children': about_children}
     return {
-        "menu_items": _build_menu(root, page),
-        "language_code": getattr(getattr(page, "locale", None), "language_code", "en"),
+        "menu_items": [about, *remaining],
+        "language_code": language,
         "page": page,
         "request": context.get("request"),
         "nested": False,
