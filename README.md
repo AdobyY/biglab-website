@@ -336,6 +336,12 @@ timeline and materials. Contact email and phone can be added under **Settings â†
 
 ## Verification
 
+Internal pages share tree-based breadcrumbs in both languages and published-sibling navigation.
+Science/project child sections use a sticky desktop contents rail with compact illustrations and
+native anchor links; the mobile layout stacks. These defaults also apply to the child-sections builder.
+Team and News omit redundant default section headings while retaining editor-supplied custom titles.
+Portrait size, format, fitting, visibility, section order, and content remain editable in Wagtail.
+
 ```bash
 uv run python manage.py test
 uv run python manage.py check

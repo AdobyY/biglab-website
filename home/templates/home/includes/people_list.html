@@ -10,7 +10,7 @@
             <div class="person-placeholder" aria-hidden="true">{% for word in person.title.split %}{{ word|first|upper }}{% endfor %}</div>
           {% endif %}
         </div>
-        <h3>{{ person.title }}</h3>
+        {% if page.pk == people_index.pk %}<h2 class="person-name">{{ person.title }}</h2>{% else %}<h3 class="person-name">{{ person.title }}</h3>{% endif %}
       </a>
       {% if show_roles and person.role %}<p class="person-role">{{ person.role }}</p>{% endif %}
       {% if person.card_summary %}<div class="person-summary reading-content">{{ person.card_summary|richtext }}</div>{% endif %}

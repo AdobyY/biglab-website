@@ -6,7 +6,7 @@ from django.test import RequestFactory
 from wagtail.models import Locale, Page, Site
 from wagtail.test.utils import WagtailPageTestCase
 
-from home.models import ContentPage, HomePage, PeopleIndexPage, ProjectPage, SciencePage
+from home.models import ContentPage, HomePage, PeopleIndexPage, PersonPage, ProjectPage, SciencePage
 from home.templatetags.navigation_tags import _build_menu, constellation_nodes, contact_url, section_url
 
 
@@ -229,3 +229,65 @@ class FrontendContractTests(WagtailPageTestCase):
         content = render_to_string(html, people.get_context(request), request=request)
         self.assertLess(content.index('class="people-grid'), content.index("Text below the photos"))
         self.assertEqual(BeautifulSoup(content, "html.parser").select("h1")[0].get_text(), "Team")
+
+    def render_page(self, page):
+        request = RequestFactory().get(page.url or "/")
+        Site.objects.update_or_create(hostname="localhost", defaults={"root_page": self.home, "is_default_site": True})
+        return BeautifulSoup(render_to_string(page.get_template(request), page.get_context(request), request=request), "html.parser")
+
+    def test_breadcrumbs_follow_the_tree_and_keep_current_page_as_text(self):
+        people = self.home.add_child(instance=PeopleIndexPage(title="Team"))
+        person = people.add_child(instance=PersonPage(title="Researcher", role="Research fellow"))
+        soup = self.render_page(person)
+        crumbs = soup.select_one("nav.breadcrumbs")
+        self.assertEqual([a.get_text(strip=True) for a in crumbs.select("a")], ["Home", "Team"])
+        self.assertEqual([a["href"] for a in crumbs.select("a")], [self.home.url, people.url])
+        self.assertEqual(crumbs.select_one("[aria-current='page']").get_text(), person.title)
+        self.assertFalse(crumbs.select("a[aria-current]"))
+        self.assertFalse(self.render_page(self.home).select(".breadcrumbs"))
+
+    def test_translated_breadcrumbs_never_link_to_the_english_tree(self):
+        locale, _ = Locale.objects.get_or_create(language_code="cs")
+        translated_home = self.home.copy_for_translation(locale)
+        translated_home.save_revision().publish()
+        translated_science = self.science.copy_for_translation(locale)
+        translated_science.title = "Výzkum"
+        translated_science.save_revision().publish()
+        soup = self.render_page(translated_science)
+        crumb = soup.select_one(".breadcrumbs a")
+        self.assertEqual(crumb.get_text(), "Úvod")
+        self.assertEqual(crumb["href"], translated_home.url)
+        self.assertEqual(soup.select_one(".breadcrumbs")["aria-label"], "Drobečková navigace")
+
+    def test_profile_navigation_skips_drafts_and_handles_a_missing_portrait(self):
+        people = self.home.add_child(instance=PeopleIndexPage(title="Team"))
+        first = people.add_child(instance=PersonPage(title="First", role="Researcher", portrait_size="large"))
+        draft = people.add_child(instance=PersonPage(title="Draft", role="Researcher"))
+        draft.unpublish()
+        last = people.add_child(instance=PersonPage(title="Last", role="Researcher"))
+        soup = self.render_page(first)
+        self.assertIsNotNone(soup.select_one(".profile-page-no-image"))
+        nav = soup.select_one(".page-navigation")
+        self.assertEqual(nav.select_one(".page-navigation-parent")["href"], people.url)
+        self.assertEqual(nav.select_one(".page-navigation-next")["href"], last.url)
+        self.assertFalse(nav.select(".page-navigation-previous"))
+        self.assertNotIn("Draft", nav.get_text())
+
+    def test_inline_contents_and_sibling_navigation_keep_working_destinations(self):
+        first = self.science.add_child(instance=ContentPage(title="First topic", intro="<p>Topic summary</p>"))
+        last = self.science.add_child(instance=ContentPage(title="Last topic"))
+        soup = self.render_page(self.science)
+        for link in soup.select(".section-toc a, .contents-return"):
+            self.assertIsNotNone(soup.select_one(link["href"]))
+        self.assertIn("Topic summary", soup.select_one(f"#section-{first.pk}").get_text())
+        self.assertEqual(self.render_page(first).select_one(".page-navigation-next")["href"], section_url(last))
+
+    def test_team_index_avoids_redundant_self_links_but_keeps_custom_headings(self):
+        people = self.home.add_child(instance=PeopleIndexPage(title="People"))
+        people.add_child(instance=PersonPage(title="Researcher", role="Research fellow"))
+        people.sections = [("people", {"is_visible": True, "title": "People", "theme": "paper", "limit": 24, "show_roles": True})]
+        soup = self.render_page(people)
+        self.assertFalse(soup.select(".people-preview .section-heading"))
+        self.assertEqual(soup.select_one(".person-name").name, "h2")
+        people.sections[0].value["title"] = "Meet our researchers"
+        self.assertEqual(self.render_page(people).select_one(".people-preview h2").get_text(), "Meet our researchers")

@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags ui_tags %}
 {% block content %}
-<article class="page-wide">
-  <header class="page-hero page-heading"><h1>{{ page.title }}</h1>{% if page.intro %}<div class="intro collection-intro">{{ page.intro|richtext }}</div>{% endif %}</header>
-  <div class="article-body reading-content">{% include_block page.body %}</div>
+<article class="page-wide science-page">
+  {% include "home/includes/page_heading.html" with index_heading=True %}
+  {% if page.body %}<div class="article-body reading-content">{% include_block page.body %}</div>{% endif %}
   {% if page.sections %}
     {% include_block page.sections %}
   {% else %}
@@ -11,6 +11,6 @@
     <section class="builder-section publication-section"><div class="section-shell"><div class="section-heading"><h2>{% ui 'publications' %}</h2></div>{% include "home/includes/publication_list.html" with publication_items=publications %}</div></section>
     {% if collaborations %}<section class="builder-section collaboration-section"><div class="section-shell"><div class="section-heading"><h2>{% ui 'collaborations' %}</h2></div>{% include "home/includes/collaboration_list.html" with collaboration_items=collaborations %}</div></section>{% endif %}
   {% endif %}
-  <div class="article-body reading-content after-body">{% include_block page.after_body %}</div>
+  {% if page.after_body %}<div class="article-body reading-content after-body">{% include_block page.after_body %}</div>{% endif %}
 </article>
 {% endblock %}

@@ -2,8 +2,8 @@
 <div class="project-list">
   {% for project in project_items %}
     <article class="project-list-item">
-      <p class="project-status">{% if project.is_completed %}{% ui 'finished_projects' %}{% else %}{% ui 'current_projects' %}{% endif %}</p>
       <h3><a href="{{ project.url }}">{{ project.title }}</a></h3>
+      {% if not grouped %}<p class="project-status">{% if project.is_completed %}{% ui 'finished_projects' %}{% else %}{% ui 'current_projects' %}{% endif %}</p>{% endif %}
       {% if project.start_date or project.end_date %}<p class="project-years">{% if project.start_date %}<span>{% ui 'start' %}: {{ project.start_date|date:"Y" }}</span>{% endif %}{% if project.end_date %} <span>{% ui 'end' %}: {{ project.end_date|date:"Y" }}</span>{% endif %}</p>{% endif %}
       {% if project.intro %}<div class="collection-intro">{{ project.intro|richtext }}</div>{% endif %}
       {% if project.funder %}<p class="project-funder">{% ui 'funder' %}: {{ project.funder }}</p>{% endif %}

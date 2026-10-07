@@ -25,6 +25,7 @@
     {% endif %}
     <link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
     <link rel="stylesheet" href="{% static 'css/config.css' %}">
+    {% if page and page.pk != site_home.pk %}<link rel="stylesheet" href="{% static 'css/internal-pages.css' %}">{% endif %}
     {% block extra_css %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}" {% block body_attrs %}{% endblock %}data-image-preview="{% ui 'image_preview' %}" data-close="{% ui 'close' %}" data-previous-image="{% ui 'previous_image' %}" data-next-image="{% ui 'next_image' %}" data-pause="{% ui 'pause' %}" data-play="{% ui 'play' %}">
@@ -54,7 +55,11 @@
         {% endif %}
       </div>
     </header>
-    <main id="content" class="site-main" tabindex="-1">{% block content %}{% endblock %}</main>
+    <main id="content" class="site-main" tabindex="-1">
+      {% breadcrumbs site_home %}
+      {% block content %}{% endblock %}
+      {% page_navigation %}
+    </main>
     <footer class="site-footer">
       {% with contact=settings.home.ContactSettings %}
       <div class="section-shell footer-grid">
@@ -65,6 +70,8 @@
       <div class="section-shell footer-bottom"><p>© {% now 'Y' %} {{ contact.copyright_text|default:contact.site_name|default:'BIG Lab' }}</p><a href="{% pageurl site_home %}">{% ui 'about' %}</a></div>
       {% endwith %}
     </footer>
-    <script src="{% static 'js/config.js' %}" defer></script>{% block extra_js %}{% endblock %}
+    <script src="{% static 'js/config.js' %}" defer></script>
+    {% if page and page.pk != site_home.pk %}<script src="{% static 'js/internal-pages.js' %}" defer></script>{% endif %}
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

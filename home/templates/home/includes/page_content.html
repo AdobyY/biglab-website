@@ -1,4 +1,4 @@
 {% load wagtailcore_tags %}
-<div class="article-body reading-content">{% include_block page.body %}</div>
+{% if page.body %}<div class="article-body reading-content">{% include_block page.body %}</div>{% endif %}
 {% if page.sections %}{% include_block page.sections %}{% endif %}
-<div class="article-body reading-content after-body">{% include_block page.after_body %}</div>
+{% if page.after_body %}<div class="article-body reading-content after-body">{% include_block page.after_body %}</div>{% endif %}

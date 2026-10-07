@@ -1,18 +1,28 @@
 {% load wagtailcore_tags wagtailimages_tags ui_tags %}
 {% if inline_children %}
-  <nav class="section-toc project-sections" aria-label="{% ui 'contents' %}">
-    {% for child in inline_children %}{% if child.live %}<a href="#section-{{ child.pk }}">{{ child.title }}</a>{% endif %}{% endfor %}
-  </nav>
-  {% for child in inline_children %}
+  <div class="inline-collection" data-inline-collection>
+    <nav class="section-toc project-sections" id="contents-{{ page.pk }}" aria-label="{% ui 'contents' %}">
+      <p class="section-toc-title">{% ui 'contents' %}</p>
+      <ol>{% for child in inline_children %}{% if child.live %}<li><a href="#section-{{ child.pk }}">{{ child.title }}</a></li>{% endif %}{% endfor %}</ol>
+    </nav>
+    <div class="inline-sections">
+    {% for child in inline_children %}
     {% if child.live %}
       <section class="inline-section" id="section-{{ child.pk }}" aria-labelledby="section-title-{{ child.pk }}">
-        <header class="section-heading"><h2 id="section-title-{{ child.pk }}">{{ child.title }}</h2></header>
-        {% if child.intro %}<div class="collection-intro reading-content">{{ child.intro|richtext }}</div>{% endif %}
-        {% if child.cover_image %}<figure class="content-cover">{% image child.cover_image width-1600 loading="lazy" %}</figure>{% endif %}
-        <div class="article-body reading-content">{% include_block child.body %}</div>
+        <div class="inline-section-lead{% if child.cover_image %} has-image{% endif %}">
+          <div class="inline-section-copy">
+            <h2 id="section-title-{{ child.pk }}">{{ child.title }}</h2>
+            {% if child.intro %}<div class="collection-intro reading-content">{{ child.intro|richtext }}</div>{% endif %}
+          </div>
+          {% if child.cover_image %}<figure class="inline-section-image">{% image child.cover_image fill-640x440 loading="lazy" %}</figure>{% endif %}
+        </div>
+        {% if child.body %}<div class="article-body reading-content">{% include_block child.body %}</div>{% endif %}
         {% if child.sections %}{% include_block child.sections with page=child %}{% endif %}
-        <div class="article-body reading-content after-body">{% include_block child.after_body %}</div>
+        {% if child.after_body %}<div class="article-body reading-content after-body">{% include_block child.after_body %}</div>{% endif %}
+        <a class="contents-return" href="#contents-{{ page.pk }}">{% ui 'back_to_contents' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6M12 8v12"/></svg></a>
       </section>
     {% endif %}
-  {% endfor %}
+    {% endfor %}
+    </div>
+  </div>
 {% endif %}

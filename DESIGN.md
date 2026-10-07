@@ -240,7 +240,11 @@ Media components include galleries, a dark image lightbox, before/after comparis
 
 ### Reading pages and inline subsections
 
-Major pages reuse a spacious serif page heading, bounded introduction, body content, section stream, and optional after-body content. Science and project templates can render their child subsections inline, with an outlined, 8px-corner contents navigation and anchored headings; the child-sections builder block uses the same presentation. This is not a grid of links requiring a separate page visit for every subsection.
+All internal pages load `internal-pages.css`, with a shared page-heading include and localized breadcrumbs generated from the actual Wagtail tree. Collection headings pair the title with a bounded introduction on desktop and stack on mobile. Neutral sections align to the same reading grid, including Wagtail's StreamField wrappers; colored and background-image sections retain full-width surfaces. Empty body fields create no layout containers. Team and News suppress repeated default section titles and links to themselves while preserving custom editor headings.
+
+Science and project subsections share an inline collection: a 230px sticky contents rail and anchored editorial rows on desktop, becoming an ordinary contents list on mobile. Topic images sit beside their summaries at 220px wide (160px on intermediate screens), then become bounded illustrations below the text on narrow phones. Each subsection links back to contents. `internal-pages.js` progressively marks the current section while reading; native anchor navigation remains usable without JavaScript. Publications and collaborations follow as separate sections.
+
+The Team index uses three columns with standard portraits capped at 240px, retaining editor-controlled small/large, aspect-ratio and fit options; mobile uses two columns. Individual profiles align the portrait with the name, role and readable biography, with a full-width reading column when the portrait is missing or hidden. News uses editorial image/text rows rather than oversized tiles; project lists pair names and dates with summaries and funding details. Standalone content covers are capped at 720px wide / 300px high, and news covers at 860px / 380px. Profiles, news, research details and projects have a shared parent / previous / next navigation containing only published siblings, with research destinations respecting the parent's inline-section configuration.
 
 ### Contact and footer
 

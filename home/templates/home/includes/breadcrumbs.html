@@ -1,0 +1,10 @@
+{% load wagtailcore_tags ui_tags %}
+{% if breadcrumb_items %}
+<nav class="breadcrumbs section-shell" aria-label="{% ui 'breadcrumbs' %}">
+  <ol>
+    {% for item in breadcrumb_items %}
+      <li>{% if item.pk == page.pk %}<span aria-current="page">{{ page.title }}</span>{% else %}<a href="{% pageurl item %}">{% if forloop.first %}{% ui 'home' %}{% else %}{{ item.title }}{% endif %}</a>{% endif %}</li>
+    {% endfor %}
+  </ol>
+</nav>
+{% endif %}

@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 {% load wagtailimages_tags wagtailcore_tags ui_tags %}
 {% block content %}
-<article class="profile-page portrait-size-{{ page.portrait_size }} portrait-format-{{ page.portrait_format }} portrait-fit-{{ page.portrait_fit }}">
+<article class="profile-page{% if not page.portrait or not page.show_portrait %} profile-page-no-image{% endif %} portrait-size-{{ page.portrait_size }} portrait-format-{{ page.portrait_format }} portrait-fit-{{ page.portrait_fit }}">
   {% if page.portrait and page.show_portrait %}<div class="profile-image">{% if page.portrait_format == 'square' %}{% image page.portrait fill-960x960 alt="" %}{% elif page.portrait_format == 'original' %}{% image page.portrait width-1100 alt="" %}{% else %}{% image page.portrait fill-800x960 alt="" %}{% endif %}</div>{% endif %}
   <div class="profile-copy">
     <header class="page-heading">
-      <a class="back-link" href="{{ page.get_parent.url }}">{% ui 'full_team' %}</a>
       <h1>{{ page.title }}</h1>
       {% if page.role %}<p class="person-role">{{ page.role }}</p>{% endif %}
       {% if page.intro %}<div class="intro collection-intro">{{ page.intro|richtext }}</div>{% endif %}
-      {% if page.email or page.profile_url %}<div class="profile-links">{% if page.email %}<a href="mailto:{{ page.email }}">{{ page.email }}</a>{% endif %}{% if page.profile_url %}<a href="{{ page.profile_url }}">{% ui 'profile' %}</a>{% endif %}</div>{% endif %}
+      {% if page.email or page.profile_url %}<div class="profile-links">{% if page.email %}<a href="mailto:{{ page.email }}">{{ page.email }}</a>{% endif %}{% if page.profile_url %}<a href="{{ page.profile_url }}">{% ui 'profile' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>{% endif %}</div>{% endif %}
     </header>
     {% include "home/includes/page_content.html" %}
   </div>

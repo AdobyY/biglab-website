@@ -8,6 +8,42 @@ from wagtail.models import Locale, Site
 register = template.Library()
 
 
+@register.inclusion_tag("home/includes/breadcrumbs.html", takes_context=True)
+def breadcrumbs(context, home):
+    page = context.get("page")
+    items = []
+    if page and home and page.pk != home.pk and page.path.startswith(home.path):
+        items = list(page.get_ancestors(inclusive=True).live().filter(depth__gte=home.depth))
+        # Wagtail previews may show an unpublished page; it is still the current crumb.
+        if not items or items[-1].pk != page.pk:
+            items.append(page)
+    return {"breadcrumb_items": items, "page": page, "request": context.get("request")}
+
+
+@register.inclusion_tag("home/includes/page_navigation.html", takes_context=True)
+def page_navigation(context):
+    page = context.get("page")
+    result = {"page": page, "request": context.get("request"), "people_index": context.get("people_index")}
+    if not page or page.__class__.__name__ not in {"PersonPage", "NewsPage", "ContentPage", "ProjectPage"}:
+        return result
+    parent = page.get_parent().specific
+    if not parent.live:
+        return result
+    siblings = parent.get_children().live().type(type(page))
+    if page.__class__.__name__ == "NewsPage":
+        siblings = siblings.specific()
+        siblings = sorted(siblings, key=lambda item: (item.date, item.path), reverse=True)
+    else:
+        siblings = list(siblings.order_by("path").specific())
+    position = next((i for i, sibling in enumerate(siblings) if sibling.pk == page.pk), None)
+    result.update(
+        navigation_parent=parent,
+        previous_page=siblings[position - 1] if position is not None and position > 0 else None,
+        next_page=siblings[position + 1] if position is not None and position + 1 < len(siblings) else None,
+    )
+    return result
+
+
 @register.filter(name="section_destination")
 def section_url(page):
     """Keep child content on its owning long page when that layout is enabled."""

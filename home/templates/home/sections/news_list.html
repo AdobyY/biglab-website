@@ -2,7 +2,8 @@
 {% if value.is_visible or legacy %}{% if news_items or not page.hero_layout %}
 <section{% include "home/includes/section_attributes.html" with section_class="news-section" %}>
   <div class="section-shell">
-    <div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'news' %}{% endif %}</h2></div>
+    {% ui 'news' as default_title %}
+    {% if page.pk != news_index.pk or value.title and value.title != page.title and value.title != default_title %}<div class="section-heading"><h2>{{ value.title|default:default_title }}</h2></div>{% endif %}
     {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
     {% include "home/includes/news_list.html" with news_list_items=news_items %}
   </div>

@@ -3,7 +3,8 @@
 {% if value.is_visible and inline_children %}
 <section{% include "home/includes/section_attributes.html" with section_class="child-sections" %}>
   <div class="section-shell">
-    <div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'contents' %}{% endif %}</h2></div>
+    {% ui 'contents' as contents_label %}
+    {% if value.title and value.title != contents_label %}<div class="section-heading"><h2>{{ value.title }}</h2></div>{% endif %}
     {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
     {% include "home/includes/inline_sections.html" %}
   </div>

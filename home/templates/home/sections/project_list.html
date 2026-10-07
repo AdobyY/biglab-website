@@ -6,12 +6,12 @@
     <div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% elif value.status == 'current' %}{% ui 'current_projects' %}{% elif value.status == 'finished' %}{% ui 'finished_projects' %}{% else %}{% ui 'projects' %}{% endif %}</h2></div>
     {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
     {% if value.status == 'current' %}
-      {% include "home/includes/project_list.html" with project_items=current_projects %}
+      {% include "home/includes/project_list.html" with project_items=current_projects grouped=True %}
     {% elif value.status == 'finished' %}
-      {% include "home/includes/project_list.html" with project_items=finished_projects %}
+      {% include "home/includes/project_list.html" with project_items=finished_projects grouped=True %}
     {% else %}
-      {% if current_projects %}<div class="project-group"><h3>{% ui 'current_projects' %}</h3>{% include "home/includes/project_list.html" with project_items=current_projects %}</div>{% endif %}
-      {% if finished_projects %}<div class="project-group"><h3>{% ui 'finished_projects' %}</h3>{% include "home/includes/project_list.html" with project_items=finished_projects %}</div>{% endif %}
+      {% if current_projects %}<div class="project-group"><h3>{% ui 'current_projects' %}</h3>{% include "home/includes/project_list.html" with project_items=current_projects grouped=True %}</div>{% endif %}
+      {% if finished_projects %}<div class="project-group"><h3>{% ui 'finished_projects' %}</h3>{% include "home/includes/project_list.html" with project_items=finished_projects grouped=True %}</div>{% endif %}
       {% if not projects %}<p class="collection-empty">{% ui 'empty_projects' %}</p>{% endif %}
     {% endif %}
   </div>

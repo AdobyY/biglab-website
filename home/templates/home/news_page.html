@@ -3,12 +3,11 @@
 {% block content %}
 <article class="article-page">
   <header class="page-heading">
-    <a class="back-link" href="{{ page.get_parent.url }}">{% ui 'news' %}</a>
-    <time datetime="{{ page.date|date:'Y-m-d' }}">{{ page.date|date:"j F Y" }}</time>
     <h1>{{ page.title }}</h1>
+    <time class="article-date" datetime="{{ page.date|date:'Y-m-d' }}">{{ page.date|date:"j F Y" }}</time>
     {% if page.intro %}<div class="intro collection-intro">{{ page.intro|richtext }}</div>{% endif %}
   </header>
-  {% if page.cover_image %}<figure class="article-image">{% image page.cover_image width-1600 %}</figure>{% endif %}
+  {% if page.cover_image %}<figure class="article-image">{% image page.cover_image width-1200 %}</figure>{% endif %}
   {% include "home/includes/page_content.html" %}
 </article>
 {% endblock %}

@@ -1,0 +1,8 @@
+{% load wagtailcore_tags navigation_tags ui_tags %}
+{% if navigation_parent %}
+<nav class="page-navigation section-shell" aria-label="{% ui 'related_pages' %}">
+  <a class="page-navigation-parent" href="{% pageurl navigation_parent %}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h12"/></svg>{% if people_index.pk == navigation_parent.pk %}{% ui 'full_team' %}{% else %}{{ navigation_parent.title }}{% endif %}</a>
+  {% if previous_page %}<a class="page-navigation-previous" href="{{ previous_page|section_destination }}"><span>{% ui 'previous' %}</span><strong>{{ previous_page.title }}</strong></a>{% endif %}
+  {% if next_page %}<a class="page-navigation-next" href="{{ next_page|section_destination }}"><span>{% ui 'next' %}</span><strong>{{ next_page.title }}</strong><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6M4 12h12"/></svg></a>{% endif %}
+</nav>
+{% endif %}

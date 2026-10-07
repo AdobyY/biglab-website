@@ -3,7 +3,6 @@
 {% block content %}
 <article class="project-page">
   <header class="page-heading">
-    <a class="back-link" href="{{ page.get_parent.url }}">{% ui 'back' %}</a>
     <h1>{{ page.title }}</h1>
     <p class="project-status">{% if page.is_completed %}{% ui 'finished_projects' %}{% else %}{% ui 'current_projects' %}{% endif %}</p>
     {% if page.intro %}<div class="intro collection-intro">{{ page.intro|richtext }}</div>{% endif %}
@@ -14,8 +13,8 @@
     </dl>{% endif %}
     {% if page.external_url %}<a class="button" href="{{ page.external_url }}">{% ui 'project_website' %}</a>{% endif %}
   </header>
-  <div class="article-body reading-content">{% include_block page.body %}</div>
+  {% if page.body %}<div class="article-body reading-content">{% include_block page.body %}</div>{% endif %}
   {% if page.sections %}{% include_block page.sections %}{% else %}{% include "home/includes/inline_sections.html" with inline_children=project_sections %}{% endif %}
-  <div class="article-body reading-content after-body">{% include_block page.after_body %}</div>
+  {% if page.after_body %}<div class="article-body reading-content after-body">{% include_block page.after_body %}</div>{% endif %}
 </article>
 {% endblock %}

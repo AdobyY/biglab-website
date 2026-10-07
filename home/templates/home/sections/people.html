@@ -7,7 +7,7 @@
 {% if value.is_visible or legacy %}{% if section_people or not page.hero_layout %}
 <section{% include "home/includes/section_attributes.html" with section_class="people-preview" %}>
   <div class="section-shell">
-    <div class="section-heading"><h2>{{ value.title|default:default_title }}</h2>{% if people_index %}<a href="{{ people_index.url }}">{% if value.link_label %}{{ value.link_label }}{% else %}{% ui 'full_team' %}{% endif %}</a>{% endif %}</div>
+    {% if page.pk != people_index.pk or value.title and value.title != page.title and value.title != default_title %}<div class="section-heading"><h2>{{ value.title|default:default_title }}</h2>{% if people_index and page.pk != people_index.pk %}<a href="{{ people_index.url }}">{% if value.link_label %}{{ value.link_label }}{% else %}{% ui 'full_team' %}{% endif %}</a>{% endif %}</div>{% endif %}
     {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
     <div class="people-carousel{% if carousel_active %} is-carousel{% endif %}" style="--people-visible:{{ value.carousel_after|default:6 }}"{% if carousel_active %} data-card-carousel role="region" aria-label="{{ value.title|default:default_title }}"{% endif %}>
       {% if legacy %}{% include "home/includes/people_list.html" with people_items=section_people show_roles=True carousel_active=False %}{% else %}{% include "home/includes/people_list.html" with people_items=section_people show_roles=value.show_roles %}{% endif %}
