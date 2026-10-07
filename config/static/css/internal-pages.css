@@ -87,12 +87,22 @@
 .page-navigation strong { display: block; font-weight: 500; font-size: 1rem; line-height: 1.4; overflow-wrap: anywhere; }
 .page-navigation-next svg { position: absolute; top: 1.9rem; right: 0; }
 
+.child-page-navigation { display: grid; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 2rem; margin-block: 2rem 3rem; }
+.child-page-navigation h2 { font-size: 1.6rem; line-height: 1.2; margin: 0; }
+.child-page-navigation ul { list-style: none; padding: 0; margin: 0; min-width: 0; border-top: 1px solid var(--line); }
+.child-page-navigation li { border-bottom: 1px solid var(--line); }
+.child-page-navigation a { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 48px; padding-block: 1rem; font-size: 1.1rem; line-height: 1.4; text-decoration: none; }
+.child-page-navigation a span { min-width: 0; overflow-wrap: anywhere; }
+.child-page-navigation a:hover span { text-decoration: underline; text-underline-offset: .2em; }
+.child-page-navigation svg { width: 21px; height: 21px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; }
+
 @media (max-width: 1100px) {
   .page-heading--index { gap: 2rem; }
   .projects-page .project-list-item { column-gap: 2rem; }
   .news-index-page .news-list-item { grid-template-columns: minmax(0, 240px) minmax(0, 1fr); }
 }
 @media (max-width: 760px) {
+  .child-page-navigation { grid-template-columns: minmax(0, 1fr); gap: 1rem; margin-block: 1.5rem 2rem; }
   .breadcrumbs { padding-top: .8rem; font-size: .8rem; }
   .breadcrumbs li + li::before { padding-inline: .5rem; }
   .page-heading { padding-block: 1.35rem 1.5rem; }

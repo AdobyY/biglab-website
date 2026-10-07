@@ -295,3 +295,29 @@ photographic columns and confident serif hierarchy; Pentagram's Isomorphic Labs
 case study (https://www.pentagram.com/work/isomorphic-labs) for a coherent scientific
 identity organized around a grid. These inform composition; BIG Lab retains its own
 palette, fonts, photographs and geometric illustrations.
+
+
+The final October homepage refinement retires the repeated collection rail for
+Research, People, Collaborations and discovery. The public identity remains navy,
+butter, cream and brick with the existing local typefaces. Alegreya display titles
+are lighter (400), 2.8–4rem on desktop and 2.5rem on mobile; the hero uses 3–5rem.
+Source Sans 3 now carries topic links, names, project headings and publication
+titles (1.1–1.7rem), so the display layer has a clear purpose. The homepage shell
+is bounded at 1280px with 56px desktop gutters. Sections use 4rem desktop and
+2.75rem mobile spacing.
+
+Research is a progressive photographic lens: all topic links stay visible in an
+open list beside a single bounded photograph (320px high, 280px at intermediate
+widths). Hover or keyboard focus updates the still photograph and its actual
+topic caption without blocking the link. Without JavaScript, the section remains
+a photographic collection. Mobile shows a two-column photo index with 110–135px
+images and no duplicate preview. Thumbnail GIFs remain still posters.
+
+The team uses the full shell in four columns with portraits bounded at 210 × 240px,
+220px high on intermediate screens, and two columns with 140–165px portraits on
+mobile. Names and roles sit below each portrait. This protects the portrait crop
+while giving faces a stronger presence. Publications and completed projects keep
+a reading rail; collaborators use four compact columns, reducing to two and one.
+Methods retain one scientific diagram and three quiet columns. Actual CMS copy,
+optional media, section themes, profile links and both homepage palettes remain
+authoritative. The preceding October paragraphs document earlier iterations.

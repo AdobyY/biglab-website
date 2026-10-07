@@ -4,6 +4,7 @@ UI_LABELS = {
     "en": {
         "breadcrumbs": "Breadcrumbs", "related_pages": "Related pages",
         "previous": "Previous", "next": "Next", "back_to_contents": "Back to contents",
+        "all_publications": "All publications", "subpages": "In this section",
         "research_disciplines": "Psychology · Sociology · Network science",
         "discover_lab": "Discover BIG Lab",
         "network_hint": "Move or tap the network",
@@ -37,6 +38,7 @@ UI_LABELS = {
     "cs": {
         "breadcrumbs": "Drobečková navigace", "related_pages": "Související stránky",
         "previous": "Předchozí", "next": "Další", "back_to_contents": "Zpět na obsah",
+        "all_publications": "Všechny publikace", "subpages": "V této sekci",
         "research_disciplines": "Psychologie · Sociologie · Síťová věda",
         "discover_lab": "Objevte BIG Lab",
         "network_hint": "Prozkoumejte myší nebo dotykem",

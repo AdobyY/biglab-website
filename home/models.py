@@ -102,7 +102,7 @@ class BaseContentPage(Page):
             "newspage": "Set the publication date and write the article in Content before the sections. Extra sections are optional.",
             "projectsindexpage": "Recommended: Projects — full list, once for Current and once for Finished. Add a child Project page for a new project.",
             "projectpage": "Set project details here. Child pages can appear inline through Child pages — inline sections.",
-            "contentpage": "Write the page in Content before the sections, or build it with text, image and media sections.",
+            "contentpage": "Write the page in Content before the sections, or build it with text, image and media sections. Published child pages marked Show in menus appear automatically in In this section, unless a visible Child pages block already displays them.",
         }.get(self._meta.model_name, "")
 
 

@@ -5,7 +5,7 @@
       <a class="home-team-link" href="{{ person.url }}">
         <div class="home-team-portrait{% if person.portrait_fit == 'contain' %} home-team-portrait--contain{% endif %}">
           {% if person.portrait and person.show_portrait %}
-            {% if person.portrait_fit == 'contain' or person.portrait_format == 'original' %}{% media_image person.portrait 'width-320' loading="lazy" alt="" controls=False %}{% elif person.portrait_format == 'square' %}{% media_image person.portrait 'fill-240x240' loading="lazy" alt="" controls=False %}{% else %}{% media_image person.portrait 'fill-240x300' loading="lazy" alt="" controls=False %}{% endif %}
+            {% if person.portrait_fit == 'contain' or person.portrait_format == 'original' %}{% media_image person.portrait 'width-600' loading="lazy" alt="" controls=False %}{% elif person.portrait_format == 'square' %}{% media_image person.portrait 'fill-480x480' loading="lazy" alt="" controls=False %}{% else %}{% media_image person.portrait 'fill-480x600' loading="lazy" alt="" controls=False %}{% endif %}
           {% else %}{% include "home/includes/person_placeholder.html" %}{% endif %}
         </div>
         <div class="home-team-copy"><h3>{{ person.title }}</h3>{% if show_roles and person.role %}<p class="person-role">{{ person.role }}</p>{% endif %}</div>

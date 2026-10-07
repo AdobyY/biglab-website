@@ -454,10 +454,15 @@ class AutomaticListSectionBlock(HomeSectionBlock):
 
 
 class PublicationsSectionBlock(AutomaticListSectionBlock):
+    homepage_limit = blocks.IntegerBlock(
+        min_value=1, max_value=6, default=3, label="Publications on the homepage",
+        help_text="Show the newest 1–6 publications on the homepage, with a link to the full list in Science. Other pages always show the full list.",
+    )
+
     class Meta:
         icon = "doc-full"
-        label = "Publications — full list"
-        help_text = "All publication snippets in this page's language, newest year first."
+        label = "Publications"
+        help_text = "Newest publications in this page's language. A short preview on the homepage; the full list on other pages."
         template = "home/sections/publications.html"
 
 

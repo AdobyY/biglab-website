@@ -46,6 +46,50 @@ def page_navigation(context):
     return result
 
 
+@register.inclusion_tag("home/includes/child_page_navigation.html", takes_context=True)
+def child_page_navigation(context, parent=None, embedded=False):
+    """Expose the next level even when it is beyond the header menu's depth."""
+    parent = parent or context.get("page")
+    result = {"page": parent, "request": context.get("request"), "embedded": embedded}
+    if not parent or parent.__class__.__name__ not in {"ContentPage", "ProjectPage", "SciencePage"}:
+        return result
+    sections = getattr(parent, "sections", [])
+    # The inline collection already exposes children; do not repeat it.
+    if (not sections and parent.__class__.__name__ in {"ProjectPage", "SciencePage"}) or any(
+        block.block_type == "child_sections" and block.value.get("is_visible")
+        for block in sections
+    ):
+        return result
+    result["child_navigation_pages"] = parent.get_children().live().in_menu().specific()
+    return result
+
+
+@register.simple_tag(takes_context=True)
+def publication_collection(context, section=None):
+    """Bound homepage growth while retaining the complete reading-page list."""
+    items = context.get("publications", [])
+    if context.get("page").__class__.__name__ != "HomePage":
+        return {"items": items, "url": ""}
+    try:
+        limit = int(section.get("homepage_limit", 3))
+    except (AttributeError, TypeError, ValueError):
+        limit = 3
+    limit = max(1, min(limit, 6))
+    science = context.get("science_page")
+    url = ""
+    if science and science.live and science.url:
+        sections = science.sections
+        if not sections:
+            url = science.url
+        else:
+            for block in sections:
+                if block.block_type == "publications" and block.value.get("is_visible"):
+                    anchor = block.value.get("anchor")
+                    url = science.url + (f"#{anchor}" if anchor else "")
+                    break
+    return {"items": items[:limit], "url": url}
+
+
 @register.filter(name="section_destination")
 def section_url(page):
     """Keep child content on its owning long page when that layout is enabled."""

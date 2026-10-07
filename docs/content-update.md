@@ -110,3 +110,23 @@ October editorial design follow-up:
   the intentionally expanded editorial scale, now recorded in DESIGN.md.
   Git whitespace checks pass. Screenshots are retained in the ignored local
   .impeccable/layout-repair-20261007/ evidence directory.
+
+October photographic composition follow-up (supersedes the collection rail above):
+- Research and People now use the full homepage shell. Lighter display headings
+  contrast with sans-serif topic links, profile names and citation titles. Portraits
+  are bounded at 210 × 240px instead of enlarged landscape crops.
+- Research progressively adds one still photograph that follows pointer hover and
+  keyboard focus. Native topic links continue to navigate to their actual anchors.
+  The no-JavaScript collection and no-image fallback remain usable; mobile uses
+  a two-column photographic index. No animation or new dependency was added.
+- All 26 relevant Django tests pass, as do the 46 published-page route, heading,
+  ID and internal-link checks. The script passes syntax and dependency-free behavior
+  checks for initialization, hover/focus, missing images, GIF posters and idempotence.
+- Chrome confirms desktop, 1000px, 390px and 320px layouts, both languages and both
+  palettes, with no horizontal overflow or broken loaded images. Keyboard Tab
+  updates the selected photograph to the focused topic. Portrait cropping and
+  the denser research heading were corrected in the final bounded review.
+- One static detector pass has no primary findings; type scale advisories were
+  reviewed against the intended display/interface contrast and recorded in DESIGN.md.
+  Git whitespace checks pass. Local screenshot evidence uses premium-*.jpg under
+  the ignored .impeccable/layout-repair-20261007/ directory.

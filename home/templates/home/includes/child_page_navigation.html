@@ -1,0 +1,11 @@
+{% load wagtailcore_tags ui_tags %}
+{% if child_navigation_pages %}
+<nav class="child-page-navigation{% if not embedded %} section-shell{% endif %}" aria-labelledby="child-navigation-{{ page.pk }}" data-child-navigation>
+  <h2 id="child-navigation-{{ page.pk }}">{% ui 'subpages' %}</h2>
+  <ul>
+    {% for child in child_navigation_pages %}
+    <li><a href="{% pageurl child %}"><span>{{ child.title }}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6M4 12h12"/></svg></a></li>
+    {% endfor %}
+  </ul>
+</nav>
+{% endif %}

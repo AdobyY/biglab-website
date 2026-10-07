@@ -1,4 +1,4 @@
-{% load wagtailcore_tags wagtailimages_tags ui_tags media_tags %}
+{% load wagtailcore_tags wagtailimages_tags ui_tags media_tags navigation_tags %}
 {% if inline_children %}
   <div class="inline-collection{% if page.content_type.model == 'sciencepage' %} inline-collection--continuous{% endif %}" data-inline-collection>
     {% if page.content_type.model != 'sciencepage' %}
@@ -21,6 +21,7 @@
         {% if child.body %}<div class="article-body reading-content">{% include_block child.body %}</div>{% endif %}
         {% if child.sections %}{% include_block child.sections with page=child %}{% endif %}
         {% if child.after_body %}<div class="article-body reading-content after-body">{% include_block child.after_body %}</div>{% endif %}
+        {% child_page_navigation child embedded=True %}
         {% if page.content_type.model != 'sciencepage' %}<a class="contents-return" href="#contents-{{ page.pk }}">{% ui 'back_to_contents' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 14 6-6 6 6M12 8v12"/></svg></a>{% endif %}
       </section>
     {% endif %}

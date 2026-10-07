@@ -1,10 +1,11 @@
-{% load wagtailcore_tags ui_tags %}
-{% if value.is_visible or legacy %}{% if publications or not page.hero_layout %}
+{% load wagtailcore_tags ui_tags navigation_tags %}
+{% publication_collection value as collection %}
+{% if value.is_visible or legacy %}{% if collection.items or not page.hero_layout %}
 <section{% include "home/includes/section_attributes.html" with section_class="publication-section" %}>
   <div class="section-shell">
-    <div class="section-heading">{% if page.hero_layout %}{% include 'home/includes/icon.html' with name='book' icon_class='section-symbol' %}{% endif %}<h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'publications' %}{% endif %}</h2></div>
+    <div class="section-heading">{% if page.hero_layout %}{% include 'home/includes/icon.html' with name='book' icon_class='section-symbol' %}{% endif %}<h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'publications' %}{% endif %}</h2>{% if collection.url %}<a class="publication-all-link" href="{{ collection.url }}">{% ui 'all_publications' %}</a>{% endif %}</div>
     {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
-    {% include "home/includes/publication_list.html" with publication_items=publications %}
+    {% include "home/includes/publication_list.html" with publication_items=collection.items %}
   </div>
 </section>
 {% endif %}{% endif %}
