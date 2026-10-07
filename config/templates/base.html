@@ -27,7 +27,8 @@
     <link rel="stylesheet" href="{% static 'css/config.css' %}">
     {% if page and page.pk != site_home.pk %}<link rel="stylesheet" href="{% static 'css/internal-pages.css' %}">{% endif %}
     {% block extra_css %}{% endblock %}
-    <link rel="stylesheet" href="{% static 'css/editorial-enhancements.css' %}">
+    <link rel="stylesheet" href="{% static 'css/editorial-enhancements.css' %}?v=20261007-editorial-2">
+    {% block final_css %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}" {% block body_attrs %}{% endblock %}data-image-preview="{% ui 'image_preview' %}" data-close="{% ui 'close' %}" data-previous-image="{% ui 'previous_image' %}" data-next-image="{% ui 'next_image' %}" data-pause="{% ui 'pause' %}" data-play="{% ui 'play' %}">
     <a class="skip-link" href="#content">{% ui 'skip_content' %}</a>

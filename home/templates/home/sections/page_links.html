@@ -1,6 +1,6 @@
 {% load wagtailcore_tags ui_tags visual_tags %}
 {% if value.is_visible %}
-<section{% include "home/includes/section_attributes.html" %}>
+<section{% include "home/includes/section_attributes.html" with section_class="discovery-section" %}>
   <div class="section-shell">
     <div class="builder-section-heading section-heading"><h2>{{ value.title }}</h2>{% if value.intro %}<div class="intro collection-intro">{{ value.intro|richtext }}</div>{% endif %}</div>
     <div class="page-link-grid page-link-grid-{{ value.columns }}">

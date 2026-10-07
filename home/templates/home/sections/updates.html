@@ -10,7 +10,7 @@
     {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
     <div class="updates-grid">
       {% if value.show_news and section_news %}<div><h3>{% if value.news_heading %}{{ value.news_heading }}{% else %}{% ui 'news' %}{% endif %}</h3>{% include "home/includes/news_list.html" with news_list_items=section_news %}</div>{% endif %}
-      {% if value.show_projects and section_projects %}<div><h3>{% if value.projects_heading %}{{ value.projects_heading }}{% else %}{% ui 'current_projects' %}{% endif %}</h3>{% include "home/includes/project_list.html" with project_items=section_projects %}</div>{% endif %}
+      {% if value.show_projects and section_projects %}<div><h3>{% if value.projects_heading %}{{ value.projects_heading }}{% else %}{% ui 'current_projects' %}{% endif %}</h3>{% include "home/includes/project_list.html" with project_items=section_projects grouped=True %}</div>{% endif %}
       {% if value.show_publications and section_publications %}<div><h3>{% if value.publications_heading %}{{ value.publications_heading }}{% else %}{% ui 'publications' %}{% endif %}</h3>{% include "home/includes/publication_list.html" with publication_items=section_publications %}</div>{% endif %}
     </div>
   </div>

@@ -4,10 +4,18 @@
 <section{% include "home/includes/section_attributes.html" with section_class="research-section" %}>
   <div class="section-shell">
     <div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'research_areas' %}{% endif %}</h2>{% if science_page %}<a href="{{ science_page.url }}">{% if value.link_label %}{{ value.link_label }}{% else %}{% ui 'all_science' %}{% endif %}</a>{% endif %}</div>
-    {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
-    <div class="research-list">
-      {% for area in section_areas %}<article class="research-row"><h3><a href="{{ area|section_destination }}">{{ area.title }}</a></h3>{% if area.cover_image %}{% if value.show_images or legacy %}{% media_image area.cover_image 'fill-420x240' loading="lazy" %}{% endif %}{% endif %}{% if area.intro %}<div class="collection-intro">{{ area.intro|richtext }}</div>{% endif %}</article>{% endfor %}
+    {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% elif page.hero_layout and science_page.intro %}<div class="collection-intro reading-content research-overview-intro">{{ science_page.intro|richtext }}</div>{% endif %}
+    {% if page.hero_layout %}
+    <div class="research-list research-overview">
+      {% for area in section_areas %}<article class="research-row research-overview-item">
+        {% if area.cover_image %}{% if value.show_images or legacy %}<figure class="research-overview-image">{% media_image area.cover_image 'fill-480x320' loading="lazy" alt="" controls=False %}</figure>{% endif %}{% endif %}
+        <div class="research-overview-copy"><h3><a href="{{ area|section_destination }}">{{ area.title }}</a></h3></div>
+        {% include 'home/includes/icon.html' with name='arrow' icon_class='research-overview-arrow' %}
+      </article>{% endfor %}
     </div>
+    {% else %}<div class="research-list">
+      {% for area in section_areas %}<article class="research-row"><h3><a href="{{ area|section_destination }}">{{ area.title }}</a></h3>{% if area.cover_image %}{% if value.show_images or legacy %}{% media_image area.cover_image 'fill-420x240' loading="lazy" %}{% endif %}{% endif %}{% if area.intro %}<div class="collection-intro">{{ area.intro|richtext }}</div>{% endif %}</article>{% endfor %}
+    </div>{% endif %}
   </div>
 </section>
 {% endif %}{% endif %}

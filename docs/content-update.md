@@ -56,6 +56,22 @@ cards. The homepage adds the existing SATIS meeting photo, larger research image
 consistent line icons, three method columns and a symbolic PARTA audience diagram.
 The editable CMS content is preserved in both languages and exported again.
 
+The subsequent homepage density revision uses equal research entries with bounded
+thumbnails and one shared Science introduction; full topic descriptions remain on
+Science. The homepage team becomes a static compact directory with names and roles
+beside small portraits (above them on mobile). News/projects use their actual column
+count. Methods, PARTA, publications, completed projects, collaborators, discovery and
+contact now use tighter spacing and bounded graphics. The large detail-page portraits
+and editor-controlled internal-page carousel remain available. Research and team
+catalogues at Oxford Internet Institute and MIT Media Lab informed the browsing layout;
+their content and imagery were not imported.
+
+This revision passes the same 26 relevant tests and the 46-page route/anchor checks.
+Chrome confirms 104px research thumbnails and 110px team portraits on desktop, 76px
+research thumbnails and 100px team portraits at 390px, and no overflow at 320px.
+The EN/CS variants and both homepage palettes retain the new shared layout. Both
+layout detector passes have no findings. `git diff --check` passes.
+
 For this follow-up, the 26 relevant frontend, homepage and animated-image tests pass.
 Chrome confirms all eight optional carousel cards retain their width at desktop and
 390 px, and Czech People/mobile homepage have no horizontal overflow. Both homepage
@@ -75,3 +91,22 @@ this layout follow-up.
   confirms GIF Play/Pause switches between the animated rendition and its poster.
 - One static Impeccable scan reports no primary findings; advisory scale/color
   suggestions were reviewed against the existing identity and requested grey silhouette.
+
+October editorial design follow-up:
+- References reviewed on their official sites: Kinfolk Stories and Pentagram's
+  Isomorphic Labs case study. Their column rhythm, serif hierarchy and scientific
+  grid informed the composition; no third-party photographs or copy were imported.
+- Homepage collections now share a left title rail. Research uses a five-topic
+  photographic index, People a four-column portrait gallery, and Publications
+  prominent unbroken years. Methods, PARTA, updates, collaborators and discovery
+  links retain distinct compositions within the same spacing and type system.
+- The 26 relevant frontend, homepage and animated-image tests pass. All 46 published
+  pages pass route, heading, anchor and internal-link checks. No backend or content
+  changes were required for this design pass.
+- Chrome inspection covers desktop, 1000px, 390px and 320px, English and Czech,
+  and both homepage palettes: no horizontal overflow or broken loaded images.
+  Publication year wrapping was corrected and confirmed on desktop and mobile.
+- The static detector reports no primary findings; typography advisories reflect
+  the intentionally expanded editorial scale, now recorded in DESIGN.md.
+  Git whitespace checks pass. Screenshots are retained in the ignored local
+  .impeccable/layout-repair-20261007/ evidence directory.

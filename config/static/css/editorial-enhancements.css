@@ -15,10 +15,6 @@
 .profile-image .person-placeholder { aspect-ratio: 5 / 6; border-radius: 8px; }
 /* Carousel tracks must never inherit a page's fixed grid columns. */
 .people-carousel.is-carousel .people-grid.portrait-run { grid-template-columns: none; }
-.template-homepage .people-preview .people-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.5rem 1.75rem; }
-.template-homepage .people-preview .person-tile-image { max-width: 100%; border-radius: 4px; }
-.template-homepage .people-preview .person-link h3 { font-size: clamp(1.25rem, 1.5vw, 1.5rem); }
-.template-homepage .people-preview .person-role { font-size: .92rem; }
 .template-homepage .builder-media { display: grid; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
 .template-homepage .builder-media-image-left { grid-template-columns: 1.08fr .92fr; }
 .template-homepage .builder-media figure { margin: 0; }
@@ -26,11 +22,6 @@
 .template-homepage .builder-media .collection-intro { font-size: 1.12rem; line-height: 1.6; margin-bottom: 1.5rem; }
 .template-homepage .builder-media .reading-content { max-width: 52ch; }
 .template-homepage .builder-media .button { margin-top: 1rem; }
-.template-homepage .research-list { gap: 0 2.5rem; }
-.template-homepage .research-row:not(:first-child) { display: flex; flex-direction: column; align-items: stretch; gap: .85rem; padding-block: 2rem; }
-.template-homepage .research-row:not(:first-child) > img, .template-homepage .research-row:not(:first-child) > .animated-media { order: -1; width: 100%; height: auto; margin-bottom: .5rem; }
-.template-homepage .research-row:not(:first-child) img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 8px; }
-.template-homepage .research-row:not(:first-child) h3 { font-size: clamp(1.55rem, 2.2vw, 1.8rem); max-width: 30ch; }
 .method-lead { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 3rem; }
 .method-lead h2 { font-size: clamp(2rem, 3.3vw, 3rem); line-height: 1.1; text-wrap: balance; max-width: 22ch; margin-bottom: 1.25rem; }
 .method-lead .collection-intro { max-width: 44ch; margin: 0; }
@@ -80,7 +71,6 @@
 .template-homepage .page-link-grid > a h3 { font-size: 1.75rem; text-wrap: balance; }
 .template-homepage .page-link-grid > a p { color: var(--section-muted); max-width: 48ch; }
 @media (max-width: 1000px) {
-  .template-homepage .people-preview .people-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .template-homepage .publication-section .section-shell { grid-template-columns: 1fr; }
   .template-homepage .publication-section .section-heading, .template-homepage .publication-section .collection-intro, .template-homepage .publication-section .publication-list { grid-column: 1; grid-row: auto; }
   .method-grid { gap: 1.75rem; }
@@ -91,7 +81,6 @@
   .template-homepage .builder-media-image-left { grid-template-columns: 1fr; }
   .template-homepage .builder-media-image-left .builder-media-copy, .template-homepage .builder-media-image-left figure { grid-column: 1; grid-row: auto; }
   .template-homepage .builder-media figure { order: -1; margin: 0; }
-  .template-homepage .research-row:not(:first-child) img { aspect-ratio: 16 / 10; }
   .method-lead { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem; }
   .method-diagram { max-height: 170px; }
   .method-grid { grid-template-columns: 1fr; gap: 1.75rem; }
@@ -104,8 +93,6 @@
   .parta-audience > .line-icon { width: 32px; height: 32px; }
   .science-page .inline-section-lead.has-image { grid-template-columns: minmax(0, 1fr) 160px; gap: 1.5rem; }
   .science-page .inline-section-image img { width: 160px; }
-  .template-homepage .people-preview .people-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1rem; }
-  .template-homepage .people-preview .person-link h3 { font-size: 1.25rem; }
   .template-homepage .publication-list > li { grid-template-columns: 3rem minmax(0, 1fr); gap: .75rem; }
   .template-homepage .publication-copy h3 { font-size: 1.4rem; }
   .template-homepage .collaboration-list { grid-template-columns: 1fr; }

@@ -269,11 +269,29 @@ collaborations and discovery links to both homepages. About groups Lab, People a
 Science exposes its published research sections and publication/collaboration/project
 anchors. Homepage and Science omit the redundant Contents strips and sidebar. Science
 uses a continuous full-width reading column with bounded research images. The homepage
-mission pairs its existing copy with the real SATIS meeting photo. Larger research
-images, three illustrated method columns, a symbolic PARTA audience diagram and
-consistent line icons enrich the open editorial sections. The homepage team uses four
-columns on desktop, three at intermediate widths and two on mobile. The People index
+mission pairs its existing copy with the real SATIS meeting photo, bounded at 340px
+high. Homepage collections share an editorial title rail at roughly one quarter of
+the content width. Display headings range from 2.3 to 3.15rem and become 2.1rem on
+mobile. Research is a five-column photographic index of equal topics with images
+capped at 124px high, becoming three columns below 1100px and horizontal rows with
+76px thumbnails on mobile. A shared Science introduction
+replaces repetitive preview descriptions; the full topic text remains on Science.
+There is no oversized featured first topic. The homepage team is a static four-column
+gallery with 104 × 130px portraits above serif names and muted roles. Below 1100px it
+becomes three columns; on mobile it has two columns with 80 × 100px portraits. All selected
+members remain visible without carousel controls. Updates fit their actual column
+count, with 172 × 140px news thumbnails and grouped project rows. Method illustrations,
+italic PARTA lettering, prominent publication years, collaborators and discovery links
+give each collection its own rhythm within the shared grid. Sections use 3.25rem
+desktop / 2.5rem mobile padding. Homepage collection titles use 1.2–1.8rem serif type;
+supporting copy uses .85–1rem sans-serif type. The People index
 shows all eight members in a regular three/two-column grid; optional carousel tracks
 explicitly reset inherited fixed columns so every portrait retains its width.
 Missing portraits use a neutral grey silhouette. GIF detail images start on a still
 poster, with explicit localized Play/Pause controls; linked thumbnails use the poster.
+
+Editorial references: Kinfolk Stories (https://www.kinfolk.com/stories/) for ruled
+photographic columns and confident serif hierarchy; Pentagram's Isomorphic Labs
+case study (https://www.pentagram.com/work/isomorphic-labs) for a coherent scientific
+identity organized around a grid. These inform composition; BIG Lab retains its own
+palette, fonts, photographs and geometric illustrations.
