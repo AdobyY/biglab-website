@@ -588,6 +588,64 @@ connections.close_all()
             result = self.run_python("-c", script, env=env)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def test_full_reset_restores_real_bilingual_snapshot_after_cms_testing(self):
+        script = '''
+import json
+import django
+from django.contrib.auth import get_user_model
+from django.core.management import call_command
+from django.db import connections
+django.setup()
+from home.content_snapshot import DEFAULT_BUNDLE, import_bundle
+from home.models import ContentPage, HomePage, PersonPage, ProjectPage, Publication
+from wagtail.models import Page, Site
+try:
+    call_command("migrate", verbosity=0)
+    import_bundle()
+    snapshot = json.loads((DEFAULT_BUNDLE / "content.json").read_text(encoding="utf-8"))
+    site = Site.objects.get(is_default_site=True)
+    site.hostname = "test-deployment.example"
+    site.port = 443
+    site.save()
+    user = get_user_model().objects.create_user("editor", password="test-password")
+    password_hash = user.password
+    home = HomePage.objects.get(locale__language_code="en", depth=2)
+    cs_home = HomePage.objects.get(locale__language_code="cs", depth=2)
+    parta = ProjectPage.objects.child_of(cs_home).get(slug="parta")
+    extra = parta.add_child(instance=ContentPage(title="Test Czech page", slug="test-czech-page", locale=cs_home.locale))
+    extra.add_child(instance=ContentPage(title="Nested draft", slug="nested-draft", locale=cs_home.locale, live=False))
+    PersonPage.objects.filter(locale=cs_home.locale).first().delete()
+    home.hero_title = "Test homepage"
+    home.save_revision().publish()
+    Publication.objects.create(locale=home.locale, title="Test article", authors="Tester", year=2026)
+    call_command("seed_biglab", reset=True, verbosity=0)
+    assert Page.objects.filter(depth__gte=2).count() == len(snapshot["pages"])
+    assert not Page.objects.filter(slug__in=["test-czech-page", "nested-draft"]).exists()
+    assert not Publication.objects.filter(title="Test article").exists()
+    for item in snapshot["pages"]:
+        restored = Page.objects.get(translation_key=item["translation_key"], locale__language_code=item["locale"])
+        assert restored.slug == item["fields"]["slug"]
+        assert restored.live == item["live"]
+    home.refresh_from_db()
+    home.hero_title = "Approved editor change after reset"
+    home.save_revision().publish()
+    assert import_bundle(if_changed=True)["unchanged"]
+    home.refresh_from_db()
+    assert home.hero_title == "Approved editor change after reset"
+    user.refresh_from_db()
+    site.refresh_from_db()
+    assert user.password == password_hash
+    assert (site.hostname, site.port) == ("test-deployment.example", 443)
+finally:
+    connections.close_all()
+'''
+        env = self.environment("config.settings.dev")
+        with tempfile.TemporaryDirectory() as directory:
+            env["SQLITE_PATH"] = str(Path(directory) / "db.sqlite3")
+            env["MEDIA_ROOT"] = str(Path(directory) / "media")
+            result = self.run_python("-c", script, env=env)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_sqlite_container_has_one_worker_and_persistent_paths(self):
         dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
         self.assertIn("DJANGO_SETTINGS_MODULE=config.settings.build python manage.py collectstatic", dockerfile)

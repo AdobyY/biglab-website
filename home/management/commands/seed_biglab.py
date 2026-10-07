@@ -3,7 +3,7 @@ from pathlib import Path
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files import File
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from wagtail.images import get_image_model
 from wagtail.models import Locale, Site
 
@@ -216,11 +216,14 @@ class Command(BaseCommand):
         parser.add_argument("--bootstrap", action="store_true", help="Use the legacy initial source-content importer instead of the development snapshot.")
         parser.add_argument("--bundle-dir", help="Directory containing an exported development content snapshot.")
         parser.add_argument("--if-changed", action="store_true", help="Skip an already applied snapshot; used at container startup to preserve later CMS edits.")
+        parser.add_argument("--reset", action="store_true", help="Replace all editorial content with the snapshot, removing added test pages, snippets and media. Keeps accounts and the site domain.")
 
     def handle(self, *args, **options):
+        if options["reset"] and (options["bootstrap"] or options["if_changed"]):
+            raise CommandError("--reset cannot be combined with --bootstrap or --if-changed.")
         if not options["bootstrap"]:
             from home.content_snapshot import DEFAULT_BUNDLE, import_bundle
-            result = import_bundle(options["bundle_dir"] or DEFAULT_BUNDLE, if_changed=options["if_changed"])
+            result = import_bundle(options["bundle_dir"] or DEFAULT_BUNDLE, if_changed=options["if_changed"], reset=options["reset"])
             self.stdout.write(f"Development content synchronized: {result}")
             return
         if options["force"]:

@@ -16,6 +16,7 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Collection, CollectionViewRestriction, Locale, Page, PageViewRestriction, Site
 from wagtail.images import get_image_model
 from wagtail.documents import get_document_model
+from wagtail.contrib.redirects.models import Redirect
 
 from home.models import Collaboration, ContactSettings, HomepageDesignSettings, InterfaceText, Publication
 
@@ -157,7 +158,36 @@ def assign_fields(obj, fields, mappings):
             setattr(obj, name, field.to_python(value))
 
 
-def import_bundle(directory=DEFAULT_BUNDLE, *, if_changed=False):
+def clear_editorial_content(data, site):
+    """Keep the site identity and accounts, then rebuild its editorial content."""
+    home = site.root_page.specific
+    expected = next(item for item in data["pages"] if item["id"] == data["default_root"])
+    if (Site.objects.exclude(pk=site.pk).exists() or home.depth != 2
+            or home._meta.label_lower != expected["model"]
+            or home.locale.language_code != expected["locale"]):
+        raise CommandError("Content reset requires a single BIG Lab site with the snapshot's home page type and language.")
+    # Keep the home ID so the domain, site settings and root permissions survive.
+    # Treebeard also removes each selected branch's descendants.
+    deleted = Page.objects.filter(depth__gte=2).exclude(pk=home.pk).count()
+    Page.objects.filter(depth=2).exclude(pk=home.pk).delete()
+    home.get_children().delete()
+    PageViewRestriction.objects.all().delete()
+    Redirect.objects.all().delete()
+    for model in SNIPPETS:
+        model.objects.all().delete()
+    for model in (get_image_model(), get_document_model()):
+        # Wagtail schedules file removal after transaction commit, so an import
+        # failure rolls back the database without deleting existing media.
+        model.objects.all().delete()
+    CollectionViewRestriction.objects.all().delete()
+    Collection.get_first_root_node().get_children().delete()
+    Locale.objects.exclude(language_code__in=data["locales"]).delete()
+    return deleted
+
+
+def import_bundle(directory=DEFAULT_BUNDLE, *, if_changed=False, reset=False):
+    if reset and if_changed:
+        raise CommandError("--reset cannot be combined with --if-changed.")
     directory = Path(directory)
     manifest = directory / "content.json"
     if not manifest.exists():
@@ -182,6 +212,8 @@ def import_bundle(directory=DEFAULT_BUNDLE, *, if_changed=False):
     counts = {"pages": 0, "assets": 0, "snippets": 0, "settings": 0, "urls": 0}
     with transaction.atomic():
         site = Site.objects.get(is_default_site=True)
+        if reset:
+            counts["removed_pages"] = clear_editorial_content(data, site)
         for code in data["locales"]:
             Locale.objects.get_or_create(language_code=code)
         for item in data["assets"]:
@@ -261,7 +293,7 @@ def import_bundle(directory=DEFAULT_BUNDLE, *, if_changed=False):
             before = record(page.get_latest_revision_as_object() if not page.live and page.latest_revision_id else page)["fields"]
             assign_fields(page, item["fields"], mappings)
             page.alias_of = None
-            changed = before != record(page)["fields"] or page.live != item["live"] or (page.has_unpublished_changes and item["live"])
+            changed = reset or before != record(page)["fields"] or page.live != item["live"] or (page.has_unpublished_changes and item["live"])
             if changed:
                 if page.live and not item["live"]:
                     page.unpublish()

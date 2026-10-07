@@ -113,6 +113,23 @@ persistent media volume, and preserves later CMS edits across restarts of the sa
 deliberately reapply it, run the command without `--if-changed`. `--bundle-dir` can select an exported
 snapshot; `export_biglab_content --output-dir` can create one outside the default directory.
 
+For manual CMS testing, return all editorial content to that snapshot with:
+
+```bash
+python manage.py seed_biglab --reset
+```
+
+This resets pages and subpages, drafts, sections, publications, collaborations, interface labels,
+images, documents and site design/contact settings. Added test content is removed. Accounts, the
+default site's hostname/port and root editor permissions are preserved. The command requires a
+single-site installation and cannot be combined with `--if-changed` or `--bootstrap`.
+The baseline is the committed `home/seed_content/` snapshot; keep it unchanged while testing.
+Run `export_biglab_content` only when intentionally replacing that baseline with new approved content.
+
+When handing the site over to editors, set `SEED_INITIAL_CONTENT=0` in Railway's service variables
+and apply the deployment. The container then only migrates the database and starts the server;
+content changes in the CMS persist across deployments. Startup never uses `--reset`.
+
 The legacy source initializer remains available as `seed_biglab --bootstrap`; it preserves existing
 editor records and is intended only for initial source scaffolding, not development synchronization.
 Parta's unfilled audience, timeline, results and contact pages remain editable drafts until real
