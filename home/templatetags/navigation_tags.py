@@ -1,5 +1,6 @@
 import math
 from types import SimpleNamespace
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
@@ -104,7 +105,36 @@ def section_url(page):
     return page.url
 
 
-def _build_menu(parent, current_page=None, levels=3):
+@register.filter
+def design_url(url, version):
+    """Keep the explicit homepage variant while following internal links."""
+    if version != "2" or not url:
+        return url
+    parts = urlsplit(url)
+    query = [(key, value) for key, value in parse_qsl(parts.query, keep_blank_values=True) if key != "design"]
+    query.append(("design", "2"))
+    return urlunsplit(parts._replace(query=urlencode(query)))
+
+
+@register.simple_tag
+def homepage_url(home, version="1", destination="home"):
+    url = getattr(home, "url", None)
+    if not url:
+        return ""
+    if destination == "about" and version == "2":
+        url += home.reverse_subpage("about")
+    return design_url(url, version)
+
+
+@register.simple_tag(takes_context=True)
+def translation_url(context, page):
+    url = page.url
+    if context.get("is_about_page"):
+        url += page.specific.reverse_subpage("about")
+    return design_url(url, context.get("design_version", "1"))
+
+
+def _build_menu(parent, current_page=None, levels=3, version="1"):
     if levels <= 0:
         return []
     current_path = getattr(current_page, "path", "")
@@ -113,10 +143,10 @@ def _build_menu(parent, current_page=None, levels=3):
         items.append(
             {
                 "page": child,
-                "url": section_url(child),
+                "url": design_url(section_url(child), version),
                 "active": bool(current_path and current_path.startswith(child.path)),
                 "current": getattr(current_page, "pk", None) == child.pk,
-                "children": _build_menu(child, current_page, levels - 1),
+                "children": _build_menu(child, current_page, levels - 1, version),
             }
         )
     return items
@@ -127,10 +157,13 @@ def primary_navigation(context, root):
     """Group the lab, people and news; expose real science section anchors."""
     page = context.get("page")
     language = getattr(getattr(page, "locale", None), "language_code", "en")
-    items = _build_menu(root, page)
+    version = context.get("design_version", "1")
+    about_url = homepage_url(root, version, "about") if version == "2" else f"{root.url}#about"
+    about_current = bool(page and page.pk == root.pk and (version != "2" or context.get("is_about_page")))
+    items = _build_menu(root, page, version=version)
     about_children = [{"page": SimpleNamespace(id=f'lab-{root.pk}', title='Lab'),
-                       "url": f'{root.url}#about', "active": page and page.pk == root.pk,
-                       "current": page and page.pk == root.pk, "children": []}]
+                       "url": about_url, "active": about_current,
+                       "current": about_current, "children": []}]
     remaining = []
     project_items = []
     for item in items:
@@ -149,13 +182,13 @@ def primary_navigation(context, root):
                 if block.block_type in {'publications', 'collaborations', 'project_list'} and block.value.get('is_visible') and block.value.get('anchor'):
                     key = block.block_type if block.block_type != 'project_list' else ('finished_projects' if block.value.get('status') == 'finished' else 'projects')
                     item['children'].append({'page': SimpleNamespace(id=f"{item['page'].pk}-{block.value['anchor']}", title=block.value.get('title') or default_ui_text(key, language)),
-                        'url': f"{item['page'].url}#{block.value['anchor']}", 'active': False, 'current': False, 'children': []})
+                        'url': design_url(f"{item['page'].url}#{block.value['anchor']}", version), 'active': False, 'current': False, 'children': []})
             break
     else:
         remaining.extend(project_items)
     about = {'page': SimpleNamespace(id=root.pk, title=default_ui_text('about', language)),
-             'url': f'{root.url}#about', 'active': any(child['active'] for child in about_children),
-             'current': page and page.pk == root.pk, 'children': about_children}
+             'url': about_url, 'active': any(child['active'] for child in about_children),
+             'current': about_current, 'children': about_children}
     return {
         "menu_items": [about, *remaining],
         "language_code": language,
@@ -215,14 +248,30 @@ def should_carousel(items, enabled, threshold):
 
 
 @register.simple_tag
-def contact_url(home):
+def contact_url(home, version="1"):
+    destination = "about" if version == "2" else "home"
+    base_url = homepage_url(home, version, destination)
     contact_sections = [block for block in getattr(home, "sections", []) if block.block_type == "contact"]
     for block in contact_sections:
         if block.value.get("is_visible"):
-            return f"{home.url}#{block.value.get('anchor') or 'contact'}"
+            return f"{base_url}#{block.value.get('anchor') or 'contact'}"
     if not contact_sections and getattr(home, "show_contact_section", False):
-        return f"{home.url}#contact"
+        return f"{base_url}#contact"
     return ""
+
+
+@register.simple_tag
+def complete_team(section, automatic_items):
+    """Keep chosen ordering, then include every published member of this team."""
+    members = list(automatic_items or [])
+    by_id = {member.pk: member for member in members}
+    selected = section.get("selected_people", []) if section else []
+    result, seen = [], set()
+    for member in list(selected or []) + members:
+        if member and member.pk in by_id and member.pk not in seen:
+            result.append(by_id[member.pk])
+            seen.add(member.pk)
+    return result
 
 
 @register.simple_tag
@@ -247,6 +296,8 @@ def constellation_nodes(areas):
 def absolute_page_url(context, page):
     request = context.get("request")
     url = getattr(page, "url", None)
+    if url and context.get("is_about_page"):
+        url += page.specific.reverse_subpage("about")
     return request.build_absolute_uri(url) if request and url else ""
 
 

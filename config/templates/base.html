@@ -4,7 +4,9 @@
 {% get_settings %}
 {% get_current_language as active_language %}
 {% localized_home as site_home %}
-{% contact_url site_home as homepage_contact_url %}
+{% homepage_url site_home design_version as site_home_url %}
+{% homepage_url site_home design_version 'about' as site_about_url %}
+{% contact_url site_home design_version as homepage_contact_url %}
 <!DOCTYPE html>
 <html lang="{{ page.locale.language_code|default:active_language }}">
 <head>
@@ -35,7 +37,7 @@
     {% wagtailuserbar 'bottom-left' %}
     <header class="site-header">
       <div class="header-inner section-shell">
-        <a class="site-name" href="{% pageurl site_home %}" aria-label="{{ settings.home.ContactSettings.site_name|default:'BIG Lab' }} — {% ui 'home' %}">
+        <a class="site-name" href="{{ site_home_url }}" aria-label="{{ settings.home.ContactSettings.site_name|default:'BIG Lab' }} — {% ui 'home' %}">
           {% include "home/includes/brand_mark.html" %}
           <span class="brand-wordmark"><span>{{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}</span><span class="brand-affiliation">Masaryk University<span class="brand-location">Czechia</span></span></span>
         </a>
@@ -50,7 +52,7 @@
           <summary aria-label="{% ui 'language' %}: {{ current_language.name_local }}"><span>{% if page.locale.language_code == 'cs' %}CZ{% else %}{{ page.locale.language_code|upper }}{% endif %}</span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg></summary>
           <nav class="language-options" aria-label="{% ui 'language' %}">
             <span aria-current="page" lang="{{ page.locale.language_code }}">{{ current_language.name_local|capfirst }}<svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8 3 3 7-7"/></svg></span>
-            {% for translation in page.get_translations.live %}{% get_language_info for translation.locale.language_code as language %}<a href="{% pageurl translation %}{% if design_version == '2' %}?design=2{% endif %}" lang="{{ translation.locale.language_code }}" hreflang="{{ translation.locale.language_code }}">{{ language.name_local|capfirst }}</a>{% endfor %}
+            {% for translation in page.get_translations.live %}{% get_language_info for translation.locale.language_code as language %}<a href="{% translation_url translation %}" lang="{{ translation.locale.language_code }}" hreflang="{{ translation.locale.language_code }}">{{ language.name_local|capfirst }}</a>{% endfor %}
           </nav>
         </details>
         {% endif %}
@@ -62,14 +64,14 @@
       {% child_page_navigation %}
       {% page_navigation %}
     </main>
-    <footer class="site-footer">
+    <footer class="site-footer" id="site-footer">
       {% with contact=settings.home.ContactSettings %}
       <div class="section-shell footer-grid">
-        <div class="footer-lead"><a class="site-name" href="{% pageurl site_home %}">{% include "home/includes/brand_mark.html" %}<span>{{ contact.site_name|default:'BIG Lab' }}</span></a><p>{% if contact.tagline %}{{ contact.tagline }}{% else %}{% ui 'footer_tagline' %}{% endif %}</p></div>
+        <div class="footer-lead"><a class="site-name" href="{{ site_home_url }}">{% include "home/includes/brand_mark.html" %}<span>{{ contact.site_name|default:'BIG Lab' }}</span></a><p>{% if contact.tagline %}{{ contact.tagline }}{% else %}{% ui 'footer_tagline' %}{% endif %}</p></div>
         {% if contact.email or contact.phone or contact.address %}<div class="footer-contact"><h2>{% ui 'contact' %}</h2>{% if contact.email %}<a href="mailto:{{ contact.email }}">{{ contact.email }}</a>{% endif %}{% if contact.phone %}<a href="tel:{{ contact.phone|cut:' ' }}">{{ contact.phone }}</a>{% endif %}{% if contact.address %}<address>{{ contact.address|linebreaksbr }}</address>{% endif %}</div>{% endif %}
         {% if contact.show_social_links %}{% if contact.linkedin_url or contact.instagram_url or contact.facebook_url %}<div class="footer-links"><h2>{% ui 'institute_social' %}</h2>{% if contact.linkedin_url %}<a href="{{ contact.linkedin_url }}">LinkedIn</a>{% endif %}{% if contact.instagram_url %}<a href="{{ contact.instagram_url }}">Instagram</a>{% endif %}{% if contact.facebook_url %}<a href="{{ contact.facebook_url }}">Facebook</a>{% endif %}</div>{% endif %}{% endif %}
       </div>
-      <div class="section-shell footer-bottom"><p>© {% now 'Y' %} {{ contact.copyright_text|default:contact.site_name|default:'BIG Lab' }}</p><a href="{% pageurl site_home %}">{% ui 'about' %}</a></div>
+      <div class="section-shell footer-bottom"><p>© {% now 'Y' %} {{ contact.copyright_text|default:contact.site_name|default:'BIG Lab' }}</p><a href="{{ site_about_url }}">{% ui 'about' %}</a></div>
       {% endwith %}
     </footer>
     <script src="{% static 'js/config.js' %}" defer></script>

@@ -1,8 +1,10 @@
 {% load wagtailcore_tags navigation_tags ui_tags %}
-{% if not legacy %}
+{% if page.hero_layout or page.pk == people_index.pk %}
+{% complete_team value people as section_people %}
+{% elif not legacy %}
 {% curated_items value "selected_people" people "limit" as section_people %}
-{% if not page.hero_layout %}{% should_carousel section_people value.enable_carousel value.carousel_after as carousel_active %}{% endif %}
 {% endif %}
+{% if not page.hero_layout %}{% should_carousel section_people value.enable_carousel value.carousel_after as carousel_active %}{% endif %}
 {% ui 'people' as default_title %}
 {% if value.is_visible or legacy %}{% if section_people or not page.hero_layout %}
 <section{% include "home/includes/section_attributes.html" with section_class="people-preview" %}>

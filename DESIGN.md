@@ -12,6 +12,8 @@ colors:
   muted: "#53616b"
   line: "#d6d5cb"
   dark-line: "#465467"
+  contact-muted: "#c0c8cd"
+  map-backing: "#e5e3dc"
 typography:
   display:
     fontFamily: "Alegreya, Georgia, serif"
@@ -90,24 +92,26 @@ components:
 
 ## Overview
 
-BIG Lab has two homepage versions sharing the same editorial content, local fonts, navigation, footer structure, and all section geometry below the hero. Version 1 remains the default, pairing navy/butter copy with its restored contained spatial network and real research-topic links on the right, followed by cream reading surfaces and occasional brick-colored sections. Version 2 uses one continuous dark surface and an abstract relationship field across its complete opening. Hollow junctions and curved connections express interaction and influence without a central hub. The constellation brand mark remains in the shared header, while neither hero uses a central star or orbital traces.
+BIG Lab has two homepage versions sharing local fonts, navigation, footer structure, and one source of editorial content. Version 1 remains the default full homepage, pairing navy/butter copy with its restored contained spatial network and real research-topic links on the right, followed by cream reading surfaces and occasional brick-colored sections, then a light Contact closing. Version 2 shows its existing dark abstract-network hero, with the title, summary, and science/team actions, followed by the footer. Its discipline strip and Discover BIG Lab link are omitted; editorial sections appear on a separate About route using the same published homepage content, including dark Contact. Hollow junctions and curved connections express interaction and influence without a central hub. The constellation brand mark remains in the shared header, while neither hero uses a central star or orbital traces.
 
-Alegreya's serif headings pair with Source Sans 3 for prose and interface text. Bounded photos accompany open editorial sections, thin dividers, rounded imagery, and softly rectangular controls. Version 1 pairs copy on the left with its contained three-dimensional network on the right. Version 2 centers the unchanged copy within a quiet area of its full-width network; research-topic navigation belongs to the common research section below, rather than its decorative opening. Below the two distinct heroes, the versions differ in palette rather than spacing, typography, image size, or layout.
+Alegreya's serif headings pair with Source Sans 3 for prose and interface text. Bounded photos accompany open editorial sections, thin dividers, rounded imagery, and softly rectangular controls. Version 1 pairs copy on the left with its contained three-dimensional network on the right. Version 2 centers the unchanged copy within a quiet area of its full-width network. Research-topic navigation belongs to the editorial sections on Version 1 and About. About retains their shared geometry in the editable dark palette and opens with a quiet title and Home link.
 
-This document records the current implementation, not a new design proposal. Shared sources are `config/static/css/config.css`, `config/static/js/config.js`, `config/templates/base.html`, the templates under `home/templates/home/`, and `config/static/fonts/fonts.css`. Both versions load `homepage.css` for shared homepage geometry. Version 1 adds `home/includes/hero_v1.html`, `homepage-v1.css`, `homepage-v1.js`, and `hero-v1-entrance.js`. Version 2 adds `hero-network.css`, the palette-only `homepage-v2.css`, `homepage.js`, and `hero-network.js` under the corresponding static directories. `design-switch.css` styles the small version control. Frontmatter records the baseline palette and representative desktop type roles; Version 2's editable palette and component-specific overrides are described below.
+This document records the current implementation, not a new design proposal. Shared sources are `config/static/css/config.css`, `config/static/js/config.js`, `config/templates/base.html`, the templates under `home/templates/home/`, and `config/static/fonts/fonts.css`. Both versions load `homepage.css`, `homepage-overview.css`, and `contact-surface.css`; `home/includes/contact_surface.html` supplies their Contact content and actions. Version 1 adds `home/includes/hero_v1.html`, `homepage-v1.css`, `homepage-v1.js`, `hero-v1-entrance.js`, and `research-preview.js`. Version 2 adds `hero-network.css`, `homepage-v2.css`, `homepage-compact.css`, and `hero-network.js`; its compact homepage omits `homepage.js` and `research-preview.js`. About extends `home_page.html`, shares `home/includes/home_sections.html`, and loads the editorial `homepage.js` and `research-preview.js` without the hero canvas or `hero-network.js`. `design-switch.css` styles the homepage version control; About omits that control. Frontmatter records the baseline palette and representative desktop type roles; Version 2's editable palette and component-specific overrides are described below.
 
 ### Homepage version selection
 
-The homepage always defaults to Version 1. Only the exact query parameter `?design=2` selects Version 2; there is no editor setting that changes the default and no local-storage preference. A small fixed control at the bottom right shows V1/V2 and switches through a normal GET link. It retains the current language path and all other query parameters, adds `design=2` when entering Version 2, and removes the parameter when returning to Version 1. Language links on Version 2 retain its version parameter. Both versions use the same stored page content, rather than copied editorial pages.
+The homepage always defaults to Version 1. Only the exact query parameter `?design=2` selects Version 2; there is no editor setting that changes the default and no local-storage preference. A small fixed control at the bottom right shows V1/V2 and switches through a normal GET link. It retains the current language path and all other query parameters, adds `design=2` when entering Version 2, and removes the parameter when returning to Version 1. Language links on Version 2 retain its version parameter.
+
+The localized `/about/` and `/cs/about/` routes always use Version 2's palette. They render the published homepage's sections, financing, after-body content, and dark Contact through the shared section include, respecting hidden sections and the legacy fallback. Content is neither copied nor migrated. Version 2's About links open this route; Home and logo links return to the compact homepage, and Contact targets About's visible Contact section. Its anchor defaults to `#contact` and respects a custom visible contact anchor. The design query precedes the hash, for example `/about/?design=2#contact`. About language links retain the About route and `design=2`; canonical and hreflang metadata use the About routes without the design parameter. Other reading pages retain their navy/cream styling while their navigation and return destinations preserve Version 2 when selected.
 
 ## Colors
 
-The palette below remains the baseline for Version 1 and internal pages. Version 2 overrides it only on its homepage.
+The palette below remains the baseline for Version 1 and ordinary reading pages. Version 2 overrides it on the compact homepage and its About route.
 
 ### Primary
 
 - **Navy** (`navy`): header, hero, footer, dark buttons, and midnight section backgrounds. The base template also uses it for the browser theme color.
-- **Butter yellow** (`yellow`): hero headings, network nodes and strands, brand mark, primary buttons, current language indicator, and the contact band. It is a substantial identity color, not merely a tiny signal accent.
+- **Butter yellow** (`yellow`): hero headings, network nodes and strands, brand mark, primary buttons, current language indicator, Parta's audience surface, and accents within the light Contact section's navy panel. It is a substantial identity color, not merely a tiny signal accent.
 
 ### Secondary
 
@@ -121,12 +125,14 @@ The palette below remains the baseline for Version 1 and internal pages. Version
 - **Ink** (`ink`): default text on light surfaces.
 - **Muted** (`muted`): supporting copy, dates, roles, captions, and metadata on light surfaces.
 - **Light line** (`line`) and **dark line** (`dark-line`): dividers and boundaries on their respective grounds.
+- **Contact muted** (`contact-muted`): small labels on the Version 1 navy contact panel; Version 2 uses its editable muted color.
+- **Map backing** (`map-backing`): the quiet neutral surface behind the grayscale external map while it loads.
 
 Midnight sections use butter headings and cream supporting text; brick sections use cream for both. The legacy `lilac` section theme now resolves to cream paper: there is no separate lilac or mint palette token in the shipped stylesheet. Background-image sections use navy overlays, with none, light, default, and dark treatments defined in CSS.
 
 ### Version 2 editable palette
 
-Wagtail's **Homepage design (Version 2)** settings expose one palette per site, shared across all languages. All five fields use native color controls and strict six-digit hexadecimal validation (`#RRGGBB`); they cannot contain arbitrary CSS values. They apply only to the Version 2 homepage, including its header, footer, sections, controls, and network.
+Wagtail's **Homepage design (Version 2)** settings expose one palette per site, shared across all languages. All five fields use native color controls and strict six-digit hexadecimal validation (`#RRGGBB`); they cannot contain arbitrary CSS values. They apply to the compact Version 2 homepage and About, including their shared header, footer, controls, editorial sections on About, and homepage network.
 
 | Setting | Default | Role |
 | --- | --- | --- |
@@ -136,7 +142,7 @@ Wagtail's **Homepage design (Version 2)** settings expose one palette per site, 
 | `muted` | `#a6b4bd` | Supporting text and metadata |
 | `network_secondary` | `#7f9d98` | Secondary network connections and accents |
 
-Version 2 remaps the existing CSS theme tokens to these values and uses subtle mixed-color dividers. Its homepage sections share the same background instead of alternating paper, butter, and brick bands. Palette changes do not alter Version 1, other pages, or their editor content.
+Version 2 remaps the existing CSS theme tokens to these values and uses subtle mixed-color dividers. About's editorial sections share the same background instead of alternating paper, butter, and brick bands. Palette changes do not alter Version 1, ordinary reading pages, or stored editor content.
 
 ## Typography
 
@@ -150,6 +156,8 @@ The base template loads local font faces before the main stylesheet. `config/sta
 
 - **Homepage display:** Version 1 uses Alegreya at `clamp(2.65rem, 4.35vw, 3.7rem)`, a 1.08 line height, `-.025em` tracking, and a 19ch maximum measure. Version 2 uses `clamp(3.3rem, 5.45vw, 4.6rem)`, a 1.04 line height, `-.03em` tracking, and a 940px maximum width, centered with balanced wrapping. Other hero variants retain their separate bounded measures.
 - **Page title:** Alegreya (500), `clamp(2.15rem, 3.8vw, 3.5rem)`, with the shared heading line height (1.12) and tracking (`-.02em`). Page headings allow 22ch.
+- **About route title:** the localized CMS page title in Alegreya (400), `clamp(2.5rem, 5vw, 4.5rem)`, line height 1.08, and `-.03em` tracking, with balanced wrapping.
+- **Contact heading:** Alegreya (400), `clamp(3rem, 5.5vw, 5rem)` on Version 1 and `clamp(3.5rem, 6.5vw, 6rem)` on Version 2 and About; both use line height 1.05 and `-.03em` tracking. At 760px and below, both use `clamp(2.75rem, 12vw, 4rem)`.
 - **Section heading and general title:** the frontmatter headline and title roles. Headings balance wrapping and allow long words to break.
 - **Reading headings:** h2 uses `clamp(1.65rem, 2.5vw, 2.15rem)`; h3 uses `1.5rem`.
 - **Body:** the root size is 17px on desktop and mobile. Reading content is capped at 72ch; paragraphs retain the body line height (1.65).
@@ -164,12 +172,12 @@ The centered desktop shell is `min(1120px, calc(100% - 96px))`. Full-width secti
 
 Version 1 uses a `.95fr 1.05fr` desktop hero grid with zero-minimum tracks, a 3rem gap, and a 620px inner minimum height, with copy on the left and a contained spatial network up to 560px wide on the right. Topic links keep their established positions and destinations, while network activity changes without replacing text or shifting its width. Version 2's decorative network spans the complete opening behind one centered copy column. Its inner minimum height is `clamp(640px, calc(100svh - 145px), 840px)`, with 6rem top and 7rem bottom padding. Neither hero has a topic caption; Version 2 also has no topic-navigation ribbon. Image and text-only hero variants retain their optional editorial media. Reading copy remains narrower than the shell.
 
-Builder sections in both versions share `clamp(3rem, 5vw, 4.5rem)` block spacing and thin rules between adjacent sections. About and financing use `.85fr 1.15fr` editorial columns. Research uses two columns with a featured first row spanning both, pairing its larger heading and summary with a wide image; later rows retain smaller bounded thumbnails. People previews use six columns on desktop, updates use their common three-column layout, and Parta/contact keep the same heading sizes, spacing, and image geometry in both versions. Version 1 retains its cream/butter/brick bands; Version 2 changes these surfaces and text colors to its editable dark palette. Other page indexes retain their existing layouts.
+Builder sections appear on Version 1 and About with shared editorial geometry and thin rules between adjacent sections; the October editorial refinements below record their current collection layouts. Version 1 retains its cream/butter/brick bands; About changes these surfaces and text colors to the editable dark palette and uses Version 2's open Contact columns. Other page indexes retain their existing layouts. About's heading aligns the title and Home link on a baseline, with a 2rem gap, `clamp(3rem, 6vw, 5rem) 2rem` block padding, and a thin bottom divider.
 
 ### Responsive behavior
 
-- **At 1100px and below:** shell gutters become 32px; the header exposes the menu control and navigation becomes a vertical panel. Version 1 retains two hero columns with a 510px inner minimum height. Version 2 stays centered, with a `clamp(3rem, 6vw, 4rem)` title. Both homepage people previews become three-column; other page grids retain their responsive rules.
-- **At 760px and below:** shell gutters become 20px. Version 1's hero stacks; Version 2 keeps centered copy with a `clamp(2.3rem, 7.3vw, 3.3rem)` title and a full-section decorative canvas. Its inner minimum height becomes `clamp(630px, calc(100svh - 145px), 790px)`, with 5.5rem top and 6.5rem bottom padding. Its network has no topic links to resize. Shared below-hero sections use 3.5rem block spacing; About, media, profiles, and contact stack, people use two columns, and research/updates use one. Research rows in both versions place a small image beside the title and the summary below. Parta/contact headings use the same 1.8rem mobile size. The footer uses two columns with its lead spanning both.
+- **At 1100px and below:** shell gutters become 32px; the header exposes the menu control and navigation becomes a vertical panel. Version 1 retains two hero columns with a 510px inner minimum height. Version 2 stays centered, with a `clamp(3rem, 6vw, 4rem)` title. Editorial people previews on Version 1 and About become three-column; other page grids retain their responsive rules.
+- **At 760px and below:** shell gutters become 20px. Version 1's hero stacks; Version 2 keeps centered copy with a `clamp(2.3rem, 7.3vw, 3.3rem)` title and a full-section decorative canvas. Its inner minimum height becomes `clamp(630px, calc(100svh - 145px), 790px)`, with 5.5rem top and 6.5rem bottom padding. Its network has no topic links to resize. Shared editorial sections on Version 1 and About follow the October refinements below; media, profiles, and contact stack. About's heading wraps with a `.75rem 1.5rem` gap and `2.5rem 1.5rem` block padding. Version 2's fixed version control sits 1.2rem from the right edge. The footer uses two columns with its lead spanning both.
 - **At 380px and below:** shell gutters become 16px and the footer becomes single-column. Version 1 retains positioned topic labels for small collections and switches dense collections to a vertical list. Its mobile hero footnote reserves 7.5rem on the right for the fixed version control. Version 2 continues to use a decorative field independent of research-topic count.
 
 Inline subsections use a wrapping, outlined contents navigation with 8px corners and 44px minimum-height links, anchored section headings, and ruled boundaries. Their scroll margin is 2rem.
@@ -190,7 +198,7 @@ Hero images use 5:4 on desktop, capped at 380px high, and 4:3 on mobile. Gallery
 
 ### Header and navigation
 
-A shared header contains the constellation mark, Source Sans 3 site name, the affiliation “Masaryk University · Czechia”, text navigation, and a native language disclosure linking to published translations of the current page. Header and footer use the same 1200px shell and 16px inherited interface type on every page. Version 1 and internal pages keep the navy/butter palette; Version 2 deliberately applies its editable palette to the homepage's shared header and footer without changing their structure. The header sticks at the top, gains a subtle shadow after scrolling, and preserves its height to avoid layout shifts. Its baseline scrolled surface is translucent navy, while Version 2 keeps its continuous dark background. The inner header has an 82px minimum height, becoming 84px at 1100px and 76px on mobile. The mark is 36px square, reducing to 35px on mobile, and can be replaced by an editor-supplied logo. Escape and outside clicks close language/navigation panels; the mobile menu scrolls within the viewport.
+A shared header contains the constellation mark, Source Sans 3 site name, the affiliation “Masaryk University · Czechia”, text navigation, and a native language disclosure linking to published translations of the current page. Header and footer use the same 1200px shell and 16px inherited interface type on every page. Version 1 and ordinary reading pages keep the navy/butter palette; Version 2 applies its editable palette to the compact homepage and About's shared header and footer without changing their structure. The header sticks at the top, gains a subtle shadow after scrolling, and preserves its height to avoid layout shifts. Its baseline scrolled surface is translucent navy, while Version 2 keeps its continuous dark background. The inner header has an 82px minimum height, becoming 84px at 1100px and 76px on mobile. The mark is 36px square, reducing to 35px on mobile, and can be replaced by an editor-supplied logo. Escape and outside clicks close language/navigation panels; the mobile menu scrolls within the viewport.
 
 Hover and current navigation states use butter text and an underline. Desktop submenus use lighter navy, rounded corners, and separate disclosure buttons. At 1100px and below they become indented lists within the vertical navigation. The template provides `aria-expanded`, `aria-controls`, current-page indicators, and a labeled language navigation. CSS leaves navigation and submenus available when JavaScript is absent.
 
@@ -214,17 +222,17 @@ The canvas suspends offscreen or in a hidden tab and has no manual pause control
 
 ### Version 2 abstract relationship field
 
-Version 2 centers the unchanged editorial copy within one full-section abstract relationship field. The decorative canvas is `aria-hidden` and independent of the number or identity of research topics. Hollow circular junctions represent individuals through their connections, without profile medallions or measured research data. There is no topic navigation, topic caption, hover-label repetition, central star, orbital diagram, or fixed set of topic hubs in this opening. Research content remains in the Science section below.
+Version 2 centers the unchanged editorial copy within one full-section abstract relationship field. The decorative canvas is `aria-hidden` and independent of the number or identity of research topics. Hollow circular junctions represent individuals through their connections, without profile medallions or measured research data. There is no topic navigation, topic caption, hover-label repetition, central star, orbital diagram, or fixed set of topic hubs in this opening. The footer follows the hero; Contact appears on About, with research content on About and the Science reading page.
 
 `hero-network.js` distributes junctions through deterministic rejection sampling with minimum spacing: 104 on wide screens, 76 below 1100px, and 46 below 600px. Resting junctions have radii between 2.4px and 4.2px and are hollow rather than glowing points. Nearest-neighbor ties form a distributed graph, capped at four connections per junction, with bridges joining disconnected paths and up to eight additional distant ties. Cubic curves vary in strength, curvature, and stroke width; idle local lines range approximately from 0.8px to 1.25px. Muted secondary color supplies resting junctions and connections; accent supplies their active states.
 
 Pointer attention locally stretches the connections and warms their color. Nearby junctions move toward the pointer by at most 10px per axis; curve control points can move by up to 24px within a 230px influence radius. The nearest junction starts a graph cascade at a 0.65s cooldown. Influence appears as a stroked reveal along a 0.17-length section of the actual curve, without a flying particle head or tail. Signals propagate for up to three hops with diminishing strength, branching to at most three initial and two later routes; at most 28 packets are live. Clicking or tapping empty hero space activates the two nearest junctions without intercepting actions. Ambient influence starts after one second and repeats every 3.4s. There are no cursor trails, profile pictograms, chat marks, radial glows, topic-focus interactions, or repeated hover labels.
 
-Slow shared motion reshapes the complete field rather than moving separate topic groups. Scroll progress smoothly changes junction geometry and connection curvature, while copy, actions, and hit targets remain fixed. A soft canvas mask erases the illustration behind the measured heading, summary, actions, and footnote, without adding an opaque card. Canvas bounds update on resize and scroll; topology rebuilds when the section's dimensions change.
+Slow shared motion reshapes the complete field rather than moving separate topic groups. Scroll progress smoothly changes junction geometry and connection curvature, while copy, actions, and hit targets remain fixed. A soft canvas mask erases the illustration behind the measured heading, summary, and actions, without adding an opaque card. Canvas bounds update on resize and scroll; topology rebuilds when the section's dimensions change.
 
 Rendering uses one approximately 30fps loop with a device-pixel ratio capped at 1.75. It suspends outside the viewport or in a hidden tab and resumes automatically. Reduced motion disables pointer deformation, graph cascades, ambient motion, and scroll rearrangement, retaining the static relationship field. The canvas is available for the constellation layout even with zero research topics; image and text-only layouts omit it.
 
-The opening's motion is a decorative enhancement: absent JavaScript leaves all copy and actions visible and usable, with an empty decorative canvas. There is no pause button. Shared entrance animations remain finite, are skipped when motion is reduced or WAAPI is unavailable, and cancel immediately when keyboard focus enters the hero or the motion preference changes. Both versions use the same research-section content and Research areas fallback heading; editor-supplied section titles remain respected.
+The opening's motion is a decorative enhancement: absent JavaScript leaves all copy and actions visible and usable, with an empty decorative canvas. There is no pause button. Shared entrance animations remain finite, are skipped when motion is reduced or WAAPI is unavailable, and cancel immediately when keyboard focus enters the hero or the motion preference changes. Version 1 and About use the same research-section content and Research areas fallback heading; editor-supplied section titles remain respected.
 
 ### Editorial sections and lists
 
@@ -232,15 +240,19 @@ Reorderable builder sections share the shell and paper, midnight, or brick theme
 
 Research rows pair serif titles and summaries with rounded thumbnails. Publications pair a small year column with title and citation text. Projects use title, status, dates, funder, and introduction; collaborations use ruled entries with optional logos. Updates combine news, projects, and publications in responsive columns.
 
+Parta pairs its original CMS title, introduction, theme, and project link with a butter audience surface containing three ruled rows: students, parents, and schools. Drawn navy icons accompany readable Source Sans 3 labels (`clamp(1.35rem, 2.2vw, 1.9rem)`) instead of the former three-circle triangle. The desktop copy/audience grid has a 4rem gap; at 760px and below it stacks with a 1.5rem gap, 1.4rem labels, and 1.25rem row padding. About uses its editable accent/background colors for the same audience list.
+
 ### People and media
 
 People tiles use rounded portraits, sans-serif names, muted roles, and optional summaries. Missing portraits have an initials-style placeholder surface. Portraits are not styled with the former grayscale hover treatment; pointer hover applies a small scale (`1.035`) over `.5s` inside the rounded crop. Desktop profiles use a 280px portrait rail with a 3rem gap, with 220px/340px small/large variants. Profile headings use `clamp(2rem, 3.5vw, 3.25rem)`. On mobile the layout stacks, the portrait is capped at 260px (230px for small), and the heading is 2.4rem. Carousel mode uses horizontal scroll snapping and circular previous/next controls.
+
+Home, About, and People directories show the complete published team in the current locale and owning People index. Selected members set the opening order, then all remaining automatic scoped members follow once; preview limits do not truncate these directories. Other content-page People previews retain their selection and limit controls. Both English and Czech currently contain eight real members; nested demo profiles are outside the team scope. Original portrait aspect-ratio, size, and fit options remain authoritative, and the legacy six-person slice is removed.
 
 Media components include galleries, a dark image lightbox, before/after comparison, sliders with caption bands and circular controls, responsive video embeds, and bordered simulation frames. Media rounding follows the shared surface radius. Text/image block photos use contain fitting and a 370px height cap; full-image blocks are centered within 860px and capped at 460px high. Article/cover images use a 420px cap, while article-body figures use contain fitting and a 460px cap. Research thumbnails are 168×105px on desktop and 110×85px on mobile.
 
 ### Reading pages and inline subsections
 
-All internal pages load `internal-pages.css`, with a shared page-heading include and localized breadcrumbs generated from the actual Wagtail tree. Collection headings pair the title with a bounded introduction on desktop and stack on mobile. Neutral sections align to the reading grid. Colored and background-image sections on internal pages use contained panels with a 12px radius and responsive side insets of 20–51px, including sections inside profiles and inline child pages. This avoids dependence on the order of Wagtail's generated wrapper classes. Homepage colored sections retain their full-width surfaces. Empty body fields create no layout containers. Team and News suppress repeated default section titles and links to themselves while preserving custom editor headings.
+Ordinary reading pages load `internal-pages.css`, with a shared page-heading include and localized breadcrumbs generated from the actual Wagtail tree; About uses the homepage's shared section styles and its quiet title header. Collection headings pair the title with a bounded introduction on desktop and stack on mobile. Neutral sections align to the reading grid. Colored and background-image sections on internal pages use contained panels with a 12px radius and responsive side insets of 20–51px, including sections inside profiles and inline child pages. This avoids dependence on the order of Wagtail's generated wrapper classes. Homepage colored sections retain their full-width surfaces. Empty body fields create no layout containers. Team and News suppress repeated default section titles and links to themselves while preserving custom editor headings.
 
 Selected-page links share compact ruled rows across homepages and internal pages: a quiet icon, a Source Sans 3 title and optional description, then an arrow aligned at the right. Two- and three-column groups collapse to a single column on mobile; rows grow with their actual content. Callouts align the text and action in two columns, stacking on mobile. Featured projects without an illustration pair the title and label with the description and action in a second column; projects with an existing illustration keep their visual layout.
 
@@ -250,15 +262,19 @@ The Team index uses three columns with standard portraits capped at 240px, retai
 
 ### Contact and footer
 
-The baseline contact band uses butter with navy text and a two-column introduction/details layout that stacks on mobile. The shared footer has optional contact/social columns and a ruled copyright row, with 4rem top padding and a 1.4rem site name on every page. Version 1 and internal pages keep its navy background, cream copy, and butter headings/tagline. Version 2 keeps the same structure on its continuous homepage background, using the editable foreground and accent colors.
+Version 1 closes on cream with a full-width grayscale Google map and a rounded navy panel over its left side. The map composition is at least 550px tall; the panel is bounded at 31rem with 2.5rem padding, cream details, butter actions, and muted labels. Version 2 About uses an open dark closing with truthful contact details on the left and a rounded map on the right, on a `.85fr 1.15fr` grid with a 4rem gap and 430px map minimum height. At 1100px the grid becomes equal columns with a 2rem gap. At 760px both stack: Version 1 joins the panel above a 340px map; Version 2 leaves the details unboxed above a separately rounded 380px map. Section padding is `clamp(3rem, 6vw, 5.5rem)` and anchor scroll margin is 6rem.
+
+The shared Contact surface respects CMS visibility, custom anchor, title, introduction, additional text, and address/email/phone/social/team-link switches. The current configured address is Joštova 10, Brno; email and phone remain absent until configured, with no invented details or send form. The team action opens the real localized People page. Directions and Open map use the configured address, and an absent or hidden address omits the map and its actions. The iframe is lazy-loaded external content with a localized accessible title; interface labels have English/Czech defaults and remain editor-overridable. Contact navigation resolves the visible Contact anchor on the V1 homepage or V2 About, using `#contact` for the legacy fallback and preserving the design query before the hash; no visible Contact means no navigation link. Ordinary reading-page contact blocks retain their butter two-column band.
+
+The shared footer has optional contact/social columns, a ruled copyright row, and a 1.4rem site name. Version 1 and ordinary reading pages keep its navy background, cream copy, butter headings/tagline, and 4rem top padding. The compact homepage and About keep this structure on their continuous dark background with editable foreground and accent colors, a 1px top border, and `3rem 1.5rem` block padding; mobile top padding is 2.5rem.
 
 ## Do's and Don'ts
 
-- **Do** preserve Version 1 and internal pages' navy, butter, cream, and brick identity. Keep Version 2's editable palette scoped to its homepage, while retaining the serif/sans pairing, bounded photos, rounded media, and softly rectangular controls.
+- **Do** preserve Version 1 and ordinary reading pages' navy, butter, cream, and brick identity. Keep Version 2's editable palette scoped to its compact homepage and About, while retaining the serif/sans pairing, bounded photos, rounded media, and softly rectangular controls.
 - **Do** retain open, ruled editorial lists and bounded reading measures instead of wrapping all content in cards.
 - **Do** preserve the skip link, semantic headings and landmarks, labeled research links, language navigation, and visible focus. The baseline focus outline is 3px brick with a 5px offset, changing to butter in the header, hero, footer, midnight sections, and brick sections. Version 2 uses its editable accent for focus.
 - **Do** preserve reduced-motion handling in both CSS and JavaScript: CSS disables smooth scrolling and all CSS animations/transitions, and removes button/arrow/portrait hover transforms; JavaScript skips or cancels the finite hero entrance. Keep keyboard focus cancellation and the visible no-JavaScript resting state.
-- **Do** keep content entrance finite and controls immediately accessible. Keep Version 1's topic labels fixed during pointer and keyboard interaction. Keep Version 2's copy and hit targets stationary during ongoing pointer and scroll motion; its network must remain independent of research-topic navigation. Below both heroes, share section geometry and vary only the palette.
+- **Do** keep content entrance finite and controls immediately accessible. Keep Version 1's topic labels fixed during pointer and keyboard interaction. Keep Version 2's copy and hit targets stationary during ongoing pointer and scroll motion; its network must remain independent of research-topic navigation. Share editorial section content and geometry between Version 1 and About while preserving their distinct Contact treatments; keep the compact Version 2 homepage to its hero and footer, with Contact on About.
 - **Do** keep optional images, summaries, contact fields, and translations optional in the existing templates.
 - **Do** keep this document aligned with the stylesheet and local font declarations when the implementation changes.
 - **Don't** restore obsolete lilac/mint accents, square buttons, numbered sociogram-era rows, grayscale portraits, text parallax, or hard coral hover shadows as if they were current design rules.
@@ -266,7 +282,7 @@ The baseline contact band uses butter with navy text and a two-column introducti
 - **Don't** mistake legacy theme names or retained subsection routes for a different visual system or a requirement to split the major reading pages.
 - **Don't** treat this implementation record as proof of a final approved logo, final Parta copy, or new accessibility/performance validation.
 
-The October content update adds editable methods, publications, completed projects,
+The earlier October content-update iteration added editable methods, publications, completed projects,
 collaborations and discovery links to both homepages. About groups Lab, People and News;
 Science exposes its published research sections and publication/collaboration/project
 anchors. Homepage and Science omit the redundant Contents strips and sidebar. Science
@@ -315,7 +331,7 @@ topic caption without blocking the link. Without JavaScript, the section remains
 a photographic collection. Mobile shows a two-column photo index with 110–135px
 images and no duplicate preview. Thumbnail GIFs animate automatically.
 
-The team uses the full shell in four columns with portraits bounded at 210 × 240px,
+The complete localized team uses the full shell in four columns with portraits bounded at 210 × 240px,
 220px high on intermediate screens, and two columns with 140–165px portraits on
 mobile. Names and roles sit below each portrait. This protects the portrait crop
 while giving faces a stronger presence. Publications and completed projects keep

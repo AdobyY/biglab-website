@@ -32,15 +32,6 @@
 .template-homepage .parta-band .button { margin-top: 1.5rem; }
 .parta-band .section-shell:not(:has(.parta-visual)) { display: block; }
 .parta-band .featured-project-copy { min-width: 0; }
-.parta-visual { position: relative; aspect-ratio: 14 / 9; color: var(--yellow); }
-.parta-connections { width: 100%; height: 100%; opacity: .6; }
-.parta-audience { position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem; width: 27%; aspect-ratio: 1; background: var(--section-ink, var(--paper)); color: var(--coral); border-radius: 50%; transform: translate(-50%, -50%); font-size: .88rem; }
-.parta-audience > .line-icon { width: 40px; height: 40px; }
-.parta-audience-school { left: 21.4%; top: 25%; }
-.parta-audience-parent { left: 78.6%; top: 25%; }
-.parta-audience-student { left: 50%; top: 80.6%; }
-.parta-center { position: absolute; left: 50%; top: 47.2%; transform: translate(-50%, -50%); font-family: var(--display); font-size: 1.5rem; color: var(--section-ink, var(--paper)); }
-.homepage-design-2 .parta-audience { background: var(--design-accent); color: var(--design-background); }
 .homepage-design-2 .method-diagram, .homepage-design-2 .method-item > .line-icon, .homepage-design-2 .parta-visual { color: var(--design-accent); }
 .template-homepage .publication-section .section-shell { display: grid; grid-template-columns: .7fr 1.3fr; gap: 0 4rem; }
 .template-homepage .publication-section .section-heading { grid-column: 1; grid-row: 1 / span 3; }
@@ -76,9 +67,6 @@
   .method-item > .line-icon { width: 36px; height: 36px; }
   .method-item h3 { font-size: 1.4rem; }
   .template-homepage .parta-band .section-shell { grid-template-columns: 1fr; gap: 2.5rem; }
-  .parta-visual { width: 100%; max-width: 480px; justify-self: center; }
-  .parta-audience { font-size: .75rem; }
-  .parta-audience > .line-icon { width: 32px; height: 32px; }
   .science-page .inline-section-lead.has-image { grid-template-columns: minmax(0, 1fr) 160px; gap: 1.5rem; }
   .science-page .inline-section-image img { width: 160px; }
   .template-homepage .publication-list > li { grid-template-columns: 3rem minmax(0, 1fr); gap: .75rem; }

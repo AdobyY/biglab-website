@@ -1,0 +1,12 @@
+{% extends "home/home_page.html" %}
+{% load static ui_tags %}
+{% block body_class %}template-homepage homepage-design-2 template-about-page{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/homepage.css' %}?v=20261007-growth"><link rel="stylesheet" href="{% static 'css/homepage-v2.css' %}">{% endblock %}
+{% block content %}
+<header class="about-page-heading section-shell">
+  <h1>{{ page.title }}</h1>
+  <a class="about-home-link" href="{{ site_home_url }}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5m6-6-6 6 6 6"/></svg>{% ui 'home' %}</a>
+</header>
+{% include 'home/includes/home_sections.html' %}
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/homepage.js' %}" defer></script><script src="{% static 'js/research-preview.js' %}?v=20261007-media-autoplay" defer></script>{% endblock %}

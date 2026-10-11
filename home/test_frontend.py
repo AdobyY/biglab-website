@@ -7,7 +7,7 @@ from wagtail.models import Locale, Page, Site
 from wagtail.test.utils import WagtailPageTestCase
 
 from home.models import ContentPage, HomePage, PeopleIndexPage, PersonPage, ProjectPage, SciencePage
-from home.templatetags.navigation_tags import _build_menu, constellation_nodes, contact_url, section_url
+from home.templatetags.navigation_tags import _build_menu, constellation_nodes, contact_url, design_url, section_url
 
 
 class FrontendContractTests(WagtailPageTestCase):
@@ -41,7 +41,7 @@ class FrontendContractTests(WagtailPageTestCase):
         self.assertEqual(reordered[0]["page"], areas[-1])
         self.assertTrue(reordered[0]["url"].endswith(f"#section-{areas[-1].pk}"))
 
-    def test_v2_hero_preserves_copy_and_keeps_research_links_in_the_collection(self):
+    def test_v2_hero_preserves_copy_and_moves_editorial_content_off_the_homepage(self):
         Site.objects.update_or_create(hostname="localhost", defaults={"root_page": self.home, "is_default_site": True})
         areas = [self.science.add_child(instance=ContentPage(title=f"Topic {i}")) for i in range(9)]
         people = self.home.add_child(instance=PeopleIndexPage(title="Team"))
@@ -60,8 +60,8 @@ class FrontendContractTests(WagtailPageTestCase):
         self.assertEqual(hero.select_one("h1").get_text(), self.home.hero_title)
         self.assertFalse(hero.select("[data-network-toggle]"))
         self.assertEqual(hero.select_one(".summary").get_text(), self.home.hero_summary)
-        self.assertEqual(hero.select_one(".hero-actions a")["href"], self.science.url)
-        self.assertEqual(hero.select_one(".hero-actions a.text-link")["href"], people.url)
+        self.assertEqual(hero.select_one(".hero-actions a")["href"], design_url(self.science.url, "2"))
+        self.assertEqual(hero.select_one(".hero-actions a.text-link")["href"], design_url(people.url, "2"))
         self.assertFalse(hero.select(".hero-copy[hidden], .hero-copy[aria-hidden='true']"))
         self.assertFalse(hero.select(".hero-copy [style]"))
         canvas = hero.select_one("canvas[data-research-network]")
@@ -72,13 +72,12 @@ class FrontendContractTests(WagtailPageTestCase):
         self.assertFalse(hero.select(".constellation, .constellation-topics, [data-constellation-topic]"))
         self.assertFalse(hero.select(".central-star, .star-orbit, .constellation-connections, .constellation-caption, [data-network-hint]"))
         self.assertNotIn("Research areas", hero.get_text(" ", strip=True))
-        self.assertEqual(soup.select_one(".research-section h2").get_text(), "Research areas")
-        links = soup.select("#home-sections .research-row h3 a")
-        self.assertEqual(len(links), len(areas))
-        for link, node in zip(links, constellation_nodes(areas)):
-            self.assertEqual(link["href"], node["url"])
-            self.assertEqual(link.get_text(), node["page"].title)
-            self.assertNotIn(node["page"].title, hero.get_text(" ", strip=True))
+        self.assertIsNone(soup.select_one("#home-sections"))
+        self.assertIsNone(soup.select_one(".research-section"))
+        self.assertEqual(len(soup.select("main > section")), 1)
+        self.assertIsNone(soup.select_one("main .contact-surface"))
+        self.assertIsNone(hero.select_one(".hero-footnote"))
+        self.assertIsNotNone(soup.select_one("footer#site-footer"))
 
     def test_design_one_is_default_without_central_star_or_network_caption(self):
         Site.objects.update_or_create(hostname="localhost", defaults={"root_page": self.home, "is_default_site": True})
@@ -215,6 +214,7 @@ class FrontendContractTests(WagtailPageTestCase):
     def test_hidden_custom_contact_does_not_create_a_dead_header_link(self):
         self.home.sections = [("contact", {"title": "", "theme": "paper", "is_visible": False})]
         self.assertEqual(contact_url(self.home), "")
+        self.assertEqual(contact_url(self.home, "2"), "")
         self.home.sections = [("contact", {"title": "", "anchor": "reach-us", "theme": "paper", "is_visible": True})]
         self.assertTrue(contact_url(self.home).endswith("#reach-us"))
 

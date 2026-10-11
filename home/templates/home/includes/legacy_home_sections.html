@@ -1,6 +1,6 @@
 {% include "home/sections/about.html" with value="" legacy=True %}
 {% if research_areas %}{% include "home/sections/research.html" with value="" legacy=True section_areas=research_areas %}{% endif %}
-{% if people %}{% include "home/sections/people.html" with value="" legacy=True section_people=people|slice:":6" carousel_active=False %}{% endif %}
+{% if people %}{% include "home/sections/people.html" with value="" legacy=True section_people=people carousel_active=False %}{% endif %}
 {% for project in featured_projects %}{% include "home/sections/featured_project.html" with value="" legacy=True featured=project %}{% endfor %}
 {% if news_items %}{% include "home/sections/news_list.html" with value="" legacy=True news_items=news_items|slice:":3" %}{% endif %}
 {% if current_projects %}{% include "home/sections/project_list.html" with value="" legacy=True projects=current_projects finished_projects="" %}{% endif %}

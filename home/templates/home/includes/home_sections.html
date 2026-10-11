@@ -1,0 +1,16 @@
+{% load wagtailcore_tags wagtailsettings_tags navigation_tags ui_tags %}
+<div id="home-sections">
+{% if page.sections %}
+  {% for section in page.sections %}
+    {% include_block section %}
+    {% if forloop.first and page.about_financing and not page.sections|has_section:'financing' %}{% include "home/includes/financing.html" %}{% endif %}
+  {% endfor %}
+{% else %}
+  {% include "home/includes/legacy_home_sections.html" %}
+  {% if page.about_financing %}{% include "home/includes/financing.html" %}{% endif %}
+{% endif %}
+{% if page.after_body %}<div class="section-shell reading-content after-body">{% include_block page.after_body %}</div>{% endif %}
+{% if page.show_contact_section and not page.sections|has_section:'contact' %}
+  {% include 'home/includes/contact_surface.html' with legacy=True %}
+{% endif %}
+</div>

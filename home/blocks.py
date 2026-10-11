@@ -231,13 +231,14 @@ class PeopleHomeSectionBlock(HomeSectionBlock):
         default=[],
         max_num=24,
         label="Selected people",
-        help_text="Choose people in this page's language, then drag into order. Leave empty for the automatic team. Draft profiles appear only after publication.",
+        help_text="Choose people in this page's language, then drag into order. Homepage and People directories include every published team member after this selection. Other pages show only the selection. Draft profiles appear only after publication.",
     )
     limit = blocks.IntegerBlock(
         min_value=1,
         max_value=24,
         default=12,
         label="Maximum number of people",
+        help_text="Limits previews on other content pages. Homepage and People directories always show the complete team.",
     )
     show_roles = blocks.BooleanBlock(required=False, default=True)
     enable_carousel = blocks.BooleanBlock(

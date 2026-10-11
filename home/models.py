@@ -10,6 +10,7 @@ from django.utils import timezone
 from modelcluster.models import ClusterableModel
 from wagtail.admin.panels import FieldPanel, HelpPanel, MultiFieldPanel
 from wagtail.contrib.settings.models import BaseSiteSetting, register_setting
+from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page, TranslatableMixin
 from wagtail.snippets.models import register_snippet
@@ -85,6 +86,7 @@ class BaseContentPage(Page):
             "featured_projects": projects.filter(is_featured=True),
             "publications": Publication.objects.filter(locale=self.locale).order_by("-year", "title"),
             "collaborations": Collaboration.objects.filter(locale=self.locale).order_by("sort_order", "name"),
+            "design_version": "2" if request.GET.get("design") == "2" else "1",
         })
         return context
 
@@ -94,7 +96,7 @@ class BaseContentPage(Page):
     @property
     def editorial_guide(self):
         return {
-            "homepage": "Edit the hero above and build the homepage with the sections below.",
+            "homepage": "Edit the hero above and build the content with the sections below. Version 1 shows everything on the homepage; Version 2 shows the hero and footer, with Contact and the remaining sections on About. Team directories show every published member; selected people control their initial order.",
             "sciencepage": "Recommended: Child pages, Publications and Collaborations. Edit each research area's text on its child page.",
             "peopleindexpage": "Recommended: People. Add a child Person page for a new member; use Content after the sections for text below the team.",
             "personpage": "Edit the role, portrait and contact details here. Use Content before the sections for the biography; extra sections are optional.",
@@ -106,7 +108,7 @@ class BaseContentPage(Page):
         }.get(self._meta.model_name, "")
 
 
-class HomePage(BaseContentPage):
+class HomePage(RoutablePageMixin, BaseContentPage):
     """The site's root page, which begins with the About BIG Lab content."""
 
     hero_title = models.CharField(max_length=160, default="About BIG Lab")
@@ -161,9 +163,14 @@ class HomePage(BaseContentPage):
         "home.ProjectPage",
     ]
 
-    def get_context(self, request, *args, **kwargs):
+    @path("about/", name="about")
+    def about_page(self, request):
+        """Reuse the published homepage sections without copying CMS content."""
+        return self.render(request, template="home/about_page.html", is_about_page=True)
+
+    def get_context(self, request, *args, is_about_page=False, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        version = "2" if request.GET.get("design") == "2" else "1"
+        version = "2" if is_about_page or request.GET.get("design") == "2" else "1"
         switch_query = request.GET.copy()
         if version == "2":
             switch_query.pop("design", None)
@@ -171,6 +178,7 @@ class HomePage(BaseContentPage):
             switch_query["design"] = "2"
         query_string = switch_query.urlencode()
         context["design_version"] = version
+        context["is_about_page"] = is_about_page
         context["design_switch_url"] = request.path + (f"?{query_string}" if query_string else "")
         return context
 

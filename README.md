@@ -17,6 +17,23 @@ uv run python manage.py runserver
 
 The public site is available at `/`, the Czech version at `/cs/`, and the CMS at `/admin/`.
 
+The homepage has two versions. Version 1 is the default and retains the full page;
+`/?design=2` (or `/cs/?design=2`) shows the hero and footer. Its **About**
+links open `/about/` (or `/cs/about/`), which displays the same
+published homepage sections, financing, Contact and content at the bottom. Edit those sections
+on the root page in Wagtail: one edit updates Version 1 and About together. The About
+URL is a reserved root-page route, not a separate CMS record. The version control
+stays on the homepage; Home and logo links on About return to the compact version.
+
+Contact has two treatments: V1 places a navy contact panel over a grayscale
+map on cream; V2 About pairs open dark contact details with a map. Both use
+**Settings → Contact settings** for the real address, email, phone and institute social
+links. Maps and directions use that address, so changing it updates both versions.
+The external map loads lazily; the address and map/directions links remain available
+if the provider cannot load. A Contact block's visibility, custom anchor and field
+switches apply to both versions; without a block, **Show homepage contact section**
+controls the fallback. Contact navigation targets the V1 homepage or the V2 About contact anchor.
+
 The Wagtail **Promote → Show in menus** option controls the generated header navigation. Top-level
 pages appear as primary links; marked child pages appear in accessible nested menus under their
 nearest marked parent. A child can only be reached through the menu when its parent is also marked.
@@ -54,6 +71,11 @@ editable default containers; deliberately clearing and saving the builder still 
 To put text **below the people list**, add blocks to
 **Content below the automatic list / sections**, or add a **People** section followed by
 **About / editorial text** in the builder.
+
+Homepage, About and People directories include every published member of their local
+team. Selected profiles set the first positions, followed by the rest in page-tree
+order; duplicates and drafts are omitted. Preview limits on other content pages
+continue to apply. Existing portrait choices, roles and summaries are preserved.
 Do not put that text in the header introduction, which appears above the list.
 
 Editors can **Save draft**, **Preview**, then **Publish** directly; no approval workflow is required.
@@ -78,8 +100,9 @@ generates the required renditions for every context.
 
 Data-driven homepage sections support curation without losing automatic updates:
 
-- **People:** optionally choose and drag specific profiles into order, set a maximum, show/hide roles,
-  and enable a responsive carousel after a chosen threshold. An empty selection uses the published team.
+- **People:** choose and drag profiles into order, show/hide roles, and enable a responsive
+  carousel after a chosen threshold. Homepage, About and People directories append all remaining
+  published team members. On other pages, the selection and maximum count control the preview.
 - **Research:** optionally choose and order specific research pages, or leave the selection empty to
   use the current research tree; image visibility and maximum count remain configurable.
 - **Updates:** optionally choose and order news, projects, and publication snippets independently,

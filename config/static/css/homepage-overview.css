@@ -84,9 +84,15 @@
 .template-homepage .method-grid { gap: 3rem; }
 .template-homepage .method-item h3 { font-family: var(--body); font-size: 1.3rem; font-weight: 600; line-height: 1.25; letter-spacing: -.015em; }
 .template-homepage .method-item > .line-icon { width: 32px; height: 32px; margin-bottom: 1.25rem; }
-.template-homepage .parta-band .section-shell { grid-template-columns: 1.1fr .9fr; }
-.template-homepage .parta-band h2 { font-size: 5rem; font-weight: 400; font-style: normal; }
-.template-homepage .parta-visual { width: 100%; max-width: 380px; justify-self: end; }
+.template-homepage .parta-band .section-shell { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+.template-homepage .parta-band h2 { font-size: clamp(3.5rem, 5.5vw, 5rem); font-weight: 400; font-style: normal; margin-bottom: 1.5rem; }
+.template-homepage .parta-visual { width: 100%; max-width: none; aspect-ratio: auto; padding: 1rem 2rem; border-radius: 12px; background: var(--yellow); color: #182b3e; }
+.parta-audience-list { list-style: none; margin: 0; padding: 0; }
+.parta-audience-list li { display: flex; align-items: center; gap: 1.5rem; padding: 1.5rem 0; font-size: clamp(1.35rem, 2.2vw, 1.9rem); line-height: 1.2; font-weight: 500; }
+.parta-audience-list li + li { border-top: 1px solid #182b3e40; }
+.parta-audience-list .line-icon { width: 36px; height: 36px; flex-shrink: 0; }
+.homepage-design-2 .parta-audience-list li + li { border-color: color-mix(in srgb, var(--design-background) 30%, transparent); }
+.template-homepage.homepage-design-2 .parta-visual { background: var(--design-accent); color: var(--design-background); }
 .template-homepage .parta-band .collection-intro { max-width: 38ch; font-size: 1.2rem; }
 
 .template-homepage .updates-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr)); gap: 4rem; }
@@ -166,7 +172,8 @@
   .template-homepage .parta-band .section-shell { grid-template-columns: 1fr; gap: 1.5rem; }
   .template-homepage .parta-band h2 { font-size: 4rem; }
   .template-homepage .parta-band .collection-intro { font-size: 1.1rem; }
-  .template-homepage .parta-visual { max-width: 300px; justify-self: center; }
+  .template-homepage .parta-visual { max-width: none; padding: .5rem 1.5rem; }
+  .parta-audience-list li { padding-block: 1.25rem; gap: 1.25rem; font-size: 1.4rem; }
   .template-homepage .updates-grid { gap: 2rem; }
   .template-homepage .updates-grid .news-list-item { grid-template-columns: 110px minmax(0, 1fr); gap: 1rem; }
   .template-homepage .updates-grid .news-thumbnail img { height: 120px; }
