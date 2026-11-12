@@ -19,6 +19,7 @@ if [ "$#" -gt 0 ]; then
 fi
 
 python manage.py migrate --noinput
+# Preserve CMS edits on deploy. Automatic snapshot import requires an explicit opt-in.
 if [ "${SEED_INITIAL_CONTENT:-0}" = "1" ]; then
     python manage.py seed_biglab --if-changed
 fi

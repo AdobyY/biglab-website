@@ -141,8 +141,9 @@ uv run python manage.py export_biglab_content
 ```
 
 An explicit `python manage.py seed_biglab` replaces the snapshot-managed content with the exported
-development version, including restoring blank fields and matching publication states. Container
-startup uses `seed_biglab --if-changed`: it applies each new snapshot once, storing its checksum on the
+development version, including restoring blank fields and matching publication states. Automatic
+seeding is disabled by default (`SEED_INITIAL_CONTENT=0` in the Docker image). Only an explicit
+`SEED_INITIAL_CONTENT=1` enables `seed_biglab --if-changed` at container startup: it applies each new snapshot once, storing its checksum on the
 persistent media volume, and preserves later CMS edits across restarts of the same snapshot. To
 deliberately reapply it, run the command without `--if-changed`. `--bundle-dir` can select an exported
 snapshot; `export_biglab_content --output-dir` can create one outside the default directory.
@@ -279,9 +280,10 @@ SQLITE_PATH=/data/db.sqlite3
 MEDIA_ROOT=/data/media
 ```
 
-Set `SEED_INITIAL_CONTENT=1` to synchronize each new development snapshot during container startup.
-Startup runs migrations and `seed_biglab --if-changed` before Gunicorn. Set it to `0` to disable
-automatic snapshot updates while retaining the command for explicit runs.
+The Docker image defaults to `SEED_INITIAL_CONTENT=0`: startup runs migrations and Gunicorn,
+preserving CMS content across deployments. Import content manually with `python manage.py seed_biglab`.
+Only set `SEED_INITIAL_CONTENT=1` when intentionally enabling automatic imports of changed snapshots;
+that mode can overwrite CMS edits when a new snapshot is deployed.
 Only one application process should write to the SQLite database; scale vertically rather than by
 running multiple containers against the same file. On Railway, the application serves registered
 raster Wagtail renditions at `/media/images/`; documents, originals and arbitrary uploads are not
@@ -295,6 +297,35 @@ Set the required production variables above to the generated Railway hostname an
 Railway supplies `PORT`; the entrypoint binds Gunicorn to it. At startup the entrypoint makes the
 mounted directory writable, then switches to the `wagtail` user before migrations, optional
 seeding and serving requests. Image builds use the isolated build settings and need no runtime secret.
+
+### Sentry monitoring and email alerts
+
+Set `SENTRY_DSN` to the Client Keys (DSN) value for the Sentry project. With an empty
+DSN, monitoring stays disabled. Development and production share
+`config/observability.py`; image builds never initialize the SDK.
+
+The SDK captures Django exceptions, error logs, structured logs and request traces.
+Trace sampling defaults to all requests locally (`1.0`) and 10% in production (`0.1`);
+`SENTRY_TRACES_SAMPLE_RATE` can override it. `SENTRY_ENVIRONMENT` defaults to
+`development` or `production`. Releases use `SENTRY_RELEASE`, Railway's
+`RAILWAY_GIT_COMMIT_SHA`, or the SDK's Git detection. CMS request bodies and local
+variables are excluded, and automatic user identity collection stays disabled.
+
+For Railway, add `SENTRY_DSN`, `SENTRY_ENVIRONMENT=production` and
+`SENTRY_TRACES_SAMPLE_RATE=0.1` to the existing service, then deploy the code.
+Sentry sends alert emails itself; the application's SMTP settings remain for
+password-reset messages. In Sentry, use an enabled alert connected to this project's
+issue stream, with triggers for new and regressed errors and an email action for
+the intended user. Alert recipients and notification frequency belong in Sentry.
+
+To opt into local monitoring with a private environment file:
+
+```powershell
+uv run --env-file .env.sentry.local python manage.py runserver
+```
+
+Keep that file ignored. Do not add Sentry login credentials or API tokens to Django
+settings, environment examples or deployment images.
 
 ### Example: Docker Compose with Caddy HTTPS
 
@@ -391,11 +422,12 @@ header, footer, browser icon, admin sidebar, login screens and editor userbar in
 both languages. The supplied BIG Lab image is also the default when this field
 is empty. Upload replacements through the existing Wagtail image chooser.
 
-## Content still awaiting confirmation
+## Supplied content
 
-The Parta page is implemented and editable, but intentionally contains a short holding text rather
-than invented project details. Replace it in the CMS when the lab supplies the confirmed overview,
-timeline and materials. Contact email and phone can be added under **Settings → Contact settings**.
+The approved Czech and English content from `CONTENT.docx`, including PARTA audience
+pages, timeline and team contacts, is in the reusable snapshot. See
+[content-update.md](docs/content-update.md) for import and verification details.
+Results and finished projects remain hidden as instructed in the document.
 
 ## Verification
 

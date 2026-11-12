@@ -5,6 +5,7 @@ description = "Multilingual Wagtail website for BIG Lab"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "sentry-sdk[django]>=2.74,<3",
     "wagtail>=8.0,<8.1",
     "whitenoise>=6.9,<7",
 ]

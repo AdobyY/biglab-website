@@ -16,3 +16,7 @@ try:
     from .local import *
 except ImportError:
     pass
+
+from config.observability import configure_sentry
+
+configure_sentry(debug=DEBUG)

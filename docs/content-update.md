@@ -1,6 +1,6 @@
 # Client content update — 12 November 2026
 
-The supplied `CONTENT.docx` is fully represented in the committed bilingual baseline
+The supplied `CONTENT.docx` is represented in the bilingual baseline
 in `home/seed_content/`. Original documents and logo files are retained unchanged in
 `home/seed_assets/supplied/`; asset provenance is in `home/seed_assets/SOURCES.md`.
 The snapshot is the source used by the existing `seed_biglab` command. Runtime
@@ -39,6 +39,26 @@ are not published as copy. Brackets become real internal links or the existing m
 The original RGB PDF supplies the shared emblem; its vector full-logo export is
 available in `config/static/images/biglab-logo-full.svg`.
 
+## Document recheck
+
+A second comparison corrected the About menu to BIG Lab → People → News, restored
+the source's Collaboration menu label, and ordered the PARTA audience pages as
+schools → parents → students. Research detail pages remain available through the
+research section rather than adding menu items absent from the supplied outline.
+
+Both contact layouts now show the localized invitation to visit, the full contact
+introduction, a map and the People button. Addresses still come from Contact settings;
+localized copy comes from Interface text. Existing custom contact text is retained
+without adding a duplicate team introduction.
+
+An ordinary member of Editors can replace the shared logo through Settings →
+Contact settings → Site and footer brand → Logo. A regression test submits that
+CMS form and checks the resulting public and admin branding.
+
+The corrected content is in the reusable snapshot. With automatic seeding disabled,
+deploying the code does not import that snapshot into an existing editorial site.
+Applying it remains an explicit content operation, separate from deploying code.
+
 ## Repeatable commands
 
 ```powershell
@@ -64,8 +84,10 @@ uv run python manage.py seed_biglab --reset
 ```
 
 This removes added editorial test content. Accounts, passwords, the site's domain,
-port and root editor permissions remain. Startup continues to use `--if-changed`,
-which applies a changed baseline once and preserves subsequent CMS edits on restarts.
+port and root editor permissions remain. Automatic seeding is disabled by default
+(`SEED_INITIAL_CONTENT=0` in the Docker image), so normal deployments preserve CMS edits.
+An explicit `SEED_INITIAL_CONTENT=1` opts into `--if-changed`, which applies a changed
+baseline once and can overwrite earlier CMS edits. Manual imports remain available.
 
 To intentionally replace the committed baseline with future published CMS changes:
 
@@ -79,16 +101,21 @@ files are retained for provenance; they are not parsed at application startup.
 
 ## Verification
 
-`home/test_supplied_content.py` compares every supplied prose paragraph with the
-baseline, checks bilingual records/contacts/visibility and tests timeline date
-boundaries and chronological validation. Snapshot tests cover repeat imports,
+`home/test_supplied_content.py` compares supplied prose and headings with their
+intended pages, verifies source roles/emails/publications/partners, and checks
+rendered bilingual navigation, audience copy, buttons and contacts. It also tests
+timeline date boundaries and chronological validation. Snapshot tests cover repeat imports,
 restoring edited fields, renamed snippets, reset, ID remapping and corrupt input.
 
-Validation on 12 November 2026: all 163 Django tests pass; system checks, migration
+Validation after the recheck on 12 November 2026: all 171 Django tests pass; system checks, migration
 drift and whitespace checks pass. All 66 published pages plus six homepage/About
 variants (72 routes) render successfully with one H1, unique IDs, existing media
 and valid internal destinations/anchors. A repeated seed updates zero pages and
 adds no revisions. Live HTTP checks also pass for EN/CS homepages, timeline,
 school information and Contact. Browser visual inspection could not be completed
 because the browser-control host was unavailable. Local HTTP preview was checked
-on port 8010, since port 8000 belongs to another local application.
+on port 8010, since port 8000 belongs to another local application. Before applying
+the recheck corrections locally, the existing content was exported to the ignored
+`.impeccable/content-import/before-review/` directory. Its managed fields matched
+the preceding baseline and no live pages had unpublished edits. The local import
+changed four pages; no production content was changed by this recheck.

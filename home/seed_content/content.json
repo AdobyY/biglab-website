@@ -207,7 +207,7 @@
               "title": null,
               "intro": "",
               "is_visible": true,
-              "text": "<p>You can find contact information for individual team members in the section</p>",
+              "text": "",
               "show_email": true,
               "show_phone": true,
               "show_address": true,
@@ -226,6 +226,504 @@
       "parent": null,
       "locale": "en",
       "translation_key": "495d67c7-ea1a-40d2-b7d8-cc40ede31a36",
+      "live": true
+    },
+    {
+      "model": "home.peopleindexpage",
+      "id": 8,
+      "fields": {
+        "title": "People",
+        "draft_title": "People",
+        "slug": "people",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "",
+        "body": [],
+        "after_body": [],
+        "sections": [
+          {
+            "type": "people",
+            "id": "8930e100-2886-4bc0-bf3c-6e56e30d4d13",
+            "value": {
+              "is_visible": true,
+              "title": "",
+              "intro": "",
+              "theme": "paper",
+              "anchor": "",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium",
+              "selected_people": [],
+              "limit": 24,
+              "link_label": "",
+              "show_roles": true,
+              "enable_carousel": false,
+              "carousel_after": 6
+            }
+          }
+        ]
+      },
+      "parent": 3,
+      "locale": "en",
+      "translation_key": "ffdfa8ee-c40e-4113-a5dd-5f5918253c4a",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 14,
+      "fields": {
+        "title": "Tibor Žingora",
+        "draft_title": "Tibor Žingora",
+        "slug": "tibor-zingora",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Tibor Žingora, Ph.D. is a social psychologist studying how attitudes and behaviours emerge, evolve and spread among people. He examines how changes shaped by environments, relationships and experience translate into broader outcomes such as polarization, the diffusion of prejudice, or the adoption of health-protective and pro-environmental behaviours. His work combines psychology, sociology and network science using structural equation modelling, longitudinal social network analysis and agent-based modelling. Before founding BIG Lab, he worked at the University of Oxford, the University of Groningen and the Czech Academy of Sciences.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Head",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 10
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "t.zingora@fss.muni.cz",
+        "profile_url": "https://www.muni.cz/en/people/362589-tibor-zingora"
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "6e6d0468-df41-461b-9347-9d0d1f041644",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 15,
+      "fields": {
+        "title": "Utku Caybas",
+        "draft_title": "Utku Caybas",
+        "slug": "utku-caybas",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Utku Caybas, Ph.D. is a postdoctoral researcher at the BIG Lab. His research focuses on peer relations at school, including interactions, relationships, and group processes, and their role in shaping students’ motivational beliefs (e.g., self-efficacy, interest) in STEM domains. He utilizes diverse methodological approaches to study these processes, including longitudinal social network analysis and mixed methods designs. Utku completed his Ph.D. in Educational Psychology and Educational Technology at Michigan State University.</p>",
+            "id": "a5bd0f3c-bed5-539f-a446-3cb2253421a1"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "role": "Postdoctoral researcher",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 11
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "utku.caybas@fss.muni.cz",
+        "profile_url": ""
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "582dfeec-d5ed-44a5-a207-8f6fa8b89ce9",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 16,
+      "fields": {
+        "title": "Zhe Dong",
+        "draft_title": "Zhe Dong",
+        "slug": "zhe-dong",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Zhe Dong, Ph.D. is a postdoctoral researcher working on friendship segregation, youth leadership and social networks. Using social network analysis and structural equation modelling, she investigates the antecedents and consequences of friendship segregation among adolescents. In 2026, she received her Ph.D. from the University of Groningen for research on positive and negative leadership in childhood.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "Postdoctoral researcher",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 12
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "z.dong@fss.muni.cz",
+        "profile_url": "https://www.muni.cz/en/people/529373-zhe-dong"
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "8c85321b-f7de-4cd1-a275-b4bbb3bb8b77",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 17,
+      "fields": {
+        "title": "Mgr. Michaela Kryštofová",
+        "draft_title": "Mgr. Michaela Kryštofová",
+        "slug": "michaela-krystofova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p><a href=\"https://www.muni.cz/lide/520266-michaela-krystofova\">Mgr. Michaela Kryštofová</a> is a PhD student whose research focuses on group processes in adolescence and on how peer relationships shape young people&#x27;s identity, attitudes and behaviour, particularly within the school class. In her work, she seeks to bridge qualitative and quantitative methodologies and to apply modern methods such as longitudinal social network analysis and agent-based modelling. Outside academia, she is an avid reader, an enthusiastic home baker, and a devoted dog owner.</p>",
+            "id": "a5d9a8a2-a47a-59c8-be83-6d1e2aeb9e9c"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "role": "PhD candidate",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 15
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "krystofova@fss.muni.cz",
+        "profile_url": "https://www.muni.cz/lide/520266-michaela-krystofova"
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "2d21c2dd-fc98-42bd-b1bf-711ed7e4ed3a",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 18,
+      "fields": {
+        "title": "Bc. Olesja Nyjherová",
+        "draft_title": "Bc. Olesja Nyjherová",
+        "slug": "olesja-nyjherova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p><a href=\"https://www.muni.cz/lide/548707-olesja-nyjherova\">Bc. Olesja Nyjherová</a> is a graduate student of psychology at Masaryk University. Her academic interests include psychometrics, research methodology and statistics, as well as developmental psychology. At the BIG lab, she fulfills the role of data collection manager, bringing her love of organization, precision, and careful planning to everything she does. Outside of the lab, she enjoys baking, knitting, and exploring nature.</p>",
+            "id": "ee39e785-5d1d-5c6c-81b2-9c567f71bbb2"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "role": "Fieldwork",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 3
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "548707@mail.muni.cz",
+        "profile_url": "https://www.muni.cz/lide/548707-olesja-nyjherova"
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "857b0187-fe32-427f-af5a-f8e5226a2823",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 19,
+      "fields": {
+        "title": "Ching Ting Ang",
+        "draft_title": "Ching Ting Ang",
+        "slug": "ching-ting-ang",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Ching-Ting Ang, MSc, is a doctoral student whose research focuses on adolescent peer cliques, including their structural characteristics, developmental consequences and underlying social processes. She graduated in 2025 from the Erasmus Mundus Joint Master’s Degree in Global MINDs (Social and Cultural Psychology), delivered by SWPS University, the University of Oslo and the University of Limerick.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "role": "PhD candidate",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 1
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "ang@fss.muni.cz",
+        "profile_url": ""
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "8b60d391-9047-4d34-8d1a-3982a213f283",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 57,
+      "fields": {
+        "title": "Petra Paličková",
+        "draft_title": "Petra Paličková",
+        "slug": "petra-palickova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p><a href=\"https://www.muni.cz/lide/561542-petra-palickova\">Petra Paličková</a> is a bachelor’s degree student in Psychology at the Faculty of Social Studies and a research assistant at BIG Lab. In her professional development, she hopes to bridge psychological research and practice. Alongside her work at BIG Lab, she also engages in volunteering, including at Černovice Mental Hospital, where she works with people with mental health difficulties.</p>",
+            "id": "377a0dfc-488f-558b-9119-d0ee5205cfa8"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "role": "Research assistant",
+        "portrait": {
+          "ref": "wagtailimages.image",
+          "id": 14
+        },
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "561542@mail.muni.cz",
+        "profile_url": "https://www.muni.cz/lide/561542-petra-palickova"
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "c8b166a9-73fe-40c0-8d12-9a75e7e3dcb3",
+      "live": true
+    },
+    {
+      "model": "home.personpage",
+      "id": 58,
+      "fields": {
+        "title": "Adéla Franková",
+        "draft_title": "Adéla Franková",
+        "slug": "adela-frankova",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Adéla Franková is a Bachelor’s student of Psychology at the Faculty of Social Studies, Masaryk University, and a Research Assistant at the BIG Lab. Through her work, she is gaining experience in psychological research and academic work.</p>",
+            "id": "b857a641-8cb0-5810-ac32-698bdbbca86a"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "role": "Research assistant",
+        "portrait": null,
+        "card_summary": "",
+        "show_portrait": true,
+        "portrait_size": "standard",
+        "portrait_format": "portrait",
+        "portrait_fit": "cover",
+        "email": "575692@mail.muni.cz",
+        "profile_url": ""
+      },
+      "parent": 8,
+      "locale": "en",
+      "translation_key": "c919b962-694c-4489-94be-121e4e18ab40",
+      "live": true
+    },
+    {
+      "model": "home.newsindexpage",
+      "id": 7,
+      "fields": {
+        "title": "News",
+        "draft_title": "News",
+        "slug": "news",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Updates from BIG Lab, our projects and research community.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": []
+      },
+      "parent": 3,
+      "locale": "en",
+      "translation_key": "3e2f898a-1c3c-440d-9436-0b1263df44c0",
+      "live": true
+    },
+    {
+      "model": "home.newspage",
+      "id": 20,
+      "fields": {
+        "title": "Research meeting with the SATIS lab",
+        "draft_title": "Research meeting with the SATIS lab",
+        "slug": "research-meeting-with-satis-lab",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>On the 19th of May, we were joined by researchers from the <a href=\"https://www.satislab.eu/\">SATIS lab</a> – they presented their current research and we presented our plans.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Like us, researchers from the <a href=\"https://www.satislab.eu/\">SATIS lab</a> conduct social network analyses within schools. This intersection gave us an opportunity to share inspiration &amp; feedback, and to brainstorm together.</p>",
+            "id": "07d34373-3a3b-54db-a9ae-713e62e2132a"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "date": "2026-05-19",
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 9
+        }
+      },
+      "parent": 7,
+      "locale": "en",
+      "translation_key": "94aa6bd7-7ce8-421f-b61e-6ca358b99e5c",
+      "live": true
+    },
+    {
+      "model": "home.newspage",
+      "id": 62,
+      "fields": {
+        "title": "Our member Tibor Žingora spoke about our project to Věda a výzkum journal",
+        "draft_title": "Our member Tibor Žingora spoke about our project to Věda a výzkum journal",
+        "slug": "tibor-zingora-interview",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>At the start of May came out an interview with our research leader Tibor Žingora about the current project of BIG Lab. He spoke about what this project is focusing on, how it will be conducted or about the expected results of the project. You can access the interview through this <a href=\"https://vedavyzkum.cz/rozhovory-a-osobnosti/rozhovory/tibor-zingora-jak-vzajemne-ovlivnovani-chovani-ve-tride-vytvari-segregaci-na-skolach\">link</a>.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "date": "2026-05-02",
+        "cover_image": null
+      },
+      "parent": 7,
+      "locale": "en",
+      "translation_key": "463c436a-0ca5-5bd1-9838-204d5dad035e",
+      "live": true
+    },
+    {
+      "model": "home.newspage",
+      "id": 63,
+      "fields": {
+        "title": "Our team has expanded with new members",
+        "draft_title": "Our team has expanded with new members",
+        "slug": "new-team-members",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>At the start of September three new members joined our team - two research assistants Petra Paličková and Adéla Franková who have taken interest in the work of BIGlab and one postdoc Utku Caybas who has gained experience with social network and peer relationships during his PhD studies at the Michigan state university in the United States.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "date": "2026-09-01",
+        "cover_image": null
+      },
+      "parent": 7,
+      "locale": "en",
+      "translation_key": "e6dd4fd8-10cd-5f4c-8e76-053d03328fc8",
+      "live": true
+    },
+    {
+      "model": "home.newspage",
+      "id": 64,
+      "fields": {
+        "title": "Tibor Žingora presented at EUSN2026 conference in Sweden",
+        "draft_title": "Tibor Žingora presented at EUSN2026 conference in Sweden",
+        "slug": "eusn2026",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>In August our leader Tibor Žingora presented at the European Conference on Social Networks (EUSN2026) in Sweden. In his contribution he presented the BIG Lab and its work, the current project Rethinking Segregation within Schools, its theoretical background, data collection or planned data analysis.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "date": "2026-08-15",
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 17
+        }
+      },
+      "parent": 7,
+      "locale": "en",
+      "translation_key": "e8754402-6697-52d1-a367-7a277039e6e6",
+      "live": true
+    },
+    {
+      "model": "home.newspage",
+      "id": 65,
+      "fields": {
+        "title": "A new PhD student has just joined our team",
+        "draft_title": "A new PhD student has just joined our team",
+        "slug": "ching-ting-ang-joins",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>A new PhD student Ching-Ting Ang became a part of our group at the beginning of September. Ang has focused in her past studies on peer cliques and their structural characteristics. You can find more details about her work here:</p>",
+        "body": [
+          {
+            "type": "button",
+            "value": {
+              "label": "Ching Ting Ang",
+              "page": 19,
+              "url": ""
+            },
+            "id": "7ce6a6f1-a197-5425-8582-0936dac0a6a7"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "date": "2026-09-01",
+        "cover_image": null
+      },
+      "parent": 7,
+      "locale": "en",
+      "translation_key": "145e99ef-b53a-5e67-8563-5b97d39abd8b",
+      "live": true
+    },
+    {
+      "model": "home.newspage",
+      "id": 66,
+      "fields": {
+        "title": "We just partnered up with our pilot school for our PARTA project",
+        "draft_title": "We just partnered up with our pilot school for our PARTA project",
+        "slug": "parta-pilot-school",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>On Thursday 24th of September we partnered up with our pilot school in the project. This way our practical part of the project began - the data collection.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "date": "2026-09-24",
+        "cover_image": null
+      },
+      "parent": 7,
+      "locale": "en",
+      "translation_key": "29e9dd3d-ac12-57a6-a9a0-6d192e038262",
       "live": true
     },
     {
@@ -601,91 +1099,6 @@
     },
     {
       "model": "home.contentpage",
-      "id": 22,
-      "fields": {
-        "title": "For parents",
-        "draft_title": "For parents",
-        "slug": "for-parents",
-        "show_in_menus": true,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Adolescent Attitudes and Classroom Atmosphere Development</p>",
-        "body": [
-          {
-            "type": "text",
-            "value": "<p>PARTA is a multi-year research project that studies how adolescents form groups and what role these groups play in spreading attitudes and behavior among peers. The research is carried out by the Behaviors of Individuals and Groups Lab (BIG lab) at Masaryk University in Brno.</p>",
-            "id": "ec5afd9d-30e7-5f5b-9533-cf665dfe2d20"
-          },
-          {
-            "type": "heading",
-            "value": "Why Research in Schools Matters",
-            "id": "c22fd8ec-ea3f-520b-bbf3-54195819ee80"
-          },
-          {
-            "type": "text",
-            "value": "<p>Secondary school is a key period in an adolescent’s life. It is at school that attitudes and behavior take shape, affecting the future of the students themselves and of society as a whole, and peers play a big part in this. Students also naturally gather into groups based on what they have in common. We want to find out when and how groups contribute to the spread of both negative and positive behavior. Working with schools helps us better prevent negative behavior and support positive behavior.</p>",
-            "id": "00007cfc-72a0-581d-bbaa-94b6b198b8c4"
-          },
-          {
-            "type": "heading",
-            "value": "How the Research Works",
-            "id": "89f3f0d0-e84a-504f-a313-3e17cbe174f5"
-          },
-          {
-            "type": "text",
-            "value": "<p>PARTA is a long-term research project that will take place at 16 schools in the South Moravian and Moravian-Silesian Regions. Before launching the full-scale research, however, we will first test everything at our partner pilot school. All parts of the research will take place on school premises during regular class time.</p><p>The pilot school will go through three different phases of the research:</p>",
-            "id": "3901c2d4-da4b-59db-a369-08019de0da82"
-          },
-          {
-            "type": "text",
-            "value": "<ol><li>In individual interviews, we will ask students how they perceive the atmosphere in their class and talk with them about their opinions and preferences. The interviews will take place in October 2026 and May 2027.</li><li>In the second part, we will test a questionnaire. This part will take place in April 2027.</li><li>In the third part, we will test a program supporting positive behavior, in which the whole class will participate together. Students will also complete a questionnaire in the weeks before and after the program. The program will take place in autumn 2027.</li></ol>",
-            "id": "4cc5ad1e-a4fb-506b-8400-d370d8c09b28"
-          },
-          {
-            "type": "text",
-            "value": "<p>The full-scale data collection is designed as a longitudinal study consisting of four waves of data collection, spaced six months apart. Each measurement will take approximately one class period. Data collection will also include a program supporting positive behavior, which will take place between the second and third waves. The first wave is planned for autumn 2027.</p><p>You can check where we currently are on the research timeline here:</p>",
-            "id": "6559367c-e262-5898-a3fc-25b173c8d315"
-          },
-          {
-            "type": "button",
-            "value": {
-              "label": "Timeline",
-              "page": 25,
-              "url": ""
-            },
-            "id": "29cc6ced-54c6-56b6-a6e6-b4ea85e9de35"
-          },
-          {
-            "type": "heading",
-            "value": "My Child’s Participation",
-            "id": "de06a249-511f-5964-ab07-5bc5f1298b0f"
-          },
-          {
-            "type": "text",
-            "value": "<p>Only students aged 15 or older at participating schools may take part in the research. In all phases of the pilot research and the full-scale data collection, the consent of a legal guardian is also required for minors. If your school is cooperating with us, you will be contacted sooner or later with further information and the opportunity to sign your child up for the research. If you have any questions in the meantime, please contact us</p>",
-            "id": "96f9af40-a2ee-5c0b-8e52-0427725c0d32"
-          },
-          {
-            "type": "button",
-            "value": {
-              "label": "Contact",
-              "page": 61,
-              "url": ""
-            },
-            "id": "66cc10c0-762d-5772-828d-22a271e0cdbf"
-          }
-        ],
-        "after_body": [],
-        "sections": [],
-        "cover_image": null
-      },
-      "parent": 21,
-      "locale": "en",
-      "translation_key": "56264938-27e5-48ee-98b4-e925394b5c2a",
-      "live": true
-    },
-    {
-      "model": "home.contentpage",
       "id": 23,
       "fields": {
         "title": "For schools",
@@ -782,6 +1195,91 @@
       "parent": 21,
       "locale": "en",
       "translation_key": "d78c35b5-0d21-4652-bc98-2690396f7f90",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 22,
+      "fields": {
+        "title": "For parents",
+        "draft_title": "For parents",
+        "slug": "for-parents",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Adolescent Attitudes and Classroom Atmosphere Development</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>PARTA is a multi-year research project that studies how adolescents form groups and what role these groups play in spreading attitudes and behavior among peers. The research is carried out by the Behaviors of Individuals and Groups Lab (BIG lab) at Masaryk University in Brno.</p>",
+            "id": "ec5afd9d-30e7-5f5b-9533-cf665dfe2d20"
+          },
+          {
+            "type": "heading",
+            "value": "Why Research in Schools Matters",
+            "id": "c22fd8ec-ea3f-520b-bbf3-54195819ee80"
+          },
+          {
+            "type": "text",
+            "value": "<p>Secondary school is a key period in an adolescent’s life. It is at school that attitudes and behavior take shape, affecting the future of the students themselves and of society as a whole, and peers play a big part in this. Students also naturally gather into groups based on what they have in common. We want to find out when and how groups contribute to the spread of both negative and positive behavior. Working with schools helps us better prevent negative behavior and support positive behavior.</p>",
+            "id": "00007cfc-72a0-581d-bbaa-94b6b198b8c4"
+          },
+          {
+            "type": "heading",
+            "value": "How the Research Works",
+            "id": "89f3f0d0-e84a-504f-a313-3e17cbe174f5"
+          },
+          {
+            "type": "text",
+            "value": "<p>PARTA is a long-term research project that will take place at 16 schools in the South Moravian and Moravian-Silesian Regions. Before launching the full-scale research, however, we will first test everything at our partner pilot school. All parts of the research will take place on school premises during regular class time.</p><p>The pilot school will go through three different phases of the research:</p>",
+            "id": "3901c2d4-da4b-59db-a369-08019de0da82"
+          },
+          {
+            "type": "text",
+            "value": "<ol><li>In individual interviews, we will ask students how they perceive the atmosphere in their class and talk with them about their opinions and preferences. The interviews will take place in October 2026 and May 2027.</li><li>In the second part, we will test a questionnaire. This part will take place in April 2027.</li><li>In the third part, we will test a program supporting positive behavior, in which the whole class will participate together. Students will also complete a questionnaire in the weeks before and after the program. The program will take place in autumn 2027.</li></ol>",
+            "id": "4cc5ad1e-a4fb-506b-8400-d370d8c09b28"
+          },
+          {
+            "type": "text",
+            "value": "<p>The full-scale data collection is designed as a longitudinal study consisting of four waves of data collection, spaced six months apart. Each measurement will take approximately one class period. Data collection will also include a program supporting positive behavior, which will take place between the second and third waves. The first wave is planned for autumn 2027.</p><p>You can check where we currently are on the research timeline here:</p>",
+            "id": "6559367c-e262-5898-a3fc-25b173c8d315"
+          },
+          {
+            "type": "button",
+            "value": {
+              "label": "Timeline",
+              "page": 25,
+              "url": ""
+            },
+            "id": "29cc6ced-54c6-56b6-a6e6-b4ea85e9de35"
+          },
+          {
+            "type": "heading",
+            "value": "My Child’s Participation",
+            "id": "de06a249-511f-5964-ab07-5bc5f1298b0f"
+          },
+          {
+            "type": "text",
+            "value": "<p>Only students aged 15 or older at participating schools may take part in the research. In all phases of the pilot research and the full-scale data collection, the consent of a legal guardian is also required for minors. If your school is cooperating with us, you will be contacted sooner or later with further information and the opportunity to sign your child up for the research. If you have any questions in the meantime, please contact us</p>",
+            "id": "96f9af40-a2ee-5c0b-8e52-0427725c0d32"
+          },
+          {
+            "type": "button",
+            "value": {
+              "label": "Contact",
+              "page": 61,
+              "url": ""
+            },
+            "id": "66cc10c0-762d-5772-828d-22a271e0cdbf"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 21,
+      "locale": "en",
+      "translation_key": "56264938-27e5-48ee-98b4-e925394b5c2a",
       "live": true
     },
     {
@@ -1088,504 +1586,6 @@
       "live": false
     },
     {
-      "model": "home.newsindexpage",
-      "id": 7,
-      "fields": {
-        "title": "News",
-        "draft_title": "News",
-        "slug": "news",
-        "show_in_menus": true,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Updates from BIG Lab, our projects and research community.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": []
-      },
-      "parent": 3,
-      "locale": "en",
-      "translation_key": "3e2f898a-1c3c-440d-9436-0b1263df44c0",
-      "live": true
-    },
-    {
-      "model": "home.newspage",
-      "id": 20,
-      "fields": {
-        "title": "Research meeting with the SATIS lab",
-        "draft_title": "Research meeting with the SATIS lab",
-        "slug": "research-meeting-with-satis-lab",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>On the 19th of May, we were joined by researchers from the <a href=\"https://www.satislab.eu/\">SATIS lab</a> – they presented their current research and we presented our plans.</p>",
-        "body": [
-          {
-            "type": "text",
-            "value": "<p>Like us, researchers from the <a href=\"https://www.satislab.eu/\">SATIS lab</a> conduct social network analyses within schools. This intersection gave us an opportunity to share inspiration &amp; feedback, and to brainstorm together.</p>",
-            "id": "07d34373-3a3b-54db-a9ae-713e62e2132a"
-          }
-        ],
-        "after_body": [],
-        "sections": [],
-        "date": "2026-05-19",
-        "cover_image": {
-          "ref": "wagtailimages.image",
-          "id": 9
-        }
-      },
-      "parent": 7,
-      "locale": "en",
-      "translation_key": "94aa6bd7-7ce8-421f-b61e-6ca358b99e5c",
-      "live": true
-    },
-    {
-      "model": "home.newspage",
-      "id": 62,
-      "fields": {
-        "title": "Our member Tibor Žingora spoke about our project to Věda a výzkum journal",
-        "draft_title": "Our member Tibor Žingora spoke about our project to Věda a výzkum journal",
-        "slug": "tibor-zingora-interview",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>At the start of May came out an interview with our research leader Tibor Žingora about the current project of BIG Lab. He spoke about what this project is focusing on, how it will be conducted or about the expected results of the project. You can access the interview through this <a href=\"https://vedavyzkum.cz/rozhovory-a-osobnosti/rozhovory/tibor-zingora-jak-vzajemne-ovlivnovani-chovani-ve-tride-vytvari-segregaci-na-skolach\">link</a>.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "date": "2026-05-02",
-        "cover_image": null
-      },
-      "parent": 7,
-      "locale": "en",
-      "translation_key": "463c436a-0ca5-5bd1-9838-204d5dad035e",
-      "live": true
-    },
-    {
-      "model": "home.newspage",
-      "id": 63,
-      "fields": {
-        "title": "Our team has expanded with new members",
-        "draft_title": "Our team has expanded with new members",
-        "slug": "new-team-members",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>At the start of September three new members joined our team - two research assistants Petra Paličková and Adéla Franková who have taken interest in the work of BIGlab and one postdoc Utku Caybas who has gained experience with social network and peer relationships during his PhD studies at the Michigan state university in the United States.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "date": "2026-09-01",
-        "cover_image": null
-      },
-      "parent": 7,
-      "locale": "en",
-      "translation_key": "e6dd4fd8-10cd-5f4c-8e76-053d03328fc8",
-      "live": true
-    },
-    {
-      "model": "home.newspage",
-      "id": 64,
-      "fields": {
-        "title": "Tibor Žingora presented at EUSN2026 conference in Sweden",
-        "draft_title": "Tibor Žingora presented at EUSN2026 conference in Sweden",
-        "slug": "eusn2026",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>In August our leader Tibor Žingora presented at the European Conference on Social Networks (EUSN2026) in Sweden. In his contribution he presented the BIG Lab and its work, the current project Rethinking Segregation within Schools, its theoretical background, data collection or planned data analysis.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "date": "2026-08-15",
-        "cover_image": {
-          "ref": "wagtailimages.image",
-          "id": 17
-        }
-      },
-      "parent": 7,
-      "locale": "en",
-      "translation_key": "e8754402-6697-52d1-a367-7a277039e6e6",
-      "live": true
-    },
-    {
-      "model": "home.newspage",
-      "id": 65,
-      "fields": {
-        "title": "A new PhD student has just joined our team",
-        "draft_title": "A new PhD student has just joined our team",
-        "slug": "ching-ting-ang-joins",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>A new PhD student Ching-Ting Ang became a part of our group at the beginning of September. Ang has focused in her past studies on peer cliques and their structural characteristics. You can find more details about her work here:</p>",
-        "body": [
-          {
-            "type": "button",
-            "value": {
-              "label": "Ching Ting Ang",
-              "page": 19,
-              "url": ""
-            },
-            "id": "7ce6a6f1-a197-5425-8582-0936dac0a6a7"
-          }
-        ],
-        "after_body": [],
-        "sections": [],
-        "date": "2026-09-01",
-        "cover_image": null
-      },
-      "parent": 7,
-      "locale": "en",
-      "translation_key": "145e99ef-b53a-5e67-8563-5b97d39abd8b",
-      "live": true
-    },
-    {
-      "model": "home.newspage",
-      "id": 66,
-      "fields": {
-        "title": "We just partnered up with our pilot school for our PARTA project",
-        "draft_title": "We just partnered up with our pilot school for our PARTA project",
-        "slug": "parta-pilot-school",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>On Thursday 24th of September we partnered up with our pilot school in the project. This way our practical part of the project began - the data collection.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "date": "2026-09-24",
-        "cover_image": null
-      },
-      "parent": 7,
-      "locale": "en",
-      "translation_key": "29e9dd3d-ac12-57a6-a9a0-6d192e038262",
-      "live": true
-    },
-    {
-      "model": "home.peopleindexpage",
-      "id": 8,
-      "fields": {
-        "title": "People",
-        "draft_title": "People",
-        "slug": "people",
-        "show_in_menus": true,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "",
-        "body": [],
-        "after_body": [],
-        "sections": [
-          {
-            "type": "people",
-            "id": "8930e100-2886-4bc0-bf3c-6e56e30d4d13",
-            "value": {
-              "is_visible": true,
-              "title": "",
-              "intro": "",
-              "theme": "paper",
-              "anchor": "",
-              "background_image": null,
-              "background_position": "center",
-              "background_overlay": "medium",
-              "selected_people": [],
-              "limit": 24,
-              "link_label": "",
-              "show_roles": true,
-              "enable_carousel": false,
-              "carousel_after": 6
-            }
-          }
-        ]
-      },
-      "parent": 3,
-      "locale": "en",
-      "translation_key": "ffdfa8ee-c40e-4113-a5dd-5f5918253c4a",
-      "live": true
-    },
-    {
-      "model": "home.personpage",
-      "id": 14,
-      "fields": {
-        "title": "Tibor Žingora",
-        "draft_title": "Tibor Žingora",
-        "slug": "tibor-zingora",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Tibor Žingora, Ph.D. is a social psychologist studying how attitudes and behaviours emerge, evolve and spread among people. He examines how changes shaped by environments, relationships and experience translate into broader outcomes such as polarization, the diffusion of prejudice, or the adoption of health-protective and pro-environmental behaviours. His work combines psychology, sociology and network science using structural equation modelling, longitudinal social network analysis and agent-based modelling. Before founding BIG Lab, he worked at the University of Oxford, the University of Groningen and the Czech Academy of Sciences.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "role": "Head",
-        "portrait": {
-          "ref": "wagtailimages.image",
-          "id": 10
-        },
-        "card_summary": "",
-        "show_portrait": true,
-        "portrait_size": "standard",
-        "portrait_format": "portrait",
-        "portrait_fit": "cover",
-        "email": "t.zingora@fss.muni.cz",
-        "profile_url": "https://www.muni.cz/en/people/362589-tibor-zingora"
-      },
-      "parent": 8,
-      "locale": "en",
-      "translation_key": "6e6d0468-df41-461b-9347-9d0d1f041644",
-      "live": true
-    },
-    {
-      "model": "home.personpage",
-      "id": 15,
-      "fields": {
-        "title": "Utku Caybas",
-        "draft_title": "Utku Caybas",
-        "slug": "utku-caybas",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "",
-        "body": [
-          {
-            "type": "text",
-            "value": "<p>Utku Caybas, Ph.D. is a postdoctoral researcher at the BIG Lab. His research focuses on peer relations at school, including interactions, relationships, and group processes, and their role in shaping students’ motivational beliefs (e.g., self-efficacy, interest) in STEM domains. He utilizes diverse methodological approaches to study these processes, including longitudinal social network analysis and mixed methods designs. Utku completed his Ph.D. in Educational Psychology and Educational Technology at Michigan State University.</p>",
-            "id": "a5bd0f3c-bed5-539f-a446-3cb2253421a1"
-          }
-        ],
-        "after_body": [],
-        "sections": [],
-        "role": "Postdoctoral researcher",
-        "portrait": {
-          "ref": "wagtailimages.image",
-          "id": 11
-        },
-        "card_summary": "",
-        "show_portrait": true,
-        "portrait_size": "standard",
-        "portrait_format": "portrait",
-        "portrait_fit": "cover",
-        "email": "utku.caybas@fss.muni.cz",
-        "profile_url": ""
-      },
-      "parent": 8,
-      "locale": "en",
-      "translation_key": "582dfeec-d5ed-44a5-a207-8f6fa8b89ce9",
-      "live": true
-    },
-    {
-      "model": "home.personpage",
-      "id": 16,
-      "fields": {
-        "title": "Zhe Dong",
-        "draft_title": "Zhe Dong",
-        "slug": "zhe-dong",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Zhe Dong, Ph.D. is a postdoctoral researcher working on friendship segregation, youth leadership and social networks. Using social network analysis and structural equation modelling, she investigates the antecedents and consequences of friendship segregation among adolescents. In 2026, she received her Ph.D. from the University of Groningen for research on positive and negative leadership in childhood.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "role": "Postdoctoral researcher",
-        "portrait": {
-          "ref": "wagtailimages.image",
-          "id": 12
-        },
-        "card_summary": "",
-        "show_portrait": true,
-        "portrait_size": "standard",
-        "portrait_format": "portrait",
-        "portrait_fit": "cover",
-        "email": "z.dong@fss.muni.cz",
-        "profile_url": "https://www.muni.cz/en/people/529373-zhe-dong"
-      },
-      "parent": 8,
-      "locale": "en",
-      "translation_key": "8c85321b-f7de-4cd1-a275-b4bbb3bb8b77",
-      "live": true
-    },
-    {
-      "model": "home.personpage",
-      "id": 17,
-      "fields": {
-        "title": "Mgr. Michaela Kryštofová",
-        "draft_title": "Mgr. Michaela Kryštofová",
-        "slug": "michaela-krystofova",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "",
-        "body": [
-          {
-            "type": "text",
-            "value": "<p><a href=\"https://www.muni.cz/lide/520266-michaela-krystofova\">Mgr. Michaela Kryštofová</a> is a PhD student whose research focuses on group processes in adolescence and on how peer relationships shape young people&#x27;s identity, attitudes and behaviour, particularly within the school class. In her work, she seeks to bridge qualitative and quantitative methodologies and to apply modern methods such as longitudinal social network analysis and agent-based modelling. Outside academia, she is an avid reader, an enthusiastic home baker, and a devoted dog owner.</p>",
-            "id": "a5d9a8a2-a47a-59c8-be83-6d1e2aeb9e9c"
-          }
-        ],
-        "after_body": [],
-        "sections": [],
-        "role": "PhD candidate",
-        "portrait": {
-          "ref": "wagtailimages.image",
-          "id": 15
-        },
-        "card_summary": "",
-        "show_portrait": true,
-        "portrait_size": "standard",
-        "portrait_format": "portrait",
-        "portrait_fit": "cover",
-        "email": "krystofova@fss.muni.cz",
-        "profile_url": "https://www.muni.cz/lide/520266-michaela-krystofova"
-      },
-      "parent": 8,
-      "locale": "en",
-      "translation_key": "2d21c2dd-fc98-42bd-b1bf-711ed7e4ed3a",
-      "live": true
-    },
-    {
-      "model": "home.personpage",
-      "id": 18,
-      "fields": {
-        "title": "Bc. Olesja Nyjherová",
-        "draft_title": "Bc. Olesja Nyjherová",
-        "slug": "olesja-nyjherova",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "",
-        "body": [
-          {
-            "type": "text",
-            "value": "<p><a href=\"https://www.muni.cz/lide/548707-olesja-nyjherova\">Bc. Olesja Nyjherová</a> is a graduate student of psychology at Masaryk University. Her academic interests include psychometrics, research methodology and statistics, as well as developmental psychology. At the BIG lab, she fulfills the role of data collection manager, bringing her love of organization, precision, and careful planning to everything she does. Outside of the lab, she enjoys baking, knitting, and exploring nature.</p>",
-            "id": "ee39e785-5d1d-5c6c-81b2-9c567f71bbb2"
-          }
-        ],
-        "after_body": [],
-        "sections": [],
-        "role": "Fieldwork",
-        "portrait": {
-          "ref": "wagtailimages.image",
-          "id": 3
-        },
-        "card_summary": "",
-        "show_portrait": true,
-        "portrait_size": "standard",
-        "portrait_format": "portrait",
-        "portrait_fit": "cover",
-        "email": "548707@mail.muni.cz",
-        "profile_url": "https://www.muni.cz/lide/548707-olesja-nyjherova"
-      },
-      "parent": 8,
-      "locale": "en",
-      "translation_key": "857b0187-fe32-427f-af5a-f8e5226a2823",
-      "live": true
-    },
-    {
-      "model": "home.personpage",
-      "id": 19,
-      "fields": {
-        "title": "Ching Ting Ang",
-        "draft_title": "Ching Ting Ang",
-        "slug": "ching-ting-ang",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Ching-Ting Ang, MSc, is a doctoral student whose research focuses on adolescent peer cliques, including their structural characteristics, developmental consequences and underlying social processes. She graduated in 2025 from the Erasmus Mundus Joint Master’s Degree in Global MINDs (Social and Cultural Psychology), delivered by SWPS University, the University of Oslo and the University of Limerick.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "role": "PhD candidate",
-        "portrait": {
-          "ref": "wagtailimages.image",
-          "id": 1
-        },
-        "card_summary": "",
-        "show_portrait": true,
-        "portrait_size": "standard",
-        "portrait_format": "portrait",
-        "portrait_fit": "cover",
-        "email": "ang@fss.muni.cz",
-        "profile_url": ""
-      },
-      "parent": 8,
-      "locale": "en",
-      "translation_key": "8b60d391-9047-4d34-8d1a-3982a213f283",
-      "live": true
-    },
-    {
-      "model": "home.personpage",
-      "id": 57,
-      "fields": {
-        "title": "Petra Paličková",
-        "draft_title": "Petra Paličková",
-        "slug": "petra-palickova",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "",
-        "body": [
-          {
-            "type": "text",
-            "value": "<p><a href=\"https://www.muni.cz/lide/561542-petra-palickova\">Petra Paličková</a> is a bachelor’s degree student in Psychology at the Faculty of Social Studies and a research assistant at BIG Lab. In her professional development, she hopes to bridge psychological research and practice. Alongside her work at BIG Lab, she also engages in volunteering, including at Černovice Mental Hospital, where she works with people with mental health difficulties.</p>",
-            "id": "377a0dfc-488f-558b-9119-d0ee5205cfa8"
-          }
-        ],
-        "after_body": [],
-        "sections": [],
-        "role": "Research assistant",
-        "portrait": {
-          "ref": "wagtailimages.image",
-          "id": 14
-        },
-        "card_summary": "",
-        "show_portrait": true,
-        "portrait_size": "standard",
-        "portrait_format": "portrait",
-        "portrait_fit": "cover",
-        "email": "561542@mail.muni.cz",
-        "profile_url": "https://www.muni.cz/lide/561542-petra-palickova"
-      },
-      "parent": 8,
-      "locale": "en",
-      "translation_key": "c8b166a9-73fe-40c0-8d12-9a75e7e3dcb3",
-      "live": true
-    },
-    {
-      "model": "home.personpage",
-      "id": 58,
-      "fields": {
-        "title": "Adéla Franková",
-        "draft_title": "Adéla Franková",
-        "slug": "adela-frankova",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "",
-        "body": [
-          {
-            "type": "text",
-            "value": "<p>Adéla Franková is a Bachelor’s student of Psychology at the Faculty of Social Studies, Masaryk University, and a Research Assistant at the BIG Lab. Through her work, she is gaining experience in psychological research and academic work.</p>",
-            "id": "b857a641-8cb0-5810-ac32-698bdbbca86a"
-          }
-        ],
-        "after_body": [],
-        "sections": [],
-        "role": "Research assistant",
-        "portrait": null,
-        "card_summary": "",
-        "show_portrait": true,
-        "portrait_size": "standard",
-        "portrait_format": "portrait",
-        "portrait_fit": "cover",
-        "email": "575692@mail.muni.cz",
-        "profile_url": ""
-      },
-      "parent": 8,
-      "locale": "en",
-      "translation_key": "c919b962-694c-4489-94be-121e4e18ab40",
-      "live": true
-    },
-    {
       "model": "home.contentpage",
       "id": 61,
       "fields": {
@@ -1605,7 +1605,7 @@
               "title": "Contact",
               "intro": "",
               "is_visible": true,
-              "text": "<p>You can find contact information for individual team members in the section</p>",
+              "text": "",
               "show_email": true,
               "show_phone": true,
               "show_address": true,
@@ -1827,7 +1827,7 @@
               "title": null,
               "intro": "",
               "is_visible": true,
-              "text": "<p>Kontakty na jednotlivé členy týmu najdete v sekci</p>",
+              "text": "",
               "show_email": true,
               "show_phone": true,
               "show_address": true,
@@ -1846,229 +1846,6 @@
       "parent": null,
       "locale": "cs",
       "translation_key": "495d67c7-ea1a-40d2-b7d8-cc40ede31a36",
-      "live": true
-    },
-    {
-      "model": "home.sciencepage",
-      "id": 31,
-      "fields": {
-        "title": "Výzkum",
-        "draft_title": "Výzkum",
-        "slug": "vyzkum",
-        "show_in_menus": true,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Pět propojených oblastí rámuje náš výzkum individuální změny a sociálního šíření.</p>",
-        "body": [
-          {
-            "type": "text",
-            "value": "<p>Propojujeme individuální zkušenost, mezilidský vliv a skupinové vzorce prostřednictvím experimentů, longitudinálních síťových dat a počítačových modelů.</p>",
-            "id": "f2696502-6a06-45de-b8d9-6c80653776a1"
-          }
-        ],
-        "after_body": [],
-        "sections": [
-          {
-            "type": "child_sections",
-            "value": {
-              "title": null,
-              "intro": "",
-              "is_visible": true,
-              "theme": "paper",
-              "anchor": "research-areas",
-              "background_image": null,
-              "background_position": "center",
-              "background_overlay": "medium"
-            },
-            "id": "b26ec627-6dc1-5e2b-8a17-6089a79ef6bf"
-          },
-          {
-            "type": "publications",
-            "value": {
-              "title": null,
-              "intro": "",
-              "is_visible": true,
-              "homepage_limit": 3,
-              "theme": "paper",
-              "anchor": "publications",
-              "background_image": null,
-              "background_position": "center",
-              "background_overlay": "medium"
-            },
-            "id": "47c020b1-6ca2-53d0-b154-639687b6a2a3"
-          },
-          {
-            "type": "project_list",
-            "value": {
-              "title": null,
-              "intro": "",
-              "is_visible": false,
-              "status": "finished",
-              "theme": "paper",
-              "anchor": "finished-projects",
-              "background_image": null,
-              "background_position": "center",
-              "background_overlay": "medium"
-            },
-            "id": "92a84a45-1309-5594-b147-bbc6fae74ecb"
-          },
-          {
-            "type": "collaborations",
-            "value": {
-              "title": "Probíhající a minulé spolupráce",
-              "intro": "",
-              "is_visible": true,
-              "theme": "paper",
-              "anchor": "collaborations",
-              "background_image": null,
-              "background_position": "center",
-              "background_overlay": "medium"
-            },
-            "id": "96c8d18b-b053-5bd4-b8f4-202fc03cad16"
-          },
-          {
-            "type": "callout",
-            "value": {
-              "title": "Chtěli byste s námi spolupracovat?",
-              "intro": "",
-              "is_visible": true,
-              "text": "",
-              "button_label": "Kontakt",
-              "button_page": 67,
-              "button_url": null,
-              "theme": "paper",
-              "anchor": "collaborate",
-              "background_image": null,
-              "background_position": "center",
-              "background_overlay": "medium"
-            },
-            "id": "5b8e7085-2eed-5529-8838-59cc68d65fa2"
-          }
-        ]
-      },
-      "parent": 30,
-      "locale": "cs",
-      "translation_key": "b51d3d27-b531-4644-bd91-b981f9b15b72",
-      "live": true
-    },
-    {
-      "model": "home.contentpage",
-      "id": 32,
-      "fields": {
-        "title": "Vývoj a šíření postojů a chování",
-        "draft_title": "Vývoj a šíření postojů a chování",
-        "slug": "development-and-spread",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Vývoj a šíření postojů a chování je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "cover_image": {
-          "ref": "wagtailimages.image",
-          "id": 4
-        }
-      },
-      "parent": 31,
-      "locale": "cs",
-      "translation_key": "7d3e8727-ea73-4cea-864f-84006cb9da4a",
-      "live": true
-    },
-    {
-      "model": "home.contentpage",
-      "id": 33,
-      "fields": {
-        "title": "Sociální vliv",
-        "draft_title": "Sociální vliv",
-        "slug": "social-influence",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Sociální vliv je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "cover_image": {
-          "ref": "wagtailimages.image",
-          "id": 8
-        }
-      },
-      "parent": 31,
-      "locale": "cs",
-      "translation_key": "d5f864a4-1024-4bc6-af90-052e69d11a43",
-      "live": true
-    },
-    {
-      "model": "home.contentpage",
-      "id": 34,
-      "fields": {
-        "title": "Vnitroskupinová a meziskupinová dynamika",
-        "draft_title": "Vnitroskupinová a meziskupinová dynamika",
-        "slug": "group-dynamics",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Vnitroskupinová a meziskupinová dynamika je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "cover_image": {
-          "ref": "wagtailimages.image",
-          "id": 5
-        }
-      },
-      "parent": 31,
-      "locale": "cs",
-      "translation_key": "3c97cf79-d458-4421-b3f3-04cee6743e18",
-      "live": true
-    },
-    {
-      "model": "home.contentpage",
-      "id": 35,
-      "fields": {
-        "title": "Segregace, předsudky a meziskupinové vztahy",
-        "draft_title": "Segregace, předsudky a meziskupinové vztahy",
-        "slug": "segregation-and-prejudice",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Segregace, předsudky a meziskupinové vztahy je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "cover_image": {
-          "ref": "wagtailimages.image",
-          "id": 7
-        }
-      },
-      "parent": 31,
-      "locale": "cs",
-      "translation_key": "58ad160a-7aad-4d8c-b038-616fd68a8610",
-      "live": true
-    },
-    {
-      "model": "home.contentpage",
-      "id": 36,
-      "fields": {
-        "title": "Sociální sítě",
-        "draft_title": "Sociální sítě",
-        "slug": "social-networks",
-        "show_in_menus": false,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Sociální sítě je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
-        "body": [],
-        "after_body": [],
-        "sections": [],
-        "cover_image": {
-          "ref": "wagtailimages.image",
-          "id": 6
-        }
-      },
-      "parent": 31,
-      "locale": "cs",
-      "translation_key": "cf277618-b7ee-4c46-b3d3-621111e5067b",
       "live": true
     },
     {
@@ -2570,6 +2347,229 @@
       "live": true
     },
     {
+      "model": "home.sciencepage",
+      "id": 31,
+      "fields": {
+        "title": "Výzkum",
+        "draft_title": "Výzkum",
+        "slug": "vyzkum",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Pět propojených oblastí rámuje náš výzkum individuální změny a sociálního šíření.</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>Propojujeme individuální zkušenost, mezilidský vliv a skupinové vzorce prostřednictvím experimentů, longitudinálních síťových dat a počítačových modelů.</p>",
+            "id": "f2696502-6a06-45de-b8d9-6c80653776a1"
+          }
+        ],
+        "after_body": [],
+        "sections": [
+          {
+            "type": "child_sections",
+            "value": {
+              "title": null,
+              "intro": "",
+              "is_visible": true,
+              "theme": "paper",
+              "anchor": "research-areas",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            },
+            "id": "b26ec627-6dc1-5e2b-8a17-6089a79ef6bf"
+          },
+          {
+            "type": "publications",
+            "value": {
+              "title": null,
+              "intro": "",
+              "is_visible": true,
+              "homepage_limit": 3,
+              "theme": "paper",
+              "anchor": "publications",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            },
+            "id": "47c020b1-6ca2-53d0-b154-639687b6a2a3"
+          },
+          {
+            "type": "project_list",
+            "value": {
+              "title": null,
+              "intro": "",
+              "is_visible": false,
+              "status": "finished",
+              "theme": "paper",
+              "anchor": "finished-projects",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            },
+            "id": "92a84a45-1309-5594-b147-bbc6fae74ecb"
+          },
+          {
+            "type": "collaborations",
+            "value": {
+              "title": "Probíhající a minulé spolupráce",
+              "intro": "",
+              "is_visible": true,
+              "theme": "paper",
+              "anchor": "collaborations",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            },
+            "id": "96c8d18b-b053-5bd4-b8f4-202fc03cad16"
+          },
+          {
+            "type": "callout",
+            "value": {
+              "title": "Chtěli byste s námi spolupracovat?",
+              "intro": "",
+              "is_visible": true,
+              "text": "",
+              "button_label": "Kontakt",
+              "button_page": 67,
+              "button_url": null,
+              "theme": "paper",
+              "anchor": "collaborate",
+              "background_image": null,
+              "background_position": "center",
+              "background_overlay": "medium"
+            },
+            "id": "5b8e7085-2eed-5529-8838-59cc68d65fa2"
+          }
+        ]
+      },
+      "parent": 30,
+      "locale": "cs",
+      "translation_key": "b51d3d27-b531-4644-bd91-b981f9b15b72",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 32,
+      "fields": {
+        "title": "Vývoj a šíření postojů a chování",
+        "draft_title": "Vývoj a šíření postojů a chování",
+        "slug": "development-and-spread",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Vývoj a šíření postojů a chování je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 4
+        }
+      },
+      "parent": 31,
+      "locale": "cs",
+      "translation_key": "7d3e8727-ea73-4cea-864f-84006cb9da4a",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 33,
+      "fields": {
+        "title": "Sociální vliv",
+        "draft_title": "Sociální vliv",
+        "slug": "social-influence",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Sociální vliv je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 8
+        }
+      },
+      "parent": 31,
+      "locale": "cs",
+      "translation_key": "d5f864a4-1024-4bc6-af90-052e69d11a43",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 34,
+      "fields": {
+        "title": "Vnitroskupinová a meziskupinová dynamika",
+        "draft_title": "Vnitroskupinová a meziskupinová dynamika",
+        "slug": "group-dynamics",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Vnitroskupinová a meziskupinová dynamika je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 5
+        }
+      },
+      "parent": 31,
+      "locale": "cs",
+      "translation_key": "3c97cf79-d458-4421-b3f3-04cee6743e18",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 35,
+      "fields": {
+        "title": "Segregace, předsudky a meziskupinové vztahy",
+        "draft_title": "Segregace, předsudky a meziskupinové vztahy",
+        "slug": "segregation-and-prejudice",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Segregace, předsudky a meziskupinové vztahy je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 7
+        }
+      },
+      "parent": 31,
+      "locale": "cs",
+      "translation_key": "58ad160a-7aad-4d8c-b038-616fd68a8610",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 36,
+      "fields": {
+        "title": "Sociální sítě",
+        "draft_title": "Sociální sítě",
+        "slug": "social-networks",
+        "show_in_menus": false,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Sociální sítě je jednou z pěti propojených výzkumných oblastí BIG Labu.</p>",
+        "body": [],
+        "after_body": [],
+        "sections": [],
+        "cover_image": {
+          "ref": "wagtailimages.image",
+          "id": 6
+        }
+      },
+      "parent": 31,
+      "locale": "cs",
+      "translation_key": "cf277618-b7ee-4c46-b3d3-621111e5067b",
+      "live": true
+    },
+    {
       "model": "home.projectpage",
       "id": 46,
       "fields": {
@@ -2719,91 +2719,6 @@
     },
     {
       "model": "home.contentpage",
-      "id": 48,
-      "fields": {
-        "title": "Pro rodiče",
-        "draft_title": "Pro rodiče",
-        "slug": "for-parents",
-        "show_in_menus": true,
-        "seo_title": "",
-        "search_description": "",
-        "intro": "<p>Postoje Adolescentů a Rozvoj Třídní Atmosféry</p>",
-        "body": [
-          {
-            "type": "text",
-            "value": "<p>PARTA je několikaletý výzkumný projekt, který zkoumá, jak se adolescenti sdružují do skupin a jakou roli tyto skupiny hrají při šíření postojů a chování mezi vrstevníky.</p><p>Výzkum zajišťuje Laboratoř chování jednotlivců a skupin (BIG lab), působící pod Masarykovou univerzitou v Brně.</p>",
-            "id": "0030fc8f-bc5c-5010-8529-20d0c14fd081"
-          },
-          {
-            "type": "heading",
-            "value": "Význam výzkumu na školách",
-            "id": "22955217-6bce-51ac-ae1e-9d25d005e6d9"
-          },
-          {
-            "type": "text",
-            "value": "<p>Střední škola je pro adolescenty klíčové období. Právě ve škole se formují postoje a chování, které ovlivňují budoucnost samotných studentů i celé společnosti, a velkou roli v tom hrají vrstevníci. Studenti se navíc přirozeně sdružují do skupin podle toho, co mají společného. Chceme zjistit, kdy a jak se skupiny podílejí na šíření negativního i pozitivního chování. Spolupráce se školami nám pomáhá lépe předcházet negativnímu chování a podporovat to pozitivní.</p>",
-            "id": "0fdc8cd9-8ffd-5d4a-808d-99c7eacce8af"
-          },
-          {
-            "type": "heading",
-            "value": "Průběh výzkumu",
-            "id": "a8e32053-c867-5e44-854e-0b106225e477"
-          },
-          {
-            "type": "text",
-            "value": "<p>PARTA je dlouhodobý výzkumný projekt, který proběhne na 16 školách v Jihomoravském a Moravskoslezském kraji. Před spuštěním plošného výzkumu však vše nejdříve otestujeme na naší spolupracující pilotní škole. Všechny části výzkumu budou probíhat na půdě školy, v čase běžného vyučování.</p><p>Na pilotní škole se odehrají tři různé fáze výzkumu:</p>",
-            "id": "76c006f9-f4fe-567c-a03d-d5cc730a365a"
-          },
-          {
-            "type": "text",
-            "value": "<ol><li>V individuálních rozhovorech se studentů zeptáme jak vnímají atmosféru ve třídě a popovídáme si o jejich názorech a preferencích. Rozhovory proběhnou v říjnu 2026 a v květnu 2027.</li><li>V druhé části otestujeme dotazník. Tato část proběhne v dubnu 2027.</li><li>V třetí části otestujeme program na podporu pozitivního chování, kterého se zúčastní celá třída společně. V týdnech před a po programu také studenti vyplní dotazník. Program proběhne na podzim 2027.</li></ol>",
-            "id": "6d068ae8-7b03-518b-b2d1-bb25c216f8e8"
-          },
-          {
-            "type": "text",
-            "value": "<p>Plošný sběr je koncipován jako longitudinální výzkum, který tvoří 4 vlny sběru dat, s odstupem půl roku. Jedno měření potrvá přibližně jednu vyučovací hodinu. Součástí sběru dat bude také program na podporu pozitivního chování, který proběhne mezi druhou a třetí vlnou sběru dat. První vlna je naplánovaná na podzim 2027.</p><p>Kde v časové ose výzkumu se nacházíme právě teď si můžete ověřit zde</p>",
-            "id": "99489748-63d2-5ea9-a02a-30b40fae2b72"
-          },
-          {
-            "type": "button",
-            "value": {
-              "label": "Časová osa",
-              "page": 51,
-              "url": ""
-            },
-            "id": "be234a52-39b0-5ab2-b408-1cb53e836d7b"
-          },
-          {
-            "type": "heading",
-            "value": "Účast mého dítěte",
-            "id": "e1fb94e7-3f5b-5466-9580-9b39b2942966"
-          },
-          {
-            "type": "text",
-            "value": "<p>Účastnit se výzkumu mohou pouze studenti zapojených škol ve věku alespoň 15 let. Dále je ve všech fázích pilotního výzkumu a plošného sběru k účasti nezletilého nutný i souhlas zákonného zástupce. Pokud s námi Vaše škola spolupracuje, dříve nebo později budete osloveni s dalšími informacemi a s možností do výzkumu se přihlásit. Pokud máte přesto nějaké otázky, kontaktujte nás</p>",
-            "id": "47e20cf5-619f-50ca-935a-820f351009d5"
-          },
-          {
-            "type": "button",
-            "value": {
-              "label": "Kontakt",
-              "page": 67,
-              "url": ""
-            },
-            "id": "952ce852-66ae-5915-9397-71756a2bf28e"
-          }
-        ],
-        "after_body": [],
-        "sections": [],
-        "cover_image": null
-      },
-      "parent": 47,
-      "locale": "cs",
-      "translation_key": "56264938-27e5-48ee-98b4-e925394b5c2a",
-      "live": true
-    },
-    {
-      "model": "home.contentpage",
       "id": 49,
       "fields": {
         "title": "Pro školy",
@@ -2900,6 +2815,91 @@
       "parent": 47,
       "locale": "cs",
       "translation_key": "d78c35b5-0d21-4652-bc98-2690396f7f90",
+      "live": true
+    },
+    {
+      "model": "home.contentpage",
+      "id": 48,
+      "fields": {
+        "title": "Pro rodiče",
+        "draft_title": "Pro rodiče",
+        "slug": "for-parents",
+        "show_in_menus": true,
+        "seo_title": "",
+        "search_description": "",
+        "intro": "<p>Postoje Adolescentů a Rozvoj Třídní Atmosféry</p>",
+        "body": [
+          {
+            "type": "text",
+            "value": "<p>PARTA je několikaletý výzkumný projekt, který zkoumá, jak se adolescenti sdružují do skupin a jakou roli tyto skupiny hrají při šíření postojů a chování mezi vrstevníky.</p><p>Výzkum zajišťuje Laboratoř chování jednotlivců a skupin (BIG lab), působící pod Masarykovou univerzitou v Brně.</p>",
+            "id": "0030fc8f-bc5c-5010-8529-20d0c14fd081"
+          },
+          {
+            "type": "heading",
+            "value": "Význam výzkumu na školách",
+            "id": "22955217-6bce-51ac-ae1e-9d25d005e6d9"
+          },
+          {
+            "type": "text",
+            "value": "<p>Střední škola je pro adolescenty klíčové období. Právě ve škole se formují postoje a chování, které ovlivňují budoucnost samotných studentů i celé společnosti, a velkou roli v tom hrají vrstevníci. Studenti se navíc přirozeně sdružují do skupin podle toho, co mají společného. Chceme zjistit, kdy a jak se skupiny podílejí na šíření negativního i pozitivního chování. Spolupráce se školami nám pomáhá lépe předcházet negativnímu chování a podporovat to pozitivní.</p>",
+            "id": "0fdc8cd9-8ffd-5d4a-808d-99c7eacce8af"
+          },
+          {
+            "type": "heading",
+            "value": "Průběh výzkumu",
+            "id": "a8e32053-c867-5e44-854e-0b106225e477"
+          },
+          {
+            "type": "text",
+            "value": "<p>PARTA je dlouhodobý výzkumný projekt, který proběhne na 16 školách v Jihomoravském a Moravskoslezském kraji. Před spuštěním plošného výzkumu však vše nejdříve otestujeme na naší spolupracující pilotní škole. Všechny části výzkumu budou probíhat na půdě školy, v čase běžného vyučování.</p><p>Na pilotní škole se odehrají tři různé fáze výzkumu:</p>",
+            "id": "76c006f9-f4fe-567c-a03d-d5cc730a365a"
+          },
+          {
+            "type": "text",
+            "value": "<ol><li>V individuálních rozhovorech se studentů zeptáme jak vnímají atmosféru ve třídě a popovídáme si o jejich názorech a preferencích. Rozhovory proběhnou v říjnu 2026 a v květnu 2027.</li><li>V druhé části otestujeme dotazník. Tato část proběhne v dubnu 2027.</li><li>V třetí části otestujeme program na podporu pozitivního chování, kterého se zúčastní celá třída společně. V týdnech před a po programu také studenti vyplní dotazník. Program proběhne na podzim 2027.</li></ol>",
+            "id": "6d068ae8-7b03-518b-b2d1-bb25c216f8e8"
+          },
+          {
+            "type": "text",
+            "value": "<p>Plošný sběr je koncipován jako longitudinální výzkum, který tvoří 4 vlny sběru dat, s odstupem půl roku. Jedno měření potrvá přibližně jednu vyučovací hodinu. Součástí sběru dat bude také program na podporu pozitivního chování, který proběhne mezi druhou a třetí vlnou sběru dat. První vlna je naplánovaná na podzim 2027.</p><p>Kde v časové ose výzkumu se nacházíme právě teď si můžete ověřit zde</p>",
+            "id": "99489748-63d2-5ea9-a02a-30b40fae2b72"
+          },
+          {
+            "type": "button",
+            "value": {
+              "label": "Časová osa",
+              "page": 51,
+              "url": ""
+            },
+            "id": "be234a52-39b0-5ab2-b408-1cb53e836d7b"
+          },
+          {
+            "type": "heading",
+            "value": "Účast mého dítěte",
+            "id": "e1fb94e7-3f5b-5466-9580-9b39b2942966"
+          },
+          {
+            "type": "text",
+            "value": "<p>Účastnit se výzkumu mohou pouze studenti zapojených škol ve věku alespoň 15 let. Dále je ve všech fázích pilotního výzkumu a plošného sběru k účasti nezletilého nutný i souhlas zákonného zástupce. Pokud s námi Vaše škola spolupracuje, dříve nebo později budete osloveni s dalšími informacemi a s možností do výzkumu se přihlásit. Pokud máte přesto nějaké otázky, kontaktujte nás</p>",
+            "id": "47e20cf5-619f-50ca-935a-820f351009d5"
+          },
+          {
+            "type": "button",
+            "value": {
+              "label": "Kontakt",
+              "page": 67,
+              "url": ""
+            },
+            "id": "952ce852-66ae-5915-9397-71756a2bf28e"
+          }
+        ],
+        "after_body": [],
+        "sections": [],
+        "cover_image": null
+      },
+      "parent": 47,
+      "locale": "cs",
+      "translation_key": "56264938-27e5-48ee-98b4-e925394b5c2a",
       "live": true
     },
     {
@@ -3270,7 +3270,7 @@
               "title": "Kontakt",
               "intro": "",
               "is_visible": true,
-              "text": "<p>Kontakty na jednotlivé členy týmu najdete v sekci</p>",
+              "text": "",
               "show_email": true,
               "show_phone": true,
               "show_address": true,
@@ -3866,6 +3866,90 @@
         },
         "key": "contact_team",
         "text": "Lidé"
+      }
+    },
+    {
+      "model": "home.interfacetext",
+      "id": 5,
+      "fields": {
+        "translation_key": "943dcdd5-ae90-5875-9779-dfe46b2a7708",
+        "locale": {
+          "locale": "en"
+        },
+        "key": "contact_visit",
+        "text": "or stop by the Faculty of Social Studies in person"
+      }
+    },
+    {
+      "model": "home.interfacetext",
+      "id": 6,
+      "fields": {
+        "translation_key": "85a3a1ba-0b76-5759-b319-ba74c9571521",
+        "locale": {
+          "locale": "en"
+        },
+        "key": "contact_team_intro",
+        "text": "You can find contact information for individual team members in the section"
+      }
+    },
+    {
+      "model": "home.interfacetext",
+      "id": 7,
+      "fields": {
+        "translation_key": "943dcdd5-ae90-5875-9779-dfe46b2a7708",
+        "locale": {
+          "locale": "cs"
+        },
+        "key": "contact_visit",
+        "text": "nebo se za námi zastavte osobně na Fakultu sociálních studií"
+      }
+    },
+    {
+      "model": "home.interfacetext",
+      "id": 8,
+      "fields": {
+        "translation_key": "85a3a1ba-0b76-5759-b319-ba74c9571521",
+        "locale": {
+          "locale": "cs"
+        },
+        "key": "contact_team_intro",
+        "text": "Kontakty na jednotlivé členy týmu najdete v sekci"
+      }
+    },
+    {
+      "model": "home.interfacetext",
+      "id": 9,
+      "fields": {
+        "translation_key": "2f47fb3c-35b1-53e8-976a-45e90e585895",
+        "locale": {
+          "locale": "en"
+        },
+        "key": "about",
+        "text": "About us"
+      }
+    },
+    {
+      "model": "home.interfacetext",
+      "id": 10,
+      "fields": {
+        "translation_key": "f5b643fa-0067-5b95-9097-869a5f089cce",
+        "locale": {
+          "locale": "en"
+        },
+        "key": "collaborations",
+        "text": "Collaboration"
+      }
+    },
+    {
+      "model": "home.interfacetext",
+      "id": 11,
+      "fields": {
+        "translation_key": "88625f36-8cc5-5cc6-993d-deb0c68edddd",
+        "locale": {
+          "locale": "cs"
+        },
+        "key": "finished_projects",
+        "text": "Dokončené projekty"
       }
     }
   ],

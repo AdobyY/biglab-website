@@ -1,0 +1,3 @@
+{% load ui_tags %}
+<iframe src="https://maps.google.com/maps?q={{ contact.address|urlencode }}&amp;hl={{ page.locale.language_code|urlencode }}&amp;z=16&amp;output=embed" title="{% ui 'map_title' %}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+<a class="contact-map-link" href="https://www.google.com/maps/search/?api=1&amp;query={{ contact.address|urlencode }}" target="_blank" rel="noopener noreferrer">{% ui 'view_map' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>

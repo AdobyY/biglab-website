@@ -6,6 +6,7 @@ from django import template
 from django.core.exceptions import ObjectDoesNotExist
 from wagtail.models import Locale, Site
 from home.ui import default_ui_text
+from home.templatetags.ui_tags import ui
 
 
 register = template.Library()
@@ -161,7 +162,7 @@ def primary_navigation(context, root):
     about_url = homepage_url(root, version, "about") if version == "2" else f"{root.url}#about"
     about_current = bool(page and page.pk == root.pk and (version != "2" or context.get("is_about_page")))
     items = _build_menu(root, page, version=version)
-    about_children = [{"page": SimpleNamespace(id=f'lab-{root.pk}', title='Lab'),
+    about_children = [{"page": SimpleNamespace(id=f'lab-{root.pk}', title=context.get('identity', {}).get('name', 'BIG Lab')),
                        "url": about_url, "active": about_current,
                        "current": about_current, "children": []}]
     remaining = []
@@ -181,12 +182,12 @@ def primary_navigation(context, root):
             for block in item['page'].sections:
                 if block.block_type in {'publications', 'collaborations', 'project_list'} and block.value.get('is_visible') and block.value.get('anchor'):
                     key = block.block_type if block.block_type != 'project_list' else ('finished_projects' if block.value.get('status') == 'finished' else 'projects')
-                    item['children'].append({'page': SimpleNamespace(id=f"{item['page'].pk}-{block.value['anchor']}", title=block.value.get('title') or default_ui_text(key, language)),
+                    item['children'].append({'page': SimpleNamespace(id=f"{item['page'].pk}-{block.value['anchor']}", title=ui(context, key)),
                         'url': design_url(f"{item['page'].url}#{block.value['anchor']}", version), 'active': False, 'current': False, 'children': []})
             break
     else:
         remaining.extend(project_items)
-    about = {'page': SimpleNamespace(id=root.pk, title=default_ui_text('about', language)),
+    about = {'page': SimpleNamespace(id=root.pk, title=ui(context, 'about')),
              'url': about_url, 'active': any(child['active'] for child in about_children),
              'current': about_current, 'children': about_children}
     return {

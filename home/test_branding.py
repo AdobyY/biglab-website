@@ -3,8 +3,10 @@ import tempfile
 
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
+from django.urls import reverse
 from PIL import Image
 from wagtail.images import get_image_model
 from wagtail.models import Site
@@ -61,6 +63,33 @@ class SharedBrandTests(TestCase):
             public = self.soup("/")
             self.assertEqual(public.select_one("#wagtail-userbar-template .biglab-admin-logo")["src"], expected)
             self.assertIsNotNone(public.select_one("#wagtail-userbar-template .w-userbar--bottom-left"))
+
+    def test_regular_editor_can_save_a_replacement_shared_logo(self):
+        editor = get_user_model().objects.create_user("logo-editor", password="test-password")
+        editor.groups.add(Group.objects.get(name="Editors"))
+        self.assertFalse(editor.is_superuser)
+        self.assertTrue(editor.has_perm("home.change_contactsettings"))
+        payload = BytesIO()
+        Image.new("RGB", (300, 120), "navy").save(payload, format="PNG")
+        logo = get_image_model().objects.create(
+            title="Replacement logo", file=SimpleUploadedFile("replacement.png", payload.getvalue(), "image/png"),
+        )
+        self.client.force_login(editor)
+        response = self.client.post(reverse("wagtailsettings:edit", args=["home", "contactsettings", self.site.pk]), {
+            "site_name": self.settings.site_name, "logo": logo.pk,
+            "email": self.settings.email, "address": self.settings.address,
+            "tagline": self.settings.tagline, "copyright_text": self.settings.copyright_text,
+            "phone": self.settings.phone, "show_social_links": "on",
+            "linkedin_url": self.settings.linkedin_url, "instagram_url": self.settings.instagram_url,
+            "facebook_url": self.settings.facebook_url,
+        })
+        self.assertEqual(response.status_code, 302)
+        self.settings.refresh_from_db()
+        self.assertEqual(self.settings.logo_id, logo.pk)
+        self.client.logout()
+        expected = logo.get_rendition("max-240x240").url
+        self.assertEqual({image["src"] for image in self.soup("/").select(".brand-mark")}, {expected})
+        self.assertEqual(self.soup("/admin/login/").select_one(".biglab-admin-logo")["src"], expected)
 
     def test_password_reset_and_admin_not_found_keep_branding(self):
         reset = self.soup("/admin/password_reset/")

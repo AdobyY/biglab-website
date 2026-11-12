@@ -24,6 +24,8 @@
 .contact-direct-link span { grid-column: 1 / -1; color: var(--contact-muted); font-size: .9rem; }
 .contact-direct-link:hover { color: var(--contact-accent); }
 .contact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.75rem; }
+.contact-team-intro { margin-top: 1.75rem; margin-bottom: .75rem; }
+.contact-team-intro + .contact-actions { margin-top: 0; }
 .template-homepage .contact-panel .button { display: inline-flex; align-items: center; justify-content: center; gap: 1rem; background: var(--contact-accent); color: var(--contact-bg); border-color: var(--contact-accent); }
 .template-homepage .contact-panel .button:hover { background: var(--contact-ink); border-color: var(--contact-ink); }
 .contact-panel .button::after { content: none; }

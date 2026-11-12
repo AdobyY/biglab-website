@@ -54,6 +54,7 @@ ENV PYTHONUNBUFFERED=1 \
     DJANGO_SETTINGS_MODULE=config.settings.production \
     SQLITE_PATH=/data/db.sqlite3 \
     MEDIA_ROOT=/data/media \
+    SEED_INITIAL_CONTENT=0 \
     PATH="/opt/venv/bin:$PATH"
 
 

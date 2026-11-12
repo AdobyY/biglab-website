@@ -423,6 +423,10 @@ figcaption { color: var(--section-muted, var(--muted)); font-size: .85rem; line-
 .contact-details { display: flex; align-items: flex-start; flex-direction: column; gap: .75rem; }
 .contact-email { font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 600; }
 .contact-details address { font-size: 1rem; }
+.builder-contact-map { width: 100%; margin-block: .5rem 1.25rem; }
+.builder-contact-map iframe { display: block; width: 100%; height: 20rem; border: 0; border-radius: 12px; }
+.builder-contact-map .contact-map-link { display: inline-flex; align-items: center; gap: .5rem; margin-top: .75rem; }
+.builder-contact-map svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; }
 .site-footer { background: var(--navy); color: var(--paper); padding-block: 4rem 1.5rem; }
 .footer-lead .site-name { font-size: 1.4rem; }
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr .8fr; gap: 3rem; }

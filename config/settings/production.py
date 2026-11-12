@@ -66,3 +66,6 @@ STORAGES["staticfiles"]["BACKEND"] = (
 )
 
 # Runtime secrets and security settings come exclusively from the environment.
+from config.observability import configure_sentry
+
+configure_sentry(debug=DEBUG)
