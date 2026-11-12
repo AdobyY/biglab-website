@@ -212,6 +212,7 @@ class Command(BaseCommand):
     help = "Synchronize all content from the committed development snapshot."
 
     def add_arguments(self, parser):
+        parser.add_argument("--check", action="store_true", help="Validate the snapshot, links, tree and asset checksums without changing the database.")
         parser.add_argument("--force", action="store_true", help="Deprecated; explicit seed_biglab runs already synchronize the snapshot.")
         parser.add_argument("--bootstrap", action="store_true", help="Use the legacy initial source-content importer instead of the development snapshot.")
         parser.add_argument("--bundle-dir", help="Directory containing an exported development content snapshot.")
@@ -219,6 +220,13 @@ class Command(BaseCommand):
         parser.add_argument("--reset", action="store_true", help="Replace all editorial content with the snapshot, removing added test pages, snippets and media. Keeps accounts and the site domain.")
 
     def handle(self, *args, **options):
+        if options["check"]:
+            if options["reset"] or options["bootstrap"] or options["if_changed"]:
+                raise CommandError("--check cannot be combined with --reset, --bootstrap or --if-changed.")
+            from home.content_snapshot import DEFAULT_BUNDLE, load_bundle
+            data, _ = load_bundle(options["bundle_dir"] or DEFAULT_BUNDLE)
+            self.stdout.write(self.style.SUCCESS(f"Content snapshot valid: {len(data['pages'])} pages, {len(data['assets'])} assets, {len(data['snippets'])} snippets."))
+            return
         if options["reset"] and (options["bootstrap"] or options["if_changed"]):
             raise CommandError("--reset cannot be combined with --bootstrap or --if-changed.")
         if not options["bootstrap"]:

@@ -1,5 +1,21 @@
 # Seed asset provenance
 
+## Client content update, 2026-11-12
+
+The user supplied `CONTENT.docx`, `big_lab_logo.png`, `big_lab_logo_JPG.jpg`,
+`big_lab_logo_rgb.pdf` and `big_lab_logo_cmyk.pdf` directly. Originals are retained
+unchanged in `supplied/`; these are source materials rather than public downloads.
+The document is the source for the complete Czech/English editorial update.
+
+- `eusn2026.png` is `word/media/image2.png` extracted unchanged from that document,
+  following the EUSN2026 news item. The SATIS news item retains its existing photo.
+- `config/static/images/biglab-logo-full.svg` is a vector export of the RGB PDF.
+- `config/static/images/biglab-logo.png` is the network emblem from the same PDF,
+  rendered at 4× resolution using PDF coordinates `(72, 68, 218, 208)` for the
+  existing square public/CMS logo control. No logo was redrawn.
+- Petra and Michaela retain the previously supplied portraits below. Olesja's
+  portrait remains unchanged and Adéla retains the requested grey placeholder.
+
 Original files were downloaded from the public BIG Lab page supplied by the user on 2026-09-21. They are retained as source material for the Wagtail seed command. Updated client portraits are listed below.
 
 - `utku-caybas.jpeg` — https://cdn.muni.cz/media/4134973/caybas_jpeg.jpeg

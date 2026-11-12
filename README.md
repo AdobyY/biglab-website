@@ -15,6 +15,17 @@ uv run python manage.py createsuperuser
 uv run python manage.py runserver
 ```
 
+The committed baseline includes the complete English/Czech content from the supplied
+12 November 2026 `CONTENT.docx`: eight team profiles with emails, six dated news items,
+PARTA audience pages and its editable 2026–2029 timeline. The current timeline period
+is determined by its milestone dates. Results and completed-project sections are hidden.
+The supplied logo is shared by the public website and CMS through Contact settings.
+
+Validate the baseline without changing data with `uv run python manage.py seed_biglab --check`.
+Reapply it with `uv run python manage.py seed_biglab`; restore the full baseline and remove
+added test content with `uv run python manage.py seed_biglab --reset`. Original supplied
+materials are retained in `home/seed_assets/supplied/`. See [content update](docs/content-update.md).
+
 The public site is available at `/`, the Czech version at `/cs/`, and the CMS at `/admin/`.
 
 The homepage has two versions. Version 1 is the default and retains the full page;

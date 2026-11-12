@@ -5,9 +5,11 @@ import hashlib
 import json
 from pathlib import Path
 import re
+from types import SimpleNamespace
 
 from django.apps import apps
 from django.core.files import File
+from django.core.exceptions import FieldDoesNotExist
 from django.core.management.base import CommandError
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db import transaction
@@ -185,29 +187,91 @@ def clear_editorial_content(data, site):
     return deleted
 
 
+def load_bundle(directory=DEFAULT_BUNDLE):
+    """Validate portable identities, links, tree and files before changing content."""
+    directory = Path(directory).resolve()
+    try:
+        payload = (directory / "content.json").read_bytes()
+        data = json.loads(payload)
+    except (OSError, ValueError) as error:
+        raise CommandError(f"Cannot read content snapshot: {error}") from error
+    if not isinstance(data, dict) or data.get("version") != 1:
+        raise CommandError("Unsupported content snapshot version.")
+    group, item = "manifest", {}
+    try:
+        mappings = {(label(Page), data["tree_root"]): SimpleNamespace(pk=data["tree_root"])}
+        for group in ("pages", "assets", "snippets", "settings"):
+            identities = set()
+            for item in data[group]:
+                model = apps.get_model(item["model"])
+                permitted = (model in SITE_SETTINGS if group == "settings" else
+                             model in SNIPPETS if group == "snippets" else
+                             model in (get_image_model(), get_document_model()) if group == "assets" else
+                             model._meta.app_label == "home" and issubclass(model, Page))
+                if not permitted:
+                    raise ValueError(f"Unsupported {group} model: {item['model']}")
+                identity = (label(model), item["id"])
+                if identity in identities or (group != "settings" and identity in mappings):
+                    raise ValueError(f"Duplicate {group} identity: {identity}")
+                identities.add(identity)
+                if group != "settings":
+                    mappings[identity] = SimpleNamespace(pk=item["id"])
+        pages = {item["id"]: item for item in data["pages"]}
+        group, item = "pages", {"id": data["default_root"]}
+        if pages[data["default_root"]]["parent"] is not None:
+            raise ValueError("The default home must be a tree root.")
+        seen, slugs, translations = set(), set(), set()
+        for item in data["pages"]:
+            if item["locale"] not in data["locales"]:
+                raise ValueError(f"Unknown locale: {item['locale']}")
+            parent = item["parent"]
+            if parent is not None and (parent not in seen or pages[parent]["locale"] != item["locale"]):
+                raise ValueError(f"Page {item['id']} needs a preceding parent in the same locale.")
+            slug = (parent, item["fields"]["slug"])
+            translation = (item["locale"], item["translation_key"])
+            if slug in slugs or translation in translations:
+                raise ValueError(f"Duplicate page slug or translation: {item['id']}")
+            slugs.add(slug)
+            translations.add(translation)
+            seen.add(item["id"])
+        for group in ("pages", "assets", "snippets", "settings"):
+            for item in data[group]:
+                model = apps.get_model(item["model"])
+                for name, value in item["fields"].items():
+                    field = model._meta.get_field(name)
+                    if field.is_relation and value:
+                        if "locale" in value:
+                            if value["locale"] not in data["locales"]:
+                                raise ValueError(f"Unknown locale: {value['locale']}")
+                        else:
+                            mappings[(value["ref"], value["id"])]
+                    elif isinstance(field, StreamField):
+                        remap_block(field.stream_block, json.loads(value) if isinstance(value, str) else value, mappings)
+                    elif isinstance(field, RichTextField):
+                        remap_rich_text(value, mappings)
+        group = "assets"
+        for item in data["assets"]:
+            source = (directory / item["asset"]).resolve()
+            if not source.is_relative_to(directory) or not source.is_file():
+                raise ValueError(f"Missing or invalid asset: {item['asset']}")
+            if hashlib.sha256(source.read_bytes()).hexdigest() != item["sha256"]:
+                raise ValueError(f"Asset checksum mismatch: {item['asset']}")
+    except (KeyError, TypeError, ValueError, LookupError, FieldDoesNotExist) as error:
+        raise CommandError(f"Invalid content snapshot ({group}, record {item.get('id', '?')}): {error}") from error
+    return data, payload
+
+
 def import_bundle(directory=DEFAULT_BUNDLE, *, if_changed=False, reset=False):
     if reset and if_changed:
         raise CommandError("--reset cannot be combined with --if-changed.")
     directory = Path(directory)
-    manifest = directory / "content.json"
-    if not manifest.exists():
-        raise CommandError("Export development content with export_biglab_content first.")
-    payload = manifest.read_bytes()
+    data, payload = load_bundle(directory)
     # Reapply when the importer gains a repair, even for the same content.
     digest = hashlib.sha256(b"biglab-content-sync-v2\n" + payload).hexdigest()
-    data = json.loads(payload)
-    if data.get("version") != 1:
-        raise CommandError("Unsupported content snapshot version.")
     from django.conf import settings
     marker = Path(settings.MEDIA_ROOT) / ".biglab-content-version"
     if if_changed and marker.exists() and marker.read_text(encoding="ascii").strip() == digest:
         return {"unchanged": True}
-    for item in data["assets"]:
-        source = (directory / item["asset"]).resolve()
-        if not source.is_relative_to(directory.resolve()) or not source.is_file():
-            raise CommandError("Missing or invalid snapshot asset.")
-        if hashlib.sha256(source.read_bytes()).hexdigest() != item["sha256"]:
-            raise CommandError("Snapshot asset checksum mismatch.")
     mappings = {(label(Page), data["tree_root"]): Page.get_first_root_node()}
     counts = {"pages": 0, "assets": 0, "snippets": 0, "settings": 0, "urls": 0}
     with transaction.atomic():
@@ -236,7 +300,8 @@ def import_bundle(directory=DEFAULT_BUNDLE, *, if_changed=False, reset=False):
                 raise CommandError("Unsupported snapshot snippet model.")
             locale = Locale.objects.get(language_code=item["fields"]["locale"]["locale"])
             key = "title" if model is Publication else "name" if model is Collaboration else "key"
-            obj = model.objects.filter(locale=locale, **{key: item["fields"][key]}).first() or model()
+            obj = model.objects.filter(locale=locale, translation_key=item["fields"]["translation_key"]).first()
+            obj = obj or model.objects.filter(locale=locale, **{key: item["fields"][key]}).first() or model()
             assign_fields(obj, item["fields"], mappings)
             obj.save()
             mappings[(label(model), item["id"])] = obj

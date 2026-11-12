@@ -516,7 +516,11 @@ try:
     assert home.hero_summary == expected_home["fields"]["hero_summary"]
     assert home.hero_title == expected_home["fields"]["hero_title"]
     assert HomePage.objects.get(locale__language_code="cs").hero_summary
-    assert not ProjectPage.objects.get(slug="parta", locale__language_code="en").get_children().live().exists()
+    parta = ProjectPage.objects.get(slug="parta", locale__language_code="en")
+    source_parta = next(p for p in snapshot["pages"] if p["locale"] == "en" and p["fields"]["slug"] == "parta")
+    expected_live_children = {p["fields"]["slug"] for p in snapshot["pages"] if p["parent"] == source_parta["id"] and p["live"]}
+    assert set(parta.get_children().live().values_list("slug", flat=True)) == expected_live_children
+    assert not parta.get_children().get(slug="results").live
     assert get_image_model().objects.count() == len(snapshot["assets"]) + 1
     assert import_bundle()["pages"] == 0
 finally:

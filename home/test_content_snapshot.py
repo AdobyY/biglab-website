@@ -133,6 +133,17 @@ class DevelopmentSnapshotTests(TestCase):
         self.assertEqual(get_image_model().objects.count(), assets)
         self.assertEqual((self.home.revisions.count(), self.child.revisions.count()), revisions)
 
+    def test_snippet_identity_is_reused_after_snapshot_renames_it(self):
+        partner = Collaboration.objects.create(locale=self.home.locale, name="Original partner")
+        data = export_bundle(self.bundle)
+        item = next(s for s in data["snippets"] if s["model"] == "home.collaboration")
+        item["fields"]["name"] = "Updated partner"
+        (self.bundle / "content.json").write_text(json.dumps(data), encoding="utf-8")
+        import_bundle(self.bundle)
+        partner.refresh_from_db()
+        self.assertEqual(partner.name, "Updated partner")
+        self.assertEqual(Collaboration.objects.count(), 1)
+
     def test_existing_translation_is_reused_after_its_parent_and_slug_changed(self):
         people = self.profile.get_parent().specific
         archive = self.home.add_child(instance=PeopleIndexPage(title="Archived people", slug="archived-people"))
@@ -276,7 +287,7 @@ class DevelopmentSnapshotTests(TestCase):
         home = next(item for item in self.data["pages"] if item["id"] == self.home.pk)
         home["fields"]["body"][0]["value"]["image"] = 999999
         (self.bundle / "content.json").write_text(json.dumps(self.data), encoding="utf-8")
-        with self.assertRaises(KeyError):
+        with self.assertRaisesMessage(CommandError, "Invalid content snapshot"):
             import_bundle(self.bundle, reset=True)
         self.assertEqual(list(Page.objects.values_list("pk", flat=True)), pages)
         self.assertTrue(get_image_model().objects.filter(pk=self.image.pk).exists())

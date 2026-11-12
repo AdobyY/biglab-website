@@ -79,3 +79,17 @@
   .science-page .inline-section-image { max-width: none; }
   .science-page .inline-section-image img { width: 100%; }
 }
+.research-timeline { margin: 3rem 0; }
+.research-timeline .timeline-list { list-style: none; padding: 0; margin: 2rem 0; }
+.timeline-list .timeline-item { position: relative; display: grid; grid-template-columns: minmax(7rem, .65fr) minmax(0, 2fr); gap: 1.5rem; margin: 0; padding: 1.5rem 1.5rem 1.5rem 2.5rem; border-left: 2px solid var(--line); }
+.timeline-item::before { content: ""; position: absolute; left: -.45rem; top: 1.9rem; width: .8rem; height: .8rem; border-radius: 50%; background: var(--paper); border: 2px solid var(--muted); }
+.timeline-item.is-past::before { background: var(--muted); }
+.timeline-item.is-current { background: var(--yellow); color: var(--navy); border-left-color: var(--navy); border-radius: 0 var(--radius) var(--radius) 0; }
+.timeline-item.is-current::before { background: var(--navy); border-color: var(--navy); }
+.timeline-period time { display: block; font-weight: 700; }
+.timeline-current { display: inline-block; margin-top: .4rem; padding: .1rem .5rem; background: var(--navy); color: var(--paper); border-radius: 4px; font-size: .8rem; }
+.timeline-description > :last-child { margin-bottom: 0; }
+@media (max-width: 600px) {
+  .timeline-list .timeline-item { grid-template-columns: minmax(0, 1fr); gap: .65rem; padding: 1.25rem 1rem 1.25rem 1.5rem; }
+  .timeline-item::before { top: 1.65rem; }
+}

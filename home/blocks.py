@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 from wagtail import blocks
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
@@ -72,6 +73,45 @@ class SimulationBlock(blocks.StructBlock):
         icon = "pick"
         template = "home/blocks/simulation.html"
         help_text = "Embed a prepared animation or interactive simulation."
+
+
+class TimelineMilestoneBlock(blocks.StructBlock):
+    starts_on = blocks.DateBlock(help_text="First day of this period. Periods must be in chronological order.")
+    period = blocks.CharBlock(max_length=80, help_text="Public date label, for example Autumn 2026.")
+    text = blocks.RichTextBlock(features=["bold", "italic", "link", "ul", "ol"])
+
+
+class TimelineBlock(blocks.StructBlock):
+    title = blocks.CharBlock(max_length=160)
+    current_label = blocks.CharBlock(max_length=80, default="Current period")
+    milestones = blocks.ListBlock(TimelineMilestoneBlock(), min_num=1)
+
+    def clean(self, value):
+        value = super().clean(value)
+        dates = [item["starts_on"] for item in value["milestones"]]
+        if dates != sorted(set(dates)):
+            raise blocks.StructBlockValidationError(block_errors={
+                "milestones": ValidationError("Use distinct start dates in chronological order."),
+            })
+        return value
+
+    def get_context(self, value, parent_context=None):
+        context = super().get_context(value, parent_context)
+        today = timezone.localdate()
+        milestones = value["milestones"]
+        current = next((index for index in range(len(milestones) - 1, -1, -1)
+                        if milestones[index]["starts_on"] <= today), -1)
+        context["timeline_items"] = [
+            {"milestone": milestone, "current": index == current,
+             "past": index < current}
+            for index, milestone in enumerate(milestones)
+        ]
+        return context
+
+    class Meta:
+        icon = "date"
+        label = "Timeline"
+        template = "home/blocks/timeline.html"
 
 
 SECTION_THEME_CHOICES = [
@@ -588,4 +628,5 @@ CONTENT_BLOCKS = [
     ("document", DocumentBlock()),
     ("button", CallToActionBlock()),
     ("simulation", SimulationBlock()),
+    ("timeline", TimelineBlock()),
 ]

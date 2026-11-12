@@ -1,0 +1,12 @@
+{% load wagtailcore_tags %}
+<section class="research-timeline">
+  <h2>{{ value.title }}</h2>
+  <ol class="timeline-list">
+    {% for item in timeline_items %}
+      <li class="timeline-item{% if item.current %} is-current{% elif item.past %} is-past{% endif %}"{% if item.current %} aria-current="step"{% endif %}>
+        <div class="timeline-period"><time datetime="{{ item.milestone.starts_on|date:'Y-m-d' }}">{{ item.milestone.period }}</time>{% if item.current %}<span class="timeline-current">{{ value.current_label }}</span>{% endif %}</div>
+        <div class="timeline-description">{{ item.milestone.text|richtext }}</div>
+      </li>
+    {% endfor %}
+  </ol>
+</section>
