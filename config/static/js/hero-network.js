@@ -149,7 +149,10 @@
     ctx.bezierCurveTo(points[1].x, points[1].y, points[2].x, points[2].y, points[3].x, points[3].y); ctx.stroke();
   };
   const draw = () => {
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0); ctx.clearRect(0, 0, width, height);
+    // Clear every backing pixel before scaling: fractional DPR can leave an uncleared edge.
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
     const flow = motion.matches ? 0 : time;
     const entrance = motion.matches ? 1 : Math.min(1, time / 1.4);
     positions = nodes.map(node => {
