@@ -200,6 +200,29 @@ class SuppliedStructureRenderingTests(TestCase):
         self.addCleanup(media.disable)
         import_bundle()
 
+    def test_news_media_and_collaborations_have_consistent_shared_layouts(self):
+        for prefix, news_path, science_path in [('', '/news/', '/science/'), ('/cs', '/cs/novinky/', '/cs/vyzkum/')]:
+            archive = BeautifulSoup(self.client.get(news_path).content, 'html.parser')
+            cards = archive.select('.news-list-item')
+            self.assertEqual(len(cards), 6)
+            self.assertEqual(len(archive.select('.news-thumbnail')), 2)
+            self.assertEqual(len(archive.select('.news-thumbnail img')), 2)
+            self.assertFalse(archive.select('.news-thumbnail--placeholder'))
+            for card in cards:
+                self.assertIsNotNone(card.select_one('time[datetime]'))
+                self.assertTrue(card.select_one('h2 a')['href'])
+                self.assertLessEqual(len(card.select_one('.news-excerpt').text.split()), 33)
+                if card.select_one('.news-thumbnail img'):
+                    detail = BeautifulSoup(self.client.get(card.select_one('.news-title a')['href']).content, 'html.parser')
+                    self.assertEqual(detail.select_one('.article-image img')['alt'], detail.select_one('main h1').get_text())
+            for path in (prefix + '/', science_path):
+                soup = BeautifulSoup(self.client.get(path).content, 'html.parser')
+                self.assertEqual(len(soup.select('.collaboration-item')), 4)
+                self.assertEqual(len(soup.select('.collaboration-symbol > svg')), 4)
+                self.assertEqual(len(soup.select('.collaboration-copy h3 a[href]')), 4)
+            parta = BeautifulSoup(self.client.get(prefix + '/parta/').content, 'html.parser')
+            self.assertFalse(parta.select('[data-child-navigation]'))
+
     def test_document_navigation_and_contact_copy_in_both_languages(self):
         for code, root in [('en','/'),('cs','/cs/')]:
             response = self.client.get(root)
@@ -243,6 +266,21 @@ class SuppliedStructureRenderingTests(TestCase):
                 contact = BeautifulSoup(self.client.get(path).content, 'html.parser').select_one('.contact-surface, .builder-contact')
                 self.assertIn('Updated campus address',contact.address.get_text())
                 self.assertNotIn('2.53',contact.get_text())
+
+    def test_section_titles_do_not_repeat_the_page_title(self):
+        for root in ('/','/cs/'):
+            home = BeautifulSoup(self.client.get(root).content,'html.parser')
+            self.assertIsNone(home.select_one('.updates-grid > div > h3'))
+            self.assertTrue(home.select('.updates .news-list-item'))
+            for suffix in ('parta/','parta/about-the-project/','contact/'):
+                with self.subTest(path=root+suffix):
+                    response = self.client.get(root+suffix)
+                    soup = BeautifulSoup(response.content,'html.parser').select_one('main')
+                    title = soup.h1.get_text(strip=True)
+                    self.assertEqual(sum(h.get_text(strip=True)==title for h in soup.select('h1,h2,h3')),1)
+                    for card in soup.select('.page-link-grid > a'):
+                        self.assertIsNotNone(card.select_one('h2.page-link-title'))
+                        self.assertTrue(card['href'])
 
     def test_existing_editor_contact_copy_is_not_duplicated(self):
         team = 'You can find contact information for individual team members in the section'

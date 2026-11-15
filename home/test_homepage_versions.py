@@ -32,11 +32,30 @@ class HomepageVersionTests(TestCase):
         soup = self.soup("/")
         self.assertIn("homepage-design-1", soup.body["class"])
         self.assertEqual(soup.select_one("h1").get_text(), "Our connected world")
+        self.assertIsNotNone(soup.select_one("body > [data-design-switch]"))
+        self.assertFalse(soup.select("footer [data-design-switch]"))
         self.assertIn("Original CMS mission.", soup.select_one("#home-sections").get_text())
         self.assertIn("Verified funding details.", soup.get_text())
         self.assertIn("Editorial content at the bottom.", soup.get_text())
         self.assertNotIn("Keep this hidden.", soup.get_text())
         self.assertEqual(soup.select_one(".site-nav > li > .nav-entry > a")["href"], "/#about")
+
+    def test_financing_shares_the_mission_without_duplicating_an_explicit_editor_block(self):
+        for url in ("/", "/about/"):
+            soup = self.soup(url)
+            self.assertEqual(len(soup.select(".financing-section")), 1)
+            self.assertIn("Verified funding details.", soup.select_one(".home-about .financing-section--embedded").get_text())
+        self.home.sections = [
+            ("about", {"title": "Our mission", "text": "<p>Original CMS mission.</p>", "is_visible": True}),
+            ("financing", {"title": "Project support", "text": "<p>Editor-selected funding.</p>", "is_visible": True}),
+        ]
+        self.home.save_revision().publish()
+        for url in ("/", "/about/"):
+            soup = self.soup(url)
+            self.assertEqual(len(soup.select(".financing-section")), 1)
+            self.assertFalse(soup.select(".financing-section--embedded"))
+            self.assertIn("Editor-selected funding.", soup.get_text())
+            self.assertNotIn("Verified funding details.", soup.get_text())
 
     def test_compact_homepage_has_only_hero_and_footer(self):
         soup = self.soup("/?design=2")
@@ -139,18 +158,21 @@ class HomepageVersionTests(TestCase):
         contact.email = "lab@example.org"
         contact.phone = "+420 123 456 789"
         contact.save()
-        self.home.sections = [("contact", {"is_visible": True, "anchor": "reach-us", "title": "Write to us", "show_email": True, "show_phone": True, "show_address": True, "show_people_link": True})]
+        self.home.sections = [("contact", {"is_visible": True, "anchor": "reach-us", "title": "Write to us", "theme": "midnight", "show_email": True, "show_phone": True, "show_address": True, "show_people_link": True})]
         self.home.save_revision().publish()
         for url, variant in (("/", "light"), ("/about/", "dark")):
             with self.subTest(url=url):
                 soup = self.soup(url)
                 section = soup.select_one(f"#reach-us.contact-surface--{variant}")
                 self.assertIsNotNone(section)
+                self.assertIn("section-theme-midnight", section["class"])
                 self.assertEqual(len(soup.select(".contact-surface")), 1)
                 self.assertIn("Write to us", section.get_text())
                 self.assertEqual(section.select_one("a[href^='mailto:']")["href"], "mailto:lab@example.org")
                 self.assertEqual(section.select_one("a[href^='tel:']")["href"], "tel:+420123456789")
                 self.assertIn("Jo%C5%A1tova", section.select_one("iframe")["src"])
+                self.assertFalse(section.select("details.contact-map-disclosure"))
+                self.assertEqual(section.select_one('.contact-composition > div')['class'], ['contact-panel'])
                 self.assertTrue(soup.select_one(".contact-nav-link")["href"].endswith("#reach-us"))
         compact = self.soup("/?design=2")
         self.assertIsNone(compact.select_one("main .contact-surface"))
@@ -164,4 +186,4 @@ class HomepageVersionTests(TestCase):
     def test_empty_contact_settings_do_not_render_an_empty_map_or_email(self):
         section = self.soup("/about/").select_one("#contact")
         self.assertIsNone(section.select_one("iframe, a[href^='mailto:'], a[href^='tel:']"))
-        self.assertEqual(section.select_one(".contact-actions .button")["href"], "/people/?design=2")
+        self.assertEqual(section.select_one(".contact-actions .contact-team-link")["href"], "/people/?design=2")

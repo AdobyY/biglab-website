@@ -8,6 +8,7 @@ from wagtail.test.utils import WagtailPageTestCase
 
 from home.models import ContentPage, HomePage, PeopleIndexPage, PersonPage, ProjectPage, SciencePage
 from home.templatetags.navigation_tags import _build_menu, constellation_nodes, contact_url, design_url, section_url
+from home.templatetags.visual_tags import editorial_parts
 
 
 class FrontendContractTests(WagtailPageTestCase):
@@ -15,6 +16,24 @@ class FrontendContractTests(WagtailPageTestCase):
         self.home = Page.get_first_root_node().add_child(instance=HomePage(title="Lab"))
         self.science = self.home.add_child(instance=SciencePage(title="Science", show_in_menus=True))
         self.project = self.home.add_child(instance=ProjectPage(title="Parta", show_in_menus=True))
+
+    def test_about_layout_preserves_rich_text_and_custom_markup(self):
+        source = '<p>First <a href="https://example.com">linked paragraph</a>.</p><h3>Methods</h3><ul><li>Full details</li></ul>'
+        parts = editorial_parts(source)
+        self.assertEqual(parts['lead'] + parts['body'], source)
+        self.assertEqual(editorial_parts('<h3>Custom opening</h3><p>Keep this.</p>'),
+                         {'lead': '', 'body': '<h3>Custom opening</h3><p>Keep this.</p>'})
+        block = self.home._meta.get_field('sections').stream_block.child_blocks['about']
+        value = block.to_python({'title': 'About the lab', 'is_visible': True, 'text': source})
+        soup = BeautifulSoup(block.render(value, context={'page': self.home}), 'html.parser')
+        self.assertEqual(soup.select_one('.about-lead a')['href'], 'https://example.com')
+        self.assertEqual(soup.select_one('.about-details h3').text, 'Methods')
+        self.assertEqual(soup.select_one('.about-details li').text, 'Full details')
+        value['title'] = self.home.title
+        about = BeautifulSoup(block.render(value, context={'page': self.home, 'is_about_page': True}), 'html.parser')
+        self.assertFalse(about.select('.section-heading'))
+        home = BeautifulSoup(block.render(value, context={'page': self.home}), 'html.parser')
+        self.assertEqual(home.select_one('.section-heading h2').text, self.home.title)
 
     def test_navigation_keeps_submenu_inside_its_parent_list(self):
         self.project.add_child(instance=ContentPage(title="Parents", show_in_menus=True))
@@ -27,6 +46,66 @@ class FrontendContractTests(WagtailPageTestCase):
         self.assertEqual(len(soup.select("ul.site-nav > li > ul.submenu > li")), 1)
         self.assertEqual(len(soup.select("ul.site-nav > li > ul.submenu > li a")), 1)
         self.assertNotIn("</ul>\n\n    <li", html)
+
+    def test_featured_audiences_follow_owned_links_labels_and_publication_state(self):
+        Site.objects.update_or_create(hostname='localhost', defaults={'root_page': self.home, 'is_default_site': True})
+        about = self.project.add_child(instance=ContentPage(title='About the project'))
+        schools = about.add_child(instance=ContentPage(title='For schools', slug='for-schools'))
+        parents = about.add_child(instance=ContentPage(title='For parents', slug='for-parents'))
+        draft = about.add_child(instance=ContentPage(title='Draft audience', live=False))
+        timeline = self.project.add_child(instance=ContentPage(title='Timeline'))
+        unrelated = self.science.add_child(instance=ContentPage(title='Unrelated research'))
+        self.project.sections = [('page_links', {'is_visible': True, 'pages': [
+            {'page': parents, 'label': 'Parent information'}, {'page': draft},
+            {'page': timeline}, {'page': unrelated}, {'page': schools}, {'page': schools},
+        ]})]
+        self.project.save()
+        block = self.home._meta.get_field('sections').stream_block.child_blocks['featured_project']
+        value = block.to_python({'project': self.project.pk, 'is_visible': True})
+        soup = BeautifulSoup(block.render(value, context={'page': self.home, 'design_version': '2'}), 'html.parser')
+        links = soup.select('.parta-audience-list a')
+        self.assertEqual([a.get_text(' ', strip=True) for a in links], ['Parent information', 'For schools'])
+        self.assertEqual([a['href'] for a in links], [parents.url + '?design=2', schools.url + '?design=2'])
+        self.project.sections[0].value['is_visible'] = False
+        self.project.save()
+        self.assertNotIn('parta-audience-list', block.render(block.to_python({'project': self.project.pk, 'is_visible': True}), context={'page': self.home}))
+
+    def test_long_article_index_preserves_copy_and_stable_unique_heading_destinations(self):
+        page = self.home.add_child(instance=ContentPage(title='School information', body=[
+            ('heading', 'Benefits'), ('text', '<p>All original benefits.</p>'),
+            ('heading', 'Benefits'), ('text', '<p>Another distinct section.</p>'),
+        ], after_body=[('heading', 'How to join'), ('text', '<p>Contact the research team.</p>')]))
+        soup = self.render_page(page)
+        links = soup.select('.article-outline a')
+        self.assertEqual([a.text for a in links], ['Benefits', 'Benefits', 'How to join'])
+        destinations = [a['href'] for a in links]
+        self.assertEqual(len(set(destinations)), 3)
+        for link in links:
+            self.assertEqual(soup.select_one(link['href']).text, link.text)
+        for text in ('All original benefits.', 'Another distinct section.', 'Contact the research team.'):
+            self.assertIn(text, soup.select_one('.content-reading-main').get_text())
+        original_body = page.body.get_prep_value()
+        page.body = [{'type': 'text', 'value': '<p>A new introduction.</p>'}] + original_body
+        page.save()
+        page.refresh_from_db()
+        updated = self.render_page(page)
+        self.assertEqual([a['href'] for a in updated.select('.article-outline a')], destinations)
+        page.after_body = []
+        self.assertFalse(self.render_page(page).select('.article-outline'))
+
+    def test_page_links_keep_custom_headings_and_use_the_correct_card_level(self):
+        child = self.project.add_child(instance=ContentPage(title="For schools", live=True))
+        block = self.project._meta.get_field("sections").stream_block.child_blocks["page_links"]
+        value = block.to_python({
+            "title": "Next steps", "intro": "<p>Choose an audience.</p>", "is_visible": True,
+            "columns": "2", "pages": [{"page": child.pk, "label": "School information", "description": ""}],
+        })
+        soup = BeautifulSoup(render_to_string("home/sections/page_links.html", {
+            "page": self.project, "value": value,
+        }), "html.parser")
+        self.assertEqual(soup.select_one(".section-heading h2").text,"Next steps")
+        self.assertEqual(soup.select_one("h3.page-link-title").text,"School information")
+        self.assertIn("Choose an audience.",soup.get_text())
 
     def test_constellation_uses_actual_labels_and_inline_destinations(self):
         areas = [self.science.add_child(instance=ContentPage(title=f"Topic {i}")) for i in range(9)]

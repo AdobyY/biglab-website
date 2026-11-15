@@ -1,4 +1,4 @@
-{% load wagtailcore_tags %}
-{% if page.body %}<div class="article-body reading-content">{% include_block page.body %}</div>{% endif %}
+{% load wagtailcore_tags navigation_tags %}
+{% if page.body %}<div class="article-body reading-content">{% if article_content %}{% render_reading_blocks page.body article_content.body %}{% else %}{% include_block page.body %}{% endif %}</div>{% endif %}
 {% if page.sections %}{% include_block page.sections %}{% endif %}
-{% if page.after_body %}<div class="article-body reading-content after-body">{% include_block page.after_body %}</div>{% endif %}
+{% if page.after_body %}<div class="article-body reading-content after-body">{% if article_content %}{% render_reading_blocks page.after_body article_content.after_body %}{% else %}{% include_block page.after_body %}{% endif %}</div>{% endif %}

@@ -12,6 +12,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="{% static 'js/navigation-init.js' %}"></script>
     <title>{% block title %}{{ page.seo_title|default:page.title|default:'BIG Lab' }} — {{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}{% endblock %}</title>
     {% if page.search_description %}<meta name="description" content="{{ page.search_description }}">{% endif %}
     <meta name="theme-color" content="{% block theme_color %}#101e32{% endblock %}">
@@ -25,11 +26,14 @@
       <meta property="og:url" content="{{ canonical_url }}">
       {% if page.search_description %}<meta property="og:description" content="{{ page.search_description }}">{% endif %}
     {% endif %}
+    <link rel="preload" href="{% static 'fonts/font-4.woff2' %}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{% if page and page.pk != site_home.pk %}{% static 'fonts/font-1.woff2' %}{% else %}{% static 'fonts/font-0.woff2' %}{% endif %}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
-    <link rel="stylesheet" href="{% static 'css/config.css' %}?v=20261007-media-autoplay">
-    {% if page and page.pk != site_home.pk %}<link rel="stylesheet" href="{% static 'css/internal-pages.css' %}?v=20261007-section-layout">{% endif %}
+    <link rel="stylesheet" href="{% static 'css/config.css' %}?v=20261115-final">
+    {% if page and page.pk != site_home.pk %}<link rel="stylesheet" href="{% static 'css/internal-pages.css' %}?v=20261115-final">{% endif %}
     {% block extra_css %}{% endblock %}
-    <link rel="stylesheet" href="{% static 'css/editorial-enhancements.css' %}?v=20261007-media-autoplay">
+    <link rel="stylesheet" href="{% static 'css/editorial-enhancements.css' %}?v=20261115-final">
+    <link rel="stylesheet" href="{% static 'css/contact-surface.css' %}?v=20261115-final">
     {% block final_css %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}" {% block body_attrs %}{% endblock %}data-image-preview="{% ui 'image_preview' %}" data-close="{% ui 'close' %}" data-previous-image="{% ui 'previous_image' %}" data-next-image="{% ui 'next_image' %}" data-pause="{% ui 'pause' %}" data-play="{% ui 'play' %}">
@@ -58,6 +62,7 @@
         {% endif %}
       </div>
     </header>
+    {% block floating_controls %}{% endblock %}
     <main id="content" class="site-main" tabindex="-1">
       {% breadcrumbs site_home %}
       {% block content %}{% endblock %}
@@ -74,7 +79,7 @@
       <div class="section-shell footer-bottom"><p>© {% now 'Y' %} {{ contact.copyright_text|default:contact.site_name|default:'BIG Lab' }}</p><a href="{{ site_about_url }}">{% ui 'about' %}</a></div>
       {% endwith %}
     </footer>
-    <script src="{% static 'js/config.js' %}" defer></script>
+    <script src="{% static 'js/config.js' %}?v=20261115-final" defer></script>
     {% if page and page.pk != site_home.pk %}<script src="{% static 'js/internal-pages.js' %}" defer></script>{% endif %}
     {% block extra_js %}{% endblock %}
 </body>

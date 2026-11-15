@@ -1,0 +1,8 @@
+{% load ui_tags %}
+<div class="about-diagram" aria-hidden="true">
+  <div class="about-diagram-node">{% include 'home/includes/icon.html' with name='person' %}<span>{% ui 'individual_change' %}</span></div>
+  <div class="about-diagram-connector">{% include 'home/includes/icon.html' with name='arrow' %}</div>
+  <div class="about-diagram-node">{% include 'home/includes/icon.html' with name='network' %}<span>{% ui 'social_influence' %}</span></div>
+  <div class="about-diagram-connector">{% include 'home/includes/icon.html' with name='arrow' %}</div>
+  <div class="about-diagram-node">{% include 'home/includes/icon.html' with name='team' %}<span>{% ui 'group_dynamics' %}</span></div>
+</div>

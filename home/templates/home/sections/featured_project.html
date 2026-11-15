@@ -1,4 +1,4 @@
-{% load wagtailcore_tags ui_tags %}
+{% load wagtailcore_tags ui_tags navigation_tags visual_tags %}
 {% if value.is_visible or legacy %}
 {% with featured=featured|default:"" automatic_project=featured_projects.first %}
 {% with project=value.project.specific|default:featured|default:automatic_project %}
@@ -16,11 +16,10 @@
         <a class="button button-light" href="{{ project.url }}">{% if value.button_label %}{{ value.button_label }}{% else %}{% ui 'about_project' %}{% endif %}</a>
       </div>
     </div>
-    {% if page.hero_layout and project.slug == 'parta' %}<div class="parta-visual">
+    {% project_audience_links project as audience_links %}
+    {% if page.hero_layout and audience_links %}<div class="parta-visual">
       <ul class="parta-audience-list">
-        <li>{% include 'home/includes/icon.html' with name='student' %}<span>{% ui 'for_students' %}</span></li>
-        <li>{% include 'home/includes/icon.html' with name='team' %}<span>{% ui 'for_parents' %}</span></li>
-        <li>{% include 'home/includes/icon.html' with name='school' %}<span>{% ui 'for_schools' %}</span></li>
+        {% for item in audience_links %}<li><a href="{{ item.page.url|design_url:design_version }}">{% include 'home/includes/icon.html' with name=item.page|page_icon %}<span>{{ item.label }}</span>{% include 'home/includes/icon.html' with name='arrow' icon_class='parta-audience-arrow' %}</a></li>{% endfor %}
       </ul>
     </div>{% endif %}
   </div>

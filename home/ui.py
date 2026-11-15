@@ -2,6 +2,7 @@
 
 UI_LABELS = {
     "en": {
+        "individual_change": "Individual change", "social_influence": "Social influence", "group_dynamics": "Group dynamics",
         "breadcrumbs": "Breadcrumbs", "related_pages": "Related pages",
         "previous": "Previous", "next": "Next", "back_to_contents": "Back to contents",
         "all_publications": "All publications", "subpages": "In this section",
@@ -40,6 +41,7 @@ UI_LABELS = {
         "show_more": "Show more", "show_less": "Show less", "play": "Play", "pause": "Pause",
     },
     "cs": {
+        "individual_change": "Individuální změna", "social_influence": "Sociální vliv", "group_dynamics": "Skupinová dynamika",
         "breadcrumbs": "Drobečková navigace", "related_pages": "Související stránky",
         "previous": "Předchozí", "next": "Další", "back_to_contents": "Zpět na obsah",
         "all_publications": "Všechny publikace", "subpages": "V této sekci",

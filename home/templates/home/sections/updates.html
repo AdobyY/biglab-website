@@ -6,12 +6,15 @@
 {% if value.show_news and section_news or value.show_projects and section_projects or value.show_publications and section_publications %}
 <section{% include "home/includes/section_attributes.html" with section_class="updates" %}>
   <div class="section-shell">
-    <div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'in_progress' %}{% endif %}</h2></div>
+    <div class="section-heading">
+      <h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'in_progress' %}{% endif %}</h2>
+      {% if value.show_news and section_news and news_index.live and page.pk != news_index.pk %}{% if not value.show_projects or not section_projects %}{% if not value.show_publications or not section_publications %}<a href="{{ news_index.url }}">{% ui 'view_all' %} <span class="visually-hidden">{% ui 'news' %}</span></a>{% endif %}{% endif %}{% endif %}
+    </div>
     {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
-    <div class="updates-grid">
-      {% if value.show_news and section_news %}<div><h3>{% if value.news_heading %}{{ value.news_heading }}{% else %}{% ui 'news' %}{% endif %}</h3>{% include "home/includes/news_list.html" with news_list_items=section_news %}</div>{% endif %}
-      {% if value.show_projects and section_projects %}<div><h3>{% if value.projects_heading %}{{ value.projects_heading }}{% else %}{% ui 'current_projects' %}{% endif %}</h3>{% include "home/includes/project_list.html" with project_items=section_projects grouped=True %}</div>{% endif %}
-      {% if value.show_publications and section_publications %}<div><h3>{% if value.publications_heading %}{{ value.publications_heading }}{% else %}{% ui 'publications' %}{% endif %}</h3>{% include "home/includes/publication_list.html" with publication_items=section_publications %}</div>{% endif %}
+    <div class="updates-grid{% if value.show_news and section_news %}{% if not value.show_projects or not section_projects %}{% if not value.show_publications or not section_publications %} updates-grid--news-only{% endif %}{% endif %}{% endif %}">
+      {% if value.show_news and section_news %}<div>{% ui 'news' as default_news_heading %}{% firstof value.news_heading default_news_heading as news_heading %}{% if value.title != news_heading or value.show_projects and section_projects or value.show_publications and section_publications %}<h3>{{ news_heading }}</h3>{% endif %}{% include "home/includes/news_list.html" with news_list_items=section_news %}</div>{% endif %}
+      {% if value.show_projects and section_projects %}<div>{% ui 'current_projects' as default_projects_heading %}{% firstof value.projects_heading default_projects_heading as projects_heading %}{% if value.title != projects_heading or value.show_news and section_news or value.show_publications and section_publications %}<h3>{{ projects_heading }}</h3>{% endif %}{% include "home/includes/project_list.html" with project_items=section_projects grouped=True %}</div>{% endif %}
+      {% if value.show_publications and section_publications %}<div>{% ui 'publications' as default_publications_heading %}{% firstof value.publications_heading default_publications_heading as publications_heading %}{% if value.title != publications_heading or value.show_news and section_news or value.show_projects and section_projects %}<h3>{{ publications_heading }}</h3>{% endif %}{% include "home/includes/publication_list.html" with publication_items=section_publications %}</div>{% endif %}
     </div>
   </div>
 </section>

@@ -1,9 +1,13 @@
 {% extends "base.html" %}
-{% load wagtailimages_tags wagtailcore_tags ui_tags media_tags %}
+{% load wagtailimages_tags wagtailcore_tags ui_tags media_tags navigation_tags %}
 {% block content %}
 <article class="content-page">
   {% include "home/includes/page_heading.html" %}
   {% if page.cover_image %}<figure class="content-cover">{% media_image page.cover_image 'width-1000' %}</figure>{% endif %}
-  {% include "home/includes/page_content.html" %}
+  {% article_contents page as article_content %}
+  <div{% if article_content.show_outline %} class="content-reading-layout"{% endif %}>
+    {% if article_content.show_outline %}{% include 'home/includes/article_outline.html' %}{% endif %}
+    <div class="content-reading-main">{% include "home/includes/page_content.html" %}</div>
+  </div>
 </article>
 {% endblock %}

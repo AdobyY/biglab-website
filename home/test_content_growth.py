@@ -90,6 +90,23 @@ class ContentGrowthTests(WagtailPageTestCase):
         self.assertIsNotNone(soup.select_one(f"#section-{child.pk}"))
         self.assertFalse(soup.select("[data-child-navigation]"))
 
+    def test_curated_cards_and_buttons_cover_only_their_own_child_links(self):
+        parent = self.home.add_child(instance=ContentPage(title="Overview"))
+        card = parent.add_child(instance=ContentPage(title="Card", show_in_menus=True))
+        button = parent.add_child(instance=ContentPage(title="Button", show_in_menus=True))
+        remaining = parent.add_child(instance=ContentPage(title="New child", show_in_menus=True))
+        parent.sections = [("page_links", {"is_visible": True, "pages": [{"page": card}]})]
+        parent.body = [("button", {"label": "Read details", "page": button})]
+        parent.save()
+        soup = self.render_page(parent)
+        self.assertEqual([a['href'] for a in soup.select('[data-child-navigation] a')], [remaining.url])
+        self.assertEqual(len(soup.select(f'main a[href="{card.url}"]')), 1)
+        self.assertEqual(len(soup.select(f'main a[href="{button.url}"]')), 1)
+        parent.sections[0].value['is_visible'] = False
+        parent.save()
+        soup = self.render_page(parent)
+        self.assertEqual([a['href'] for a in soup.select('[data-child-navigation] a')], [card.url, remaining.url])
+
     def test_czech_preview_and_child_navigation_stay_in_the_czech_tree(self):
         cs, _ = Locale.objects.get_or_create(language_code="cs")
         home = self.home.copy_for_translation(cs)

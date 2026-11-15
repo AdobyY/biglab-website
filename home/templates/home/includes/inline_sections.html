@@ -10,13 +10,13 @@
     <div class="inline-sections">
     {% for child in inline_children %}
     {% if child.live %}
-      <section class="inline-section" id="section-{{ child.pk }}" aria-labelledby="section-title-{{ child.pk }}">
+      <section class="inline-section{% if page.content_type.model == 'sciencepage' and not child.body and not child.sections and not child.after_body %} inline-section--summary{% endif %}" id="section-{{ child.pk }}" aria-labelledby="section-title-{{ child.pk }}">
         <div class="inline-section-lead{% if child.cover_image %} has-image{% endif %}">
           <div class="inline-section-copy">
             <h2 id="section-title-{{ child.pk }}">{{ child.title }}</h2>
             {% if child.intro %}<div class="collection-intro reading-content">{{ child.intro|richtext }}</div>{% endif %}
           </div>
-          {% if child.cover_image %}<figure class="inline-section-image">{% media_image child.cover_image 'fill-640x440' loading="lazy" %}</figure>{% endif %}
+          {% if child.cover_image %}<figure class="inline-section-image">{% media_image child.cover_image 'fill-640x440' loading="lazy" alt=child.title %}</figure>{% endif %}
         </div>
         {% if child.body %}<div class="article-body reading-content">{% include_block child.body %}</div>{% endif %}
         {% if child.sections %}{% include_block child.sections with page=child %}{% endif %}

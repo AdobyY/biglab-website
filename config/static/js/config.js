@@ -51,8 +51,24 @@ const closeSubmenus = (except = null) => {
   document.querySelectorAll('.has-submenu.is-open').forEach((item) => {
     if (item === except || (except && item.contains(except))) return;
     item.classList.remove('is-open');
+    item.classList.remove('opens-left');
+    const submenu = item.querySelector(':scope > .submenu');
+    if (submenu) submenu.style.transform = '';
     item.querySelector(':scope > .nav-entry .submenu-toggle')?.setAttribute('aria-expanded', 'false');
   });
+};
+const positionSubmenu = (item) => {
+  const submenu = item.querySelector(':scope > .submenu');
+  if (!submenu || window.matchMedia('(max-width: 1100px)').matches) return;
+  item.classList.remove('opens-left');
+  submenu.style.transform = '';
+  const edge = 16;
+  if (item.parentElement.classList.contains('submenu') && submenu.getBoundingClientRect().right > innerWidth - edge) {
+    item.classList.add('opens-left');
+  }
+  const bounds = submenu.getBoundingClientRect();
+  const shift = bounds.left < edge ? edge - bounds.left : Math.min(0, innerWidth - edge - bounds.right);
+  if (shift) submenu.style.transform = `translateX(${shift}px)`;
 };
 const closeNavigation = (restoreFocus = false) => {
   if (!menuButton || !navigation) return;
@@ -78,6 +94,7 @@ document.querySelectorAll('.submenu-toggle').forEach((button) => {
     closeSubmenus(open ? null : item);
     item.classList.toggle('is-open', !open);
     button.setAttribute('aria-expanded', String(!open));
+    if (!open) positionSubmenu(item);
   });
 });
 document.addEventListener('click', (event) => {
@@ -93,6 +110,9 @@ languageSwitcher?.addEventListener('focusout', (event) => {
 window.matchMedia('(max-width: 1100px)').addEventListener('change', () => {
   closeNavigation();
   closeLanguage();
+});
+window.addEventListener('resize', () => {
+  document.querySelectorAll('.has-submenu.is-open').forEach(positionSubmenu);
 });
 document.addEventListener('keydown', (event) => {
   if (event.key !== 'Escape') return;

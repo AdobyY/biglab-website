@@ -2,11 +2,12 @@
 <div class="news-list">
   {% for item in news_list_items %}
     <article class="news-list-item">
-      {% if item.cover_image %}<a class="news-thumbnail" href="{{ item.url }}" tabindex="-1" aria-hidden="true">{% media_image item.cover_image 'fill-760x440' loading="lazy" alt="" controls=False %}</a>{% endif %}
+      {% if item.cover_image %}<div class="news-thumbnail" aria-hidden="true">{% media_image item.cover_image 'max-1000x700' loading="lazy" alt="" controls=False %}</div>{% endif %}
       <div class="news-list-copy">
         <time datetime="{{ item.date|date:'Y-m-d' }}">{{ item.date|date:"j F Y" }}</time>
         {% if page.pk == news_index.pk %}<h2 class="news-title"><a href="{{ item.url }}">{{ item.title }}</a></h2>{% else %}<h3 class="news-title"><a href="{{ item.url }}">{{ item.title }}</a></h3>{% endif %}
-        {% if item.intro %}<div class="collection-intro">{{ item.intro|richtext }}</div>{% endif %}
+        {% if item.intro %}<p class="news-excerpt">{{ item.intro|striptags|truncatewords:22 }}</p>{% endif %}
+        <span class="news-read-more" aria-hidden="true">{% ui 'read_more' %}{% include 'home/includes/icon.html' with name='arrow' %}</span>
       </div>
     </article>
   {% empty %}

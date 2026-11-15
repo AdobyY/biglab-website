@@ -1,16 +1,23 @@
-{% load wagtailcore_tags ui_tags %}
+{% load wagtailcore_tags ui_tags visual_tags %}
 {% if value.is_visible or legacy %}
 {% if page.hero_layout and value.anchor == 'methods' %}{% include 'home/sections/methods.html' %}{% else %}
 <section{% include "home/includes/section_attributes.html" with section_class="builder-about home-about" %}>
   <div class="section-shell builder-section-inner">
-    <div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'about' %}{% endif %}</h2></div>
+    <div class="about-aside">{% if not is_about_page or value.title != page.title %}<div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'about' %}{% endif %}</h2></div>{% endif %}
+    {% if page.hero_layout and not embedded_financing %}
+      {% include 'home/includes/about_diagram.html' %}
+    {% endif %}
+    </div>
+    <div class="about-narrative">
     {% if legacy %}
       {% if page.intro %}<div class="intro collection-intro">{{ page.intro|richtext }}</div>{% endif %}
-      <div class="builder-copy reading-content">{% include_block page.body %}</div>
+      <div class="builder-copy reading-content about-details">{% include_block page.body %}</div>
     {% else %}
       {% if value.intro %}<div class="intro collection-intro">{{ value.intro|richtext }}</div>{% endif %}
-      {% if value.text %}<div class="builder-copy reading-content">{{ value.text|richtext }}</div>{% endif %}
+      {% if value.text %}<div class="builder-copy reading-content">{% if value.intro %}<div class="about-details">{{ value.text|richtext }}</div>{% else %}{% with parts=value.text|editorial_parts %}{% if parts.lead %}<div class="about-lead">{{ parts.lead|richtext }}</div>{% endif %}{% if parts.body %}<div class="about-details">{{ parts.body|richtext }}</div>{% endif %}{% endwith %}{% endif %}</div>{% endif %}
     {% endif %}
+    </div>
+    {% if embedded_financing %}{% include 'home/includes/financing.html' with embedded=True %}{% endif %}
   </div>
 </section>
 {% endif %}

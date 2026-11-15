@@ -28,16 +28,18 @@ materials are retained in `home/seed_assets/supplied/`. See [content update](doc
 
 The public site is available at `/`, the Czech version at `/cs/`, and the CMS at `/admin/`.
 
-The homepage has two versions. Version 1 is the default and retains the full page;
-`/?design=2` (or `/cs/?design=2`) shows the hero and footer. Its **About**
+The homepage has two versions. Both openings fill at least the first viewport and grow if longer text needs room. Version 1 is the default and retains the full page;
+`/?design=2` (or `/cs/?design=2`) fills the first viewport with the header and hero; the footer begins below it. The hero can grow for long text or zoom. Its **About**
 links open `/about/` (or `/cs/about/`), which displays the same
 published homepage sections, financing, Contact and content at the bottom. Edit those sections
 on the root page in Wagtail: one edit updates Version 1 and About together. The About
 URL is a reserved root-page route, not a separate CMS record. The version control
-stays on the homepage; Home and logo links on About return to the compact version.
+is fixed to the bottom-right of the homepage viewport, outside the footer; Home and logo links on About return to the compact version. Footer spacing and hero discovery-link clearance keep those links accessible.
 
-Contact has two treatments: V1 places a navy contact panel over a grayscale
-map on cream; V2 About pairs open dark contact details with a map. Both use
+Contact shares one open layout on V1, V2 About and the Contact page. The heading and
+introduction stay together, email leads the correspondence details, and a bounded map stays with the visit address.
+Writing to the lab and visiting it are separate columns. The address, directions and map are visible immediately (240px high on desktop, 200px on mobile); opening a disclosure is not required.
+The dark version uses the editable V2 palette. Both use
 **Settings → Contact settings** for the real address, email, phone and institute social
 links. Maps and directions use that address, so changing it updates both versions.
 The external map loads lazily; the address and map/directions links remain available
@@ -75,8 +77,7 @@ The homepage and content pages have a **Page section builder** in the page edito
 append to them.** Header introductions remain visible, and existing main content stays stored.
 Clear the builder to return to the default layout. Hidden sections remain saved.
 The initial homepage is About-first, followed by research, people, Parta and updates, using the
-navy / butter-yellow / cream / brick palette. Financing is a separate root-page field and can also
-be placed through the financing section. Empty editors, including old revisions, open with visible
+navy / butter-yellow / cream / brick palette. Financing is a separate root-page field. When the first visible section is About, automatic funding is grouped beside that explanation (below it on phones). An explicit Financing section keeps its own position and override text without duplicating the automatic funding. Empty editors, including old revisions, open with visible
 editable default containers; deliberately clearing and saving the builder still restores the default layout.
 
 To put text **below the people list**, add blocks to
@@ -88,6 +89,16 @@ team. Selected profiles set the first positions, followed by the rest in page-tr
 order; duplicates and drafts are omitted. Preview limits on other content pages
 continue to apply. Existing portrait choices, roles and summaries are preserved.
 Do not put that text in the header introduction, which appears above the list.
+
+To add a page without code, open **Pages**, select its parent, choose **Add child page**
+and the appropriate page type (use **Content page** for a general page). Fill in the title,
+introduction and section builder. Under **Promote**, enable **Show in menus** if needed;
+marked children appear under their marked parent. Preview both desktop and mobile, then
+publish. Use **Translate** for its other-language copy; drafts stay out of public lists.
+Update the existing About section on the root page, financing in **About / financing information**
+(or an explicit Financing block), research under **Science**, and news under **News**.
+Shared contact details and the logo stay in **Settings ? Contact settings**; interface labels
+are editable in **Snippets ? Interface texts**. No deployment is required for CMS content changes.
 
 Editors can **Save draft**, **Preview**, then **Publish** directly; no approval workflow is required.
 Saving a draft alone does not change the public site. To remove content temporarily, unpublish it

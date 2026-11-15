@@ -4,12 +4,41 @@ from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.html import format_html_join
 from wagtail.models import Locale, Site
 from home.ui import default_ui_text
 from home.templatetags.ui_tags import ui
 
 
 register = template.Library()
+
+
+@register.simple_tag
+def article_contents(page):
+    """Build the reading index and render IDs from the same owned heading blocks."""
+    result = {"items": []}
+    for field in ("body", "after_body"):
+        result[field] = []
+        for position, block in enumerate(getattr(page, field, ()) or ()):
+            heading_id = ""
+            if block.block_type == "heading":
+                heading_id = f"article-{page.pk}-{field}-{block.id or position}"
+                result["items"].append({"id": heading_id, "label": block.value})
+            result[field].append({"block": block, "heading_id": heading_id})
+    result["show_outline"] = len(result["items"]) >= 3
+    return result
+
+
+@register.simple_tag(takes_context=True)
+def render_reading_blocks(context, value, entries):
+    """Keep Wagtail's own wrappers while supplying each heading's stable anchor."""
+    parent_context = context.flatten()
+    return format_html_join("\n", "{}", (
+        (value.stream_block.render_basic(
+            [item["block"]], context={**parent_context, "heading_id": item["heading_id"]},
+        ),)
+        for item in entries
+    ))
 
 
 @register.inclusion_tag("home/includes/breadcrumbs.html", takes_context=True)
@@ -62,7 +91,26 @@ def child_page_navigation(context, parent=None, embedded=False):
         for block in sections
     ):
         return result
-    result["child_navigation_pages"] = parent.get_children().live().in_menu().specific()
+    # Curated cards own their links. Only expose children they do not cover.
+    covered_ids = {
+        item["page"].pk
+        for block in sections
+        if block.block_type == "page_links" and block.value.get("is_visible")
+        for item in block.value.get("pages", [])
+        if item.get("page") and item["page"].live
+    }
+    for field in (getattr(parent, "body", []), getattr(parent, "after_body", [])):
+        for block in field:
+            if block.block_type == "button":
+                target = block.value.get("page")
+                if target and target.live and block.value.get("label"):
+                    covered_ids.add(target.pk)
+    for block in sections:
+        if block.value.get("is_visible") and block.value.get("button_label"):
+            target = block.value.get("button_page")
+            if target and target.live:
+                covered_ids.add(target.pk)
+    result["child_navigation_pages"] = parent.get_children().live().in_menu().exclude(pk__in=covered_ids).specific()
     return result
 
 
@@ -272,6 +320,24 @@ def complete_team(section, automatic_items):
         if member and member.pk in by_id and member.pk not in seen:
             result.append(by_id[member.pk])
             seen.add(member.pk)
+    return result
+
+
+@register.simple_tag
+def project_audience_links(project):
+    """Reuse the project's curated nested-page links as its audience navigation."""
+    result, seen = [], set()
+    for block in getattr(project, "sections", ()) or ():
+        if block.block_type != "page_links" or not block.value.get("is_visible"):
+            continue
+        for item in block.value.get("pages", ()):
+            target = item.get("page")
+            if (target and target.live and target.pk not in seen
+                    and target.locale_id == project.locale_id
+                    and target.depth > project.depth + 1
+                    and target.path.startswith(project.path)):
+                result.append({"page": target, "label": item.get("label") or target.title})
+                seen.add(target.pk)
     return result
 
 

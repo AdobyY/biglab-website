@@ -1,0 +1,33 @@
+{% load wagtailcore_tags navigation_tags ui_tags %}
+{% ui 'contact' as default_contact_title %}{% firstof value.title default_contact_title as contact_title %}
+{% if page.hero_layout or contact_title != page.title %}<div class="contact-surface-heading"><h2 id="contact-title-{{ value.anchor|default:'contact' }}">{{ contact_title }}</h2></div>{% endif %}
+<div class="contact-composition{% if not contact.address or not value.show_address and not legacy %} contact-composition--no-map{% endif %}">
+  <div class="contact-panel">
+  <div class="contact-surface-intro reading-content">{% if value.intro %}{{ value.intro|richtext }}{% else %}<p>{% ui 'contact_intro' %}</p>{% endif %}{% if value.text %}{{ value.text|richtext }}{% endif %}</div>
+
+    <div class="contact-direct">
+      {% if contact.email %}{% if value.show_email or legacy %}<a class="contact-direct-link" href="mailto:{{ contact.email }}"><span>{% ui 'email' %}</span>{{ contact.email }}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>{% endif %}{% endif %}
+      {% if contact.phone %}{% if value.show_phone or legacy %}<a class="contact-direct-link" href="tel:{{ contact.phone|cut:' ' }}"><span>{% ui 'phone' %}</span>{{ contact.phone }}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>{% endif %}{% endif %}
+    </div>
+    <div class="contact-connections">
+      {% if not value.text %}{% if people_index %}{% if value.show_people_link or legacy %}<p class="contact-team-intro">{% ui 'contact_team_intro' %}</p>{% endif %}{% endif %}{% endif %}
+      <div class="contact-actions">
+        {% if people_index %}{% if value.show_people_link or legacy %}<a class="contact-team-link" href="{{ people_index.url|design_url:design_version }}">{% ui 'contact_team' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>{% endif %}{% endif %}
+
+      </div>
+    </div>
+    {% if contact.show_social_links %}{% if value.show_social_links or legacy %}{% if contact.linkedin_url or contact.instagram_url or contact.facebook_url %}
+    <div class="contact-networks"><p>{% ui 'institute_social' %}</p><div>{% if contact.linkedin_url %}<a href="{{ contact.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>{% endif %}{% if contact.instagram_url %}<a href="{{ contact.instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram</a>{% endif %}{% if contact.facebook_url %}<a href="{{ contact.facebook_url }}" target="_blank" rel="noopener noreferrer">Facebook</a>{% endif %}</div></div>
+    {% endif %}{% endif %}{% endif %}
+  </div>
+  {% if contact.address %}{% if value.show_address or legacy %}
+  <div class="contact-visit-panel">
+    <div class="contact-location">
+      {% if page.hero_layout or contact_title != page.title %}<h3 class="contact-panel-title">{{ contact.site_name|default:'BIG Lab' }}</h3>{% else %}<h2 class="contact-panel-title">{{ contact.site_name|default:'BIG Lab' }}</h2>{% endif %}
+      {% if contact.address %}{% if value.show_address or legacy %}<p class="contact-visit">{% ui 'contact_visit' %}</p><address>{{ contact.address|linebreaksbr }}</address>{% endif %}{% endif %}
+    </div>
+        {% if contact.address %}{% if value.show_address or legacy %}<a class="contact-directions" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ contact.address|urlencode }}" target="_blank" rel="noopener noreferrer">{% ui 'get_directions' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>{% endif %}{% endif %}
+    <div class="contact-map">{% include 'home/includes/contact_map.html' %}</div>
+  </div>
+  {% endif %}{% endif %}
+</div>

@@ -1,0 +1,5 @@
+{% load ui_tags %}
+<nav class="article-outline" aria-label="{% ui 'contents' %}">
+  <p>{% ui 'contents' %}</p>
+  <ol>{% for item in article_content.items %}<li><a href="#{{ item.id }}">{{ item.label }}</a></li>{% endfor %}</ol>
+</nav>

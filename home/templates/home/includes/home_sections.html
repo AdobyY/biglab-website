@@ -2,8 +2,13 @@
 <div id="home-sections">
 {% if page.sections %}
   {% for section in page.sections %}
-    {% include_block section %}
-    {% if forloop.first and page.about_financing and not page.sections|has_section:'financing' %}{% include "home/includes/financing.html" %}{% endif %}
+    {% if forloop.first and page.about_financing and not page.sections|has_section:'financing' %}
+      {% if section.block_type == 'about' and section.value.is_visible and section.value.anchor != 'methods' %}
+        {% include_block section with embedded_financing=True %}
+      {% else %}
+        {% include_block section %}{% include "home/includes/financing.html" %}
+      {% endif %}
+    {% else %}{% include_block section %}{% endif %}
   {% endfor %}
 {% else %}
   {% include "home/includes/legacy_home_sections.html" %}

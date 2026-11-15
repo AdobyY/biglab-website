@@ -5,20 +5,33 @@
 .inline-collection--continuous { display: block; }
 .science-page .inline-section-lead.has-image { grid-template-columns: minmax(0, 1fr) 280px; gap: 3rem; }
 .science-page .inline-section-image img { width: 280px; }
+/* Short research summaries form an index; full editorial sections retain their reading width. */
+.science-page .inline-collection--continuous > .inline-sections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+.science-page .inline-section { grid-column: 1 / -1; margin: 0; }
+.science-page .inline-section--summary { grid-column: auto; padding: 0; }
+.science-page .inline-section--summary .inline-section-lead.has-image { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 1.25rem; }
+.science-page .inline-section--summary .inline-section-copy { grid-column: 2; grid-row: 1; }
+.science-page .inline-section--summary .inline-section-copy:only-child { grid-column: 1 / -1; }
+.science-page .inline-section--summary .inline-section-image { grid-column: 1; grid-row: 1; margin: 0; }
+.science-page .inline-section--summary .inline-section-image img { width: 140px; height: 140px; }
+.science-page .inline-section--summary h2 { font-family: var(--body); font-size: 1.2rem; font-weight: 600; line-height: 1.3; margin-bottom: .65rem; }
+.science-page .inline-section--summary .collection-intro { font-size: .9rem; }
+.science-page .inline-section--summary .collection-intro > :last-child { margin-bottom: 0; }
+@media (max-width: 1000px) {
+  .science-page .inline-collection--continuous > .inline-sections { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  .science-page .inline-section--summary .inline-section-lead.has-image { grid-template-columns: 100px minmax(0, 1fr); gap: 1rem; }
+  .science-page .inline-section--summary .inline-section-image img { width: 100px; height: 115px; }
+  .science-page .inline-section--summary h2 { font-size: 1.1rem; }
+}
 .person-placeholder { background: #dededb; color: #939793; }
 .person-placeholder svg { display: block; width: 74%; max-height: 100%; fill: currentColor; }
 .profile-image .person-placeholder { aspect-ratio: 5 / 6; border-radius: 8px; }
 /* Carousel tracks must never inherit a page's fixed grid columns. */
 .people-carousel.is-carousel .people-grid.portrait-run { grid-template-columns: none; }
-.template-homepage .builder-media { display: grid; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
-.template-homepage .builder-media-image-left { grid-template-columns: 1.08fr .92fr; }
-.template-homepage .builder-media figure { margin: 0; }
-.template-homepage .builder-media figure img { width: 100%; max-height: none; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 70%; border-radius: 12px; }
-.template-homepage .builder-media .collection-intro { font-size: 1.12rem; line-height: 1.6; margin-bottom: 1.5rem; }
-.template-homepage .builder-media .reading-content { max-width: 52ch; }
-.template-homepage .builder-media .button { margin-top: 1rem; }
 .method-lead { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 3rem; }
-.method-lead h2 { font-size: clamp(2rem, 3.3vw, 3rem); line-height: 1.1; text-wrap: balance; max-width: 22ch; margin-bottom: 1.25rem; }
+.method-lead h2 { font-size: var(--font-section-title); line-height: 1.18; text-wrap: balance; max-width: 30ch; margin-bottom: 1.25rem; }
 .method-lead .collection-intro { max-width: 44ch; margin: 0; }
 .method-diagram { display: block; width: 100%; max-height: 250px; color: var(--yellow); }
 .method-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3rem; }
@@ -26,53 +39,22 @@
 .method-item > .line-icon { width: 44px; height: 44px; margin-bottom: 1.25rem; color: var(--yellow); }
 .method-item h3 { font-size: 1.6rem; line-height: 1.2; margin-bottom: .85rem; max-width: 22ch; }
 .method-item p { margin-bottom: 0; color: var(--section-muted, var(--muted)); font-size: 1rem; }
-.template-homepage .parta-band .section-shell { grid-template-columns: .95fr 1.05fr; gap: 4rem; }
-.template-homepage .parta-band .section-heading { margin-bottom: 1.25rem; }
-.template-homepage .parta-band h2 { font-size: clamp(3rem, 6vw, 4.5rem); }
-.template-homepage .parta-band .button { margin-top: 1.5rem; }
 .parta-band .section-shell:not(:has(.parta-visual)) { display: block; }
 .parta-band .featured-project-copy { min-width: 0; }
 .homepage-design-2 .method-diagram, .homepage-design-2 .method-item > .line-icon, .homepage-design-2 .parta-visual { color: var(--design-accent); }
-.template-homepage .publication-section .section-shell { display: grid; grid-template-columns: .7fr 1.3fr; gap: 0 4rem; }
-.template-homepage .publication-section .section-heading { grid-column: 1; grid-row: 1 / span 3; }
-.template-homepage .publication-section .publication-list { grid-column: 2; }
-.template-homepage .publication-section .collection-intro { grid-column: 2; margin-bottom: 1.5rem; }
-.template-homepage .publication-list > li { grid-template-columns: 4rem minmax(0, 1fr); gap: 1.5rem; padding-block: 1.75rem; }
-.template-homepage .publication-copy h3 { font-family: var(--display); font-size: 1.65rem; line-height: 1.2; text-wrap: balance; }
-.template-homepage .publication-year { color: var(--section-muted); font-size: 1rem; }
-.template-homepage .collaboration-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 4rem; }
-.template-homepage .collaboration-item { display: grid; grid-template-columns: 100px minmax(0, 1fr); gap: .4rem 1.5rem; padding-block: 2rem; border-top: 1px solid var(--section-line, var(--line)); }
-.template-homepage .collaboration-item:not(:has(.collaboration-logo, .collaboration-symbol)) { display: block; }
-.template-homepage .collaboration-symbol { grid-row: 1 / span 2; align-self: start; color: var(--section-muted, var(--muted)); }
-.template-homepage .collaboration-symbol .line-icon { width: 48px; height: 48px; }
-.template-homepage .collaboration-logo { grid-row: 1 / span 2; align-self: center; }
-.template-homepage .collaboration-logo img { width: 100%; height: 70px; object-fit: contain; }
-.template-homepage .collaboration-item h3 { font-size: 1.4rem; line-height: 1.25; margin-bottom: .25rem; }
-.template-homepage .collaboration-description { grid-column: 2; font-size: .95rem; }
 @media (max-width: 1000px) {
-  .template-homepage .publication-section .section-shell { grid-template-columns: 1fr; }
-  .template-homepage .publication-section .section-heading, .template-homepage .publication-section .collection-intro, .template-homepage .publication-section .publication-list { grid-column: 1; grid-row: auto; }
   .method-grid { gap: 1.75rem; }
   .method-lead { gap: 2rem; }
-  .template-homepage .parta-band .section-shell { gap: 2rem; }
 }
 @media (max-width: 760px) {
-  .template-homepage .builder-media-image-left { grid-template-columns: 1fr; }
-  .template-homepage .builder-media-image-left .builder-media-copy, .template-homepage .builder-media-image-left figure { grid-column: 1; grid-row: auto; }
-  .template-homepage .builder-media figure { order: -1; margin: 0; }
   .method-lead { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem; }
   .method-diagram { max-height: 170px; }
   .method-grid { grid-template-columns: 1fr; gap: 1.75rem; }
   .method-item { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 1rem; }
   .method-item > .line-icon { width: 36px; height: 36px; }
   .method-item h3 { font-size: 1.4rem; }
-  .template-homepage .parta-band .section-shell { grid-template-columns: 1fr; gap: 2.5rem; }
   .science-page .inline-section-lead.has-image { grid-template-columns: minmax(0, 1fr) 160px; gap: 1.5rem; }
   .science-page .inline-section-image img { width: 160px; }
-  .template-homepage .publication-list > li { grid-template-columns: 3rem minmax(0, 1fr); gap: .75rem; }
-  .template-homepage .publication-copy h3 { font-size: 1.4rem; }
-  .template-homepage .collaboration-list { grid-template-columns: 1fr; }
-  .template-homepage .collaboration-item { grid-template-columns: 72px minmax(0, 1fr); gap: .5rem 1rem; }
 }
 @media (max-width: 480px) {
   .science-page .inline-section-lead.has-image { display: block; }

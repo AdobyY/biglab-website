@@ -1,8 +1,10 @@
 /* Version 1 hero only. Section dimensions come from the shared homepage stylesheet. */
+.homepage-design-1 .hero { display: flex; flex-direction: column; min-height: calc(100svh - var(--header-height)); }
+.homepage-design-1 .hero-inner { flex: 1; min-height: 0; }
 .homepage-design-1 .hero-constellation .hero-inner { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
 .homepage-design-1 .hero-copy, .homepage-design-1 .relationship-network { min-width: 0; }
 .homepage-design-1 .relationship-network { width: 100%; max-width: 100%; }
-.homepage-design-1 .constellation-field { max-width: 560px; width: 100%; }
+.homepage-design-1 .constellation-field { max-width: min(560px, calc(100svh - var(--header-height) - 9rem)); width: 100%; }
 .homepage-design-1 .constellation-field::before, .homepage-design-1 .constellation-field::after { content: none; }
 .homepage-design-1 .constellation-field > .research-network, .homepage-design-1 .relationship-fallback { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .homepage-design-1 .relationship-fallback { opacity: .2; }
@@ -19,8 +21,7 @@
 }
 @media (max-width: 760px) {
   .homepage-design-1 .hero-constellation .hero-inner { grid-template-columns: minmax(0, 1fr); }
-  .homepage-design-1 .hero-footnote { padding-right: 7.5rem; }
-  .homepage-design-1 .relationship-network { max-width: 470px; }
+  .homepage-design-1 .relationship-network { max-width: 290px; margin-inline: auto; }
   .homepage-design-1 .constellation-topics li { width: 140px; }
   .homepage-design-1 .constellation-topics a { font-size: .76rem; }
 }
