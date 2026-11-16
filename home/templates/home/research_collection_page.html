@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags ui_tags %}
+{% block content %}
+<article class="page-wide research-collection-page">
+  <header class="page-heading"><h1>{{ collection_title }}</h1></header>
+  {% include_block collection_section with collection_detail=True %}
+  {% if collection_followup %}{% include_block collection_followup %}{% endif %}
+</article>
+{% endblock %}

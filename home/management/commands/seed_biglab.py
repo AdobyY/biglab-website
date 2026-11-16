@@ -327,8 +327,8 @@ class Command(BaseCommand):
         science = home.get_children().type(SciencePage).specific().first()
         self._seed_existing(
             science,
-            title="Science",
-            draft_title="Science",
+            title="Research",
+            draft_title="Research",
             slug="science",
             show_in_menus=True,
             intro="<p>Five connected areas frame our research into individual change and social spread.</p>",

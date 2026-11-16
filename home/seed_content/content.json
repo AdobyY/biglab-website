@@ -91,7 +91,7 @@
           {
             "type": "research",
             "value": {
-              "title": "Science",
+              "title": "Research",
               "intro": "",
               "is_visible": true,
               "link_label": "",
@@ -188,7 +188,7 @@
                 },
                 {
                   "page": 4,
-                  "label": "Science",
+                  "label": "Research",
                   "description": ""
                 }
               ],
@@ -730,8 +730,8 @@
       "model": "home.sciencepage",
       "id": 4,
       "fields": {
-        "title": "Science",
-        "draft_title": "Science",
+        "title": "Research",
+        "draft_title": "Research",
         "slug": "science",
         "show_in_menus": true,
         "seo_title": "",

@@ -1,6 +1,8 @@
 import re
 
 from django import forms
+from django.http import Http404
+from django.template import Context
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 from django.db import models
@@ -339,18 +341,73 @@ class ProjectPage(BaseContentPage):
         return context
 
 
-class SciencePage(BaseContentPage):
+class SciencePage(RoutablePageMixin, BaseContentPage):
     show_in_menus_default = True
     parent_page_types = ["home.HomePage"]
     subpage_types = ["home.ContentPage"]
 
-    def get_context(self, request, *args, **kwargs):
+    # These views reuse this page's editable sections and shared snippet collections.
+    collection_types = {
+        "publications": ("publications", None),
+        "collaborations": ("collaborations", None),
+        "finished_projects": ("project_list", "finished"),
+    }
+
+    def collection_sections(self):
+        sections = list(self.sections)
+        if not sections:
+            from home.editorial import defaults_for_page
+            sections = list(defaults_for_page(self))
+        result = []
+        for section in sections:
+            for name, (kind, status) in self.collection_types.items():
+                if (section.block_type == kind and section.value.get("is_visible")
+                        and (status is None or section.value.get("status") == status)):
+                    result.append({"name": name, "section": section,
+                                   "url": (self.url or "") + self.reverse_subpage(name)})
+                    break
+        return result
+
+    def collection_url(self, name):
+        return next((item["url"] for item in self.collection_sections() if item["name"] == name), "")
+
+    def get_context(self, request, *args, research_collection_name=None, **kwargs):
         context = super().get_context(request, *args, **kwargs)
-        context["publications"] = Publication.objects.filter(locale=self.locale).order_by("-year", "title")
-        context["collaborations"] = Collaboration.objects.filter(locale=self.locale).order_by(
-            "sort_order", "name"
-        )
+        context["research_collections"] = self.collection_sections()
+        context["research_overview_sections"] = [
+            section for section in self.sections
+            if not any(section.block_type == kind and (status is None or section.value.get("status") == status)
+                       for kind, status in self.collection_types.values())
+        ]
+        if research_collection_name:
+            from home.templatetags.ui_tags import ui
+            item = next((item for item in context["research_collections"] if item["name"] == research_collection_name), None)
+            if item is None:
+                raise Http404
+            context.update(research_collection_name=research_collection_name, collection_section=item["section"],
+                           collection_title=item["section"].value.get("title") or ui(Context(context), research_collection_name))
+            sections = list(self.sections)
+            index = next((index for index, section in enumerate(sections) if section.id == item["section"].id), -1)
+            context["collection_followup"] = sections[index + 1] if (
+                research_collection_name == "collaborations" and index >= 0 and index + 1 < len(sections)
+                and sections[index + 1].block_type == "callout"
+            ) else None
         return context
+
+    def serve_collection(self, request, name):
+        return self.render(request, research_collection_name=name, template="home/research_collection_page.html")
+
+    @path("publications/", name="publications")
+    def publications_page(self, request):
+        return self.serve_collection(request, "publications")
+
+    @path("collaboration/", name="collaborations")
+    def collaborations_page(self, request):
+        return self.serve_collection(request, "collaborations")
+
+    @path("finished-projects/", name="finished_projects")
+    def finished_projects_page(self, request):
+        return self.serve_collection(request, "finished_projects")
 
 
 @register_snippet

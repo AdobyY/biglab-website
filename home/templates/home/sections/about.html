@@ -13,7 +13,7 @@
       {% if page.intro %}<div class="intro collection-intro">{{ page.intro|richtext }}</div>{% endif %}
       <div class="builder-copy reading-content about-details">{% include_block page.body %}</div>
     {% else %}
-      {% if value.intro %}<div class="intro collection-intro">{{ value.intro|richtext }}</div>{% endif %}
+      {% if value.intro %}{% with intro_plain=value.intro|striptags %}{% if is_about_page or intro_plain != page.hero_summary %}<div class="intro collection-intro">{{ value.intro|richtext }}</div>{% endif %}{% endwith %}{% endif %}
       {% if value.text %}<div class="builder-copy reading-content">{% if value.intro %}<div class="about-details">{{ value.text|richtext }}</div>{% else %}{% with parts=value.text|editorial_parts %}{% if parts.lead %}<div class="about-lead">{{ parts.lead|richtext }}</div>{% endif %}{% if parts.body %}<div class="about-details">{{ parts.body|richtext }}</div>{% endif %}{% endwith %}{% endif %}</div>{% endif %}
     {% endif %}
     </div>

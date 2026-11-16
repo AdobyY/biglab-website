@@ -7,9 +7,14 @@
 .template-homepage .contact-surface { padding-block: 2.75rem; }
 .contact-surface-heading { margin-bottom: 1.5rem; }
 .contact-surface-heading h2 { margin: 0; font-size: var(--font-section-title); font-weight: 500; line-height: 1.2; }
-.contact-composition { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .9fr); gap: 4rem; align-items: start; }
-.contact-panel { min-width: 0; display: flex; flex-direction: column; align-items: start; gap: 1.5rem; }
-.contact-surface-intro { max-width: 64ch; font-size: 1rem; line-height: 1.6; }
+.contact-composition { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.15fr); gap: 1.5rem 3rem; align-items: start; }
+.contact-panel { min-width: 0; display: flex; flex-direction: column; align-items: stretch; gap: 1.5rem; }
+.contact-correspondence, .contact-visit-panel, .contact-connections, .contact-networks { display: grid; grid-template-columns: 24px minmax(0, 1fr); column-gap: .85rem; align-content: start; }
+.contact-correspondence > .contact-direct, .contact-correspondence > .contact-surface-intro, .contact-location, .contact-directions, .contact-team-intro, .contact-actions, .contact-networks > p, .contact-networks > div { grid-column: 2; }
+.contact-correspondence { row-gap: .75rem; }
+.contact-surface .contact-group-icon { grid-column: 1; grid-row: 1 / span 2; width: 24px; height: 24px; margin-top: .2rem; color: var(--contact-accent); }
+.contact-surface-intro { max-width: 52ch; font-size: .95rem; line-height: 1.7; color: var(--contact-muted); }
+.contact-surface-intro p { margin-top: 0; }
 .contact-surface-intro p:last-child { margin-bottom: 0; }
 .contact-direct { display: flex; flex-wrap: wrap; gap: 1rem 2rem; }
 .contact-direct:not(:has(a)) { display: none; }
@@ -25,11 +30,11 @@
 .contact-networks p { font-size: .8rem; color: var(--contact-muted); margin: 0; }
 .contact-networks > div { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
 .contact-networks a { display: inline-flex; align-items: center; min-height: 44px; font-size: .9rem; text-underline-offset: .25em; }
-.contact-visit-panel { min-width: 0; }
+.contact-visit-panel { min-width: 0; padding-top: 1.5rem; border-top: 1px solid var(--section-line, var(--line)); }
 .contact-location .contact-panel-title { font-family: var(--body); font-size: 1rem; font-weight: 600; line-height: 1.3; margin: 0 0 .5rem; }
-.contact-visit { font-size: .9rem; color: var(--contact-muted); margin: 0 0 .75rem; }
+.contact-visit { max-width: 44ch; font-size: .9rem; color: var(--contact-muted); margin: 0 0 .75rem; }
 .contact-location address { font-size: .95rem; line-height: 1.6; font-style: normal; margin: 0; }
-.contact-map { position: relative; height: 240px; margin-top: .5rem; overflow: hidden; border-radius: var(--radius); background: var(--paper-deep); }
+.contact-map { grid-column: 2; grid-row: 1; align-self: center; width: 100%; position: relative; height: 360px; margin-top: 0; overflow: hidden; border-radius: var(--radius); background: var(--paper-deep); }
 .contact-map iframe { width: 100%; height: 100%; min-height: 0; border: 0; display: block; filter: grayscale(1); }
 .contact-composition--no-map { display: block; max-width: 72ch; }
 .contact-surface :focus-visible { outline: 2px solid var(--contact-accent); outline-offset: 5px; }
@@ -37,6 +42,7 @@
 .content-page > .page-heading:has(+ div > .content-reading-main > .block-contact:first-child) { padding-bottom: 1rem; }
 .content-page > .page-heading + div > .content-reading-main > .block-contact:first-child > .builder-contact { padding-top: 0; padding-bottom: 0; }
 @media (max-width: 1000px) {
+  .contact-map { height: 300px; }
   .contact-composition { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 2rem; }
 }
 @media (max-width: 760px) {
@@ -44,5 +50,9 @@
   .contact-composition { display: flex; flex-direction: column; gap: 2rem; }
   .contact-panel, .contact-visit-panel { width: 100%; }
   .contact-direct-link { font-size: 1.3rem; }
-  .contact-map { height: 200px; }
+  .contact-map { height: 260px; }
 }
+
+.contact-support { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 3rem; padding-top: 1rem; border-top: 1px solid var(--section-line, var(--line)); }
+.contact-composition--no-map .contact-support { margin-top: 1.5rem; }
+@media (max-width: 760px) { .contact-support { display: flex; flex-wrap: wrap; width: 100%; gap: 1rem; } }

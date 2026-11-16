@@ -51,7 +51,6 @@ const closeSubmenus = (except = null) => {
   document.querySelectorAll('.has-submenu.is-open').forEach((item) => {
     if (item === except || (except && item.contains(except))) return;
     item.classList.remove('is-open');
-    item.classList.remove('opens-left');
     const submenu = item.querySelector(':scope > .submenu');
     if (submenu) submenu.style.transform = '';
     item.querySelector(':scope > .nav-entry .submenu-toggle')?.setAttribute('aria-expanded', 'false');
@@ -60,12 +59,8 @@ const closeSubmenus = (except = null) => {
 const positionSubmenu = (item) => {
   const submenu = item.querySelector(':scope > .submenu');
   if (!submenu || window.matchMedia('(max-width: 1100px)').matches) return;
-  item.classList.remove('opens-left');
   submenu.style.transform = '';
   const edge = 16;
-  if (item.parentElement.classList.contains('submenu') && submenu.getBoundingClientRect().right > innerWidth - edge) {
-    item.classList.add('opens-left');
-  }
   const bounds = submenu.getBoundingClientRect();
   const shift = bounds.left < edge ? edge - bounds.left : Math.min(0, innerWidth - edge - bounds.right);
   if (shift) submenu.style.transform = `translateX(${shift}px)`;
@@ -95,6 +90,35 @@ document.querySelectorAll('.submenu-toggle').forEach((button) => {
     item.classList.toggle('is-open', !open);
     button.setAttribute('aria-expanded', String(!open));
     if (!open) positionSubmenu(item);
+  });
+});
+// One panel per top-level section; deeper destinations stay inside that panel.
+const desktopHover = window.matchMedia('(min-width: 1101px) and (hover: hover) and (pointer: fine)');
+document.querySelectorAll('.site-nav > .has-submenu').forEach((item) => {
+  const button = item.querySelector(':scope > .nav-entry .submenu-toggle');
+  let closeTimer;
+  item.addEventListener('pointerenter', (event) => {
+    clearTimeout(closeTimer);
+    if (!desktopHover.matches || event.pointerType === 'touch') return;
+    closeLanguage();
+    closeSubmenus(item);
+    item.classList.add('is-open');
+    button?.setAttribute('aria-expanded', 'true');
+    positionSubmenu(item);
+  });
+  item.addEventListener('pointerleave', () => {
+    if (!desktopHover.matches) return;
+    closeTimer = setTimeout(() => {
+      if (item.contains(document.activeElement) && document.activeElement.matches(':focus-visible')) return;
+      item.classList.remove('is-open');
+      button?.setAttribute('aria-expanded', 'false');
+    }, 150);
+  });
+  item.addEventListener('focusout', (event) => {
+    if (!item.contains(event.relatedTarget)) {
+      item.classList.remove('is-open');
+      button?.setAttribute('aria-expanded', 'false');
+    }
   });
 });
 document.addEventListener('click', (event) => {

@@ -4,12 +4,11 @@
 <article class="page-wide science-page">
   {% include "home/includes/page_heading.html" with index_heading=True %}
   {% if page.body %}<div class="article-body reading-content">{% include_block page.body %}</div>{% endif %}
+  {% if research_collections %}<nav class="research-collection-nav" aria-label="{% ui 'contents' %}">{% for item in research_collections %}<a href="{{ item.url|design_url:design_version }}">{% ui item.name %}{% include 'home/includes/icon.html' with name='arrow' %}</a>{% endfor %}</nav>{% endif %}
   {% if page.sections %}
-    {% include_block page.sections %}
+    {% for section in research_overview_sections %}{% include_block section %}{% endfor %}
   {% else %}
     {% if research_areas %}<section class="builder-section research-section"><div class="section-shell">{% include "home/includes/inline_sections.html" with inline_children=research_areas %}</div></section>{% endif %}
-    <section class="builder-section publication-section"><div class="section-shell"><div class="section-heading"><h2>{% ui 'publications' %}</h2></div>{% include "home/includes/publication_list.html" with publication_items=publications %}</div></section>
-    {% if collaborations %}<section class="builder-section collaboration-section"><div class="section-shell"><div class="section-heading"><h2>{% ui 'collaborations' %}</h2></div>{% include "home/includes/collaboration_list.html" with collaboration_items=collaborations %}</div></section>{% endif %}
   {% endif %}
   {% if page.after_body %}<div class="article-body reading-content after-body">{% include_block page.after_body %}</div>{% endif %}
 </article>

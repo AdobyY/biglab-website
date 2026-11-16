@@ -215,7 +215,7 @@ class SuppliedStructureRenderingTests(TestCase):
                 if card.select_one('.news-thumbnail img'):
                     detail = BeautifulSoup(self.client.get(card.select_one('.news-title a')['href']).content, 'html.parser')
                     self.assertEqual(detail.select_one('.article-image img')['alt'], detail.select_one('main h1').get_text())
-            for path in (prefix + '/', science_path):
+            for path in (prefix + '/', science_path + 'collaboration/'):
                 soup = BeautifulSoup(self.client.get(path).content, 'html.parser')
                 self.assertEqual(len(soup.select('.collaboration-item')), 4)
                 self.assertEqual(len(soup.select('.collaboration-symbol > svg')), 4)
@@ -231,7 +231,7 @@ class SuppliedStructureRenderingTests(TestCase):
             menu = soup.select('header .site-nav > li')
             def titles(items):
                 return [item.select_one(':scope > .nav-entry > a').get_text(strip=True) for item in items]
-            self.assertEqual(titles(menu), ['About us','Science','PARTA'] if code=='en' else ['O nás','Výzkum','PARTA'])
+            self.assertEqual(titles(menu), ['About us','Research','PARTA'] if code=='en' else ['O nás','Výzkum','PARTA'])
             self.assertEqual(titles(menu[0].select(':scope > ul > li')),
                              ['BIG Lab','People','News'] if code=='en' else ['BIG Lab','Lidé','Novinky'])
             self.assertEqual(titles(menu[1].select(':scope > ul > li')),

@@ -10,10 +10,11 @@
 <!DOCTYPE html>
 <html lang="{{ page.locale.language_code|default:active_language }}">
 <head>
+    {% firstof collection_title page.seo_title page.title 'BIG Lab' as public_page_title %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="{% static 'js/navigation-init.js' %}"></script>
-    <title>{% block title %}{{ page.seo_title|default:page.title|default:'BIG Lab' }} — {{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}{% endblock %}</title>
+    <title>{% block title %}{{ public_page_title }} — {{ settings.home.ContactSettings.site_name|default:'BIG Lab' }}{% endblock %}</title>
     {% if page.search_description %}<meta name="description" content="{{ page.search_description }}">{% endif %}
     <meta name="theme-color" content="{% block theme_color %}#101e32{% endblock %}">
     <link rel="icon" href="{{ identity.icon_url }}">
@@ -21,7 +22,7 @@
       {% absolute_page_url page as canonical_url %}<link rel="canonical" href="{{ canonical_url }}">
       <link rel="alternate" hreflang="{{ page.locale.language_code }}" href="{{ canonical_url }}">
       {% for translation in page.get_translations.live %}{% absolute_page_url translation as translation_url %}<link rel="alternate" hreflang="{{ translation.locale.language_code }}" href="{{ translation_url }}">{% endfor %}
-      <meta property="og:title" content="{{ page.seo_title|default:page.title }}">
+      <meta property="og:title" content="{{ public_page_title }}">
       <meta property="og:type" content="website">
       <meta property="og:url" content="{{ canonical_url }}">
       {% if page.search_description %}<meta property="og:description" content="{{ page.search_description }}">{% endif %}
@@ -29,11 +30,11 @@
     <link rel="preload" href="{% static 'fonts/font-4.woff2' %}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{% if page and page.pk != site_home.pk %}{% static 'fonts/font-1.woff2' %}{% else %}{% static 'fonts/font-0.woff2' %}{% endif %}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{% static 'fonts/fonts.css' %}">
-    <link rel="stylesheet" href="{% static 'css/config.css' %}?v=20261115-final">
-    {% if page and page.pk != site_home.pk %}<link rel="stylesheet" href="{% static 'css/internal-pages.css' %}?v=20261115-final">{% endif %}
+    <link rel="stylesheet" href="{% static 'css/config.css' %}?v=20261116-document">
+    {% if page and page.pk != site_home.pk %}<link rel="stylesheet" href="{% static 'css/internal-pages.css' %}?v=20261116-document">{% endif %}
     {% block extra_css %}{% endblock %}
-    <link rel="stylesheet" href="{% static 'css/editorial-enhancements.css' %}?v=20261115-final">
-    <link rel="stylesheet" href="{% static 'css/contact-surface.css' %}?v=20261115-final">
+    <link rel="stylesheet" href="{% static 'css/editorial-enhancements.css' %}?v=20261116-document">
+    <link rel="stylesheet" href="{% static 'css/contact-surface.css' %}?v=20261116-document">
     {% block final_css %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %}" {% block body_attrs %}{% endblock %}data-image-preview="{% ui 'image_preview' %}" data-close="{% ui 'close' %}" data-previous-image="{% ui 'previous_image' %}" data-next-image="{% ui 'next_image' %}" data-pause="{% ui 'pause' %}" data-play="{% ui 'play' %}">
@@ -79,7 +80,7 @@
       <div class="section-shell footer-bottom"><p>© {% now 'Y' %} {{ contact.copyright_text|default:contact.site_name|default:'BIG Lab' }}</p><a href="{{ site_about_url }}">{% ui 'about' %}</a></div>
       {% endwith %}
     </footer>
-    <script src="{% static 'js/config.js' %}?v=20261115-final" defer></script>
+    <script src="{% static 'js/config.js' %}?v=20261116-document" defer></script>
     {% if page and page.pk != site_home.pk %}<script src="{% static 'js/internal-pages.js' %}" defer></script>{% endif %}
     {% block extra_js %}{% endblock %}
 </body>

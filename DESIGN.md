@@ -363,3 +363,18 @@ Each adjacent top-level homepage builder section has one inner-shell keyline wit
 ### Final map and V2 summary refinement
 
 The embedded Google map keeps its provider-owned Open in Maps control; the duplicate custom overlay link and its CSS are removed. Address and directions remain outside the iframe. V2's summary is 80ch wide on larger screens and fills the available reading width on phones, with the original copy, type size and fullscreen hero preserved.
+
+### Document and contact refinement, 16 November 2026
+
+Contact now pairs the correspondence, email and visit details in the left column
+with a 360px map in the right column (300px on intermediate widths). Team and
+institute social links share a compact lower row. Below 760px the same DOM order
+stacks naturally and the map is 260px high. This supersedes earlier contact geometry;
+the map retains only its provider-owned opening control.
+
+Research collections have separate reading destinations using the owning Research
+sections and shared snippets, with one H1, collection breadcrumbs and locale links.
+The public English name is Research; established URLs stay compatible. The main
+navigation uses one dropdown surface per branch. Nested audience links are visibly
+indented inside that surface, rather than opening a second flyout. Desktop hover
+and explicit keyboard/touch disclosure share the same state and ARIA attributes.

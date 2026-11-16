@@ -141,3 +141,9 @@
   .page-heading--index { display: block; }
   .page-heading--index h1 { margin-bottom: 1rem; }
 }
+
+/* Research's collections are real destinations owned by its editable sections. */
+.research-collection-nav { display: flex; flex-wrap: wrap; gap: .75rem 2rem; margin-bottom: 2rem; }
+.research-collection-nav a { display: inline-flex; align-items: center; gap: .75rem; min-height: 44px; font-weight: 600; text-underline-offset: .25em; }
+.research-collection-nav .line-icon { width: 18px; height: 18px; }
+.research-collection-page > .builder-section { padding-top: 0; }

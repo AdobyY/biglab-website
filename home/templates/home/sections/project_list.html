@@ -3,7 +3,7 @@
 {% if not page.hero_layout or value.status == 'current' and current_projects or value.status == 'finished' and finished_projects or value.status != 'current' and value.status != 'finished' and projects %}
 <section{% include "home/includes/section_attributes.html" with section_class="project-section" %}>
   <div class="section-shell">
-    <div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% elif value.status == 'current' %}{% ui 'current_projects' %}{% elif value.status == 'finished' %}{% ui 'finished_projects' %}{% else %}{% ui 'projects' %}{% endif %}</h2></div>
+    {% if not collection_detail %}<div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% elif value.status == 'current' %}{% ui 'current_projects' %}{% elif value.status == 'finished' %}{% ui 'finished_projects' %}{% else %}{% ui 'projects' %}{% endif %}</h2></div>{% endif %}
     {% if value.intro %}<div class="collection-intro reading-content">{{ value.intro|richtext }}</div>{% endif %}
     {% if value.status == 'current' %}
       {% include "home/includes/project_list.html" with project_items=current_projects grouped=True %}

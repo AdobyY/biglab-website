@@ -1,5 +1,32 @@
 # Client content update — 12 November 2026
 
+## Document recheck — 16 November 2026
+
+The accepted body of `CONTENT (1).docx` adds the English navigation rename
+Science → Research. Its factual paragraphs match the original document. The
+newsletter comment is deferred; no subscription form is enabled. Finished
+projects and PARTA Results stay hidden, as the document explicitly requests.
+
+Research now exposes Publications and Collaboration as separate destinations
+under its existing URL (`/science/publications/` and `/science/collaboration/`,
+with equivalent routes beneath the Czech Research page). These views reuse the
+Research page's section titles, introductions, visibility and order, and the
+existing publication/collaboration snippets. Edit those owners in Wagtail; do not
+create child pages with the reserved slugs `publications`, `collaboration` or
+`finished-projects`. Ordinary additional child pages remain supported. Enabling
+the existing finished-projects section also enables its destination and menu link.
+
+Migration 0026 changes only exact former default English interface labels, including
+the current live/draft revisions. Custom labels, factual copy, page identities,
+slugs, publication states and other editor changes are preserved. Normal deployment
+does not import the snapshot or enable automatic seeding.
+
+Desktop navigation opens on hover and through its disclosure button. Nested
+audience destinations remain inside one panel; keyboard, Escape and mobile button
+interaction remain available. Contact uses correspondence/address alongside a
+bounded map, with team and social links below. All contact data and field switches
+remain owned by the existing settings and Contact block.
+
 The supplied `CONTENT.docx` is represented in the bilingual baseline
 in `home/seed_content/`. Original documents and logo files are retained unchanged in
 `home/seed_assets/supplied/`; asset provenance is in `home/seed_assets/SOURCES.md`.

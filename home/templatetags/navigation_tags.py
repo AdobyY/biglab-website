@@ -50,6 +50,8 @@ def breadcrumbs(context, home):
         # Wagtail previews may show an unpublished page; it is still the current crumb.
         if not items or items[-1].pk != page.pk:
             items.append(page)
+    if items and context.get("research_collection_name"):
+        items.append(SimpleNamespace(title=context["collection_title"]))
     return {"breadcrumb_items": items, "page": page, "request": context.get("request")}
 
 
@@ -82,7 +84,7 @@ def child_page_navigation(context, parent=None, embedded=False):
     """Expose the next level even when it is beyond the header menu's depth."""
     parent = parent or context.get("page")
     result = {"page": parent, "request": context.get("request"), "embedded": embedded}
-    if not parent or parent.__class__.__name__ not in {"ContentPage", "ProjectPage", "SciencePage"}:
+    if context.get("research_collection_name") or not parent or parent.__class__.__name__ not in {"ContentPage", "ProjectPage", "SciencePage"}:
         return result
     sections = getattr(parent, "sections", [])
     # The inline collection already exposes children; do not repeat it.
@@ -126,17 +128,7 @@ def publication_collection(context, section=None):
         limit = 3
     limit = max(1, min(limit, 6))
     science = context.get("science_page")
-    url = ""
-    if science and science.live and science.url:
-        sections = science.sections
-        if not sections:
-            url = science.url
-        else:
-            for block in sections:
-                if block.block_type == "publications" and block.value.get("is_visible"):
-                    anchor = block.value.get("anchor")
-                    url = science.url + (f"#{anchor}" if anchor else "")
-                    break
+    url = science.collection_url("publications") if science and science.live else ""
     return {"items": items[:limit], "url": url}
 
 
@@ -180,6 +172,8 @@ def translation_url(context, page):
     url = page.url
     if context.get("is_about_page"):
         url += page.specific.reverse_subpage("about")
+    elif context.get("research_collection_name"):
+        url = page.specific.collection_url(context["research_collection_name"]) or url
     return design_url(url, context.get("design_version", "1"))
 
 
@@ -227,14 +221,17 @@ def primary_navigation(context, root):
         if item['page'].__class__.__name__ == 'SciencePage':
             item['children'].extend(project_items)
             item['active'] = item['active'] or any(child['active'] for child in project_items)
-            for block in item['page'].sections:
-                if block.block_type in {'publications', 'collaborations', 'project_list'} and block.value.get('is_visible') and block.value.get('anchor'):
-                    key = block.block_type if block.block_type != 'project_list' else ('finished_projects' if block.value.get('status') == 'finished' else 'projects')
-                    item['children'].append({'page': SimpleNamespace(id=f"{item['page'].pk}-{block.value['anchor']}", title=ui(context, key)),
-                        'url': design_url(f"{item['page'].url}#{block.value['anchor']}", version), 'active': False, 'current': False, 'children': []})
+            for collection in item["page"].collection_sections():
+                current = context.get("research_collection_name") == collection["name"] and page.pk == item["page"].pk
+                item["children"].append({"page": SimpleNamespace(id=f"{item['page'].pk}-{collection['name']}", title=ui(context, collection["name"])),
+                    "url": design_url(collection["url"], version), "active": current, "current": current, "children": []})
+            if context.get("research_collection_name") and page.pk == item["page"].pk:
+                item["current"] = False
             break
     else:
         remaining.extend(project_items)
+    # The document's About group has a semantic order; reuse the same published page records.
+    about_children[1:] = sorted(about_children[1:], key=lambda child: 0 if child["page"].__class__.__name__ == "PeopleIndexPage" else 1)
     about = {'page': SimpleNamespace(id=root.pk, title=ui(context, 'about')),
              'url': about_url, 'active': any(child['active'] for child in about_children),
              'current': about_current, 'children': about_children}
@@ -365,6 +362,8 @@ def absolute_page_url(context, page):
     url = getattr(page, "url", None)
     if url and context.get("is_about_page"):
         url += page.specific.reverse_subpage("about")
+    if url and context.get("research_collection_name"):
+        url += page.specific.reverse_subpage(context["research_collection_name"])
     return request.build_absolute_uri(url) if request and url else ""
 
 
