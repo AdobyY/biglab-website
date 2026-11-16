@@ -83,9 +83,16 @@
     ratio = Math.min(devicePixelRatio || 1, 1.75);
     const w = Math.round(width * ratio), h = Math.round(height * ratio);
     if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
-    quiet = [...hero.querySelectorAll('.hero-copy h1, .hero-copy .summary, .hero-copy .hero-actions, .hero-footnote')].map(element => {
-      const rect = element.getBoundingClientRect();
-      return { left: rect.left - bounds.left - 20, top: rect.top - bounds.top - 10, width: rect.width + 40, height: rect.height + 20 };
+    const protect = rect => ({ left: rect.left - bounds.left - 3, top: rect.top - bounds.top - 2,
+      width: rect.width + 6, height: rect.height + 4 });
+    // Protect each rendered text line, not the full-width paragraph/container.
+    quiet = [...hero.querySelectorAll('.hero-copy h1, .hero-copy .summary')].flatMap(element => {
+      const range = document.createRange();
+      range.selectNodeContents(element);
+      return [...range.getClientRects()].filter(rect => rect.width && rect.height).map(protect);
+    });
+    hero.querySelectorAll('.hero-actions > a, .hero-footnote a').forEach(element => {
+      quiet.push(protect(element.getBoundingClientRect()));
     });
     scrollTarget = clamp(-bounds.top / height, 0, 1);
     if (changed || !nodes.length) build();
@@ -203,7 +210,7 @@
     });
     // Erase only the illustration behind copy, with a soft edge; text never moves or gets crossed by light.
     ctx.save(); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'destination-out';
-    ctx.fillStyle = '#000'; ctx.shadowColor = '#000'; ctx.shadowBlur = width < 600 ? 28 : 40;
+    ctx.fillStyle = '#000'; ctx.shadowColor = '#000'; ctx.shadowBlur = width < 600 ? 8 : 12;
     quiet.forEach(rect => ctx.fillRect(rect.left, rect.top, rect.width, rect.height));
     ctx.restore(); ctx.globalAlpha = 1;
   };
@@ -239,6 +246,8 @@
   });
   const refresh = () => { measure(); if (motion.matches) draw(); };
   window.addEventListener('resize', refresh, { passive: true }); window.addEventListener('scroll', refresh, { passive: true });
+  document.fonts?.ready.then(refresh);
+  Promise.allSettled(hero.getAnimations({ subtree: true }).map(animation => animation.finished)).then(refresh);
   if ('ResizeObserver' in window) new ResizeObserver(() => { measure(); draw(); }).observe(hero);
   if ('IntersectionObserver' in window) new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) start(); else stop(); }).observe(hero);
   document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else start(); });

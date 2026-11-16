@@ -378,3 +378,8 @@ The public English name is Research; established URLs stay compatible. The main
 navigation uses one dropdown surface per branch. Nested audience links are visibly
 indented inside that surface, rather than opening a second flyout. Desktop hover
 and explicit keyboard/touch disclosure share the same state and ARIA attributes.
+
+V2's network protection follows each rendered title/summary text line, with a
+small soft edge, rather than blanking the paragraph's full container. Action links
+have their own bounds. Measurements refresh after font loading and the entrance
+animation; the heading and summary have no extra margin between them.
