@@ -1,20 +1,13 @@
-{% load static i18n %}{% get_current_language as LANGUAGE_CODE %}
-<!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% if LANGUAGE_CODE == 'cs' %}Chyba serveru{% else %}Server error{% endif %} — BIG Lab</title>
-    <link rel="stylesheet" href="{% static 'css/config.css' %}">
-</head>
-<body>
-    <main class="content-page">
-        <header>
-            <p class="kicker">500 / BIG LAB</p>
-            <h1>{% if LANGUAGE_CODE == 'cs' %}Spojení se přerušilo.{% else %}Something disconnected.{% endif %}</h1>
-            <div class="intro"><p>{% if LANGUAGE_CODE == 'cs' %}Server nemohl požadavek dokončit. Zkuste to prosím za chvíli znovu.{% else %}The server could not complete this request. Please try again shortly.{% endif %}</p></div>
-            <a class="button" href="{% if LANGUAGE_CODE == 'cs' %}/cs/{% else %}/{% endif %}">{% if LANGUAGE_CODE == 'cs' %}Zpět na úvod{% else %}Return home{% endif %}</a>
-        </header>
-    </main>
-</body>
-</html>
+{% extends error_layout|default:"error_base.html" %}
+{% load i18n %}
+{% block title %}{% get_current_language as language_code %}{% if language_code == 'cs' %}Chyba serveru{% else %}Server error{% endif %} — BIG Lab{% endblock %}
+{% block content %}
+{% get_current_language as language_code %}
+<article class="content-page">
+    <header class="page-heading">
+        <h1>{% if language_code == 'cs' %}Chyba serveru{% else %}Server error{% endif %}</h1>
+        <div class="intro"><p>{% if language_code == 'cs' %}Server nemohl požadavek dokončit. Zkuste to prosím za chvíli znovu.{% else %}The server could not complete this request. Please try again shortly.{% endif %}</p></div>
+        <a class="button" href="{% if site_home_url %}{{ site_home_url }}{% elif language_code == 'cs' %}/cs/{% else %}/{% endif %}">{% if language_code == 'cs' %}Zpět na úvod{% else %}Return home{% endif %}</a>
+    </header>
+</article>
+{% endblock %}

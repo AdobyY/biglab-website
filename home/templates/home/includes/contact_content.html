@@ -1,36 +1,43 @@
-{% load wagtailcore_tags navigation_tags ui_tags %}
-{% ui 'contact' as default_contact_title %}{% firstof value.title default_contact_title as contact_title %}
-{% if page.hero_layout or contact_title != page.title %}<div class="contact-surface-heading"><h2 id="contact-title-{{ value.anchor|default:'contact' }}">{{ contact_title }}</h2></div>{% endif %}
-<div class="contact-composition{% if not contact.address or not value.show_address and not legacy %} contact-composition--no-map{% endif %}">
-  <div class="contact-panel">
+{% load wagtailcore_tags ui_tags %}
+{% ui 'contact' as default_title %}{% firstof value.title default_title as contact_title %}
+{% if contact_title != page.title %}<h2 class="contact-section-title">{{ contact_title }}</h2>{% endif %}
+<div class="contact-composition">
+  {% if value.intro or value.text or value.show_email and contact.email or value.show_phone and contact.phone %}
     <div class="contact-correspondence">
-      {% include 'home/includes/icon.html' with name='mail' icon_class='contact-group-icon' %}
-    <div class="contact-direct">
-      {% if contact.email %}{% if value.show_email or legacy %}<a class="contact-direct-link" href="mailto:{{ contact.email }}"><span>{% ui 'email' %}</span>{{ contact.email }}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>{% endif %}{% endif %}
-      {% if contact.phone %}{% if value.show_phone or legacy %}<a class="contact-direct-link" href="tel:{{ contact.phone|cut:' ' }}"><span>{% ui 'phone' %}</span>{{ contact.phone }}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>{% endif %}{% endif %}
-    </div>
-      <div class="contact-surface-intro reading-content">{% if value.intro %}{{ value.intro|richtext }}{% else %}<p>{% ui 'contact_intro' %}</p>{% endif %}{% if value.text %}{{ value.text|richtext }}{% endif %}</div>
-    </div>
-    {% if contact.address %}{% if value.show_address or legacy %}
-    <div class="contact-visit-panel">
-      {% include 'home/includes/icon.html' with name='pin' icon_class='contact-group-icon' %}
-      <div class="contact-location">
-        {% if page.hero_layout or contact_title != page.title %}<h3 class="contact-panel-title">{{ contact.site_name|default:'BIG Lab' }}</h3>{% else %}<h2 class="contact-panel-title">{{ contact.site_name|default:'BIG Lab' }}</h2>{% endif %}
-        <p class="contact-visit">{% ui 'contact_visit' %}</p><address>{{ contact.address|linebreaksbr }}</address>
+      <div class="contact-surface-intro reading-content">
+        {% if value.intro %}{{ value.intro|richtext }}{% else %}<p>{% ui 'contact_intro' %}</p>{% endif %}
+        {% if value.text %}{{ value.text|richtext }}{% endif %}
       </div>
-      <a class="contact-directions" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ contact.address|urlencode }}" target="_blank" rel="noopener noreferrer">{% ui 'get_directions' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+      {% if value.show_email and contact.email %}<p class="contact-method contact-method-email"><a href="mailto:{{ contact.email }}"><span class="visually-hidden">{% ui 'email' %} </span>{{ contact.email }}</a></p>{% endif %}
+      {% if value.show_phone and contact.phone %}<p class="contact-method"><a href="tel:{{ contact.phone|cut:' ' }}"><span class="visually-hidden">{% ui 'phone' %} </span>{{ contact.phone }}</a></p>{% endif %}
     </div>
-    {% endif %}{% endif %}
-  </div>
-  {% if contact.address %}{% if value.show_address or legacy %}<div class="contact-map">{% include 'home/includes/contact_map.html' %}</div>{% endif %}{% endif %}
-  <div class="contact-support">
-    <div class="contact-connections">
-      {% if people_index %}{% if value.show_people_link or legacy %}{% include 'home/includes/icon.html' with name='team' icon_class='contact-group-icon' %}{% endif %}{% endif %}
-      {% if not value.text %}{% if people_index %}{% if value.show_people_link or legacy %}<p class="contact-team-intro">{% ui 'contact_team_intro' %}</p>{% endif %}{% endif %}{% endif %}
-      {% if people_index %}{% if value.show_people_link or legacy %}<div class="contact-actions"><a class="contact-team-link" href="{{ people_index.url|design_url:design_version }}">{% ui 'contact_team' %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>{% endif %}{% endif %}
+  {% endif %}
+  {% if value.show_address and contact.address %}
+    <figure class="contact-visit-panel">
+      <div class="contact-map">{% include 'home/includes/contact_map.html' %}</div>
+      <figcaption class="contact-location">
+        <div>
+          {% if contact_title != page.title %}<h3 class="contact-panel-title">{% ui 'contact_visit' %}</h3>{% else %}<h2 class="contact-panel-title">{% ui 'contact_visit' %}</h2>{% endif %}
+          <address>{{ contact.address|linebreaksbr }}</address>
+        </div>
+        <a class="contact-directions" href="https://www.google.com/maps/dir/?api=1&amp;destination={{ contact.address|urlencode }}">{% ui 'get_directions' %}</a>
+      </figcaption>
+    </figure>
+  {% endif %}
+  {% if value.show_people_link and people_index or value.show_social_links and contact.social_links %}
+    <div class="contact-support">
+      {% if value.show_people_link and people_index %}
+        <div class="contact-connections">
+          {% if not value.text %}<p>{% ui 'contact_team_intro' %}</p>{% endif %}
+          <a class="contact-team-link" href="{{ people_index.url }}">{% ui 'contact_team' %}</a>
+        </div>
+      {% endif %}
+      {% if value.show_social_links and contact.social_links %}
+        <div class="contact-networks">
+          <p>{% ui 'institute_social' %}</p>
+          <div>{% for name, url in contact.social_links %}<a href="{{ url }}">{{ name }}</a>{% endfor %}</div>
+        </div>
+      {% endif %}
     </div>
-    {% if contact.show_social_links %}{% if value.show_social_links or legacy %}{% if contact.linkedin_url or contact.instagram_url or contact.facebook_url %}
-    <div class="contact-networks">{% include 'home/includes/icon.html' with name='network' icon_class='contact-group-icon' %}<p>{% ui 'institute_social' %}</p><div>{% if contact.linkedin_url %}<a href="{{ contact.linkedin_url }}" target="_blank" rel="noopener noreferrer">LinkedIn</a>{% endif %}{% if contact.instagram_url %}<a href="{{ contact.instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram</a>{% endif %}{% if contact.facebook_url %}<a href="{{ contact.facebook_url }}" target="_blank" rel="noopener noreferrer">Facebook</a>{% endif %}</div></div>
-    {% endif %}{% endif %}{% endif %}
-  </div>
+  {% endif %}
 </div>

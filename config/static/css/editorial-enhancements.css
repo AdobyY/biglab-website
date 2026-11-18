@@ -25,7 +25,7 @@
   .science-page .inline-section--summary .inline-section-image img { width: 100px; height: 115px; }
   .science-page .inline-section--summary h2 { font-size: 1.1rem; }
 }
-.person-placeholder { background: #dededb; color: #939793; }
+.person-placeholder { background: var(--paper-deep); color: var(--muted); }
 .person-placeholder svg { display: block; width: 74%; max-height: 100%; fill: currentColor; }
 .profile-image .person-placeholder { aspect-ratio: 5 / 6; border-radius: 8px; }
 /* Carousel tracks must never inherit a page's fixed grid columns. */
@@ -41,7 +41,7 @@
 .method-item p { margin-bottom: 0; color: var(--section-muted, var(--muted)); font-size: 1rem; }
 .parta-band .section-shell:not(:has(.parta-visual)) { display: block; }
 .parta-band .featured-project-copy { min-width: 0; }
-.homepage-design-2 .method-diagram, .homepage-design-2 .method-item > .line-icon, .homepage-design-2 .parta-visual { color: var(--design-accent); }
+.parta-visual { color: var(--yellow); }
 @media (max-width: 1000px) {
   .method-grid { gap: 1.75rem; }
   .method-lead { gap: 2rem; }

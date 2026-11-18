@@ -28,24 +28,17 @@ materials are retained in `home/seed_assets/supplied/`. See [content update](doc
 
 The public site is available at `/`, the Czech version at `/cs/`, and the CMS at `/admin/`.
 
-The homepage has two versions. Both openings fill at least the first viewport and grow if longer text needs room. Version 1 is the default and retains the full page;
-`/?design=2` (or `/cs/?design=2`) fills the first viewport with the header and hero; the footer begins below it. The hero can grow for long text or zoom. Its **About**
-links open `/about/` (or `/cs/about/`), which displays the same
-published homepage sections, financing, Contact and content at the bottom. Edit those sections
-on the root page in Wagtail: one edit updates Version 1 and About together. The About
-URL is a reserved root-page route, not a separate CMS record. The version control
-is fixed to the bottom-right of the homepage viewport, outside the footer; Home and logo links on About return to the compact version. Footer spacing and hero discovery-link clearance keep those links accessible.
+The homepage opens with the full-width animated network. All public pages share the dark palette
+from **Settings → Site colors**. Its default background is `#0b141e`.
 
-Contact shares one open layout on V1, V2 About and the Contact page. The heading and
-introduction stay together, email leads the correspondence details, and a bounded map stays with the visit address.
-Writing to the lab and visiting it are separate columns. The address, directions and map are visible immediately (240px high on desktop, 200px on mobile); opening a disclosure is not required.
-The dark version uses the editable V2 palette. Both use
-**Settings → Contact settings** for the real address, email, phone and institute social
-links. Maps and directions use that address, so changing it updates both versions.
-The external map loads lazily; the address and map/directions links remain available
-if the provider cannot load. A Contact block's visibility, custom anchor and field
-switches apply to both versions; without a block, **Show homepage contact section**
-controls the fallback. Contact navigation targets the V1 homepage or the V2 About contact anchor.
+**About** opens at `/about/` and `/cs/about/`. Edit its sections on the root page in Wagtail.
+The interactive globe sits alongside the introduction and links to published research topics.
+An explicit **Research network** block sets its position in the section order.
+
+**Contact** opens at `/contact/` and `/cs/contact/`. Each translation is a regular Wagtail
+page in the main menu. Its Contact details block controls the displayed fields. Email, phone,
+address and social links come from **Settings → Contact settings**. The map and directions
+use the same address.
 
 The Wagtail **Promote → Show in menus** option controls the generated header navigation. Top-level
 pages appear as primary links; marked child pages appear in accessible nested menus under their
@@ -76,15 +69,14 @@ The homepage and content pages have a **Page section builder** in the page edito
 **A nonempty section builder replaces the default content layout and automatic lists; it does not
 append to them.** Header introductions remain visible, and existing main content stays stored.
 Clear the builder to return to the default layout. Hidden sections remain saved.
-The initial homepage is About-first, followed by research, people, Parta and updates, using the
-navy / butter-yellow / cream / brick palette. Financing is a separate root-page field. When the first visible section is About, automatic funding is grouped beside that explanation (below it on phones). An explicit Financing section keeps its own position and override text without duplicating the automatic funding. Empty editors, including old revisions, open with visible
-editable default containers; deliberately clearing and saving the builder still restores the default layout.
+On About, the research globe accompanies the first editorial introduction. It moves below the
+text on phones. Financing blocks on other pages can reuse the saved funding text from the root page.
 
 To put text **below the people list**, add blocks to
 **Content below the automatic list / sections**, or add a **People** section followed by
 **About / editorial text** in the builder.
 
-Homepage, About and People directories include every published member of their local
+About and People directories include every published member of their local
 team. Selected profiles set the first positions, followed by the rest in page-tree
 order; duplicates and drafts are omitted. Preview limits on other content pages
 continue to apply. Existing portrait choices, roles and summaries are preserved.
@@ -123,7 +115,7 @@ generates the required renditions for every context.
 Data-driven homepage sections support curation without losing automatic updates:
 
 - **People:** choose and drag profiles into order, show/hide roles, and enable a responsive
-  carousel after a chosen threshold. Homepage, About and People directories append all remaining
+  carousel after a chosen threshold. About and People directories append all remaining
   published team members. On other pages, the selection and maximum count control the preview.
 - **Research:** optionally choose and order specific research pages, or leave the selection empty to
   use the current research tree; image visibility and maximum count remain configurable.
@@ -135,7 +127,7 @@ chooser fields and drag ordering, so editors do not need template changes for th
 
 The `seed_biglab` command synchronizes the committed development snapshot in `home/seed_content/`.
 It copies page text (including the hero), sections and their order, both languages, original images,
-documents, publications, collaborations, interface labels, contacts and homepage colors. Page/image
+documents, publications, collaborations, interface labels, contacts and site colors. Page/image
 IDs are remapped for the destination database. Menu visibility and published/draft states match
 development, so a draft Parta child does not appear in production navigation. Unrelated destination
 records are retained. Accounts, passwords, permissions, revision history and runtime credentials are
@@ -242,7 +234,7 @@ translations are edited separately. The language switcher lists published langua
 including aliases; a published alias is not proof that its content has been translated.
 
 The **Editors** group can create, edit and publish pages, manage images/documents, publications,
-collaborations, interface texts, translations, contacts and the Version 2 palette. It cannot manage
+collaborations, interface texts, translations, contacts and the site palette. It cannot manage
 users or groups. Migration `0018_editor_content_permissions` adds these content permissions to
 the existing group without changing membership or removing other permissions.
 

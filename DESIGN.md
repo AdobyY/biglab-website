@@ -1,19 +1,19 @@
 ---
 name: BIG Lab
-description: A navy and butter homepage with a contained spatial network plus a dark homepage with a full-width abstract field.
+description: A dark research site with a full-width relationship field on the homepage and an interactive topic globe on About.
 colors:
-  navy: "#101e32"
-  navy-light: "#1c3048"
-  ink: "#182b3e"
-  paper: "#f6f3e9"
-  paper-deep: "#ebe6d9"
-  yellow: "#f3dfa1"
-  coral: "#a94737"
-  muted: "#53616b"
-  line: "#d6d5cb"
-  dark-line: "#465467"
-  contact-muted: "#c0c8cd"
-  map-backing: "#e5e3dc"
+  navy: "#0b141e"
+  navy-light: "#19212a"
+  ink: "#eeeae0"
+  paper: "#eeeae0"
+  paper-deep: "#19212a"
+  yellow: "#dac99c"
+  coral: "#7f9d98"
+  muted: "#a6b4bd"
+  line: "#a6b4bd40"
+  dark-line: "#a6b4bd40"
+  contact-muted: "#a6b4bd"
+  map-backing: "#ddded5"
 typography:
   display:
     fontFamily: "Alegreya, Georgia, serif"
@@ -67,10 +67,7 @@ components:
     rounded: "{rounded.control}"
     padding: ".6rem 1.15rem"
   button-primary-hover:
-    backgroundColor: "{colors.navy}"
-    textColor: "{colors.yellow}"
-  button-primary-hover-dark-context:
-    backgroundColor: "{colors.paper}"
+    backgroundColor: "{colors.ink}"
     textColor: "{colors.navy}"
   button-secondary-hero:
     backgroundColor: "transparent"
@@ -79,70 +76,26 @@ components:
     padding: ".6rem 1.15rem"
   button-secondary-hero-hover:
     backgroundColor: "{colors.navy-light}"
-  button-dark:
-    backgroundColor: "{colors.navy}"
-    textColor: "{colors.yellow}"
-    rounded: "{rounded.control}"
-    padding: ".6rem 1.15rem"
-  button-dark-hover:
-    backgroundColor: "{colors.navy-light}"
 ---
 
 # Design System: BIG Lab
 
-## Overview
+## Public site
 
-BIG Lab has two homepage versions sharing local fonts, navigation, footer structure, and one source of editorial content. Version 1 remains the default full homepage, pairing navy/butter copy with its restored contained spatial network and real research-topic links on the right, followed by cream reading surfaces and occasional brick-colored sections, then a light Contact closing. Version 2 shows its existing dark abstract-network hero, with the title, summary, and science/team actions, followed by the footer. Its discipline strip and Discover BIG Lab link are omitted; editorial sections appear on a separate About route using the same published homepage content, including dark Contact. Hollow junctions and curved connections express interaction and influence without a central hub. The constellation brand mark remains in the shared header, while neither hero uses a central star or orbital traces.
+The homepage opens with the full-width animated relationship field, its title, summary and two actions. The footer follows the opening. The same homepage serves both the ordinary URL and previous design links.
 
-Alegreya's serif headings pair with Source Sans 3 for prose and interface text. Bounded photos accompany open editorial sections, spacing between groups, rounded imagery, and softly rectangular controls. Version 1 pairs copy on the left with its contained three-dimensional network on the right. Version 2 centers the unchanged copy within a quiet area of its full-width network. Research-topic navigation belongs to the editorial sections on Version 1 and About. About retains their shared geometry in the editable dark palette and opens with a quiet title and Home link.
+All public routes use the palette from Wagtail’s **Settings → Site colors**. The default background is `#0b141e`, main text is `#eeeae0`, supporting text is `#a6b4bd`, the primary accent is `#dac99c`, and secondary connections use `#7f9d98`. The base template publishes these values on the document root for styles and both canvases. Alegreya remains the display face and Source Sans 3 the reading and interface face.
 
-This document records the current implementation, not a new design proposal. Shared sources are `config/static/css/config.css`, `config/static/js/config.js`, `config/templates/base.html`, the templates under `home/templates/home/`, and `config/static/fonts/fonts.css`. Both versions load `homepage.css` and `contact-surface.css`; `home/includes/contact_surface.html` supplies their Contact content and actions. Version 1 adds `home/includes/hero_v1.html`, `homepage-v1.css`, `homepage-v1.js`, and `hero-v1-entrance.js`. Version 2 adds `hero-network.css`, `homepage-v2.css`, `homepage-compact.css`, and `hero-network.js`; its compact homepage omits `homepage.js` and `research-preview.js`. About extends `home_page.html`, shares `home/includes/home_sections.html`, and loads the editorial `homepage.js` without the hero canvas or `hero-network.js`. `design-switch.css` styles the homepage version control; About omits that control. Frontmatter records the baseline palette and representative desktop type roles; Version 2's editable palette and component-specific overrides are described below.
+**About** lives at `/about/` and `/cs/about/`. The root page’s About sections supply the content. Its introduction shares a row with the rotating globe formerly used in the first homepage design. The globe sits below the prose on small screens. Topic labels link to the published research areas. A Research network block can place the globe elsewhere in the editorial order. Both networks respect reduced motion and suspend while offscreen.
 
-### Homepage version selection
+**Contact** is a published Wagtail page in each language. The email address is the primary action. A light street map with muted colors shares a figure with the office address and directions beneath it. The Contact details block controls the fields in the body. All pages use the same footer, which reads the site’s contact details and institute social links from Wagtail settings. Its default tagline is “behavior of individuals and groups” in both languages.
 
-The homepage always defaults to Version 1. Only the exact query parameter `?design=2` selects Version 2; there is no editor setting that changes the default and no local-storage preference. A fixed control at the bottom-right of the viewport shows V1/V2 and switches through a normal GET link. It retains the current language path and all other query parameters, adds `design=2` when entering Version 2, and removes the parameter when returning to Version 1. Language links on Version 2 retain its version parameter.
+Internal pages share a localized breadcrumb, including About. Linked titles are underlined. Only news articles and individual profiles offer adjacent entries, drawn in order from their archive or directory. Research links to the published project directory alongside its collections.
 
-The localized `/about/` and `/cs/about/` routes always use Version 2's palette. They render the published homepage's sections, financing, after-body content, and dark Contact through the shared section include, respecting hidden sections and the legacy fallback. Content is neither copied nor migrated. Version 2's About links open this route; Home and logo links return to the compact homepage, and Contact targets About's visible Contact section. Its anchor defaults to `#contact` and respects a custom visible contact anchor. The design query precedes the hash, for example `/about/?design=2#contact`. About language links retain the About route and `design=2`; canonical and hreflang metadata use the About routes without the design parameter. Other reading pages retain their navy/cream styling while their navigation and return destinations preserve Version 2 when selected.
+## Design history through 16 November 2026
 
-## Colors
-
-The palette below remains the baseline for Version 1 and ordinary reading pages. Version 2 overrides it on the compact homepage and its About route.
-
-### Primary
-
-- **Navy** (`navy`): header, hero, footer, dark buttons, and midnight section backgrounds. The base template also uses it for the browser theme color.
-- **Butter yellow** (`yellow`): hero headings, network nodes and strands, brand mark, primary buttons, current language indicator, Parta's audience surface, and accents within the light Contact section's navy panel. It is a substantial identity color, not merely a tiny signal accent.
-
-### Secondary
-
-- **Brick** (`coral`): the CSS token retains its historical name, but its shipped appearance is brick red. It supplies the coral section background, default focus outline, and native control accent.
-- **Lighter navy** (`navy-light`): desktop submenu surfaces and dark-button hover states.
-
-### Neutral
-
-- **Cream paper** (`paper`): default page and section background, secondary hero copy, and text on brick sections.
-- **Deeper paper** (`paper-deep`): portrait placeholders and media backing surfaces.
-- **Ink** (`ink`): default text on light surfaces.
-- **Muted** (`muted`): supporting copy, dates, roles, captions, and metadata on light surfaces.
-- **Light line** (`line`) and **dark line** (`dark-line`): dividers and boundaries on their respective grounds.
-- **Contact muted** (`contact-muted`): small labels on the Version 1 navy contact panel; Version 2 uses its editable muted color.
-- **Map backing** (`map-backing`): the quiet neutral surface behind the grayscale external map while it loads.
-
-Midnight sections use butter headings and cream supporting text; brick sections use cream for both. The legacy `lilac` section theme now resolves to cream paper: there is no separate lilac or mint palette token in the shipped stylesheet. Background-image sections use navy overlays, with none, light, default, and dark treatments defined in CSS.
-
-### Version 2 editable palette
-
-Wagtail's **Homepage design (Version 2)** settings expose one palette per site, shared across all languages. All five fields use native color controls and strict six-digit hexadecimal validation (`#RRGGBB`); they cannot contain arbitrary CSS values. They apply to the compact Version 2 homepage and About, including their shared header, footer, controls, editorial sections on About, and homepage network.
-
-| Setting | Default | Role |
-| --- | --- | --- |
-| `background` | `#0b141e` | Continuous dark surface |
-| `foreground` | `#eeeae0` | Primary text |
-| `accent` | `#dac99c` | Actions, active junctions, and relationship highlights |
-| `muted` | `#a6b4bd` | Supporting text and metadata |
-| `network_secondary` | `#7f9d98` | Secondary network connections and accents |
-
-Version 2 remaps the existing CSS theme tokens to these values and uses subtle mixed-color dividers. About's editorial sections share the same background instead of alternating paper, butter, and brick bands. Palette changes do not alter Version 1, ordinary reading pages, or stored editor content.
+<details>
+<summary>Earlier layouts, design variants and implementation notes</summary>
 
 ## Typography
 
@@ -383,3 +336,5 @@ V2's network protection follows each rendered title/summary text line, with a
 small soft edge, rather than blanking the paragraph's full container. Action links
 have their own bounds. Measurements refresh after font loading and the entrance
 animation; the heading and summary have no extra margin between them.
+
+</details>

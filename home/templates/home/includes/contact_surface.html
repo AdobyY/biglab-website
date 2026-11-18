@@ -1,6 +1,0 @@
-{% load wagtailsettings_tags %}{% get_settings %}
-{% with contact=settings.home.ContactSettings %}
-<section{% if not value.anchor %} id="contact"{% endif %}{% if design_version == '2' %}{% include 'home/includes/section_attributes.html' with section_class='contact-surface contact-surface--dark' %}{% else %}{% include 'home/includes/section_attributes.html' with section_class='contact-surface contact-surface--light' %}{% endif %} aria-labelledby="contact-title-{{ value.anchor|default:'contact' }}">
-  <div class="section-shell">{% include 'home/includes/contact_content.html' %}</div>
-</section>
-{% endwith %}

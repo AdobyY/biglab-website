@@ -33,7 +33,7 @@ One lab administrator updates the site roughly monthly through Wagtail. The publ
 
 ## Brand Commitments
 
-The working name is BIG Lab / Behaviors of Individuals and Groups Lab. The shipped design uses a constellation as a metaphor for hidden interdependence, with navy and butter yellow, cream reading surfaces, brick accents, and Alegreya paired with Source Sans 3. `DESIGN.md` records the implemented visual system; the earlier mycelium and earthy-green alternatives are not the current design. The site is not required to follow the university visual identity.
+The working name is BIG Lab / Behaviors of Individuals and Groups Lab. The public site uses a shared dark blue palette, warm accents, and Alegreya paired with Source Sans 3. The homepage network illustrates relationships, and the globe on About links to the research areas. `DESIGN.md` records the implemented visual system; the earlier mycelium and earthy-green alternatives are not the current design. The site is not required to follow the university visual identity.
 
 ## Evidence on Hand
 

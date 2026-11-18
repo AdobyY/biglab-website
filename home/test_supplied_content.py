@@ -4,6 +4,7 @@ from io import StringIO
 import json
 from pathlib import Path
 import re
+import shutil
 import tempfile
 from unittest.mock import patch
 import xml.etree.ElementTree as ET
@@ -26,6 +27,31 @@ class SuppliedContentTests(SimpleTestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.data, _ = load_bundle()
+
+    def test_legacy_snapshot_retains_network_position_and_reuses_contact_translations(self):
+        data = json.loads(json.dumps(self.data))
+        data["version"] = 1
+        homes = [page for page in data["pages"] if page["model"] == "home.homepage"]
+        contact_ids = {}
+        for home in homes:
+            contact = next(page for page in data["pages"] if page["parent"] == home["id"] and page["fields"]["slug"] == "contact")
+            contact_ids[home["locale"]] = contact["id"]
+            contact["fields"]["show_in_menus"] = False
+            home["fields"]["sections"].insert(1, {"type": "financing", "value": {"anchor": "funding", "is_visible": True}})
+            home["fields"]["sections"].extend(contact["fields"]["sections"])
+            home["fields"]["show_contact_section"] = True
+        with tempfile.TemporaryDirectory() as directory:
+            shutil.copytree(Path(__file__).parent / "seed_content/assets", Path(directory) / "assets")
+            Path(directory, "content.json").write_text(json.dumps(data), encoding="utf-8")
+            data, _ = load_bundle(directory)
+        for home in (page for page in data["pages"] if page["model"] == "home.homepage"):
+            sections = home["fields"]["sections"]
+            self.assertEqual(sections[1]["type"], "topic_network")
+            self.assertEqual(sections[1]["value"]["anchor"], "funding")
+            self.assertNotIn("contact", [block["type"] for block in sections])
+            contacts = [page for page in data["pages"] if page["parent"] == home["id"] and page["fields"]["slug"] == "contact"]
+            self.assertEqual([page["id"] for page in contacts], [contact_ids[home["locale"]]])
+            self.assertTrue(contacts[0]["fields"]["show_in_menus"])
 
     def test_every_supplied_prose_paragraph_is_transferred_in_full(self):
         source = Path(__file__).parent / 'seed_assets/supplied/CONTENT.docx'
@@ -215,11 +241,12 @@ class SuppliedStructureRenderingTests(TestCase):
                 if card.select_one('.news-thumbnail img'):
                     detail = BeautifulSoup(self.client.get(card.select_one('.news-title a')['href']).content, 'html.parser')
                     self.assertEqual(detail.select_one('.article-image img')['alt'], detail.select_one('main h1').get_text())
-            for path in (prefix + '/', science_path + 'collaboration/'):
+            for path in (prefix + '/about/', science_path + 'collaboration/'):
                 soup = BeautifulSoup(self.client.get(path).content, 'html.parser')
                 self.assertEqual(len(soup.select('.collaboration-item')), 4)
                 self.assertEqual(len(soup.select('.collaboration-symbol > svg')), 4)
-                self.assertEqual(len(soup.select('.collaboration-copy h3 a[href]')), 4)
+                level = 'h3' if path.endswith('/about/') else 'h2'
+                self.assertEqual(len(soup.select(f'.collaboration-copy {level} a[href]')), 4)
             parta = BeautifulSoup(self.client.get(prefix + '/parta/').content, 'html.parser')
             self.assertFalse(parta.select('[data-child-navigation]'))
 
@@ -231,45 +258,44 @@ class SuppliedStructureRenderingTests(TestCase):
             menu = soup.select('header .site-nav > li')
             def titles(items):
                 return [item.select_one(':scope > .nav-entry > a').get_text(strip=True) for item in items]
-            self.assertEqual(titles(menu), ['About us','Research','PARTA'] if code=='en' else ['O nás','Výzkum','PARTA'])
+            self.assertEqual(titles(menu), ['About us','Research','PARTA','Contact'] if code=='en' else ['O nás','Výzkum','PARTA','Kontakt'])
             self.assertEqual(titles(menu[0].select(':scope > ul > li')),
-                             ['BIG Lab','People','News'] if code=='en' else ['BIG Lab','Lidé','Novinky'])
+                             ['People','News'] if code=='en' else ['Lidé','Novinky'])
             self.assertEqual(titles(menu[1].select(':scope > ul > li')),
                              ['Publications','Collaboration'] if code=='en' else ['Publikace','Spolupráce'])
             parta = menu[2].select(':scope > ul > li')
             self.assertEqual(titles(parta), ['About the project','Timeline'] if code=='en' else ['O projektu','Časová osa'])
             self.assertEqual(titles(parta[0].select(':scope > ul > li')),
                              ['For schools','For parents','For students'] if code=='en' else ['Pro školy','Pro rodiče','Pro studenty'])
-            visit = ('or stop by the Faculty of Social Studies in person' if code=='en' else
-                     'nebo se za námi zastavte osobně na Fakultu sociálních studií')
-            team = ('You can find contact information for individual team members in the section' if code=='en' else
-                    'Kontakty na jednotlivé členy týmu najdete v sekci')
-            for path in (root+'?design=1', root+'contact/', root+'about/'):
-                with self.subTest(path=path):
-                    response = self.client.get(path)
-                    self.assertEqual(response.status_code, 200)
-                    contact = BeautifulSoup(response.content, 'html.parser').select_one('.contact-surface, .builder-contact')
-                    self.assertIsNotNone(contact)
-                    self.assertIn(visit, contact.get_text(' ',strip=True))
-                    self.assertEqual(contact.get_text(' ',strip=True).count(team), 1)
-                    self.assertIsNotNone(contact.select_one('a[href="mailto:biglab@muni.cz"]'))
-                    self.assertIn('2.53', contact.address.get_text())
-                    self.assertIn('218/10', contact.address.get_text())
-                    self.assertIsNotNone(contact.select_one('iframe'))
+            contact_path = menu[-1].select_one(".nav-entry > a")["href"]
+            self.assertEqual(contact_path, root + "contact/")
+            page = BeautifulSoup(self.client.get(contact_path).content, 'html.parser')
+            self.assertEqual(page.footer, soup.footer)
+            self.assertEqual(BeautifulSoup(self.client.get(root + 'about/').content, 'html.parser').footer, soup.footer)
+            contact = page.select_one('.contact-surface')
+            location = contact.select_one('figure')
+            self.assertIsNotNone(location.select_one('.contact-map:first-child iframe'))
+            self.assertEqual(location.figcaption.h2.get_text(strip=True), 'Visit the lab' if code == 'en' else 'Kde nás najdete')
+            self.assertIsNotNone(location.figcaption.select_one('a[href*="maps/dir/"]'))
+            self.assertEqual(contact.select_one('.contact-connections p').get_text(strip=True),
+                             'Team contacts' if code == 'en' else 'Kontakty na členy týmu')
+            self.assertIsNotNone(contact.select_one('a[href="mailto:biglab@muni.cz"]'))
+            self.assertIn('2.53', contact.address.get_text())
+            self.assertIn('218/10', contact.address.get_text())
+            self.assertIsNotNone(contact.select_one('iframe'))
 
     def test_shared_address_stays_editable_without_changing_contact_copy(self):
         settings = ContactSettings.for_site(Site.objects.get(is_default_site=True))
         settings.address = 'Updated campus address\nOffice 9.99'
         settings.save()
         for root in ('/','/cs/'):
-            for path in (root+'?design=1',root+'contact/'):
-                contact = BeautifulSoup(self.client.get(path).content, 'html.parser').select_one('.contact-surface, .builder-contact')
-                self.assertIn('Updated campus address',contact.address.get_text())
-                self.assertNotIn('2.53',contact.get_text())
+            contact = BeautifulSoup(self.client.get(root + 'contact/').content, 'html.parser').select_one('.contact-surface')
+            self.assertIn('Updated campus address',contact.address.get_text())
+            self.assertNotIn('2.53',contact.get_text())
 
     def test_section_titles_do_not_repeat_the_page_title(self):
         for root in ('/','/cs/'):
-            home = BeautifulSoup(self.client.get(root).content,'html.parser')
+            home = BeautifulSoup(self.client.get(root+'about/').content,'html.parser')
             self.assertIsNone(home.select_one('.updates-grid > div > h3'))
             self.assertTrue(home.select('.updates .news-list-item'))
             for suffix in ('parta/','parta/about-the-project/','contact/'):
@@ -284,15 +310,13 @@ class SuppliedStructureRenderingTests(TestCase):
 
     def test_existing_editor_contact_copy_is_not_duplicated(self):
         team = 'You can find contact information for individual team members in the section'
-        for page in (HomePage.objects.get(locale__language_code='en'),
-                     ContentPage.objects.get(locale__language_code='en',slug='contact')):
-            for block in page.sections:
-                if block.block_type=='contact':
-                    block.value['text'] = block.block.child_blocks['text'].to_python(f'<p>{team}</p>')
-            page.save()
-        for path in ('/?design=1','/contact/'):
-            contact = BeautifulSoup(self.client.get(path).content,'html.parser').select_one('.contact-surface, .builder-contact')
-            self.assertEqual(contact.get_text(' ',strip=True).count(team),1)
+        page = ContentPage.objects.get(locale__language_code='en',slug='contact')
+        for block in page.sections:
+            if block.block_type == 'contact':
+                block.value['text'] = block.block.child_blocks['text'].to_python(f'<p>{team}</p>')
+        page.save()
+        contact = BeautifulSoup(self.client.get(page.url).content,'html.parser').select_one('.contact-surface')
+        self.assertEqual(contact.get_text(' ',strip=True).count(team),1)
 
     def test_audience_copy_and_buttons_render_in_both_languages(self):
         with ZipFile(Path(__file__).parent / 'seed_assets/supplied/CONTENT.docx') as document:

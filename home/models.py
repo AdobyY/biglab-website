@@ -17,7 +17,7 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page, TranslatableMixin
 from wagtail.snippets.models import register_snippet
 
-from .blocks import CONTENT_BLOCKS, HOME_SECTION_BLOCKS
+from .blocks import ABOUT_SECTION_BLOCKS, CONTENT_BLOCKS, HOME_SECTION_BLOCKS
 from .editorial import EditorialPageForm
 from .admin_forms import PublicationAdminForm, contrast_ratio
 from .ui import UI_LABELS
@@ -63,14 +63,21 @@ class BaseContentPage(Page):
         scope = Page.objects.descendant_of(home, inclusive=True) if home else Page.objects.none()
 
         def index(model):
+            if isinstance(self, model):
+                return self
+            if (model is PeopleIndexPage and isinstance(self, PersonPage)) or (
+                model is NewsIndexPage and isinstance(self, NewsPage)
+            ):
+                parent = self.get_parent()
+                return parent.specific if parent and parent.live else None
             return model.objects.filter(pk__in=scope.values("pk")).live().first()
 
-        science = self if isinstance(self, SciencePage) else index(SciencePage)
-        people_index = self if isinstance(self, PeopleIndexPage) else index(PeopleIndexPage)
-        news_index = self if isinstance(self, NewsIndexPage) else index(NewsIndexPage)
-        projects_index = self if isinstance(self, ProjectsIndexPage) else index(ProjectsIndexPage)
+        science = index(SciencePage)
+        people_index = index(PeopleIndexPage)
+        news_index = index(NewsIndexPage)
+        projects_index = index(ProjectsIndexPage)
         projects = ProjectPage.objects.filter(pk__in=scope.values("pk")).live().order_by("-start_date", "path")
-        news = NewsPage.objects.child_of(news_index).live().order_by("-date", "-first_published_at") if news_index else NewsPage.objects.none()
+        news = NewsPage.objects.child_of(news_index).live().order_by("-date", "-first_published_at", "path") if news_index else NewsPage.objects.none()
         today = timezone.localdate()
         context.update({
             "site_home": home,
@@ -88,7 +95,6 @@ class BaseContentPage(Page):
             "featured_projects": projects.filter(is_featured=True),
             "publications": Publication.objects.filter(locale=self.locale).order_by("-year", "title"),
             "collaborations": Collaboration.objects.filter(locale=self.locale).order_by("sort_order", "name"),
-            "design_version": "2" if request.GET.get("design") == "2" else "1",
         })
         return context
 
@@ -98,7 +104,7 @@ class BaseContentPage(Page):
     @property
     def editorial_guide(self):
         return {
-            "homepage": "Edit the hero above and build the content with the sections below. Version 1 shows everything on the homepage; Version 2 shows the hero and footer, with Contact and the remaining sections on About. Team directories show every published member; selected people control their initial order.",
+            "homepage": "Edit the opening on the homepage and the editorial sections on About. About pairs its introduction with the research network. Edit contact content on the separate Contact page.",
             "sciencepage": "Recommended: Child pages, Publications and Collaborations. Edit each research area's text on its child page.",
             "peopleindexpage": "Recommended: People. Add a child Person page for a new member; use Content after the sections for text below the team.",
             "personpage": "Edit the role, portrait and contact details here. Use Content before the sections for the biography; extra sections are optional.",
@@ -111,7 +117,14 @@ class BaseContentPage(Page):
 
 
 class HomePage(RoutablePageMixin, BaseContentPage):
-    """The site's root page, which begins with the About BIG Lab content."""
+    """The opening and its localized About route share one editorial record."""
+
+    preview_modes = [("", "Homepage"), ("about", "About")]
+
+    def serve_preview(self, request, mode_name):
+        if mode_name == "about":
+            return self.about_page(request)
+        return super().serve_preview(request, mode_name)
 
     hero_title = models.CharField(max_length=160, default="About BIG Lab")
     hero_summary = models.TextField(blank=True, verbose_name="Hero summary")
@@ -124,23 +137,17 @@ class HomePage(RoutablePageMixin, BaseContentPage):
         choices=[("constellation", "Constellation"), ("image", "Image"), ("text", "Text only")],
         verbose_name="Hero layout",
     )
-    show_contact_section = models.BooleanField(
-        default=True, verbose_name="Show homepage contact section",
-        help_text="Show the fallback contact section using real site settings when no Contact details block is present. A Contact details block controls its own visibility.",
-    )
     about_financing = RichTextField(
         blank=True, verbose_name="About / financing information",
-        help_text="Optional verified funding information, used by the fallback financing section and Financing / funding blocks with empty text. Leave blank if there is nothing to publish.",
+        help_text="Shared funding text for Financing blocks on other pages that have no text of their own.",
     )
     sections = StreamField(
-        HOME_SECTION_BLOCKS,
+        ABOUT_SECTION_BLOCKS,
         blank=True,
         use_json_field=True,
-        verbose_name="Homepage sections",
-        help_text=(
-            "Build the homepage below the hero. Add, duplicate, remove, hide, and drag sections "
-            "into the required order."
-        ),
+        block_counts={"topic_network": {"max_num": 1}},
+        verbose_name="About sections",
+        help_text="Arrange the sections on About. The research network sits beside the introduction unless you place it separately.",
     )
 
     content_panels = Page.content_panels + [
@@ -151,7 +158,7 @@ class HomePage(RoutablePageMixin, BaseContentPage):
         ),
         MultiFieldPanel([FieldPanel("sections")], heading="Page sections"),
         MultiFieldPanel(
-            [FieldPanel("after_body"), FieldPanel("about_financing"), FieldPanel("show_contact_section")],
+            [FieldPanel("after_body"), FieldPanel("about_financing")],
             heading="Content at the bottom", classname="collapsed",
         ),
     ]
@@ -167,22 +174,14 @@ class HomePage(RoutablePageMixin, BaseContentPage):
 
     @path("about/", name="about")
     def about_page(self, request):
-        """Reuse the published homepage sections without copying CMS content."""
-        return self.render(request, template="home/about_page.html", is_about_page=True)
-
-    def get_context(self, request, *args, is_about_page=False, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        version = "2" if is_about_page or request.GET.get("design") == "2" else "1"
-        switch_query = request.GET.copy()
-        if version == "2":
-            switch_query.pop("design", None)
-        else:
-            switch_query["design"] = "2"
-        query_string = switch_query.urlencode()
-        context["design_version"] = version
-        context["is_about_page"] = is_about_page
-        context["design_switch_url"] = request.path + (f"?{query_string}" if query_string else "")
-        return context
+        sections = [block for block in self.sections if block.value.get("is_visible")]
+        has_network = any(block.block_type == "topic_network" for block in self.sections)
+        introduction = next((block for block in sections if block.block_type == "about" and block.value.get("anchor") != "methods"), None)
+        return self.render(request, template="home/about_page.html", context_overrides={
+            "is_about_page": True, "route_title": self.title, "about_sections": sections,
+            "network_introduction": None if has_network else introduction,
+            "standalone_network": not has_network and introduction is None,
+        })
 
 
 class ContentPage(BaseContentPage):
@@ -206,10 +205,12 @@ class PeopleIndexPage(BaseContentPage):
     parent_page_types = ["home.HomePage"]
     subpage_types = ["home.PersonPage"]
 
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["people"] = PersonPage.objects.child_of(self).live().order_by("path")
-        return context
+    @property
+    def directory_section(self):
+        return next((
+            block.value for block in self.sections
+            if block.block_type == "people" and block.value.get("is_visible")
+        ), None)
 
 
 class PersonPage(BaseContentPage):
@@ -264,13 +265,6 @@ class NewsIndexPage(BaseContentPage):
     show_in_menus_default = True
     parent_page_types = ["home.HomePage"]
     subpage_types = ["home.NewsPage"]
-
-    def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request, *args, **kwargs)
-        context["news_items"] = NewsPage.objects.child_of(self).live().order_by(
-            "-date", "-first_published_at"
-        )
-        return context
 
 
 class NewsPage(BaseContentPage):
@@ -506,6 +500,13 @@ class ContactSettings(BaseSiteSetting):
     instagram_url = models.URLField(blank=True)
     facebook_url = models.URLField(blank=True)
 
+    @property
+    def social_links(self):
+        if not self.show_social_links:
+            return []
+        accounts = [("LinkedIn", self.linkedin_url), ("Instagram", self.instagram_url), ("Facebook", self.facebook_url)]
+        return [(name, url) for name, url in accounts if url]
+
     panels = [
         MultiFieldPanel(
             [FieldPanel("site_name"), FieldPanel("tagline"), FieldPanel("copyright_text"), FieldPanel("logo")],
@@ -528,32 +529,32 @@ HEX_COLOR_VALIDATOR = RegexValidator(
 
 @register_setting
 class HomepageDesignSettings(BaseSiteSetting):
-    """One homepage Version 2 palette shared by all languages of a site."""
+    """One public site palette shared by all pages and languages."""
 
     background = models.CharField(
         max_length=7, default="#0b141e", validators=[HEX_COLOR_VALIDATOR],
-        verbose_name="Version 2 background",
-        help_text="Background of the homepage in Version 2 only. Use #RRGGBB.",
+        verbose_name="Background",
+        help_text="Background on all public pages. Use #RRGGBB.",
     )
     foreground = models.CharField(
         max_length=7, default="#eeeae0", validators=[HEX_COLOR_VALIDATOR],
-        verbose_name="Version 2 foreground",
-        help_text="Main text on the homepage in Version 2 only. Use #RRGGBB.",
+        verbose_name="Foreground",
+        help_text="Primary text on all public pages. Use #RRGGBB.",
     )
     accent = models.CharField(
         max_length=7, default="#dac99c", validators=[HEX_COLOR_VALIDATOR],
-        verbose_name="Version 2 accent",
-        help_text="Actions and primary network connections on the homepage in Version 2 only. Use #RRGGBB.",
+        verbose_name="Accent",
+        help_text="Actions and highlighted network connections. Use #RRGGBB.",
     )
     muted = models.CharField(
         max_length=7, default="#a6b4bd", validators=[HEX_COLOR_VALIDATOR],
-        verbose_name="Version 2 muted text",
-        help_text="Supporting text on the homepage in Version 2 only. Use #RRGGBB.",
+        verbose_name="Muted text",
+        help_text="Supporting text on all public pages. Use #RRGGBB.",
     )
     network_secondary = models.CharField(
         max_length=7, default="#7f9d98", validators=[HEX_COLOR_VALIDATOR],
-        verbose_name="Version 2 secondary network color",
-        help_text="Secondary network strands on the homepage in Version 2 only. Use #RRGGBB.",
+        verbose_name="Secondary network color",
+        help_text="Secondary network strands and editorial accents. Use #RRGGBB.",
     )
 
     panels = [
@@ -563,21 +564,21 @@ class HomepageDesignSettings(BaseSiteSetting):
                 FieldPanel("foreground", widget=forms.ColorInput()),
                 FieldPanel("muted", widget=forms.ColorInput()),
             ],
-            heading="Version 2 homepage surfaces and text",
-            help_text="Shared across all languages. These colors affect only homepage Version 2 (?design=2); Version 1 remains the default.",
+            heading="Site surfaces and text",
+            help_text="These colors apply to every public page in all languages.",
         ),
         MultiFieldPanel(
             [
                 FieldPanel("accent", widget=forms.ColorInput()),
                 FieldPanel("network_secondary", widget=forms.ColorInput()),
             ],
-            heading="Version 2 homepage connections and accents",
-            help_text="Choose colors with readable contrast against the Version 2 background.",
+            heading="Network connections and accents",
+            help_text="Choose colors with readable contrast against the site background.",
         ),
     ]
 
     class Meta:
-        verbose_name = "homepage design (Version 2)"
+        verbose_name = "site colors"
 
     def clean(self):
         super().clean()

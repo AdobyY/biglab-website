@@ -58,7 +58,7 @@ class ResearchCollectionTests(WagtailPageTestCase):
         research_cs.save_revision().publish()
         soup = self.get_collection(query="?design=2")
         expected = research_cs.url + "publications/"
-        self.assertEqual(soup.select_one('.language-options a[lang="cs"]')["href"], expected + "?design=2")
+        self.assertEqual(soup.select_one('.language-options a[lang="cs"]')["href"], expected)
         self.assertTrue(soup.select_one('link[hreflang="cs"]')["href"].endswith(expected))
         self.assertEqual(self.client.get(expected).status_code, 200)
 

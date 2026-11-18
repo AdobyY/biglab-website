@@ -1,12 +1,10 @@
 import math
 from types import SimpleNamespace
-from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.html import format_html_join
 from wagtail.models import Locale, Site
-from home.ui import default_ui_text
 from home.templatetags.ui_tags import ui
 
 
@@ -45,7 +43,9 @@ def render_reading_blocks(context, value, entries):
 def breadcrumbs(context, home):
     page = context.get("page")
     items = []
-    if page and home and page.pk != home.pk and page.path.startswith(home.path):
+    if home and context.get("is_about_page"):
+        items = [home, SimpleNamespace(title=ui(context, "about"))]
+    elif page and home and page.pk != home.pk and page.path.startswith(home.path):
         items = list(page.get_ancestors(inclusive=True).live().filter(depth__gte=home.depth))
         # Wagtail previews may show an unpublished page; it is still the current crumb.
         if not items or items[-1].pk != page.pk:
@@ -56,27 +56,23 @@ def breadcrumbs(context, home):
 
 
 @register.inclusion_tag("home/includes/page_navigation.html", takes_context=True)
-def page_navigation(context):
-    page = context.get("page")
-    result = {"page": page, "request": context.get("request"), "people_index": context.get("people_index")}
-    if not page or page.__class__.__name__ not in {"PersonPage", "NewsPage", "ContentPage", "ProjectPage"}:
-        return result
-    parent = page.get_parent().specific
-    if not parent.live:
-        return result
-    siblings = parent.get_children().live().type(type(page))
-    if page.__class__.__name__ == "NewsPage":
-        siblings = siblings.specific()
-        siblings = sorted(siblings, key=lambda item: (item.date, item.path), reverse=True)
-    else:
-        siblings = list(siblings.order_by("path").specific())
+def page_navigation(context, collection_name, previous_label, next_label, team_section=None):
+    """Browse a directory or news archive in its own published order."""
+    collection = context.get(collection_name)
+    if collection is None:
+        return {}
+    page = context["page"]
+    entries = collection.only("title", "path", "url_path", "locale")
+    siblings = complete_team(team_section, entries) if team_section else list(entries)
     position = next((i for i, sibling in enumerate(siblings) if sibling.pk == page.pk), None)
-    result.update(
-        navigation_parent=parent,
-        previous_page=siblings[position - 1] if position is not None and position > 0 else None,
-        next_page=siblings[position + 1] if position is not None and position + 1 < len(siblings) else None,
-    )
-    return result
+    if position is None:
+        return {}
+    return {
+        "page": page, "request": context.get("request"),
+        "previous_page": siblings[position - 1] if position > 0 else None,
+        "next_page": siblings[position + 1] if position + 1 < len(siblings) else None,
+        "previous_label": previous_label, "next_label": next_label,
+    }
 
 
 @register.inclusion_tag("home/includes/child_page_navigation.html", takes_context=True)
@@ -146,25 +142,14 @@ def section_url(page):
     return page.url
 
 
-@register.filter
-def design_url(url, version):
-    """Keep the explicit homepage variant while following internal links."""
-    if version != "2" or not url:
-        return url
-    parts = urlsplit(url)
-    query = [(key, value) for key, value in parse_qsl(parts.query, keep_blank_values=True) if key != "design"]
-    query.append(("design", "2"))
-    return urlunsplit(parts._replace(query=urlencode(query)))
-
-
 @register.simple_tag
-def homepage_url(home, version="1", destination="home"):
+def homepage_url(home, destination="home"):
     url = getattr(home, "url", None)
     if not url:
         return ""
-    if destination == "about" and version == "2":
+    if destination == "about":
         url += home.reverse_subpage("about")
-    return design_url(url, version)
+    return url
 
 
 @register.simple_tag(takes_context=True)
@@ -174,10 +159,10 @@ def translation_url(context, page):
         url += page.specific.reverse_subpage("about")
     elif context.get("research_collection_name"):
         url = page.specific.collection_url(context["research_collection_name"]) or url
-    return design_url(url, context.get("design_version", "1"))
+    return url
 
 
-def _build_menu(parent, current_page=None, levels=3, version="1"):
+def _build_menu(parent, current_page=None, levels=3):
     if levels <= 0:
         return []
     current_path = getattr(current_page, "path", "")
@@ -186,10 +171,10 @@ def _build_menu(parent, current_page=None, levels=3, version="1"):
         items.append(
             {
                 "page": child,
-                "url": design_url(section_url(child), version),
+                "url": section_url(child),
                 "active": bool(current_path and current_path.startswith(child.path)),
                 "current": getattr(current_page, "pk", None) == child.pk,
-                "children": _build_menu(child, current_page, levels - 1, version),
+                "children": _build_menu(child, current_page, levels - 1),
             }
         )
     return items
@@ -200,13 +185,10 @@ def primary_navigation(context, root):
     """Group the lab, people and news; expose real science section anchors."""
     page = context.get("page")
     language = getattr(getattr(page, "locale", None), "language_code", "en")
-    version = context.get("design_version", "1")
-    about_url = homepage_url(root, version, "about") if version == "2" else f"{root.url}#about"
-    about_current = bool(page and page.pk == root.pk and (version != "2" or context.get("is_about_page")))
-    items = _build_menu(root, page, version=version)
-    about_children = [{"page": SimpleNamespace(id=f'lab-{root.pk}', title=context.get('identity', {}).get('name', 'BIG Lab')),
-                       "url": about_url, "active": about_current,
-                       "current": about_current, "children": []}]
+    about_url = homepage_url(root, "about")
+    about_current = bool(context.get("is_about_page"))
+    items = _build_menu(root, page)
+    about_children = []
     remaining = []
     project_items = []
     for item in items:
@@ -224,16 +206,16 @@ def primary_navigation(context, root):
             for collection in item["page"].collection_sections():
                 current = context.get("research_collection_name") == collection["name"] and page.pk == item["page"].pk
                 item["children"].append({"page": SimpleNamespace(id=f"{item['page'].pk}-{collection['name']}", title=ui(context, collection["name"])),
-                    "url": design_url(collection["url"], version), "active": current, "current": current, "children": []})
+                    "url": collection["url"], "active": current, "current": current, "children": []})
             if context.get("research_collection_name") and page.pk == item["page"].pk:
                 item["current"] = False
             break
     else:
         remaining.extend(project_items)
     # The document's About group has a semantic order; reuse the same published page records.
-    about_children[1:] = sorted(about_children[1:], key=lambda child: 0 if child["page"].__class__.__name__ == "PeopleIndexPage" else 1)
+    about_children.sort(key=lambda child: child["page"].__class__.__name__ != "PeopleIndexPage")
     about = {'page': SimpleNamespace(id=root.pk, title=ui(context, 'about')),
-             'url': about_url, 'active': any(child['active'] for child in about_children),
+             'url': about_url, 'active': about_current or any(child['active'] for child in about_children),
              'current': about_current, 'children': about_children}
     return {
         "menu_items": [about, *remaining],
@@ -242,11 +224,6 @@ def primary_navigation(context, root):
         "request": context.get("request"),
         "nested": False,
     }
-
-
-@register.filter
-def has_section(sections, block_type):
-    return any(block.block_type == block_type for block in sections or [])
 
 
 @register.filter
@@ -291,19 +268,6 @@ def should_carousel(items, enabled, threshold):
         return bool(enabled) and len(items) > int(threshold)
     except (TypeError, ValueError):
         return False
-
-
-@register.simple_tag
-def contact_url(home, version="1"):
-    destination = "about" if version == "2" else "home"
-    base_url = homepage_url(home, version, destination)
-    contact_sections = [block for block in getattr(home, "sections", []) if block.block_type == "contact"]
-    for block in contact_sections:
-        if block.value.get("is_visible"):
-            return f"{base_url}#{block.value.get('anchor') or 'contact'}"
-    if not contact_sections and getattr(home, "show_contact_section", False):
-        return f"{base_url}#contact"
-    return ""
 
 
 @register.simple_tag
@@ -369,6 +333,8 @@ def absolute_page_url(context, page):
 
 @register.simple_tag(takes_context=True)
 def localized_home(context):
+    if context.get("site_home"):
+        return context["site_home"]
     page = context.get("page")
     home = Site.find_for_request(context["request"]).root_page.specific
     target_locale = page.locale if page else Locale.get_active()

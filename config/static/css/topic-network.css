@@ -1,0 +1,32 @@
+.relationship-network {
+  position: relative;
+  width: 100%;
+  max-width: 29rem;
+  min-width: 0;
+  margin-inline: auto;
+  align-self: center;
+  color: var(--yellow);
+}
+.template-about-page .builder-section-inner:has(> .relationship-network) {
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  column-gap: clamp(2rem, 5vw, 4.5rem);
+}
+.builder-section-inner > .relationship-network { grid-column: 2; grid-row: 1 / span 2; }
+#home-sections > .relationship-network { width: min(var(--shell), 29rem); margin-block: 2rem; }
+.constellation-field { position: relative; width: 100%; aspect-ratio: 1; }
+.constellation-field > canvas, .relationship-fallback { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.relationship-fallback { opacity: .25; }
+.network-ready .relationship-fallback { visibility: hidden; }
+.constellation-topics { list-style: none; margin: 0; padding: 0; }
+.constellation-topics li { position: absolute; left: var(--star-x); top: var(--star-y); width: 32%; transform: translate(-50%, -14px); }
+.constellation-topics a { display: flex; flex-direction: column; align-items: center; gap: .5rem; padding: .3rem; min-height: 44px; text-decoration: none; text-align: center; font-size: .78rem; font-weight: 500; line-height: 1.35; }
+.topic-label { padding: .15rem .35rem; border-radius: 4px; background: var(--navy); }
+.relationship-point { flex: none; width: 10px; height: 10px; border-radius: 50%; background: currentColor; outline: 1px solid color-mix(in srgb, currentColor 40%, transparent); outline-offset: 4px; }
+.constellation-topics a:is(:hover, :focus-visible) { color: var(--ink); text-decoration: underline; }
+.constellation-dense .constellation-topics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem 1rem; }
+.constellation-dense .constellation-topics li { position: static; transform: none; width: auto; }
+.constellation-dense .constellation-topics a { flex-direction: row; text-align: left; }
+@media (max-width: 760px) {
+  .relationship-network { max-width: 22rem; }
+}
+@media print { .relationship-network { display: none; } }

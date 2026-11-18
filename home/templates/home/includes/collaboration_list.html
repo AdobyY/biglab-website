@@ -1,13 +1,14 @@
 {% load wagtailimages_tags media_tags %}
 <div class="collaboration-list">
+  {% with heading=collection_detail|yesno:'h2,h3' %}
   {% for collaboration in collaboration_items %}
     <article class="collaboration-item">
       <div class="collaboration-symbol">{% if collaboration.logo %}{% media_image collaboration.logo 'max-360x180' loading="lazy" alt="" %}{% else %}{% include 'home/includes/icon.html' with name='campus' %}{% endif %}</div>
       <div class="collaboration-copy">
-      <h3>{% if collaboration.website %}<a href="{{ collaboration.website }}">{{ collaboration.name }}</a>{% else %}{{ collaboration.name }}{% endif %}</h3>
+      <{{ heading }} class="collaboration-title">{% if collaboration.website %}<a href="{{ collaboration.website }}">{{ collaboration.name }}</a>{% else %}{{ collaboration.name }}{% endif %}</{{ heading }}>
       {% if collaboration.description %}<div class="collaboration-description">{{ collaboration.description|linebreaks }}</div>{% endif %}
       </div>
-      {% if collaboration.website %}{% include 'home/includes/icon.html' with name='arrow' icon_class='collaboration-arrow' %}{% endif %}
     </article>
   {% endfor %}
+  {% endwith %}
 </div>

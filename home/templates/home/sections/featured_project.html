@@ -19,7 +19,7 @@
     {% project_audience_links project as audience_links %}
     {% if page.hero_layout and audience_links %}<div class="parta-visual">
       <ul class="parta-audience-list">
-        {% for item in audience_links %}<li><a href="{{ item.page.url|design_url:design_version }}">{% include 'home/includes/icon.html' with name=item.page|page_icon %}<span>{{ item.label }}</span>{% include 'home/includes/icon.html' with name='arrow' icon_class='parta-audience-arrow' %}</a></li>{% endfor %}
+        {% for item in audience_links %}<li><a href="{{ item.page.url }}">{% include 'home/includes/icon.html' with name=item.page|page_icon %}<span>{{ item.label }}</span></a></li>{% endfor %}
       </ul>
     </div>{% endif %}
   </div>

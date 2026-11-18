@@ -1,9 +1,8 @@
 {% load wagtailsettings_tags %}{% get_settings %}
 {% if value.is_visible %}
-  {% if page.hero_layout %}{% include 'home/includes/contact_surface.html' %}
-  {% else %}{% with contact=settings.home.ContactSettings %}
+  {% with contact=settings.home.ContactSettings %}
   <section{% if not value.anchor %} id="contact"{% endif %}{% include 'home/includes/section_attributes.html' with section_class="builder-contact contact-surface" %}>
     <div class="section-shell">{% include 'home/includes/contact_content.html' %}</div>
   </section>
-  {% endwith %}{% endif %}
+  {% endwith %}
 {% endif %}

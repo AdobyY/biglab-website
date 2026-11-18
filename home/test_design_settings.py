@@ -1,5 +1,3 @@
-from urllib.parse import parse_qs, urlsplit
-
 from bs4 import BeautifulSoup
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -8,7 +6,7 @@ from django.urls import reverse
 from wagtail.contrib.settings.views import get_setting_edit_handler
 from wagtail.models import Locale, Page, Site
 
-from home.models import HomePage, HomepageDesignSettings
+from home.models import ContentPage, HomePage, HomepageDesignSettings
 
 
 PALETTE_FIELDS = ("background", "foreground", "accent", "muted", "network_secondary")
@@ -37,33 +35,6 @@ class HomepagePaletteValidationTests(SimpleTestCase):
         self.assertIn("accent", form.errors)
 
 
-class HomepageDesignContextTests(TestCase):
-    def setUp(self):
-        self.home = Page.get_first_root_node().add_child(instance=HomePage(title="Design preview home"))
-        self.factory = RequestFactory()
-
-    def test_only_explicit_version_two_selects_the_alternative(self):
-        for query, expected in (("", "1"), ("?design=2", "2"), ("?design=1", "1"), ("?design=02", "1"), ("?design=other", "1")):
-            with self.subTest(query=query):
-                context = self.home.get_context(self.factory.get("/cs/" + query))
-                self.assertEqual(context["design_version"], expected)
-
-    def test_switch_preserves_localized_path_and_repeated_query_parameters(self):
-        context = self.home.get_context(self.factory.get("/cs/?tag=parents&tag=school&q=linked+people"))
-        url = urlsplit(context["design_switch_url"])
-        self.assertEqual(url.path, "/cs/")
-        self.assertEqual(parse_qs(url.query), {"tag": ["parents", "school"], "q": ["linked people"], "design": ["2"]})
-        context = self.home.get_context(self.factory.get(context["design_switch_url"]))
-        url = urlsplit(context["design_switch_url"])
-        self.assertEqual(url.path, "/cs/")
-        self.assertEqual(parse_qs(url.query), {"tag": ["parents", "school"], "q": ["linked people"]})
-
-    def test_returning_to_default_removes_all_design_parameters(self):
-        context = self.home.get_context(self.factory.get("/?design=1&design=2"))
-        self.assertEqual(context["design_version"], "2")
-        self.assertEqual(context["design_switch_url"], "/")
-
-
 class HomepagePaletteAdminTests(TestCase):
     def setUp(self):
         self.home = Page.get_first_root_node().add_child(instance=HomePage(title="Palette admin home"))
@@ -83,13 +54,23 @@ class HomepagePaletteAdminTests(TestCase):
             control = soup.select_one(f"input[name='{name}']")
             self.assertIsNotNone(control)
             self.assertEqual(control["type"], "color")
-        self.assertContains(response, "Version 1 remains the default")
+        self.assertContains(response, "every public page")
         values = {"background": "#123456", "foreground": "#ffffff", "muted": "#eeeeee", "accent": "#dddddd", "network_secondary": "#abcdef"}
         response = self.client.post(self.edit_url, values)
         self.assertEqual(response.status_code, 302)
         saved = HomepageDesignSettings.for_site(self.site)
         for name in PALETTE_FIELDS:
             self.assertEqual(getattr(saved, name), values[name])
+
+    def test_saved_palette_reaches_home_about_and_reading_pages(self):
+        child = self.home.add_child(instance=ContentPage(title="Reading"))
+        palette = HomepageDesignSettings.for_site(self.site)
+        palette.background = "#112233"
+        palette.save()
+        for url in (self.home.url, self.home.url + "about/", child.url):
+            soup = BeautifulSoup(self.client.get(url).content, "html.parser")
+            self.assertIn("--design-background:#112233", soup.html["style"])
+            self.assertEqual(soup.select_one("meta[name=theme-color]")["content"], "#112233")
 
     def test_unreadable_palette_is_rejected_without_changing_saved_colors(self):
         palette = HomepageDesignSettings.for_site(self.site)

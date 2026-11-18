@@ -129,7 +129,7 @@ class HomeTests(WagtailPageTestCase):
         ]
         self.homepage.save_revision().publish()
 
-        content = self.client.get(self.homepage.url).content.decode()
+        content = self.client.get(self.homepage.url + "about/").content.decode()
 
         self.assertLess(content.index("First editable section"), content.index("Second editable section"))
 
@@ -149,7 +149,7 @@ class HomeTests(WagtailPageTestCase):
         ]
         self.homepage.save_revision().publish()
 
-        response = self.client.get(self.homepage.url)
+        response = self.client.get(self.homepage.url + "about/")
 
         self.assertNotContains(response, "Hidden editorial section")
 

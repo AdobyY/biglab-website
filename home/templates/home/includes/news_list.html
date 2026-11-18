@@ -7,7 +7,6 @@
         <time datetime="{{ item.date|date:'Y-m-d' }}">{{ item.date|date:"j F Y" }}</time>
         {% if page.pk == news_index.pk %}<h2 class="news-title"><a href="{{ item.url }}">{{ item.title }}</a></h2>{% else %}<h3 class="news-title"><a href="{{ item.url }}">{{ item.title }}</a></h3>{% endif %}
         {% if item.intro %}<p class="news-excerpt">{{ item.intro|striptags|truncatewords:22 }}</p>{% endif %}
-        <span class="news-read-more" aria-hidden="true">{% ui 'read_more' %}{% include 'home/includes/icon.html' with name='arrow' %}</span>
       </div>
     </article>
   {% empty %}

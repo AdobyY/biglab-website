@@ -1,4 +1,4 @@
-{% include "home/sections/about.html" with value="" legacy=True %}
+{% include "home/sections/about.html" with value="" legacy=True embedded_network=True %}
 {% if research_areas %}{% include "home/sections/research.html" with value="" legacy=True section_areas=research_areas %}{% endif %}
 {% if people %}{% include "home/sections/people.html" with value="" legacy=True section_people=people carousel_active=False %}{% endif %}
 {% for project in featured_projects %}{% include "home/sections/featured_project.html" with value="" legacy=True featured=project %}{% endfor %}

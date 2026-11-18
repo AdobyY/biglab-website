@@ -109,7 +109,7 @@ class EditorialTests(TestCase):
                 else:
                     self.assertTrue({"intro", "body"}.issubset(fields))
         fields = HomePage.get_edit_handler().get_form_class().base_fields
-        self.assertTrue({"hero_image", "hero_layout", "show_contact_section", "about_financing"}.issubset(fields))
+        self.assertTrue({"hero_image", "hero_layout", "about_financing"}.issubset(fields))
         self.assertIn("card_summary", PersonPage.get_edit_handler().get_form_class().base_fields)
         self.assertTrue(ContactSettings._meta.get_field("show_social_links").default)
 

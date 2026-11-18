@@ -4,7 +4,7 @@
 <article class="project-page">
   <header class="page-heading">
     <h1>{{ page.title }}</h1>
-    <p class="project-status">{% if page.is_completed %}{% ui 'finished_projects' %}{% else %}{% ui 'current_projects' %}{% endif %}</p>
+    <p class="project-status">{% if page.is_completed %}{% ui 'completed_project' %}{% else %}{% ui 'ongoing_project' %}{% endif %}</p>
     {% if page.intro %}<div class="intro collection-intro">{{ page.intro|richtext }}</div>{% endif %}
     {% if page.start_date or page.end_date or page.funder %}<dl class="metadata">
       {% if page.start_date %}<dt>{% ui 'start' %}</dt><dd>{{ page.start_date|date:"F Y" }}</dd>{% endif %}

@@ -7,11 +7,10 @@
 {% block content %}
 {% get_current_language as LANGUAGE_CODE %}
 <article class="content-page">
-    <header>
-        <p class="kicker">404 / BIG LAB</p>
+    <header class="page-heading">
         <h1>{% if LANGUAGE_CODE == 'cs' %}Stránka nenalezena{% else %}Page not found{% endif %}</h1>
-        <div class="intro"><p>{% if LANGUAGE_CODE == 'cs' %}Stránka se mohla přesunout nebo odkaz vede jinam.{% else %}The page may have moved, or the connection led somewhere unexpected.{% endif %}</p></div>
-        <a class="button" href="{% if LANGUAGE_CODE == 'cs' %}/cs/{% else %}/{% endif %}">{% if LANGUAGE_CODE == 'cs' %}Zpět na úvod{% else %}Return home{% endif %}</a>
+        <div class="intro"><p>{% if LANGUAGE_CODE == 'cs' %}Ověřte adresu nebo pokračujte z úvodní stránky.{% else %}Check the address or visit the homepage.{% endif %}</p></div>
+        <a class="button" href="{{ site_home_url }}">{% if LANGUAGE_CODE == 'cs' %}Zpět na úvod{% else %}Return home{% endif %}</a>
     </header>
 </article>
 {% endblock %}

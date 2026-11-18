@@ -10,7 +10,6 @@
       {% for area in section_areas %}<article class="research-row research-overview-item">
         {% if area.cover_image %}{% if value.show_images or legacy %}<figure class="research-overview-image">{% media_image area.cover_image 'fill-1000x700' loading="lazy" alt="" controls=False %}</figure>{% endif %}{% endif %}
         <div class="research-overview-copy"><h3><a href="{{ area|section_destination }}">{{ area.title }}</a></h3></div>
-        {% include 'home/includes/icon.html' with name='arrow' icon_class='research-overview-arrow' %}
       </article>{% endfor %}
     </div>
     {% else %}<div class="research-list">

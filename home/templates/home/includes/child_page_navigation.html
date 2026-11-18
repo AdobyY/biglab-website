@@ -4,7 +4,7 @@
   <h2 id="child-navigation-{{ page.pk }}">{% ui 'subpages' %}</h2>
   <ul>
     {% for child in child_navigation_pages %}
-    <li><a href="{% pageurl child %}"><span>{{ child.title }}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 6 6 6-6 6M4 12h12"/></svg></a></li>
+    <li><a href="{% pageurl child %}">{{ child.title }}</a></li>
     {% endfor %}
   </ul>
 </nav>

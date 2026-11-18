@@ -23,6 +23,9 @@ class ContentGrowthTests(WagtailPageTestCase):
         request = RequestFactory().get(page.url or "/")
         return BeautifulSoup(render_to_string(page.get_template(request), page.get_context(request), request=request), "html.parser")
 
+    def about(self, home):
+        return BeautifulSoup(self.client.get(home.url + "about/").content, "html.parser")
+
     def add_publications(self, count=100):
         Publication.objects.bulk_create([
             Publication(title=f"Paper {number:03}", authors="Research team", year=2025, locale=self.home.locale)
@@ -33,7 +36,7 @@ class ContentGrowthTests(WagtailPageTestCase):
         self.add_publications()
         cs, _ = Locale.objects.get_or_create(language_code="cs")
         Publication.objects.create(title="Other language", authors="Team", year=2029, locale=cs)
-        soup = self.render_page(self.home)
+        soup = self.about(self.home)
         self.assertEqual(len(soup.select(".publication-section .publication-list > li")), 3)
         self.assertNotIn("Other language", soup.get_text())
         self.assertEqual(soup.select_one(".publication-all-link")["href"], self.science.url + "publications/")
@@ -47,7 +50,7 @@ class ContentGrowthTests(WagtailPageTestCase):
         self.home.sections[0].value["homepage_limit"] = 6
         self.home.save()
         newest = Publication.objects.create(title="New discovery", authors="Team", year=2026, locale=self.home.locale)
-        soup = self.render_page(self.home)
+        soup = self.about(self.home)
         self.assertEqual(len(soup.select(".publication-list > li")), 6)
         self.assertEqual(soup.select_one(".publication-copy h3").get_text(), newest.title)
 
@@ -55,7 +58,7 @@ class ContentGrowthTests(WagtailPageTestCase):
         self.add_publications(2)
         self.science.sections[0].value["is_visible"] = False
         self.science.save()
-        self.assertFalse(self.render_page(self.home).select(".publication-all-link"))
+        self.assertFalse(self.about(self.home).select(".publication-all-link"))
 
     def test_deep_pages_are_reachable_in_inline_and_standalone_parents(self):
         project = self.home.add_child(instance=ProjectPage(title="PARTA", show_in_menus=True))
@@ -114,7 +117,7 @@ class ContentGrowthTests(WagtailPageTestCase):
         science = self.science.copy_for_translation(cs)
         science.save_revision().publish()
         Publication.objects.create(title="Studie", authors="Tým", year=2026, locale=cs)
-        soup = self.render_page(home)
+        soup = self.about(home)
         link = soup.select_one(".publication-all-link")
         self.assertEqual(link.get_text(), "Všechny publikace")
         self.assertEqual(link["href"], science.url + "publications/")

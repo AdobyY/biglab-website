@@ -1,2 +1,0 @@
-{% load wagtailcore_tags ui_tags %}
-<section class="financing-section{% if embedded %} financing-section--embedded{% endif %}" aria-labelledby="financing-title"><div{% if not embedded %} class="section-shell"{% endif %}><h2 class="financing-heading" id="financing-title">{% include 'home/includes/icon.html' with name='funding' icon_class='financing-symbol' %}<span>{% ui 'financing' %}</span></h2><div class="reading-content">{{ page.about_financing|richtext }}</div></div></section>

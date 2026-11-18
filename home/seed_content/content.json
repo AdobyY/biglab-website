@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "locales": [
     "en",
     "cs"
@@ -24,7 +24,6 @@
         "hero_summary": "Our team focuses on two fundamental questions: how individuals’ attitudes and behaviors change, and how these changes then spread among people, within and between groups. We study how attitudes and behaviors form and evolve in individuals and how social influence, group formation and intergroup dynamics shape their diffusion in broader social contexts.",
         "hero_image": null,
         "hero_layout": "constellation",
-        "show_contact_section": true,
         "about_financing": "<p>BIG Lab’s research is supported through two funded projects: <a href=\"https://www.muni.cz/en/research/projects/75245\">Rethinking Segregation within Schools</a> (2026–2030), funded by the Czech Science Foundation’s JUNIOR STAR programme, and <a href=\"https://www.muni.cz/en/research/projects/74806\">Behavior Dynamics: From Individual Change to Social Spread</a> (2025–2029), funded by the Grant Agency of Masaryk University.</p>",
         "sections": [
           {
@@ -200,26 +199,6 @@
               "background_overlay": "medium"
             },
             "id": "625d6060-1f24-5f13-941f-7629f4a40d83"
-          },
-          {
-            "type": "contact",
-            "value": {
-              "title": null,
-              "intro": "",
-              "is_visible": true,
-              "text": "",
-              "show_email": true,
-              "show_phone": true,
-              "show_address": true,
-              "show_people_link": true,
-              "show_social_links": true,
-              "theme": "paper",
-              "anchor": "contact",
-              "background_image": null,
-              "background_position": "center",
-              "background_overlay": "medium"
-            },
-            "id": "22c77423-4ea1-5da8-863e-0d01e6896114"
           }
         ]
       },
@@ -1592,7 +1571,7 @@
         "title": "Contact",
         "draft_title": "Contact",
         "slug": "contact",
-        "show_in_menus": false,
+        "show_in_menus": true,
         "seo_title": "",
         "search_description": "",
         "intro": "",
@@ -1644,7 +1623,6 @@
         "hero_summary": "Náš tým se zaměřuje na dvě základní otázky: jak se mění postoje a chování jednotlivců a jak se tyto změny následně šíří mezi lidmi, uvnitř i mezi skupinami. Zkoumáme, jak se postoje a chování u jednotlivce formují a vyvíjejí a jak jejich šíření ovlivňují sociální vlivy, vznik skupin a meziskupinová dynamika v širším společenském kontextu.",
         "hero_image": null,
         "hero_layout": "constellation",
-        "show_contact_section": true,
         "about_financing": "<p>Výzkum BIG Labu podporují dva financované projekty: <a href=\"https://www.muni.cz/en/research/projects/75245\">Přehodnocení segregace ve školách</a> (2026–2030), financovaný Grantovou agenturou České republiky v programu JUNIOR STAR, a <a href=\"https://www.muni.cz/en/research/projects/74806\">Dynamika chování: od individuální změny k sociálnímu šíření</a> (2025–2029), financovaný Grantovou agenturou Masarykovy univerzity.</p>",
         "sections": [
           {
@@ -1820,26 +1798,6 @@
               "background_overlay": "medium"
             },
             "id": "625d6060-1f24-5f13-941f-7629f4a40d83"
-          },
-          {
-            "type": "contact",
-            "value": {
-              "title": null,
-              "intro": "",
-              "is_visible": true,
-              "text": "",
-              "show_email": true,
-              "show_phone": true,
-              "show_address": true,
-              "show_people_link": true,
-              "show_social_links": true,
-              "theme": "paper",
-              "anchor": "contact",
-              "background_image": null,
-              "background_position": "center",
-              "background_overlay": "medium"
-            },
-            "id": "22c77423-4ea1-5da8-863e-0d01e6896114"
           }
         ]
       },
@@ -3257,7 +3215,7 @@
         "title": "Kontakt",
         "draft_title": "Kontakt",
         "slug": "contact",
-        "show_in_menus": false,
+        "show_in_menus": true,
         "seo_title": "",
         "search_description": "",
         "intro": "",
@@ -3877,7 +3835,7 @@
           "locale": "en"
         },
         "key": "contact_visit",
-        "text": "or stop by the Faculty of Social Studies in person"
+        "text": "Visit the lab"
       }
     },
     {
@@ -3889,7 +3847,7 @@
           "locale": "en"
         },
         "key": "contact_team_intro",
-        "text": "You can find contact information for individual team members in the section"
+        "text": "Team contacts"
       }
     },
     {
@@ -3901,7 +3859,7 @@
           "locale": "cs"
         },
         "key": "contact_visit",
-        "text": "nebo se za námi zastavte osobně na Fakultu sociálních studií"
+        "text": "Kde nás najdete"
       }
     },
     {
@@ -3913,7 +3871,7 @@
           "locale": "cs"
         },
         "key": "contact_team_intro",
-        "text": "Kontakty na jednotlivé členy týmu najdete v sekci"
+        "text": "Kontakty na členy týmu"
       }
     },
     {

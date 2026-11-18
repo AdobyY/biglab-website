@@ -620,6 +620,21 @@ for _name, _block in HOME_SECTION_BLOCKS:
         _block.meta.group = "People and content lists"
 
 
+class TopicNetworkBlock(blocks.StructBlock):
+    is_visible = blocks.BooleanBlock(required=False, default=True, label="Show the research network")
+    anchor = blocks.RegexBlock(regex=r"^[a-z0-9-]*$", max_length=60, required=False)
+
+    class Meta:
+        label = "Research network"
+        icon = "site"
+        template = "home/includes/topic_network.html"
+        help_text = "Places the interactive network here on About. Its links come from the published research areas."
+
+
+ABOUT_SECTION_BLOCKS = [(name, block) for name, block in HOME_SECTION_BLOCKS if name not in {"contact", "financing"}]
+ABOUT_SECTION_BLOCKS.append(("topic_network", TopicNetworkBlock()))
+
+
 CONTENT_BLOCKS = [
     ("heading", HeadingBlock(form_classname="title")),
     ("text", blocks.RichTextBlock(features=["h2", "h3", "bold", "italic", "link", "ol", "ul"])),

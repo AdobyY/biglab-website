@@ -4,7 +4,7 @@
 <section{% include "home/includes/section_attributes.html" with section_class="builder-about home-about" %}>
   <div class="section-shell builder-section-inner">
     <div class="about-aside">{% if not is_about_page or value.title != page.title %}<div class="section-heading"><h2>{% if value.title %}{{ value.title }}{% else %}{% ui 'about' %}{% endif %}</h2></div>{% endif %}
-    {% if page.hero_layout and not embedded_financing %}
+    {% if page.hero_layout and not embedded_network %}
       {% include 'home/includes/about_diagram.html' %}
     {% endif %}
     </div>
@@ -17,7 +17,7 @@
       {% if value.text %}<div class="builder-copy reading-content">{% if value.intro %}<div class="about-details">{{ value.text|richtext }}</div>{% else %}{% with parts=value.text|editorial_parts %}{% if parts.lead %}<div class="about-lead">{{ parts.lead|richtext }}</div>{% endif %}{% if parts.body %}<div class="about-details">{{ parts.body|richtext }}</div>{% endif %}{% endwith %}{% endif %}</div>{% endif %}
     {% endif %}
     </div>
-    {% if embedded_financing %}{% include 'home/includes/financing.html' with embedded=True %}{% endif %}
+    {% if embedded_network %}{% include 'home/includes/topic_network.html' %}{% endif %}
   </div>
 </section>
 {% endif %}

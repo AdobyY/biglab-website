@@ -12,7 +12,6 @@
           {% if value.title and value.title != page.title %}<h3 class="page-link-title">{{ item.label|default:item.page.title }}</h3>{% else %}<h2 class="page-link-title">{{ item.label|default:item.page.title }}</h2>{% endif %}
           {% if item.description %}<p>{{ item.description }}</p>{% elif item.page.search_description %}<p>{{ item.page.search_description }}</p>{% endif %}
         </div>
-        {% include 'home/includes/icon.html' with name='arrow' icon_class='page-link-arrow' %}
       </a>
       {% endif %}{% endfor %}
     </div>

@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const canvas = document.querySelector('.homepage-design-2 .hero > [data-research-network]');
+  const canvas = document.querySelector('.hero > [data-research-network]');
   const ctx = canvas?.getContext('2d');
   if (!ctx) return;
   const hero = canvas.closest('.hero');
@@ -12,7 +12,6 @@
   };
   const colors = { tie: rgb('--design-network-secondary'), attention: rgb('--design-accent') };
   const surface = palette.getPropertyValue('--design-background').trim();
-  document.documentElement.style.backgroundColor = surface;
   const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
   let width = 0, height = 0, ratio = 1, bounds, quiet = [];
   let nodes = [], edges = [], positions = [], packets = [];

@@ -1,7 +1,7 @@
 /* A continuous social fabric surrounds the editorial opening. */
 .template-homepage .hero-constellation { position: relative; isolation: isolate; overflow: clip; }
 .hero-constellation > .research-network { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
-.template-homepage.homepage-design-2 .hero .hero-inner { min-height: calc(100svh - var(--header-height)); }
+.template-homepage .hero .hero-inner { min-height: calc(100svh - var(--header-height)); }
 .template-homepage .hero-constellation .hero-inner { display: flex; flex-direction: column; justify-content: center; min-height: calc(100svh - var(--header-height)); padding-block: 3rem 4rem; }
 .template-homepage .hero-constellation .hero-copy { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0; text-align: center; }
 .template-homepage .hero-constellation h1 { max-width: 940px; font-size: var(--font-hero-title); line-height: 1.12; letter-spacing: -.025em; margin-bottom: 0; }

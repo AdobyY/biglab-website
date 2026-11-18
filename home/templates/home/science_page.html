@@ -4,7 +4,14 @@
 <article class="page-wide science-page">
   {% include "home/includes/page_heading.html" with index_heading=True %}
   {% if page.body %}<div class="article-body reading-content">{% include_block page.body %}</div>{% endif %}
-  {% if research_collections %}<nav class="research-collection-nav" aria-label="{% ui 'contents' %}">{% for item in research_collections %}<a href="{{ item.url|design_url:design_version }}">{% ui item.name %}{% include 'home/includes/icon.html' with name='arrow' %}</a>{% endfor %}</nav>{% endif %}
+  {% with has_projects=projects_index.get_children.live.public.exists %}
+    {% if research_collections or has_projects %}
+      <nav class="research-collection-nav" aria-label="{% ui 'contents' %}">
+        {% for item in research_collections %}<a href="{{ item.url }}">{% ui item.name %}</a>{% endfor %}
+        {% if has_projects %}<a href="{{ projects_index.url }}">{{ projects_index.title }}</a>{% endif %}
+      </nav>
+    {% endif %}
+  {% endwith %}
   {% if page.sections %}
     {% for section in research_overview_sections %}{% include_block section %}{% endfor %}
   {% else %}

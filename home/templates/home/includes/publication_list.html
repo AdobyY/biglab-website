@@ -1,10 +1,11 @@
 {% load ui_tags %}
 <ul class="publication-list">
+  {% with heading=collection_detail|yesno:'h2,h3' %}
   {% for publication in publication_items %}
     <li>
       <span class="publication-year">{{ publication.year }}</span>
       <div class="publication-copy">
-        <h3>{% if publication.doi_or_url %}<a href="{{ publication.doi_or_url }}">{{ publication.title }}</a>{% else %}{{ publication.title }}{% endif %}</h3>
+        <{{ heading }} class="publication-title">{% if publication.doi_or_url %}<a href="{{ publication.doi_or_url }}">{{ publication.title }}</a>{% else %}{{ publication.title }}{% endif %}</{{ heading }}>
         <p>{{ publication.authors }}</p>
         {% if publication.journal_or_publisher %}<p class="publication-source">{{ publication.journal_or_publisher }}</p>{% endif %}
         {% if publication.publication_type %}<p class="publication-type">{{ publication.publication_type }}</p>{% endif %}
@@ -13,4 +14,5 @@
   {% empty %}
     <li class="collection-empty">{% ui 'empty_publications' %}</li>
   {% endfor %}
+  {% endwith %}
 </ul>

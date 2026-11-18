@@ -1,9 +1,0 @@
-.design-switch { position: fixed; z-index: 60; inset-inline-end: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: inline-flex; align-items: center; gap: .7rem; min-height: 44px; padding: .5rem .85rem; background: var(--navy); color: var(--paper); border: 1px solid var(--dark-line); border-radius: var(--control-radius); font: 600 .75rem/1 var(--body); text-decoration: none; transition: border-color .2s ease; }
-.template-homepage:not(.template-about-page) .site-footer { padding-bottom: calc(5rem + env(safe-area-inset-bottom)); }
-.homepage-design-1 .hero-footnote > a { margin-inline-end: max(0px, calc(150px - (100vw - 100%) / 2)); }
-.design-switch svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; }
-.design-switch .is-active { color: var(--design-accent, #f3dfa1); }
-.design-switch-divider { height: 13px; width: 1px; background: currentColor; opacity: .45; }
-.design-switch:hover { border-color: var(--design-accent, #f3dfa1); }
-.design-switch:focus-visible { outline-color: var(--design-accent, #f3dfa1); }
-@media print { .design-switch { display: none; } }

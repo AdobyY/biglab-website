@@ -21,6 +21,7 @@ from wagtail.documents import get_document_model
 from wagtail.contrib.redirects.models import Redirect
 
 from home.models import Collaboration, ContactSettings, HomepageDesignSettings, InterfaceText, Publication
+from home.legacy_homepage import upgrade_snapshot
 
 
 DEFAULT_BUNDLE = Path(__file__).resolve().parent / "seed_content"
@@ -75,7 +76,7 @@ def export_bundle(directory=DEFAULT_BUNDLE):
     pages = list(Page.objects.filter(depth__gte=2).order_by("path").specific())
     if any(page._meta.app_label != "home" for page in pages):
         raise CommandError("The snapshot supports BIG Lab page models only.")
-    data = {"version": 1, "locales": list(Locale.objects.order_by("pk").values_list("language_code", flat=True)),
+    data = {"version": 2, "locales": list(Locale.objects.order_by("pk").values_list("language_code", flat=True)),
             "tree_root": Page.get_first_root_node().pk, "default_root": site.root_page_id, "pages": [],
             "assets": [], "snippets": [], "settings": []}
     for page in pages:
@@ -195,10 +196,12 @@ def load_bundle(directory=DEFAULT_BUNDLE):
         data = json.loads(payload)
     except (OSError, ValueError) as error:
         raise CommandError(f"Cannot read content snapshot: {error}") from error
-    if not isinstance(data, dict) or data.get("version") != 1:
+    if not isinstance(data, dict) or data.get("version") not in (1, 2):
         raise CommandError("Unsupported content snapshot version.")
     group, item = "manifest", {}
     try:
+        if data["version"] == 1:
+            upgrade_snapshot(data)
         mappings = {(label(Page), data["tree_root"]): SimpleNamespace(pk=data["tree_root"])}
         for group in ("pages", "assets", "snippets", "settings"):
             identities = set()
